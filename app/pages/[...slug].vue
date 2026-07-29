@@ -2,33 +2,27 @@
 const route = useRoute()
 const config = useRuntimeConfig()
 
-const targetSlug = computed(() => {
-	const slugs = route.params.slug
-	return Array.isArray(slugs) ? slugs.join("/") : slugs || "home"
-})
+const slugParam = route.params.slug
+const targetSlug = Array.isArray(slugParam) && slugParam.length > 0 ? slugParam[slugParam.length - 1] : "home"
 
 const {
 	data: pageData,
 	status,
 	error,
-} = await useFetch(() => `${config.public.wpApiBaseUrl}pages?slug=${targetSlug.value}`, {
+} = await useFetch(`${config.public.wpApiBaseUrl}/pages`, {
+	query: {
+		slug: targetSlug,
+	},
 	server: false,
 	lazy: true,
-	transform: (response) => {
-		if (!response || response.length === 0) return null
-
-		const page = response[0]
-		return {
-			title: page.title?.rendered || "Untitled",
-			content: page.content?.rendered || "",
-			excerpt: page.excerpt?.rendered || "",
-		}
-	},
 })
 
+const page = computed(() => {
+	return pageData.value && pageData.value.length > 0 ? pageData.value[0] : null
+})
 watchEffect(() => {
 	if (pageData.value) {
-		console.log("WordPress API standard payload generated successfully:", pageData.value)
+		console.log("wp_api payload generated successfully:", pageData.value)
 	}
 })
 </script>
@@ -41,17 +35,17 @@ watchEffect(() => {
 				<p class="animate-pulse text-sm font-medium text-slate-500">Loading content...</p>
 			</div>
 
-			<div v-else-if="error || !pageData" class="rounded-2xl border border-red-100 bg-red-50 px-6 py-24 text-center">
+			<div v-else-if="error || !page" class="rounded-2xl border border-red-100 bg-red-50 px-6 py-24 text-center">
 				<h2 class="mb-2 text-xl font-bold text-red-800">Failed to load content</h2>
 				<p class="text-sm text-red-600">Could not resolve route or the target slug is missing/unpublished in WordPress.</p>
 			</div>
 
 			<article v-else class="rounded-2xl border border-slate-100 bg-white p-8 shadow-sm md:p-12">
 				<header class="mb-8 border-b border-slate-100 pb-6">
-					<h1 class="text-4xl font-extrabold tracking-tight text-slate-900 md:text-5xl" v-html="pageData.title"></h1>
+					<h1 class="text-4xl font-extrabold tracking-tight text-slate-900 md:text-5xl" v-html="page.title.rendered"></h1>
 				</header>
 
-				<main v-if="pageData.content" class="prose prose-slate prose-lg max-w-none focus:outline-none" v-html="pageData.content"></main>
+				<main v-if="page.content" class="prose prose-slate prose-lg max-w-none focus:outline-none" v-html="page.content.rendered"></main>
 
 				<p v-else class="italic text-slate-400">This page has no content body text.</p>
 			</article>

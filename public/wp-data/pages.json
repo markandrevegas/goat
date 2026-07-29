@@ -1,0 +1,200 @@
+[
+  {
+    "id": 3,
+    "date": "2026-07-08T05:52:04",
+    "date_gmt": "2026-07-08T05:52:04",
+    "guid": {
+      "rendered": "https://wp.local/?page_id=3"
+    },
+    "modified": "2026-07-28T19:24:51",
+    "modified_gmt": "2026-07-28T19:24:51",
+    "slug": "privacy-policy",
+    "status": "publish",
+    "type": "page",
+    "link": "https://wp.local/privacy-policy/",
+    "title": {
+      "rendered": "Privacy Policy"
+    },
+    "content": {
+      "rendered": "\n<p class=\"has-text-align-left wp-block-paragraph\">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>\n",
+      "protected": false
+    },
+    "excerpt": {
+      "rendered": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat [&hellip;]</p>\n",
+      "protected": false
+    },
+    "author": 1,
+    "featured_media": 0,
+    "parent": 0,
+    "menu_order": 0,
+    "comment_status": "closed",
+    "ping_status": "closed",
+    "template": "",
+    "meta": {
+      "footnotes": ""
+    },
+    "class_list": [
+      "post-3",
+      "page",
+      "type-page",
+      "status-publish",
+      "hentry"
+    ],
+    "blocks": [],
+    "acf": null,
+    "_links": {
+      "self": [
+        {
+          "href": "https://wp.local/wp-json/wp/v2/pages/3",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://wp.local/wp-json/wp/v2/pages"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://wp.local/wp-json/wp/v2/types/page"
+        }
+      ],
+      "author": [
+        {
+          "embeddable": true,
+          "href": "https://wp.local/wp-json/wp/v2/users/1"
+        }
+      ],
+      "replies": [
+        {
+          "embeddable": true,
+          "href": "https://wp.local/wp-json/wp/v2/comments?post=3"
+        }
+      ],
+      "version-history": [
+        {
+          "count": 4,
+          "href": "https://wp.local/wp-json/wp/v2/pages/3/revisions"
+        }
+      ],
+      "predecessor-version": [
+        {
+          "id": 11,
+          "href": "https://wp.local/wp-json/wp/v2/pages/3/revisions/11"
+        }
+      ],
+      "wp:attachment": [
+        {
+          "href": "https://wp.local/wp-json/wp/v2/media?parent=3"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 2,
+    "date": "2026-07-08T05:52:04",
+    "date_gmt": "2026-07-08T05:52:04",
+    "guid": {
+      "rendered": "https://wp.local/?page_id=2"
+    },
+    "modified": "2026-07-08T05:52:04",
+    "modified_gmt": "2026-07-08T05:52:04",
+    "slug": "sample-page",
+    "status": "publish",
+    "type": "page",
+    "link": "https://wp.local/sample-page/",
+    "title": {
+      "rendered": "Sample Page"
+    },
+    "content": {
+      "rendered": "\n<p class=\"wp-block-paragraph\">This is an example page. It&#8217;s different from a blog post because it will stay in one place and will show up in your site navigation (in most themes). Most people start with an About page that introduces them to potential site visitors. It might say something like this:</p>\n\n\n\n<blockquote class=\"wp-block-quote is-layout-flow wp-block-quote-is-layout-flow\"><p>Hi there! I&#8217;m a bike messenger by day, aspiring actor by night, and this is my website. I live in Los Angeles, have a great dog named Jack, and I like pi&#241;a coladas. (And gettin&#8217; caught in the rain.)</p></blockquote>\n\n\n\n<p class=\"wp-block-paragraph\">&#8230;or something like this:</p>\n\n\n\n<blockquote class=\"wp-block-quote is-layout-flow wp-block-quote-is-layout-flow\"><p>The XYZ Doohickey Company was founded in 1971, and has been providing quality doohickeys to the public ever since. Located in Gotham City, XYZ employs over 2,000 people and does all kinds of awesome things for the Gotham community.</p></blockquote>\n\n\n\n<p class=\"wp-block-paragraph\">As a new WordPress user, you should go to <a href=\"https://wp.local/wp-admin/\">your dashboard</a> to delete this page and create new pages for your content. Have fun!</p>\n",
+      "protected": false
+    },
+    "excerpt": {
+      "rendered": "<p>This is an example page. It&#8217;s different from a blog post because it will stay in one place and will show up in your site navigation (in most themes). Most people start with an About page that introduces them to potential site visitors. It might say something like this: Hi there! I&#8217;m a bike messenger [&hellip;]</p>\n",
+      "protected": false
+    },
+    "author": 1,
+    "featured_media": 0,
+    "parent": 0,
+    "menu_order": 0,
+    "comment_status": "closed",
+    "ping_status": "open",
+    "template": "",
+    "meta": {
+      "footnotes": ""
+    },
+    "class_list": [
+      "post-2",
+      "page",
+      "type-page",
+      "status-publish",
+      "hentry"
+    ],
+    "blocks": [],
+    "acf": null,
+    "_links": {
+      "self": [
+        {
+          "href": "https://wp.local/wp-json/wp/v2/pages/2",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://wp.local/wp-json/wp/v2/pages"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://wp.local/wp-json/wp/v2/types/page"
+        }
+      ],
+      "author": [
+        {
+          "embeddable": true,
+          "href": "https://wp.local/wp-json/wp/v2/users/1"
+        }
+      ],
+      "replies": [
+        {
+          "embeddable": true,
+          "href": "https://wp.local/wp-json/wp/v2/comments?post=2"
+        }
+      ],
+      "version-history": [
+        {
+          "count": 0,
+          "href": "https://wp.local/wp-json/wp/v2/pages/2/revisions"
+        }
+      ],
+      "wp:attachment": [
+        {
+          "href": "https://wp.local/wp-json/wp/v2/media?parent=2"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  }
+]
