@@ -2,41 +2,50 @@
 import fs from 'node:fs/promises'
 
 const WP_URL = process.env.NUXT_PUBLIC_WP_API_BASE_URL || process.env.WP_API_BASE_URL
-
-// Tell Node/Bun to accept local SSL
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 
 const OUT_DIR = './public/wp-data'
 
+async function fetchEndpoint(endpoint: string) {
+  const url = `${WP_URL}/${endpoint}?per_page=100`
+  console.log(`Fetching from ${url}...`)
+  
+  const res = await fetch(url)
+  if (!res.ok) {
+    throw new Error(`Failed to fetch ${endpoint}: ${res.status} ${res.statusText}`)
+  }
+  
+  const data = await res.json()
+  if (!Array.isArray(data)) {
+    throw new Error(`Expected array from ${endpoint}, got ${typeof data}`)
+  }
+  return data
+}
+
 async function exportData() {
   if (!WP_URL) {
-    console.error('No NUXT_PUBLIC_WP_API_BASE_URL environment variable in .env')
-    return
+    console.error('Error: No WP_API_BASE_URL environment variable provided.')
+    process.exit(1)
   }
 
-  console.log(`Fetching data from ${WP_URL}/pages...`)
-
   try {
-    const res = await fetch(`${WP_URL}/pages?per_page=100`)
-    
-    if (!res.ok) {
-      throw new Error(`error = ${res.status} ${res.statusText}.`)
-    }
-
-    const pages = await res.json()
-
-    if (!Array.isArray(pages)) {
-      console.error('No arrays. Instead we got:')
-      console.error(pages)
-      return
-    }
-
     await fs.mkdir(OUT_DIR, { recursive: true })
-    await fs.writeFile(`${OUT_DIR}/pages.json`, JSON.stringify(pages, null, 2))
-    
+
+    const [pages, posts] = await Promise.all([
+      fetchEndpoint('pages'),
+      fetchEndpoint('posts')
+    ])
+
+    await Promise.all([
+      fs.writeFile(`${OUT_DIR}/pages.json`, JSON.stringify(pages, null, 2)),
+      fs.writeFile(`${OUT_DIR}/posts.json`, JSON.stringify(posts, null, 2))
+    ])
+
     console.log(`Saved ${pages.length} pages to ${OUT_DIR}/pages.json`)
+    console.log(`Saved ${posts.length} posts to ${OUT_DIR}/posts.json`)
   } catch (error) {
-    console.error('No data:', error)
+    console.error('Export failed:', error)
+    process.exit(1)
   }
 }
 
