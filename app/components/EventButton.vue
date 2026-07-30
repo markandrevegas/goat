@@ -1,10 +1,12 @@
 <script setup lang="ts">
+const route = useRoute()
 const { trackEvent } = useTrackEvent()
 
 const handleButtonClick = () => {
 	trackEvent("test_click", {
-		button_name: "hero_cta",
-		page: "homepage",
+		button_name: "menu_cta",
+		page_path: route.path,
+		page: typeof document !== 'undefined' ? document.title : ''
 	})
 }
 </script>

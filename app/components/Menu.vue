@@ -20,10 +20,11 @@ const menuItems = computed(() => data.value || [])
 						<span v-if="status === 'pending'" class="animate-pulse text-sm text-gray-400"> Loading... </span>
 
 						<span v-else-if="error" class="text-sm text-red-400"> Failed loading menu </span>
-
+						
 						<template v-else>
 							<NuxtLink v-for="page in menuItems" :key="page.id" :to="`/${page.slug}`" class="text-sm font-medium text-gray-600 transition-colors hover:text-blue-600" active-class="text-blue-600 font-semibold" v-html="page.title.rendered" />
 						</template>
+						<EventButton />
 					</div>
 
 					<!-- Mobile button -->
@@ -54,6 +55,7 @@ const menuItems = computed(() => data.value || [])
 						<template v-else>
 							<NuxtLink v-for="page in menuItems" :key="page.id" :to="`/${page.slug}`" @click="isMobileMenuOpen = false" class="block rounded-md px-3 py-2.5 text-base font-medium text-gray-700 transition-colors hover:bg-gray-200 hover:text-gray-900" active-class="bg-blue-50 text-blue-600 font-semibold" v-html="page.title.rendered" />
 						</template>
+						<EventButton />
 					</div>
 				</div>
 			</Transition>
