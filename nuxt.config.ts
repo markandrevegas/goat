@@ -51,6 +51,9 @@ declare module "nuxt/schema" {
 	}
 }
 export default defineNuxtConfig({
+	app: {
+    baseURL: process.env.NODE_ENV === 'production' ? '/goat/' : '/'
+  },
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
   modules: ['@nuxtjs/tailwindcss', '@tailwindcss/typography', '@nuxt/scripts'],
