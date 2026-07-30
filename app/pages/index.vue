@@ -6,7 +6,7 @@ const { data, error } = await useAsyncData(
 	async () => {
 		const [pagesRes, postsRes] = await Promise.all([$fetch(`${WP_API_BASE_URL}/pages?per_page=10&_fields=id,title,slug`), $fetch(`${WP_API_BASE_URL}/posts?per_page=10&_fields=id,title,slug,date,excerpt`)])
 
-		return { pages: pagesRes, posts: postsRes }
+		return { pages: pagesRes || [], posts: postsRes || [] }
 	},
 	{
 		server: false,
@@ -15,6 +15,45 @@ const { data, error } = await useAsyncData(
 
 const pages = computed(() => data.value?.pages || [])
 const posts = computed(() => data.value?.posts || [])
+
+const homePage = computed(() => {
+  return pages.value.find((p) => p.slug === 'home' || p.slug === 'index') || pages.value[0] || null
+})
+
+const seoTitle = computed(() => {
+  return (
+    homePage.value?.title?.rendered ||
+    'Welcome to Our Site'
+  )
+})
+
+const seoDescription = computed(() => {
+
+  if (homePage.value?.excerpt?.rendered) {
+    return homePage.value.excerpt.rendered.replace(/<[^>]*>?/gm, '').trim()
+  }
+
+  return 'Discover our latest articles, insights, and updates.'
+})
+
+const ogImage = computed(() => {
+  return homePage.value?.yoast_head_json?.og_image?.[0]?.url || '/default-og.jpg'
+})
+
+useSeoMeta({
+  title: seoTitle,
+  titleTemplate: null,
+  metaTitle: seoTitle,
+  description: seoDescription,
+  ogTitle: seoTitle,
+  ogDescription: seoDescription,
+  ogImage: ogImage,
+  ogType: 'website',
+  twitterCard: 'summary_large_image',
+  twitterTitle: seoTitle,
+  twitterDescription: seoDescription,
+  twitterImage: ogImage
+})
 </script>
 <template>
 	<main class="mx-auto max-w-6xl px-4 py-12">
