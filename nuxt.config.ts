@@ -7,6 +7,15 @@ declare module "nuxt/schema" {
 			name?: string
 			[key: string]: unknown
 		}
+		gtag?: {
+			id?: string
+			config?: {
+				page_title?: string
+				send_page_view?: boolean
+				[key: string]: unknown
+			}
+			[key: string]: unknown
+		}
 		schemaOrg?: {
 			identity?: {
 				type?: string
@@ -58,7 +67,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
 	css: ['~/assets/css/main.css'],
   devtools: { enabled: true },
-  modules: ['@tailwindcss/typography', '@nuxt/scripts', 'nuxt-svgo'],
+  modules: ['@tailwindcss/typography', '@nuxt/scripts', 'nuxt-svgo', 'nuxt-gtag'],
   runtimeConfig: {
     public: {
       gaMeasurementId: process.env.NUXT_PUBLIC_GA_MEASUREMENT_ID,
@@ -112,5 +121,12 @@ export default defineNuxtConfig({
 	},
 	svgo: {
     dts: true
+  },
+	gtag: {
+    id: process.env.NUXT_PUBLIC_GTAG_ID || 'G-0TNS5Z0421',
+    config: {
+      page_title: 'Nuxt App',
+      send_page_view: true
+    }
   }
 })
