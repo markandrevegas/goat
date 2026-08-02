@@ -1,5 +1,107 @@
 [
   {
+    "id": 12,
+    "date": "2026-08-02T12:33:15",
+    "date_gmt": "2026-08-02T12:33:15",
+    "guid": {
+      "rendered": "https://wp.local/?page_id=12"
+    },
+    "modified": "2026-08-02T12:33:15",
+    "modified_gmt": "2026-08-02T12:33:15",
+    "slug": "information",
+    "status": "publish",
+    "type": "page",
+    "link": "https://wp.local/information/",
+    "title": {
+      "rendered": "Information"
+    },
+    "content": {
+      "rendered": "\n<p class=\"wp-block-paragraph\">Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.</p>\n\n\n\n<p class=\"wp-block-paragraph\">Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.</p>\n",
+      "protected": false
+    },
+    "excerpt": {
+      "rendered": "<p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti [&hellip;]</p>\n",
+      "protected": false
+    },
+    "author": 1,
+    "featured_media": 0,
+    "parent": 0,
+    "menu_order": 0,
+    "comment_status": "closed",
+    "ping_status": "closed",
+    "template": "",
+    "meta": {
+      "footnotes": ""
+    },
+    "class_list": [
+      "post-12",
+      "page",
+      "type-page",
+      "status-publish",
+      "hentry"
+    ],
+    "blocks": [],
+    "acf": null,
+    "_links": {
+      "self": [
+        {
+          "href": "https://wp.local/wp-json/wp/v2/pages/12",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://wp.local/wp-json/wp/v2/pages"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://wp.local/wp-json/wp/v2/types/page"
+        }
+      ],
+      "author": [
+        {
+          "embeddable": true,
+          "href": "https://wp.local/wp-json/wp/v2/users/1"
+        }
+      ],
+      "replies": [
+        {
+          "embeddable": true,
+          "href": "https://wp.local/wp-json/wp/v2/comments?post=12"
+        }
+      ],
+      "version-history": [
+        {
+          "count": 1,
+          "href": "https://wp.local/wp-json/wp/v2/pages/12/revisions"
+        }
+      ],
+      "predecessor-version": [
+        {
+          "id": 13,
+          "href": "https://wp.local/wp-json/wp/v2/pages/12/revisions/13"
+        }
+      ],
+      "wp:attachment": [
+        {
+          "href": "https://wp.local/wp-json/wp/v2/media?parent=12"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
     "id": 3,
     "date": "2026-07-08T05:52:04",
     "date_gmt": "2026-07-08T05:52:04",
@@ -77,7 +179,7 @@
       ],
       "version-history": [
         {
-          "count": 4,
+          "count": 3,
           "href": "https://wp.local/wp-json/wp/v2/pages/3/revisions"
         }
       ],

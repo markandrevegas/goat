@@ -1,4 +1,5 @@
 import type { NitroRouteConfig } from 'nitropack'
+import tailwindcss from '@tailwindcss/vite'
 declare module "nuxt/schema" {
 	interface NuxtConfig {
 		site?: {
@@ -55,8 +56,9 @@ export default defineNuxtConfig({
     baseURL: process.env.NODE_ENV === 'production' ? '/goat/' : '/'
   },
   compatibilityDate: '2025-07-15',
+	css: ['~/assets/css/main.css'],
   devtools: { enabled: true },
-  modules: ['@nuxtjs/tailwindcss', '@tailwindcss/typography', '@nuxt/scripts'],
+  modules: ['@tailwindcss/typography', '@nuxt/scripts', 'nuxt-svgo'],
   runtimeConfig: {
     public: {
       gaMeasurementId: process.env.NUXT_PUBLIC_GA_MEASUREMENT_ID,
@@ -69,6 +71,9 @@ export default defineNuxtConfig({
     compatibilityVersion: 4
   },
   vite: {
+		plugins: [
+      tailwindcss()
+    ],
     optimizeDeps: {
       include: [
         '@vue/devtools-core',
@@ -104,5 +109,8 @@ export default defineNuxtConfig({
         }
       }
     }
-	}
+	},
+	svgo: {
+    dts: true
+  }
 })
