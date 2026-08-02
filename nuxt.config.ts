@@ -15,7 +15,7 @@ declare module "nuxt/schema" {
 				[key: string]: unknown
 			}
 			[key: string]: unknown
-		}
+		},
 		scripts?: {
 			registry?: {
 				googleAnalytics?: {

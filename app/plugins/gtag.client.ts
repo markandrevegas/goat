@@ -28,7 +28,7 @@ export default defineNuxtPlugin(() => {
   gtag('js', new Date())
   gtag('config', measurementId, {
     send_page_view: true,
-    debug_mode: isDev
+    debug_mode: true // force needed for development
   })
 
   useHead({
