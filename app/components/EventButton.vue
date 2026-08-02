@@ -1,8 +1,6 @@
 <script setup lang="ts">
-const { trackEvent } = useTrackEvent()
-
 const handleButtonClick = () => {
-  trackEvent('test_click', {
+  useTrackEvent('test_click', {
     button_name: 'menu_cta'
   })
 }
