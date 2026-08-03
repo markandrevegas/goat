@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from "vue"
-import Logo from '~/assets/svg/logo.svg?component'
+import Logo from "~/assets/svg/logo.svg?component"
 
 const isMobileMenuOpen = ref(false)
 const { data, status, error } = await useMenu()
@@ -12,9 +12,7 @@ const menuItems = computed(() => data.value || [])
 		<nav class="sticky top-0 z-50 border-b border-gray-200 bg-white">
 			<div class="mx-auto max-w-6xl px-4">
 				<div class="flex h-16 items-center justify-between">
-					
 					<div class="flex-shrink-0">
-						
 						<NuxtLink to="/"><Logo class="h-8 w-auto fill-current" /></NuxtLink>
 					</div>
 
@@ -23,7 +21,7 @@ const menuItems = computed(() => data.value || [])
 						<span v-if="status === 'pending'" class="animate-pulse text-sm text-gray-400"> Loading... </span>
 
 						<span v-else-if="error" class="text-sm text-red-400"> Failed loading menu </span>
-						
+
 						<template v-else>
 							<NuxtLink v-for="page in menuItems" :key="page.id" :to="`/${page.slug}`" class="text-sm font-medium text-gray-600 transition-colors hover:text-blue-600" active-class="text-blue-600 font-semibold" v-html="page.title.rendered" />
 						</template>
@@ -50,7 +48,7 @@ const menuItems = computed(() => data.value || [])
 			<!-- Mobile menu -->
 			<Transition enter-active-class="transition duration-300 ease-out" enter-from-class="opacity-0 -translate-y-2" enter-to-class="opacity-100 translate-y-0" leave-active-class="transition duration-200 ease-in" leave-from-class="opacity-100 translate-y-0" leave-to-class="opacity-0 -translate-y-2">
 				<div v-show="isMobileMenuOpen" id="mobile-menu" class="overflow-hidden bg-gray-50 md:hidden">
-					<div class="space-y-2 px-4 pb-4 pt-2 shadow-inner">
+					<div class="space-y-2 px-4 pt-2 pb-4 shadow-inner">
 						<span v-if="status === 'pending'" class="block animate-pulse py-2 text-sm text-gray-400"> Loading menu... </span>
 
 						<span v-else-if="error" class="block py-2 text-sm text-red-400"> Failed loading menu </span>

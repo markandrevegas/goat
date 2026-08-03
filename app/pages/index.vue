@@ -17,49 +17,45 @@ const pages = computed(() => data.value?.pages || [])
 const posts = computed(() => data.value?.posts || [])
 
 const homePage = computed(() => {
-  return pages.value.find((p) => p.slug === 'home' || p.slug === 'index') || pages.value[0] || null
+	return pages.value.find((p) => p.slug === "home" || p.slug === "index") || pages.value[0] || null
 })
 
 const seoTitle = computed(() => {
-  return (
-    homePage.value?.title?.rendered ||
-    'Welcome to Our Site'
-  )
+	return homePage.value?.title?.rendered || "Welcome to Our Site"
 })
 
 const seoDescription = computed(() => {
+	if (homePage.value?.excerpt?.rendered) {
+		return homePage.value.excerpt.rendered.replace(/<[^>]*>?/gm, "").trim()
+	}
 
-  if (homePage.value?.excerpt?.rendered) {
-    return homePage.value.excerpt.rendered.replace(/<[^>]*>?/gm, '').trim()
-  }
-
-  return 'Discover our latest articles, insights, and updates.'
+	return "Discover our latest articles, insights, and updates."
 })
 
 const ogImage = computed(() => {
-  return homePage.value?.yoast_head_json?.og_image?.[0]?.url || '/default-og.jpg'
+	return homePage.value?.yoast_head_json?.og_image?.[0]?.url || "/default-og.jpg"
 })
 
 useSeoMeta({
-  title: seoTitle,
-  titleTemplate: null,
-  metaTitle: seoTitle,
-  description: seoDescription,
-  ogTitle: seoTitle,
-  ogDescription: seoDescription,
-  ogImage: ogImage,
-  ogType: 'website',
-  twitterCard: 'summary_large_image',
-  twitterTitle: seoTitle,
-  twitterDescription: seoDescription,
-  twitterImage: ogImage
+	title: seoTitle,
+	titleTemplate: null,
+	metaTitle: seoTitle,
+	description: seoDescription,
+	ogTitle: seoTitle,
+	ogDescription: seoDescription,
+	ogImage: ogImage,
+	ogType: "website",
+	twitterCard: "summary_large_image",
+	twitterTitle: seoTitle,
+	twitterDescription: seoDescription,
+	twitterImage: ogImage,
 })
 </script>
 <template>
 	<main class="mx-auto max-w-6xl px-4 py-12">
 		<header class="mb-12 border-b pb-6">
-			<h1 class="text-4xl font-extrabold tracking-tight text-gray-900">WordPress Content Index</h1>
-			<p class="mt-2 text-lg text-gray-600">Browse all available pages and articles.</p>
+			<h1 class="text-4xl font-extrabold tracking-tight">WordPress Content Index</h1>
+			<p class="mt-2 text-lg">Browse all available pages and articles.</p>
 		</header>
 		<ClientOnly>
 			<div v-if="error" class="mb-8 rounded-md border border-red-200 bg-red-50 p-4 text-red-800">
@@ -69,7 +65,7 @@ useSeoMeta({
 
 			<div class="grid gap-12 md:grid-cols-2" v-else>
 				<section>
-					<h2 class="mb-6 flex items-center gap-2 text-2xl font-bold text-gray-800">
+					<h2 class="mb-6 flex items-center gap-2 text-2xl font-bold">
 						Pages
 						<span class="text-sm font-normal text-gray-500">({{ pages?.length || 0 }})</span>
 					</h2>
@@ -82,7 +78,7 @@ useSeoMeta({
 				</section>
 
 				<section>
-					<h2 class="mb-6 flex items-center gap-2 text-2xl font-bold text-gray-800">
+					<h2 class="mb-6 flex items-center gap-2 text-2xl font-bold">
 						Recent Posts
 						<span class="text-sm font-normal text-gray-500">({{ posts?.length || 0 }})</span>
 					</h2>
@@ -90,11 +86,11 @@ useSeoMeta({
 					<div class="space-y-6">
 						<article v-for="post in posts" :key="post.id" class="group">
 							<NuxtLink :to="`/blog/${post.slug}`" class="block">
-								<h3 class="text-xl font-semibold text-gray-900 transition-colors group-hover:text-blue-600" v-html="post.title.rendered"></h3>
+								<h3 class="text-xl font-semibold transition-colors group-hover:text-blue-600" v-html="post.title.rendered"></h3>
 								<time class="mt-1 block text-xs text-gray-400">
 									{{ new Date(post.date).toLocaleDateString("en-US", { dateStyle: "medium" }) }}
 								</time>
-								<div class="prose prose-sm mt-2 line-clamp-2 max-w-none text-gray-600" v-html="post.excerpt.rendered"></div>
+								<div class="prose prose-sm mt-2 line-clamp-2 max-w-none" v-html="post.excerpt.rendered"></div>
 							</NuxtLink>
 						</article>
 					</div>

@@ -2,3 +2,12 @@
 @theme {
   --color-brand: #13283B;
 }
+
+@layer base {
+  body {
+    @apply bg-white text-brand;
+  }
+  .dark body {
+    @apply bg-brand text-white;
+  }
+}

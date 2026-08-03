@@ -12,6 +12,7 @@ declare module "nuxt/schema" {
 			config?: {
 				page_title?: string
 				send_page_view?: boolean
+				debug_mode?: boolean
 				[key: string]: unknown
 			}
 			[key: string]: unknown
@@ -126,7 +127,8 @@ export default defineNuxtConfig({
     id: process.env.NUXT_PUBLIC_GTAG_ID || 'G-0TNS5Z0421',
     config: {
       page_title: 'Nuxt App',
-      send_page_view: true
+      send_page_view: true,
+			debug_mode: false
     }
   }
 })
