@@ -87,25 +87,6 @@ useSeoMeta({
 						</li>
 					</ul>
 				</section>
-
-				<section>
-					<h2 class="mb-6 flex items-center gap-2 text-2xl font-bold">
-						Recent Posts
-						<span class="text-sm font-normal text-gray-500">({{ posts?.length || 0 }})</span>
-					</h2>
-
-					<div class="space-y-6">
-						<article v-for="post in posts" :key="post.id" class="group">
-							<NuxtLink :to="`/blog/${post.slug}`" class="block">
-								<h3 class="text-xl font-semibold transition-colors group-hover:text-blue-600" v-html="post.title.rendered"></h3>
-								<time class="mt-1 block text-xs text-gray-400">
-									{{ new Date(post.date).toLocaleDateString("en-US", { dateStyle: "medium" }) }}
-								</time>
-								<div class="prose prose-sm mt-2 line-clamp-2 max-w-none" v-html="post.excerpt.rendered"></div>
-							</NuxtLink>
-						</article>
-					</div>
-				</section>
 			</div>
 		</ClientOnly>
 	</main>
