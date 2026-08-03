@@ -8,12 +8,12 @@ export interface WordPressPage {
 
 export const useMenu = () => {
   const config = useRuntimeConfig()
-  const baseUrl = config.public.wpApiBaseUrl || 'https://wp.local/wp-json/wp/v2'
+  const wordpressUrl = config.public.wordpressUrl
 
   return useAsyncData<WordPressPage[]>(
     'wp-menu-pages',
     async () => {
-      const res = await $fetch(`${baseUrl}/pages?per_page=10&_fields=id,title,slug`)
+      const res = await $fetch(`${wordpressUrl}/pages?per_page=10&_fields=id,title,slug`)
       return Array.isArray(res) ? res : []
     },
     {

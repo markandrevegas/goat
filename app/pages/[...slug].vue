@@ -13,7 +13,7 @@ const {
 	data: pageData,
 	status,
 	error,
-} = await useFetch(isProduction ? "/wp-data/pages.json" : `${config.public.wpApiBaseUrl}/pages`, {
+} = await useFetch(isProduction ? "/wp-data/pages.json" : `${config.public.wordpressUrl}/pages`, {
 	query: isProduction ? undefined : { slug: targetSlug },
 	transform: (res) => {
 		if (!Array.isArray(res)) return null

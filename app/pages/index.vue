@@ -1,10 +1,11 @@
 <script setup>
-const WP_API_BASE_URL = "https://wp.local/wp-json/wp/v2"
+const config = useRuntimeConfig()
+const wordpressUrl = config.public.wordpressUrl
 
 const { data, error } = await useAsyncData(
 	"wp-index-data",
 	async () => {
-		const [pagesRes, postsRes] = await Promise.all([$fetch(`${WP_API_BASE_URL}/pages?per_page=10&_fields=id,title,slug`), $fetch(`${WP_API_BASE_URL}/posts?per_page=10&_fields=id,title,slug,date,excerpt`)])
+		const [pagesRes, postsRes] = await Promise.all([$fetch(`${wordpressUrl}/pages?per_page=10&_fields=id,title,slug`), $fetch(`${wordpressUrl}/posts?per_page=10&_fields=id,title,slug,date,excerpt`)])
 
 		return { pages: pagesRes || [], posts: postsRes || [] }
 	},

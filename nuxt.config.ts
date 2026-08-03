@@ -72,8 +72,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       gaMeasurementId: process.env.NUXT_PUBLIC_GA_MEASUREMENT_ID,
-      wordpressUrl: process.env.WP_API_BASE_URL || 'http://localhost:3001',
-      wpApiBaseUrl: process.env.WP_API_BASE_URL,
+      wordpressUrl: process.env.NUXT_PUBLIC_WORDPRESS_URL || 'https://wp.local/wp-json',
       gtagId: process.env.NUXT_PUBLIC_GTAG_ID
     }
   },
