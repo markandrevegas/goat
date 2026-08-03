@@ -2,7 +2,6 @@
 const route = useRoute()
 const config = useRuntimeConfig()
 
-const slugParam = route.params.slug
 const targetSlug = computed(() => {
 	const slugParam = route.params.slug
 	if (Array.isArray(slugParam) && slugParam.length > 0) {
@@ -11,46 +10,32 @@ const targetSlug = computed(() => {
 	return slugParam || "home"
 })
 
-// Determine environment
-const isDev = import.meta.dev
-
-// Fetch logic: Uses static JSON in production, WP REST API in local dev
-const fetchUrl = computed(() => {
-	return isDev 
-		? `${config.public.wordpressUrl}/pages` 
-		: "/wp-data/pages.json"
-})
-const fetchQuery = computed(() => {
-	return isDev ? { slug: targetSlug.value } : undefined
-})
-
 const {
 	data: pageData,
 	status,
 	error,
-} = await useFetch(fetchUrl, {
-	key: `wp-page-${targetSlug.value}`, // Fixes cache key collision in production
-	query: fetchQuery,
+} = await useFetch(`${config.public.wordpressUrl}/pages`, {
+	query: { slug: targetSlug },
+	key: `wp-page-${targetSlug}`,
 	transform: (res) => {
-		if (!Array.isArray(res)) return null
-		// When loading static array in production, find the matching item
-		if (!isDev) {
-			return res.find((p) => p.slug === targetSlug.value) || null
-		}
-		// In dev, WP REST API returns array with 1 item for ?slug=xyz
-		return res[0] || null
+		if (!Array.isArray(res) || res.length === 0) return null
+		return res[0]
 	},
 })
 
 const page = computed(() => pageData.value)
-
-// Dynamic SEO setup using the fetched page content
 const seoTitle = computed(() => page.value?.title?.rendered || "Page")
 const seoDescription = computed(() => {
 	if (!page.value?.excerpt?.rendered) return "Welcome to our site."
 	return page.value.excerpt.rendered.replace(/<[^>]*>?/gm, "").trim()
 })
 
+useSeoMeta({
+	title: seoTitle,
+	description: seoDescription,
+	ogTitle: seoTitle,
+	ogDescription: seoDescription,
+})
 useSeoMeta({
 	title: seoTitle,
 	description: seoDescription,
