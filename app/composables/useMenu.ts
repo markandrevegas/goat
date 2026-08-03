@@ -13,12 +13,19 @@ export const useMenu = () => {
   return useAsyncData<WordPressPage[]>(
     'wp-menu-pages',
     async () => {
-      const res = await $fetch(`${wordpressUrl}/pages?per_page=10&_fields=id,title,slug`)
+      const res = await $fetch(`${wordpressUrl}/pages`, {
+        baseURL: '', 
+        query: {
+          per_page: 10,
+          _fields: 'id,title,slug'
+        }
+      })
+      
       return Array.isArray(res) ? res : []
     },
     {
-      server: false,
-      lazy: true
+      lazy: true,
+      server: false
     }
   )
 }

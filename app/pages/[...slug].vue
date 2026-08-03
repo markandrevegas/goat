@@ -15,6 +15,7 @@ const {
 	status,
 	error,
 } = await useFetch(`${config.public.wordpressUrl}/pages`, {
+	baseURL: '',
 	query: { slug: targetSlug },
 	key: `wp-page-${targetSlug}`,
 	transform: (res) => {
