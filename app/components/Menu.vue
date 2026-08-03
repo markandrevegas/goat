@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from "vue"
-import Logo from "~/assets/svg/logo.svg?component"
+import Logo from "~/assets/svg/anchor.svg?component"
 
 const isMobileMenuOpen = ref(false)
 const { data, status, error } = await useMenu()
@@ -13,7 +13,7 @@ const menuItems = computed(() => data.value || [])
 			<div class="mx-auto max-w-6xl px-4">
 				<div class="flex h-16 items-center justify-between">
 					<div class="flex-shrink-0">
-						<NuxtLink to="/"><Logo class="h-8 w-auto fill-current" /></NuxtLink>
+						<NuxtLink to="/"><Logo class="h-8 w-auto fill-current scale-150" /></NuxtLink>
 					</div>
 
 					<!-- Desktop -->
