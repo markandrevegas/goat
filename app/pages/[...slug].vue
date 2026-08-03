@@ -1,30 +1,20 @@
 <script setup>
 const route = useRoute()
 const config = useRuntimeConfig()
+const wordpressUrl = config.public.wordpressUrl
 
-const targetSlug = computed(() => {
-	const slugParam = route.params.slug
-	if (Array.isArray(slugParam) && slugParam.length > 0) {
-		return slugParam[slugParam.length - 1]
-	}
-	return slugParam || "home"
+const slug = computed(() => {
+  const params = route.params.slug
+  return Array.isArray(params) ? params.join('/') : params || ''
+})
+const { data: pageData, pending, error } = await useFetch(() => {
+  const targetSlug = slug.value || 'home'
+  return `${wordpressUrl}/pages?slug=${targetSlug}`
+}, {
+  watch: [slug]
 })
 
-const {
-	data: pageData,
-	status,
-	error,
-} = await useFetch(`${config.public.wordpressUrl}/pages`, {
-	baseURL: '',
-	query: { slug: targetSlug },
-	key: `wp-page-${targetSlug}`,
-	transform: (res) => {
-		if (!Array.isArray(res) || res.length === 0) return null
-		return res[0]
-	},
-})
-
-const page = computed(() => pageData.value)
+const page = computed(() => pageData.value?.[0] || null)
 const seoTitle = computed(() => page.value?.title?.rendered || "Page")
 const seoDescription = computed(() => {
 	if (!page.value?.excerpt?.rendered) return "Welcome to our site."
@@ -47,7 +37,7 @@ useSeoMeta({
 
 <template>
 	<div class="container mx-auto max-w-4xl px-4 py-12">
-		<div v-if="status === 'pending'" class="flex flex-col items-center justify-center space-y-4 py-24">
+		<div v-if="pending === 'pending'" class="flex flex-col items-center justify-center space-y-4 py-24">
 			<div class="h-12 w-12 animate-spin rounded-full border-b-4 border-indigo-600"></div>
 			<p class="animate-pulse text-sm font-medium text-slate-500">Loading content...</p>
 		</div>
