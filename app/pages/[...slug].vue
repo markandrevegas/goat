@@ -15,6 +15,22 @@ const { data: pageData, pending, error } = await useFetch(() => {
 })
 
 const page = computed(() => pageData.value?.[0] || null)
+if (error.value) {
+  throw createError({
+    statusCode: error.value.statusCode || 500,
+    statusMessage: 'Failed to fetch content from WordPress',
+    fatal: true
+  })
+}
+
+if (!pending.value && !page.value) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: `Page '/${slug.value}' not found`,
+    fatal: true
+  })
+}
+
 const seoTitle = computed(() => page.value?.title?.rendered || "Page")
 const seoDescription = computed(() => {
 	if (!page.value?.excerpt?.rendered) return "Welcome to our site."
@@ -37,12 +53,12 @@ useSeoMeta({
 
 <template>
 	<div class="container mx-auto max-w-4xl px-4 py-12">
-		<div v-if="pending === 'pending'" class="flex flex-col items-center justify-center space-y-4 py-24">
+		<div v-if="pending" class="flex flex-col items-center justify-center space-y-4 py-24">
 			<div class="h-12 w-12 animate-spin rounded-full border-b-4 border-indigo-600"></div>
 			<p class="animate-pulse text-sm font-medium text-slate-500">Loading content...</p>
 		</div>
 
-		<div v-else-if="error || !page" class="rounded-2xl border border-red-100 bg-red-50 px-6 py-24 text-center">
+		<div v-else-if="error" class="rounded-2xl border border-red-100 bg-red-50 px-6 py-24 text-center">
 			<h2 class="mb-2 text-xl font-bold text-red-800">Failed to load content</h2>
 			<p class="text-sm text-red-600">Could not resolve route or the target slug is missing/unpublished.</p>
 		</div>
