@@ -3,22 +3,42 @@ const route = useRoute()
 const config = useRuntimeConfig()
 
 const slugParam = route.params.slug
-const targetSlug = Array.isArray(slugParam) && slugParam.length > 0 ? slugParam[slugParam.length - 1] : "home"
+const targetSlug = computed(() => {
+	const slugParam = route.params.slug
+	if (Array.isArray(slugParam) && slugParam.length > 0) {
+		return slugParam[slugParam.length - 1]
+	}
+	return slugParam || "home"
+})
 
 // Determine environment
-const isProduction = process.env.NODE_ENV === "production"
+const isDev = import.meta.dev
 
 // Fetch logic: Uses static JSON in production, WP REST API in local dev
+const fetchUrl = computed(() => {
+	return isDev 
+		? `${config.public.wordpressUrl}/pages` 
+		: "/wp-data/pages.json"
+})
+const fetchQuery = computed(() => {
+	return isDev ? { slug: targetSlug.value } : undefined
+})
+
 const {
 	data: pageData,
 	status,
 	error,
-} = await useFetch(isProduction ? "/wp-data/pages.json" : `${config.public.wordpressUrl}/pages`, {
-	query: isProduction ? undefined : { slug: targetSlug },
+} = await useFetch(fetchUrl, {
+	key: `wp-page-${targetSlug.value}`, // Fixes cache key collision in production
+	query: fetchQuery,
 	transform: (res) => {
 		if (!Array.isArray(res)) return null
-		// Search local JSON array for matching slug
-		return res.find((p) => p.slug === targetSlug) || null
+		// When loading static array in production, find the matching item
+		if (!isDev) {
+			return res.find((p) => p.slug === targetSlug.value) || null
+		}
+		// In dev, WP REST API returns array with 1 item for ?slug=xyz
+		return res[0] || null
 	},
 })
 
