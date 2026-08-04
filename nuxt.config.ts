@@ -63,7 +63,12 @@ declare module "nuxt/schema" {
 }
 export default defineNuxtConfig({
 	app: {
-    baseURL: process.env.NODE_ENV === 'production' ? '/goat/' : '/'
+    baseURL: process.env.NODE_ENV === 'production' ? '/goat/' : '/',
+		head: {
+      meta: [
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+      ]
+    }
   },
   compatibilityDate: '2025-07-15',
 	css: ['~/assets/css/main.css'],

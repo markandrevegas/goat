@@ -3,16 +3,16 @@ import heroMobile from "~/assets/videos/floating-goat-homepage.mp4"
 import heroDesktop from "~/assets/videos/floating-goat-homepage.mp4"
 
 interface Props {
-  title?: string
-  subtitle?: string
+	title?: string
+	subtitle?: string
 }
 withDefaults(defineProps<Props>(), {
-  title: 'Welcome to Our Site',
-  subtitle: ''
+	title: "Welcome to Our Site",
+	subtitle: "",
 })
 </script>
 <template>
-	<div class="relative h-screen w-full overflow-hidden bg-black">
+	<div class="absolute inset-0 -z-10 overflow-hidden">
 		<video autoplay loop muted playsinline class="absolute inset-0 z-0 h-full w-full object-cover">
 			<source :src="heroMobile" type="video/mp4" media="(max-width: 767px)" />
 

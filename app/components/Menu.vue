@@ -13,7 +13,7 @@ const menuItems = computed(() => data.value || [])
 			<div class="mx-auto max-w-6xl px-4">
 				<div class="flex h-16 items-center justify-between">
 					<div class="flex-shrink-0">
-						<NuxtLink to="/"><Logo class="h-8 w-auto scale-150 fill-current" /></NuxtLink>
+						<NuxtLink to="/"><Logo class="h-8 w-auto scale-150 fill-brand" /></NuxtLink>
 					</div>
 
 					<!-- Desktop -->
