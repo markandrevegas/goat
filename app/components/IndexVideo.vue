@@ -37,7 +37,7 @@ const truncatedSubtitle = computed(() => {
 
 		<div class="absolute inset-0 z-10 bg-black/40"></div>
 
-		<div class="relative z-20 flex h-full flex-col justify-center pl-32 text-white">
+		<div class="relative z-20 flex h-full flex-col justify-center px-8 sm:pl-32 text-white">
 			<slot>
 				<h1 class="text-4xl font-bold tracking-tight md:text-6xl" v-html="title"></h1>
 				<p class="mt-4 max-w-xl text-lg text-gray-200 md:text-xl line-clamp-4" v-html="truncatedSubtitle"></p>

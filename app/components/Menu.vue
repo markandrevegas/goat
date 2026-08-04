@@ -9,7 +9,7 @@ const menuItems = computed(() => data.value || [])
 
 <template>
 	<ClientOnly>
-		<nav class="sticky top-0 z-50 pl-24">
+		<nav class="sticky top-0 z-50 px-8 sm:pl-24">
 			<div class="flex flex-col">
 				<div class="flex justify-start items-center flex-shrink-0 mt-16">
 					<NuxtLink to="/"><Logo class="h-16 w-auto fill-white" /></NuxtLink>
