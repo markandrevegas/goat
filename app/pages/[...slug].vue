@@ -4,31 +4,38 @@ const config = useRuntimeConfig()
 const wordpressUrl = config.public.wordpressUrl
 
 const slug = computed(() => {
-  const params = route.params.slug
-  return Array.isArray(params) ? params.join('/') : params || ''
+	const params = route.params.slug
+	return Array.isArray(params) ? params.join("/") : params || ""
 })
-const { data: pageData, pending, error } = await useFetch(() => {
-  const targetSlug = slug.value || 'home'
-  return `${wordpressUrl}/pages?slug=${targetSlug}`
-}, {
-  watch: [slug]
-})
+const {
+	data: pageData,
+	pending,
+	error,
+} = await useFetch(
+	() => {
+		const targetSlug = slug.value || "home"
+		return `${wordpressUrl}/pages?slug=${targetSlug}`
+	},
+	{
+		watch: [slug],
+	},
+)
 
 const page = computed(() => pageData.value?.[0] || null)
 if (error.value) {
-  throw createError({
-    statusCode: error.value.statusCode || 500,
-    statusMessage: 'Failed to fetch content from WordPress',
-    fatal: true
-  })
+	throw createError({
+		statusCode: error.value.statusCode || 500,
+		statusMessage: "Failed to fetch content from WordPress",
+		fatal: true,
+	})
 }
 
 if (!pending.value && !page.value) {
-  throw createError({
-    statusCode: 404,
-    statusMessage: `Page '/${slug.value}' not found`,
-    fatal: true
-  })
+	throw createError({
+		statusCode: 404,
+		statusMessage: `Page '/${slug.value}' not found`,
+		fatal: true,
+	})
 }
 
 const seoTitle = computed(() => page.value?.title?.rendered || "Page")

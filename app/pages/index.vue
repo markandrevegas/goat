@@ -1,30 +1,30 @@
 <script setup>
-import { onMounted, computed, watch } from 'vue'
+import { onMounted, computed, watch } from "vue"
 
 const config = useRuntimeConfig()
 const wordpressUrl = config.public.wordpressUrl
-const pageFields = ['id', 'title', 'slug', 'excerpt']
+const pageFields = ["id", "title", "slug", "excerpt"]
 
 const { data, status, error } = await useAsyncData(
 	"wp-index-data",
 	async () => {
 		const [pagesRes, postsRes] = await Promise.all([
 			$fetch(`${wordpressUrl}/pages`, {
-				baseURL: '',
-				query: { per_page: 10, _fields: pageFields.join(',') }
+				baseURL: "",
+				query: { per_page: 10, _fields: pageFields.join(",") },
 			}),
 			$fetch(`${wordpressUrl}/posts`, {
-				baseURL: '',
-				query: { per_page: 10, _fields: pageFields.join(',') }
-			})
+				baseURL: "",
+				query: { per_page: 10, _fields: pageFields.join(",") },
+			}),
 		])
 
 		return { pages: pagesRes || [], posts: postsRes || [] }
 	},
 	{
 		server: false,
-		lazy: true
-	}
+		lazy: true,
+	},
 )
 
 const pages = computed(() => data.value?.pages || [])
@@ -34,22 +34,26 @@ const homePage = computed(() => {
 	return pages.value.find((p) => p.slug === "home" || p.slug === "index") || pages.value[0] || null
 })
 
-watch(homePage, (newPage) => {
-	if (newPage) {
-		console.log('Homepage contents loaded:', newPage)
-	}
-}, { immediate: true })
+watch(
+	homePage,
+	(newPage) => {
+		if (newPage) {
+			console.log("Homepage contents loaded:", newPage)
+		}
+	},
+	{ immediate: true },
+)
 
 onMounted(() => {
 	if (homePage.value) {
-		console.log('Homepage contents on mount:', homePage.value)
+		console.log("Homepage contents on mount:", homePage.value)
 	} else {
-		console.log('Fetch is still pending on mount, waiting for watcher...')
+		console.log("Fetch is still pending on mount, waiting for watcher...")
 	}
 })
 
 const seoTitle = computed(() => {
-	return homePage.value?.title?.rendered?.replace('&#8211;', '').replace('MAR-K Waterside', '').trim()
+	return homePage.value?.title?.rendered?.replace("&#8211;", "").replace("MAR-K Waterside", "").trim()
 })
 
 const excerpt = computed(() => {
@@ -85,6 +89,7 @@ useSeoMeta({
 </script>
 <template>
 	<main class="mx-auto max-w-6xl px-4 py-12">
+		<IndexVideo :title="seoTitle" />
 		<header class="mb-12 border-b pb-6">
 			<h1 class="text-4xl font-extrabold tracking-tight" v-html="seoTitle"></h1>
 			<p class="mt-2 text-lg" v-html="excerpt"></p>
