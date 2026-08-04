@@ -2,7 +2,7 @@
 import { onMounted, computed, watch } from "vue"
 
 definePageMeta({
-  layout: false
+	layout: false,
 })
 
 const config = useRuntimeConfig()

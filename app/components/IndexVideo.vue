@@ -8,21 +8,21 @@ interface Props {
 }
 
 const props = defineProps<{
-  title?: string
-  subtitle?: string
+	title?: string
+	subtitle?: string
 }>()
 
 const truncatedSubtitle = computed(() => {
-  if (!props.subtitle) return ''
-  
-  let plainText = props.subtitle.replace(/<[^>]*>/g, '').trim()
+	if (!props.subtitle) return ""
 
-  if (import.meta.client) {
-    const doc = new DOMParser().parseFromString(props.subtitle, 'text/html')
-    plainText = doc.body.textContent || ''
-  }
+	let plainText = props.subtitle.replace(/<[^>]*>/g, "").trim()
 
-  return plainText.length > 40 ? plainText.slice(0, 240).trim() + '...' : plainText
+	if (import.meta.client) {
+		const doc = new DOMParser().parseFromString(props.subtitle, "text/html")
+		plainText = doc.body.textContent || ""
+	}
+
+	return plainText.length > 40 ? plainText.slice(0, 240).trim() + "..." : plainText
 })
 </script>
 <template>
@@ -37,10 +37,10 @@ const truncatedSubtitle = computed(() => {
 
 		<div class="absolute inset-0 z-10 bg-black/40"></div>
 
-		<div class="relative z-20 flex h-full flex-col justify-center px-8 sm:pl-32 text-white">
+		<div class="relative z-20 flex h-full flex-col justify-center px-8 text-white sm:pl-32">
 			<slot>
 				<h1 class="text-4xl font-bold tracking-tight md:text-6xl" v-html="title"></h1>
-				<p class="mt-4 max-w-xl text-lg text-gray-200 md:text-xl line-clamp-4" v-html="truncatedSubtitle"></p>
+				<p class="mt-4 line-clamp-4 max-w-xl text-lg text-gray-200 md:text-xl" v-html="truncatedSubtitle"></p>
 			</slot>
 		</div>
 	</div>

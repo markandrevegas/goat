@@ -3,15 +3,13 @@ const { data: menuItems, status } = await useMenu()
 </script>
 
 <template>
-	<div class="relative min-h-screen overflow-hidden text-white font-sans">
-		<div v-if="$slots['bg-video']" class="relative w-full min-h-screen">
+	<div class="relative min-h-screen overflow-hidden font-sans text-white">
+		<div v-if="$slots['bg-video']" class="relative min-h-screen w-full">
 			<Menu :items="menuItems || []" :loading="status === 'pending'" class="bg-transparent" />
-      <slot name="bg-video"></slot>
-    </div>
+			<slot name="bg-video"></slot>
+		</div>
 
 		<div class="relative z-10 flex min-h-screen flex-col">
-			
-
 			<main class="flex-grow">
 				<slot></slot>
 			</main>
