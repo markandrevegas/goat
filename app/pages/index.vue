@@ -94,9 +94,9 @@ useSeoMeta({
 <template>
 	<NuxtLayout name="default">
 		<template #bg-video>
-			<IndexVideo :title="seoTitle" />
+			<IndexVideo :title="seoTitle" :subtitle="seoDescription" />
 		</template>
-		<main class="mx-auto max-w-6xl px-4 py-12 text-white">
+		<div class="mx-auto max-w-6xl px-4 py-12 text-white">
 			<ClientOnly>
 				<div v-if="status === 'pending'">
 					<span class="animate-pulse text-sm text-gray-400"> Loading... </span>
@@ -121,6 +121,6 @@ useSeoMeta({
 					</section>
 				</div>
 			</ClientOnly>
-		</main>
+		</div>
 	</NuxtLayout>
 </template>

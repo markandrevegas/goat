@@ -9,7 +9,8 @@
 		"preview": "nuxt preview",
 		"postinstall": "nuxt prepare",
 		"format": "bun x prettier --write '**/*.vue'",
-		"export": "bun scripts/export-wp.ts"
+		"export": "bun scripts/export-wp.ts",
+		"fresh": "rm -rf .nuxt .output node_modules/.cache"
 	},
 	"dependencies": {
 		"@google-analytics/data": "^6.1.0",
@@ -26,6 +27,7 @@
 		"vue-router": "^5.1.0"
 	},
 	"devDependencies": {
+		"@nuxt/fonts": "^0.14.0",
 		"@tailwindcss/postcss": "^4.3.3",
 		"@tailwindcss/typography": "^0.5.20",
 		"@types/bun": "^1.3.14",

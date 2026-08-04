@@ -9,13 +9,13 @@ const menuItems = computed(() => data.value || [])
 
 <template>
 	<ClientOnly>
-		<nav class="sticky top-0 z-50 border-b border-gray-200 bg-white">
-			<div class="mx-auto max-w-6xl px-4">
-				<div class="flex h-16 items-center justify-between">
-					<div class="flex-shrink-0">
-						<NuxtLink to="/"><Logo class="h-8 w-auto scale-150 fill-brand" /></NuxtLink>
-					</div>
-
+		<nav class="sticky top-0 z-50 pl-24">
+			<div class="flex flex-col">
+				<div class="flex justify-start items-center flex-shrink-0 mt-16">
+					<NuxtLink to="/"><Logo class="h-16 w-auto fill-white" /></NuxtLink>
+					<span class="text-3xl">floating g.o.a.t.</span>
+				</div>
+				<div class="hidden flex h-16 items-center justify-between">
 					<!-- Desktop -->
 					<div class="hidden items-center space-x-8 md:flex">
 						<span v-if="status === 'pending'" class="animate-pulse text-sm text-gray-400"> Loading... </span>

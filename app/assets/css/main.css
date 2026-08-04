@@ -1,11 +1,13 @@
 @import "tailwindcss";
 @theme {
   --color-brand: #13283B;
+  --font-sans: 'Lexend', sans-serif;
+  --font-serif: 'Playfair Display', serif;
 }
 
 @layer base {
   body {
-    @apply bg-white text-brand;
+    @apply bg-white text-brand font-sans;
   }
   .dark body {
     @apply bg-brand text-white;
