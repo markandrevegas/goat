@@ -1,18 +1,21 @@
 <script setup>
+import { onMounted, computed, watch } from 'vue'
+
 const config = useRuntimeConfig()
 const wordpressUrl = config.public.wordpressUrl
+const pageFields = ['id', 'title', 'slug', 'excerpt']
 
-const { data, error } = await useAsyncData(
+const { data, status, error } = await useAsyncData(
 	"wp-index-data",
 	async () => {
 		const [pagesRes, postsRes] = await Promise.all([
 			$fetch(`${wordpressUrl}/pages`, {
 				baseURL: '',
-				query: { per_page: 10, _fields: 'id,title,slug' }
+				query: { per_page: 10, _fields: pageFields.join(',') }
 			}),
 			$fetch(`${wordpressUrl}/posts`, {
 				baseURL: '',
-				query: { per_page: 10, _fields: 'id,title,slug,date,excerpt' }
+				query: { per_page: 10, _fields: pageFields.join(',') }
 			})
 		])
 
@@ -20,8 +23,8 @@ const { data, error } = await useAsyncData(
 	},
 	{
 		server: false,
-		lazy:true
-	},
+		lazy: true
+	}
 )
 
 const pages = computed(() => data.value?.pages || [])
@@ -31,8 +34,26 @@ const homePage = computed(() => {
 	return pages.value.find((p) => p.slug === "home" || p.slug === "index") || pages.value[0] || null
 })
 
+watch(homePage, (newPage) => {
+	if (newPage) {
+		console.log('Homepage contents loaded:', newPage)
+	}
+}, { immediate: true })
+
+onMounted(() => {
+	if (homePage.value) {
+		console.log('Homepage contents on mount:', homePage.value)
+	} else {
+		console.log('Fetch is still pending on mount, waiting for watcher...')
+	}
+})
+
 const seoTitle = computed(() => {
-	return homePage.value?.title?.rendered || "Welcome to Our Site"
+	return homePage.value?.title?.rendered?.replace('&#8211;', '').replace('MAR-K Waterside', '').trim()
+})
+
+const excerpt = computed(() => {
+	return homePage.value?.excerpt?.rendered
 })
 
 const seoDescription = computed(() => {
@@ -65,11 +86,14 @@ useSeoMeta({
 <template>
 	<main class="mx-auto max-w-6xl px-4 py-12">
 		<header class="mb-12 border-b pb-6">
-			<h1 class="text-4xl font-extrabold tracking-tight">WordPress Content Index</h1>
-			<p class="mt-2 text-lg">Browse all available pages and articles.</p>
+			<h1 class="text-4xl font-extrabold tracking-tight" v-html="seoTitle"></h1>
+			<p class="mt-2 text-lg" v-html="excerpt"></p>
 		</header>
 		<ClientOnly>
-			<div v-if="error" class="mb-8 rounded-md border border-red-200 bg-red-50 p-4 text-red-800">
+			<div v-if="status === 'pending'">
+				<span class="animate-pulse text-sm text-gray-400"> Loading... </span>
+			</div>
+			<div v-else-if="error" class="mb-8 rounded-md border border-red-200 bg-red-50 p-4 text-red-800">
 				<p class="font-semibold">Failed to load content from WordPress.</p>
 				<p class="text-sm opacity-90">{{ error.message }}</p>
 			</div>
