@@ -13,13 +13,13 @@ const menuItems = computed(() => data.value || [])
 		<nav class="sticky top-0 z-50 sm:pl-24">
 			<div class="w-full">
 				<!-- Desktop -->
-				<div class="hidden items-center space-x-8 md:flex">
+				<div class="hidden items-center space-x-8 md:flex md:justify-end md: mr-24 md:pt-16">
 					<span v-if="status === 'pending'" class="animate-pulse text-sm text-gray-400"> Loading... </span>
 
 					<span v-else-if="error" class="text-sm text-red-400"> Failed loading menu </span>
 
 					<template v-else>
-						<NuxtLink v-for="page in menuItems" :key="page.id" :to="`/${page.slug}`" class="text-sm font-medium text-gray-600 transition-colors hover:text-blue-600" active-class="text-blue-600 font-semibold" v-html="page.title.rendered" />
+						<NuxtLink v-for="page in menuItems" :key="page.id" :to="`/${page.slug}`" class="text-sm font-medium text-palladian transition-colors hover:opacity-70" active-class="text-blue-600 font-semibold" v-html="page.title.rendered" />
 					</template>
 				</div>
 
@@ -31,9 +31,11 @@ const menuItems = computed(() => data.value || [])
 					</button>
 				</div>
 			</div>
-			<div class="mt-8 flex flex-shrink-0 flex-col items-center justify-start">
-				<NuxtLink to="/"><Logo class="h-24 w-auto fill-palladian" /></NuxtLink>
-				<span class="text-2xl">floating g.o.a.t.</span>
+			<div class="mt-8 flex flex-shrink-0 flex-col items-center sm:items-start justify-start">
+				<NuxtLink to="/">
+					<Logo class="h-24 w-auto fill-palladian" />
+				</NuxtLink>
+				<span class="text-2xl hidden">floating g.o.a.t.</span>
 			</div>
 			<div class="relative h-24">
 				<Transition enter-active-class="transition-opacity duration-300 ease-out" enter-from-class="opacity-0" enter-to-class="opacity-100" leave-active-class="transition-opacity duration-200 ease-in" leave-from-class="opacity-100" leave-to-class="opacity-0">
