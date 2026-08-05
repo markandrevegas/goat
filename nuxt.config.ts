@@ -65,6 +65,9 @@ export default defineNuxtConfig({
 	app: {
     baseURL: process.env.NODE_ENV === 'production' ? '/goat/' : '/',
 		head: {
+			htmlAttrs: {
+				lang: 'da-DK',
+			},
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1' }
       ]
@@ -73,7 +76,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
 	css: ['~/assets/css/main.css'],
   devtools: { enabled: true },
-  modules: ['@tailwindcss/typography', '@nuxt/scripts', 'nuxt-svgo', 'nuxt-gtag', '@nuxt/fonts', '@vueuse/nuxt', '@vueuse/motion/nuxt'],
+  modules: ['@tailwindcss/typography', '@nuxt/scripts', 'nuxt-svgo', 'nuxt-gtag', '@nuxt/fonts', '@vueuse/nuxt', '@vueuse/motion/nuxt', '@nuxtjs/i18n'],
   runtimeConfig: {
     public: {
       gaMeasurementId: process.env.NUXT_PUBLIC_GA_MEASUREMENT_ID,
@@ -140,5 +143,12 @@ export default defineNuxtConfig({
       weights: [400, 500, 600, 700],
       styles: ['normal', 'italic']
     }
+  },
+	i18n: {
+    defaultLocale: 'en',
+    locales: [
+      { code: 'en', name: 'English', file: 'en.json' },
+      { code: 'nl', name: 'Nederlands', file: 'nl.json' }
+    ]
   }
 })

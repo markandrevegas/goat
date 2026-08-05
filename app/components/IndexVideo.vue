@@ -41,11 +41,11 @@ const truncatedSubtitle = computed(() => {
 
 		<div class="relative z-20 flex h-full flex-col gap-2 justify-center items-start px-8 text-white sm:pl-32">
 			<slot>
-				<h1 class="text-3xl font-bold tracking-tight md:text-6xl" v-html="title"></h1>
-				<p class="my-4 line-clamp-4 max-w-xl text-lg text-gray-200 md:text-xl" v-html="truncatedSubtitle"></p>
+				<h1 class="text-3xl font-bold tracking-tight md:text-4xl">Floating G.O.A.T.</h1>
+				<p class="my-4 line-clamp-4 max-w-2xl text-lg text-gray-200 md:text-xl">Mødelokaler, eventspace, private selskaber og ferielejligheder. <br>På en færge midt i København.</p>
 				<div class="flex flex-row gap-4">
-					<PrimaryButton :text="'Primary'" />
-					<SecondaryButton :text="'Secondary'" />
+					<PrimaryButton :text="'Primary Button'" />
+					<SecondaryButton :text="'Secondary Button'" />
 				</div>
 			</slot>
 			
