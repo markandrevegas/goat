@@ -89,6 +89,7 @@ useSeoMeta({
 			<IndexVideo :title="seoTitle" :subtitle="seoDescription" />
 		</template>
 		<FirstRow />
+		<ServicesGrid />
 		<div class="mx-auto hidden max-w-6xl px-4 py-12">
 			<ClientOnly>
 				<div v-if="status === 'pending'">

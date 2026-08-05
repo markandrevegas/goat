@@ -10,7 +10,7 @@ const menuItems = computed(() => data.value || [])
 
 <template>
 	<ClientOnly>
-		<nav class="sticky top-0 z-50 mx-auto max-w-6xl">
+		<nav class="mx-auto flex max-w-6xl flex-col">
 			<div class="w-full">
 				<!-- Desktop -->
 				<div class="md: mr-24 hidden items-center space-x-8 md:flex md:justify-end md:pt-16">
@@ -24,7 +24,7 @@ const menuItems = computed(() => data.value || [])
 				</div>
 
 				<!-- Mobile button -->
-				<div class="relative flex w-full flex-col md:hidden">
+				<div class="flex w-full flex-row justify-end md:hidden">
 					<button @click="isMobileMenuOpen = !isMobileMenuOpen" type="button" class="text-palladian flex w-full justify-end rounded-md p-2 hover:bg-gray-100 hover:text-gray-900 focus:outline-none" aria-controls="mobile-menu" :aria-expanded="isMobileMenuOpen">
 						<MenuIcon :is-open="isMobileMenuOpen" />
 						<span class="sr-only">Open main menu</span>

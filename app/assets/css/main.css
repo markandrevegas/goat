@@ -2,7 +2,8 @@
 @theme {
   --color-brand: #13283B;
   --color-palladian: #EEE9DF;
-  --font-sans: 'Lexend', sans-serif;
+  --font-display: 'Fraunces', sans-serif;
+  --font-sans: 'Inter', sans-serif;
   --font-serif: 'Playfair Display', serif;
 }
 
@@ -12,5 +13,8 @@
   }
   .dark body {
     @apply bg-brand text-palladian;
+  }
+  h1, h2, h3 {
+    @apply font-display;
   }
 }
