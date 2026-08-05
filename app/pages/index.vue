@@ -88,7 +88,8 @@ useSeoMeta({
 		<template #bg-video>
 			<IndexVideo :title="seoTitle" :subtitle="seoDescription" />
 		</template>
-		<div class="mx-auto max-w-6xl px-4 py-12 text-white">
+		<FirstRow />
+		<div class="mx-auto hidden max-w-6xl px-4 py-12">
 			<ClientOnly>
 				<div v-if="status === 'pending'">
 					<span class="animate-pulse text-sm text-gray-400"> Loading... </span>

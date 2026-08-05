@@ -8,9 +8,9 @@
 
 @layer base {
   body {
-    @apply bg-white text-brand font-sans;
+    @apply bg-palladian text-brand font-sans;
   }
   .dark body {
-    @apply bg-brand text-white;
+    @apply bg-brand text-palladian;
   }
 }

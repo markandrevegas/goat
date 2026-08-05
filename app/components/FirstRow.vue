@@ -1,0 +1,13 @@
+<script lang="ts"></script>
+<template>
+	<div class="py-24">
+		<div class="mx-auto flex max-w-6xl flex-col gap-4 pt-8 text-center">
+			<div>
+				<h2 class="text-sm uppercase">møde- og eventlokaler til erhverv</h2>
+				<h3 class="text-2xl">Opdag ‘Møde på Vandet’</h3>
+			</div>
+
+			<p class="mx-auto max-w-xl text-lg font-light">Flyt jeres næste møde ud på vandet og mærk, hvordan nye rammer giver nye idéer. Hos Floating G.O.A.T. kombinerer vi professionelle faciliteter med Københavns mest beroligende udsigt – det perfekte frirum til strategisk tænkning og styrket samarbejde.</p>
+		</div>
+	</div>
+</template>

@@ -3,7 +3,7 @@ const { data: menuItems, status } = await useMenu()
 </script>
 
 <template>
-	<div class="relative min-h-screen overflow-hidden font-sans text-white">
+	<div class="relative min-h-screen overflow-hidden">
 		<div v-if="$slots['bg-video']" class="relative min-h-screen w-full">
 			<Menu :items="menuItems || []" :loading="status === 'pending'" class="bg-transparent" />
 			<slot name="bg-video"></slot>
@@ -14,7 +14,7 @@ const { data: menuItems, status } = await useMenu()
 				<slot></slot>
 			</main>
 
-			<footer class="border-t border-white/10 bg-black/20 py-6 text-center text-sm text-white/70 backdrop-blur-sm">&copy; {{ new Date().getFullYear() }}</footer>
+			<footer class="py-6 text-center text-sm">&copy; {{ new Date().getFullYear() }}</footer>
 		</div>
 	</div>
 </template>
