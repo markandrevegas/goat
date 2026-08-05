@@ -16,7 +16,7 @@ export const useMenu = () => {
       const res = await $fetch(`${wordpressUrl}/pages`, {
         baseURL: '', 
         query: {
-          include: [4619, 6652, 3].join(','),
+          include: [4619, 6652, 3, 8530].join(','),
           orderby: 'include',
           _fields: 'id,title,slug'
         }

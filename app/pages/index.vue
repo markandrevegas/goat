@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, computed, watch } from "vue"
+import { computed, watch } from "vue"
 
 definePageMeta({
 	layout: false,
@@ -47,14 +47,6 @@ watch(
 	},
 	{ immediate: true },
 )
-
-onMounted(() => {
-	if (homePage.value) {
-		console.log("Homepage contents on mount:", homePage.value)
-	} else {
-		console.log("Fetch is still pending on mount, waiting for watcher...")
-	}
-})
 
 const seoTitle = computed(() => {
 	return homePage.value?.title?.rendered?.replace("&#8211;", "").replace("MAR-K Waterside", "").trim()

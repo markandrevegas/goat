@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import heroMobile from "~/assets/videos/floating-goat-homepage.mp4"
 import heroDesktop from "~/assets/videos/floating-goat-homepage.mp4"
+import PrimaryButton from "./ui/PrimaryButton.vue"
+import SecondaryButton from "./ui/SecondaryButton.vue"
 
 interface Props {
 	title?: string
@@ -22,12 +24,12 @@ const truncatedSubtitle = computed(() => {
 		plainText = doc.body.textContent || ""
 	}
 
-	return plainText.length > 40 ? plainText.slice(0, 240).trim() + "..." : plainText
+	return plainText.length > 40 ? plainText.slice(0, 100).trim() + "..." : plainText
 })
 </script>
 <template>
 	<div class="absolute inset-0 -z-10 overflow-hidden">
-		<video autoplay loop muted playsinline class="absolute inset-0 z-0 h-full w-full object-cover">
+		<video autoplay muted playsinline class="absolute inset-0 z-0 h-full w-full object-cover">
 			<source :src="heroMobile" type="video/mp4" media="(max-width: 767px)" />
 
 			<source :src="heroDesktop" type="video/mp4" media="(min-width: 768px)" />
@@ -37,11 +39,16 @@ const truncatedSubtitle = computed(() => {
 
 		<div class="absolute inset-0 z-10 bg-black/40"></div>
 
-		<div class="relative z-20 flex h-full flex-col justify-center px-8 text-white sm:pl-32">
+		<div class="relative z-20 flex h-full flex-col gap-2 justify-center items-start px-8 text-white sm:pl-32">
 			<slot>
-				<h1 class="text-4xl font-bold tracking-tight md:text-6xl" v-html="title"></h1>
-				<p class="mt-4 line-clamp-4 max-w-xl text-lg text-gray-200 md:text-xl" v-html="truncatedSubtitle"></p>
+				<h1 class="text-3xl font-bold tracking-tight md:text-6xl" v-html="title"></h1>
+				<p class="my-4 line-clamp-4 max-w-xl text-lg text-gray-200 md:text-xl" v-html="truncatedSubtitle"></p>
+				<div class="flex flex-row gap-4">
+					<PrimaryButton :text="'Primary'" />
+					<SecondaryButton :text="'Secondary'" />
+				</div>
 			</slot>
+			
 		</div>
 	</div>
 </template>
