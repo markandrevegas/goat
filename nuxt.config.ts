@@ -143,12 +143,5 @@ export default defineNuxtConfig({
       weights: [400, 500, 600, 700],
       styles: ['normal', 'italic']
     }
-  },
-	i18n: {
-    defaultLocale: 'en',
-    locales: [
-      { code: 'en', name: 'English', file: 'en.json' },
-      { code: 'nl', name: 'Nederlands', file: 'nl.json' }
-    ]
   }
 })
