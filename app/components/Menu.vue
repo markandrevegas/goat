@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from "vue"
 import Logo from "~/assets/svg/anchor.svg?component"
+import MenuIcon from "./ui/MenuIcon.vue"
 
 const isMobileMenuOpen = ref(false)
 const { data, status, error } = await useMenu()
@@ -26,15 +27,16 @@ const menuItems = computed(() => data.value || [])
 					<!-- Mobile button -->
 					<div class="relative flex w-full flex-col md:hidden">
 						<button @click="isMobileMenuOpen = !isMobileMenuOpen" type="button" class="flex w-full justify-end rounded-md p-2 text-white hover:bg-gray-100 hover:text-gray-900 focus:outline-none" aria-controls="mobile-menu" :aria-expanded="isMobileMenuOpen">
+							<MenuIcon :is-open="isMobileMenuOpen" />
 							<span class="sr-only">Open main menu</span>
 
-							<svg v-if="!isMobileMenuOpen" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+							<!--<svg v-if="!isMobileMenuOpen" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
 								<path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
 							</svg>
 
 							<svg v-else class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
 								<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-							</svg>
+							</svg>-->
 						</button>
 					</div>
 				</div>
