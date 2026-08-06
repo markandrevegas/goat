@@ -137,4 +137,8 @@ export default defineNuxtConfig({
 			styles: ["normal", "italic"],
 		},
 	},
+	image: {
+		provider: 'none',
+    dir: 'assets/images'
+  }
 })
