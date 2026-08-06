@@ -76,7 +76,7 @@ export default defineNuxtConfig({
 	devtools: { enabled: true },
 	modules: ["@tailwindcss/typography", "@nuxt/scripts", "nuxt-svgo", "nuxt-gtag", "@nuxt/fonts", "@vueuse/nuxt", "@vueuse/motion/nuxt", "@nuxtjs/i18n", "@nuxt/image"],
 	image: {
-		provider: "ipx"
+		provider: "none"
 	},
 	runtimeConfig: {
 		public: {
