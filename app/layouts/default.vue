@@ -16,7 +16,7 @@ const { data: menuItems, status } = await useMenu()
 				<slot></slot>
 			</main>
 
-			<footer class="py-6 text-center text-sm">&copy; {{ new Date().getFullYear() }}</footer>
+			<MainFooter />
 		</div>
 	</div>
 </template>
