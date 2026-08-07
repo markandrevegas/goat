@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import meetingImg from '~/assets/images/meeting.webp'
-import eventsImg from '~/assets/images/events.webp'
-import workshopImg from '~/assets/images/workshop.webp'
+import meetingImg from "~/assets/images/meeting.webp"
+import eventsImg from "~/assets/images/events.webp"
+import workshopImg from "~/assets/images/workshop.webp"
 </script>
 <template>
 	<div class="text-palladian grid h-full w-full gap-4 px-8 sm:grid-cols-2 md:grid-cols-4">

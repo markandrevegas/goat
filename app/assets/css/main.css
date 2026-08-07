@@ -18,3 +18,25 @@
     @apply font-display;
   }
 }
+
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@utility animate-marquee {
+  animation-name: marquee-scroll;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@utility pause-on-hover {
+  &:hover {
+    animation-play-state: paused;
+  }
+}

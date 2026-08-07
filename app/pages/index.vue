@@ -1,5 +1,10 @@
 <script setup>
 import { computed, watch } from "vue"
+import Marquee from "~/components/ui/Marquee.vue"
+import CardScroller from "~/components/ui/CardScroller.vue"
+import meetingImg from "~/assets/images/meeting.webp"
+import eventsImg from "~/assets/images/events.webp"
+import workshopImg from "~/assets/images/workshop.webp"
 
 definePageMeta({
 	layout: false,
@@ -88,8 +93,24 @@ useSeoMeta({
 		<template #bg-video>
 			<IndexVideo :title="seoTitle" :subtitle="seoDescription" />
 		</template>
+		<Marquee
+			:items="[
+				{ logo: 'https://placehold.co/64x64', label: 'Acme Corp' },
+				{ logo: 'https://placehold.co/64x64', label: 'Globex' },
+				{ logo: 'https://placehold.co/64x64', label: 'Initech' },
+			]"
+			:speed="20"
+		/>
 		<FirstRow />
-		<ServicesGrid />
+		<CardScroller
+			:items="[
+				{ img: meetingImg, title: 'Møder og strategidage', description: 'Hold møde med panoramaudsigt ud over vandet og til Københavns spir og tage.' },
+				{ img: eventsImg, title: 'Events og receptioner', description: 'Skab en helt særlig ramme om jeres arrangement med byens liv og vandets ro som baggrundstæppe.' },
+				{ img: workshopImg, title: 'Workshops og teambuilding', description: 'Omsæt indsigt til handling. Floating G.O.A.T. er et perfekt sted til at tænke nye tanker og blive inspireret.' },
+				{ img: eventsImg, title: 'Workshops og teambuilding', description: 'Omsæt indsigt til handling. Floating G.O.A.T. er et perfekt sted til at tænke nye tanker og blive inspireret.' },
+			]"
+		/>
+		<!--<ServicesGrid />-->
 		<div class="mx-auto hidden max-w-6xl px-4 py-12">
 			<ClientOnly>
 				<div v-if="status === 'pending'">
