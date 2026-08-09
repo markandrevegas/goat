@@ -42,17 +42,6 @@ const posts = computed(() => data.value?.posts || [])
 const homePage = computed(() => {
 	return pages.value.find((p) => p.slug === "home" || p.slug === "index") || pages.value[0] || null
 })
-
-watch(
-	homePage,
-	(newPage) => {
-		if (newPage) {
-			console.log("Homepage contents loaded:", newPage)
-		}
-	},
-	{ immediate: true }
-)
-
 const seoTitle = computed(() => {
 	return homePage.value?.title?.rendered?.replace("&#8211;", "").replace("MAR-K Waterside", "").trim()
 })
