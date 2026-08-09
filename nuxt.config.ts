@@ -133,17 +133,20 @@ export default defineNuxtConfig({
 		config: {
 			page_title: "Nuxt App",
 			send_page_view: true,
-			debug_mode: false,
-		},
+			debug_mode: false
+		}
 	},
 	fonts: {
 		defaults: {
 			weights: [300, 400, 500, 600, 700],
 			styles: ["normal", "italic"],
-		},
+			subsets: ["latin", "latin-ext"]
+		}
 	},
 	image: {
+		quality: 80,
     provider: 'none',
-    dir: 'assets/images'
+    dir: 'assets/images',
+		domains: []
   }
 })

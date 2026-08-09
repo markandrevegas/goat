@@ -4,5 +4,6 @@
 	"useTabs": true,
 	"singleAttributePerLine": false,
 	"printWidth": 999,
+	"trailingComma": "none",
 	"plugins": ["prettier-plugin-tailwindcss"]
 }

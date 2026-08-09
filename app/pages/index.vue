@@ -7,7 +7,7 @@ import eventsImg from "~/assets/images/events.webp"
 import workshopImg from "~/assets/images/workshop.webp"
 
 definePageMeta({
-	layout: false,
+	layout: false
 })
 
 const config = useRuntimeConfig()
@@ -20,20 +20,20 @@ const { data, status, error } = await useAsyncData(
 		const [pagesRes, postsRes] = await Promise.all([
 			$fetch(`${wordpressUrl}/pages`, {
 				baseURL: "",
-				query: { per_page: 10, _fields: pageFields.join(",") },
+				query: { per_page: 10, _fields: pageFields.join(",") }
 			}),
 			$fetch(`${wordpressUrl}/posts`, {
 				baseURL: "",
-				query: { per_page: 10, _fields: pageFields.join(",") },
-			}),
+				query: { per_page: 10, _fields: pageFields.join(",") }
+			})
 		])
 
 		return { pages: pagesRes || [], posts: postsRes || [] }
 	},
 	{
 		server: false,
-		lazy: true,
-	},
+		lazy: true
+	}
 )
 
 const pages = computed(() => data.value?.pages || [])
@@ -50,7 +50,7 @@ watch(
 			console.log("Homepage contents loaded:", newPage)
 		}
 	},
-	{ immediate: true },
+	{ immediate: true }
 )
 
 const seoTitle = computed(() => {
@@ -85,7 +85,7 @@ useSeoMeta({
 	twitterCard: "summary_large_image",
 	twitterTitle: seoTitle,
 	twitterDescription: seoDescription,
-	twitterImage: ogImage,
+	twitterImage: ogImage
 })
 </script>
 <template>
@@ -97,7 +97,7 @@ useSeoMeta({
 			:items="[
 				{ logo: 'https://placehold.co/64x64', label: 'Acme Corp' },
 				{ logo: 'https://placehold.co/64x64', label: 'Globex' },
-				{ logo: 'https://placehold.co/64x64', label: 'Initech' },
+				{ logo: 'https://placehold.co/64x64', label: 'Initech' }
 			]"
 			:speed="20"
 		/>
@@ -107,7 +107,7 @@ useSeoMeta({
 				{ img: meetingImg, title: 'Møder og strategidage', description: 'Hold møde med panoramaudsigt ud over vandet og til Københavns spir og tage.' },
 				{ img: eventsImg, title: 'Events og receptioner', description: 'Skab en helt særlig ramme om jeres arrangement med byens liv og vandets ro som baggrundstæppe.' },
 				{ img: workshopImg, title: 'Workshops og teambuilding', description: 'Omsæt indsigt til handling. Floating G.O.A.T. er et perfekt sted til at tænke nye tanker og blive inspireret.' },
-				{ img: eventsImg, title: 'Workshops og teambuilding', description: 'Omsæt indsigt til handling. Floating G.O.A.T. er et perfekt sted til at tænke nye tanker og blive inspireret.' },
+				{ img: eventsImg, title: 'Workshops og teambuilding', description: 'Omsæt indsigt til handling. Floating G.O.A.T. er et perfekt sted til at tænke nye tanker og blive inspireret.' }
 			]"
 		/>
 		<!--<ServicesGrid />-->

@@ -3,7 +3,7 @@
 import type { NuxtError } from "#app"
 
 const props = defineProps({
-	error: Object as () => NuxtError,
+	error: Object as () => NuxtError
 })
 
 // Determine if this is a 404 or a server/network 500 error

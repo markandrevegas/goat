@@ -13,8 +13,8 @@ import { MotionComponent as Motion, useMotion } from "@vueuse/motion"
 const props = defineProps({
 	isOpen: {
 		type: Boolean,
-		default: false,
-	},
+		default: false
+	}
 })
 
 const emit = defineEmits(["update:isOpen", "click"])
@@ -22,28 +22,28 @@ const emit = defineEmits(["update:isOpen", "click"])
 const lines = [
 	{ x1: 4, y1: 6, x2: 20, y2: 6 },
 	{ x1: 4, y1: 12, x2: 20, y2: 12 },
-	{ x1: 4, y1: 18, x2: 20, y2: 18 },
+	{ x1: 4, y1: 18, x2: 20, y2: 18 }
 ]
 
 const defaultTransition = {
 	type: "spring",
 	stiffness: 260,
-	damping: 20,
+	damping: 20
 }
 
 const variants = {
 	normal: {
 		rotate: 0,
 		y: 0,
-		opacity: 1,
+		opacity: 1
 	},
 	animate: (i) => ({
 		rotate: i === 0 ? 45 : i === 2 ? -45 : 0,
 		y: i === 0 ? 6 : i === 2 ? -6 : 0,
 		opacity: i === 1 ? 0 : 1,
-		transition: defaultTransition,
+		transition: defaultTransition
 	}),
-	transformOrigin: ["12 6", "0 0", "12 18"],
+	transformOrigin: ["12 6", "0 0", "12 18"]
 }
 
 const len = lines.length
@@ -53,7 +53,7 @@ const targetInstanceList = reactive([])
 onMounted(() => {
 	for (let i = 0; i < len; i++) {
 		targetInstanceList[i] = useMotion(targetList.value[i], {
-			initial: props.isOpen ? variants.animate(i) : variants.normal,
+			initial: props.isOpen ? variants.animate(i) : variants.normal
 		})
 	}
 	animateState(props.isOpen)
@@ -67,7 +67,7 @@ function animateState(active) {
 		if (instance) {
 			instance.apply({
 				transition: defaultTransition,
-				...variant,
+				...variant
 			})
 		}
 	}
@@ -78,7 +78,7 @@ watch(
 	() => props.isOpen,
 	(newValue) => {
 		animateState(newValue)
-	},
+	}
 )
 
 // Handle click event locally and emit state update

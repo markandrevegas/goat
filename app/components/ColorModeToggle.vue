@@ -22,7 +22,7 @@ import { useColorMode } from "@vueuse/core"
 const colorMode = useColorMode({
 	attribute: "class",
 	emitAuto: true,
-	storageKey: "vueuse-color-scheme",
+	storageKey: "vueuse-color-scheme"
 })
 
 const toggle = () => {

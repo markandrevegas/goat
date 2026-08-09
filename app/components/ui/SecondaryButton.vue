@@ -2,12 +2,12 @@
 defineProps({
 	text: {
 		type: String,
-		required: true,
-	},
+		required: true
+	}
 })
 const handleButtonClick = () => {
 	useTrackEvent("test_click", {
-		button_name: "secondary_cta",
+		button_name: "secondary_cta"
 	})
 }
 </script>

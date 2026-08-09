@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const handleButtonClick = () => {
 	useTrackEvent("test_click", {
-		button_name: "menu_cta",
+		button_name: "menu_cta"
 	})
 }
 </script>
