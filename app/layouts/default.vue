@@ -7,7 +7,7 @@ const { data: menuItems, status } = await useMenu()
 		<div v-if="$slots['bg-video']" class="relative min-h-screen w-full">
 			<slot name="bg-video"></slot>
 		</div>
-		<div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+		<div class="absolute top-0 right-0 left-0 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
 			<Menu :items="menuItems || []" :loading="status === 'pending'" class="bg-transparent" />
 		</div>
 
