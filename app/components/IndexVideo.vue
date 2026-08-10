@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import poster from "~/assets/images/poster.webp"
-import heroMobile from "~/assets/videos/floating-goat-homepage.mp4"
-import heroDesktop from "~/assets/videos/floating-goat-homepage.mp4"
+import heroMobile from "~/assets/videos/floating-goat-homepage-compressed.mp4"
+import heroDesktop from "~/assets/videos/floating-goat-homepage-compressed.mp4"
 import PrimaryButton from "./ui/PrimaryButton.vue"
 import SecondaryButton from "./ui/SecondaryButton.vue"
 
