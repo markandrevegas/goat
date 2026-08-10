@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import poster from "~/assets/images/poster.webp"
 import heroMobile from "~/assets/videos/floating-goat-homepage.mp4"
 import heroDesktop from "~/assets/videos/floating-goat-homepage.mp4"
 import PrimaryButton from "./ui/PrimaryButton.vue"
@@ -29,7 +30,7 @@ const truncatedSubtitle = computed(() => {
 </script>
 <template>
 	<div class="text-palladian absolute inset-0 -z-10 overflow-hidden">
-		<video autoplay muted playsinline class="absolute inset-0 z-0 h-full w-full object-cover">
+		<video :poster="poster" autoplay muted playsinline class="absolute inset-0 z-0 h-full w-full object-cover">
 			<source :src="heroMobile" type="video/mp4" media="(max-width: 767px)" />
 
 			<source :src="heroDesktop" type="video/mp4" media="(min-width: 768px)" />

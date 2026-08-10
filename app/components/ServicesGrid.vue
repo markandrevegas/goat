@@ -33,7 +33,7 @@ import workshopImg from "~/assets/images/workshop.webp"
 		<div class="relative flex-shrink-0">
 			<NuxtImg :src="eventsImg" loading="lazy" class="h-auto w-full" alt="Events"></NuxtImg>
 			<div class="absolute inset-0 z-10 flex flex-col justify-end gap-1 p-8">
-				<p class="font-display text-xl/6 font-semibold">Workshops og teambuilding</p>
+				<p class="font-display text-xl/6 font-semibold">Simple Meetings</p>
 				<p class="font-light">Omsæt indsigt til handling. Floating G.O.A.T. er et perfekt sted til at tænke nye tanker og blive inspireret.</p>
 			</div>
 			<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />

@@ -126,5 +126,6 @@ useSeoMeta({
 				</div>
 			</ClientOnly>
 		</div>
+		<ImageScrollWindow />
 	</NuxtLayout>
 </template>
