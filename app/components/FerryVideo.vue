@@ -27,7 +27,7 @@ const props = defineProps<{
 
 		<div class="absolute inset-0 z-10 bg-black/40"></div>
 
-		<div class="relative z-20 mx-auto flex h-full max-w-6xl flex-col sm:justify-center sm:text-center gap-2 px-8">
+		<div class="relative z-20 mx-auto flex h-full max-w-6xl flex-col gap-2 px-8 sm:justify-center sm:text-center">
 			<slot>
 				<span class="text-sm uppercase">Find os på airbnb</span>
 				<h1 class="text-3xl font-bold tracking-tight md:text-4xl">Floating G.O.A.T.</h1>
