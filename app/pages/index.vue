@@ -127,5 +127,6 @@ useSeoMeta({
 			</ClientOnly>
 		</div>
 		<ImageScrollWindow />
+		<FerryVideo />
 	</NuxtLayout>
 </template>

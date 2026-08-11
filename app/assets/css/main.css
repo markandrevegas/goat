@@ -12,9 +12,9 @@
   body {
     @apply bg-palladian text-brand font-sans;
   }
-  .dark body {
+  /*.dark body {
     @apply bg-brand text-palladian;
-  }
+  }*/
   h1, h2, h3 {
     @apply font-display;
   }
