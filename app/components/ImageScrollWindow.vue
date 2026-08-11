@@ -19,7 +19,7 @@ import PrimaryButton from "~/components/ui/PrimaryButton.vue"
 				</div>
 			</section>
 
-			<section class="bg-palladian flex min-h-screen items-center justify-center">
+			<section class="bg-palladian flex min-h-screen items-center justify-center pb-8">
 				<div class="flex max-w-3xl flex-col sm:grid sm:grid-cols-3">
 					<NuxtImg :src="posterImg" loading="lazy" class="mb-6 h-full w-full object-cover" alt="Events" sizes="100vw" />
 					<div class="px-4 sm:col-span-2 sm:px-8 py-16">
