@@ -1,6 +1,6 @@
 <script lang="ts"></script>
 <template>
-	<div class="px-8 py-24">
+	<div class="px-8 pt-16">
 		<div class="mx-auto flex max-w-6xl flex-col gap-4 pt-8 sm:text-center">
 			<div class="flex flex-col gap-2">
 				<h2 class="mt-2 font-sans text-sm uppercase">møde- og eventlokaler til erhverv</h2>

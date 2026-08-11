@@ -45,7 +45,7 @@ const truncatedSubtitle = computed(() => {
 				<h1 class="text-3xl font-bold tracking-tight md:text-4xl">Floating G.O.A.T.</h1>
 				<p class="my-4 line-clamp-4 max-w-2xl text-xl">Mødelokaler, eventspace, private selskaber og ferielejligheder. <br /><br />På en færge midt i København.</p>
 				<div class="flex flex-row gap-4">
-					<PrimaryButton :text="'Primary Button'" />
+					<PrimaryButton :text="'Primary Button'" class="bg-palladian text-brand" />
 					<SecondaryButton :text="'Secondary Button'" />
 				</div>
 			</slot>
