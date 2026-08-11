@@ -40,13 +40,13 @@ const truncatedSubtitle = computed(() => {
 
 		<div class="absolute inset-0 z-10 bg-black/40"></div>
 
-		<div class="relative z-20 mx-auto flex h-full max-w-6xl flex-col justify-center gap-2 px-8">
+		<div class="relative z-20 mx-auto flex h-full max-w-6xl flex-col justify-center gap-2 px-8 text-center">
 			<slot>
 				<h1 class="text-3xl font-bold tracking-tight md:text-4xl">Floating G.O.A.T.</h1>
-				<p class="my-4 line-clamp-4 max-w-2xl text-xl">Mødelokaler, eventspace, private selskaber og ferielejligheder. <br /><br />På en færge midt i København.</p>
-				<div class="flex flex-row gap-4">
-					<PrimaryButton :text="'Primary Button'" class="bg-palladian text-brand" />
-					<SecondaryButton :text="'Secondary Button'" />
+				<p class="my-4 line-clamp-4 max-w-2xl text-xl/5 mx-auto">Mødelokaler, eventspace, private selskaber og ferielejligheder. <br /><br />På en færge midt i København.</p>
+				<div class="flex flex-row gap-4 justify-center">
+					<PrimaryButton :text="'Primary Button'" class="bg-brand text-palladian text-lg" />
+					<SecondaryButton :text="'Secondary Button'" class="text-lg" />
 				</div>
 			</slot>
 		</div>
