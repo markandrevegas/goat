@@ -13,5 +13,5 @@ const handleButtonClick = () => {
 </script>
 
 <template>
-	<button @click="handleButtonClick" class="w-max rounded bg-action px-3 py-2 font-medium text-white transition-colors hover:bg-[#21658D]">{{ text }}</button>
+	<button @click="handleButtonClick" class="bg-action w-max rounded px-3 py-2 font-medium text-white transition-colors hover:bg-[#21658D]">{{ text }}</button>
 </template>

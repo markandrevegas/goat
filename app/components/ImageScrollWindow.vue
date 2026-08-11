@@ -13,16 +13,16 @@ import PrimaryButton from "~/components/ui/PrimaryButton.vue"
 
 		<!-- Foreground -->
 		<div class="relative z-10 -mt-[50vh]">
-			<section class="flex h-[50vh] items-center justify-center px-6">
+			<section class="text-palladian flex h-[50vh] items-center justify-center px-6">
 				<div class="max-w-2xl text-center">
 					<h1 class="text-5xl">Vandets ro og byens puls</h1>
 				</div>
 			</section>
 
 			<section class="bg-palladian flex min-h-screen items-center justify-center pb-8">
-				<div class="flex max-w-3xl flex-col sm:grid sm:grid-cols-3">
+				<div class="flex max-w-5xl flex-col sm:grid sm:grid-cols-3">
 					<NuxtImg :src="posterImg" loading="lazy" class="mb-6 h-full w-full object-cover" alt="Events" sizes="100vw" />
-					<div class="px-4 sm:col-span-2 sm:px-8 py-16">
+					<div class="px-4 py-16 sm:col-span-2 sm:px-8">
 						<span class="text-center text-sm uppercase">private selskaber</span>
 						<h2 class="mt-4 text-4xl font-semibold">Hold jeres selskab på Floating G.O.A.T.</h2>
 						<p class="mt-6 text-lg">I kommer i de bedste hænder hos os. Uanset om I ønsker at holde bryllup med de nærmeste, arrangere et foredrag, fejre en fødselsdag eller noget helt fjerde. Vi er klar til at hjælpe jer med at skabe de bedste rammer, så I kan fokusere på jeres gæster.</p>
