@@ -7,15 +7,22 @@ defineProps<{
 	loading?: boolean
 }>()
 const isMobileMenuOpen = ref(false)
-const { data, status, error } = await useMenu()
-const menuItems = computed(() => data.value || [])
+const {
+  data: menuItems,
+  status,
+  error
+} = await useWordPressMenu({
+  pages: [4619, 6652, 3, 8530],
+  posts: [9505]
+})
+// const menuItems = computed(() => data.value || [])
 </script>
 <template>
 	<ClientOnly>
 		<nav class="text-brand mx-auto flex max-w-6xl flex-col">
 			<div class="w-full">
 				<!-- Desktop -->
-				<div class="flex justify-between items-center md:pt-16">
+				<div class="flex items-center justify-between md:pt-16">
 					<NuxtLink to="/">
 						<Logo class="fill-brand h-16 w-auto" />
 					</NuxtLink>

@@ -1,5 +1,11 @@
 <script setup lang="ts">
-const { data: menuItems, status } = await useMenu()
+const {
+  data: menuItems,
+  status
+} = await useWordPressMenu({
+  pages: [4619, 6652, 3, 8530],
+  posts: [9505]
+})
 </script>
 
 <template>

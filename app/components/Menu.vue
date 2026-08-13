@@ -1,11 +1,18 @@
 <script setup lang="ts">
-import { ref, computed } from "vue"
+import { ref } from "vue"
 import Logo from "~/assets/svg/anchor.svg?component"
 import MenuIcon from "./ui/MenuIcon.vue"
 
 const isMobileMenuOpen = ref(false)
-const { data, status, error } = await useMenu()
-const menuItems = computed(() => data.value || [])
+const {
+  data: menuItems,
+  status,
+  error
+} = await useWordPressMenu({
+  pages: [4619, 6652, 3, 8530],
+  posts: [9505]
+})
+
 </script>
 
 <template>

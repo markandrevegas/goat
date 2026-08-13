@@ -9,10 +9,11 @@ const slug = computed(() => {
 	const params = route.params.slug
 	return Array.isArray(params) ? params.join("/") : params || ""
 })
+
 const {
 	data: pageData,
-	pending,
-	error
+	pending: pagePending,
+	error: pageError
 } = await useFetch(
 	() => {
 		const targetSlug = slug.value || "home"
@@ -23,7 +24,25 @@ const {
 	}
 )
 
+const {
+	data: postData,
+	pending: postPending,
+	error: postError
+} = await useFetch(() => `${wordpressUrl}/posts?slug=${slug.value}`, {
+	watch: [slug],
+	immediate: !!slug.value
+})
+
+const pending = computed(() => pagePending.value || postPending.value)
+const error = computed(() => (pageError.value && postError.value ? pageError.value : null))
+
 const page = computed(() => pageData.value?.[0] || null)
+const post = computed(() => postData.value?.[0] || null)
+
+// Prefer page match; fall back to post
+const content = computed(() => page.value || post.value)
+const isPost = computed(() => !page.value && !!post.value)
+
 if (error.value) {
 	throw createError({
 		statusCode: error.value.statusCode || 500,
@@ -32,7 +51,7 @@ if (error.value) {
 	})
 }
 
-if (!pending.value && !page.value) {
+if (!pending.value && !content.value) {
 	throw createError({
 		statusCode: 404,
 		statusMessage: `Page '/${slug.value}' not found`,
@@ -40,13 +59,13 @@ if (!pending.value && !page.value) {
 	})
 }
 
-const seoTitle = computed(() => page.value?.title?.rendered || "Page")
+const seoTitle = computed(() => content.value?.title?.rendered || "Page")
 const seoDescription = computed(() => {
-	if (!page.value?.excerpt?.rendered) return "Welcome to our site."
-	return page.value.excerpt.rendered.replace(/<[^>]*>?/gm, "").trim()
+	if (!content.value?.excerpt?.rendered) return "Welcome to our site."
+	return content.value.excerpt.rendered.replace(/<[^>]*>?/gm, "").trim()
 })
 const ogImage = computed(() => {
-	return page.value?.yoast_head_json?.og_image?.[0]?.url || "/default-og.jpg"
+	return content.value?.yoast_head_json?.og_image?.[0]?.url || "/default-og.jpg"
 })
 
 useSeoMeta({
@@ -79,10 +98,11 @@ useSeoMeta({
 
 		<article v-else class="w-full">
 			<header class="mb-8">
-				<h1 class="text-4xl font-extrabold tracking-tight text-slate-900 md:text-5xl" v-html="page.title.rendered"></h1>
+				<h1 class="text-4xl font-extrabold tracking-tight text-slate-900 md:text-5xl" v-html="content.title.rendered"></h1>
 			</header>
 
-			<main v-if="page.content?.rendered" class="prose prose-slate prose-lg max-w-none focus:outline-none" v-html="page.content.rendered"></main>
+			<main v-if="content.content?.rendered" class="prose prose-slate prose-lg max-w-2xl focus:outline-none" v-html="content.content.rendered"></main>
+			<main v-if="isPost" class="prose prose-slate prose-lg max-w-2xl focus:outline-none" v-html="content.content.rendered"></main>
 			<p v-else class="font-display text-brand italic">This page has no content body text.</p>
 		</article>
 	</div>

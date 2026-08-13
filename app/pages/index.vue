@@ -1,5 +1,5 @@
 <script setup>
-import { computed, watch } from "vue"
+import { computed } from "vue"
 import Marquee from "~/components/ui/Marquee.vue"
 import CardScroller from "~/components/ui/CardScroller.vue"
 import meetingImg from "~/assets/images/meeting.webp"
@@ -88,7 +88,8 @@ useSeoMeta({
 				{ logo: 'https://placehold.co/64x64', label: 'Globex' },
 				{ logo: 'https://placehold.co/64x64', label: 'Initech' }
 			]"
-			:speed="20" class="hidden"
+			:speed="20"
+			class="hidden"
 		/>
 		<FirstRow />
 		<CardScroller
