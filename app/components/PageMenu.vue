@@ -12,17 +12,22 @@ const menuItems = computed(() => data.value || [])
 </script>
 <template>
 	<ClientOnly>
-		<nav class="text-brand mx-auto flex max-w-4xl flex-col">
+		<nav class="text-brand mx-auto flex max-w-6xl flex-col">
 			<div class="w-full">
 				<!-- Desktop -->
-				<div class="hidden items-center space-x-8 md:mr-24 md:flex md:justify-end md:pt-16">
-					<span v-if="status === 'pending'" class="animate-pulse text-sm text-gray-400"> Loading... </span>
+				<div class="flex justify-between items-center md:pt-16">
+					<NuxtLink to="/">
+						<Logo class="fill-brand h-16 w-auto" />
+					</NuxtLink>
+					<div class="flex space-x-8">
+						<span v-if="status === 'pending'" class="animate-pulse text-sm text-gray-400"> Loading... </span>
 
-					<span v-else-if="error" class="text-sm text-red-400"> Failed loading menu </span>
+						<span v-else-if="error" class="text-sm text-red-400"> Failed loading menu </span>
 
-					<template v-else>
-						<NuxtLink v-for="page in menuItems" :key="page.id" :to="`/${page.slug}`" class="text-brand text-sm font-medium transition-colors hover:opacity-70" active-class="text-blue-600 font-semibold" v-html="page.title.rendered" />
-					</template>
+						<template v-else>
+							<NuxtLink v-for="page in menuItems" :key="page.id" :to="`/${page.slug}`" class="text-brand text-sm font-medium transition-colors hover:opacity-70" active-class="text-blue-600 font-semibold" v-html="page.title.rendered" />
+						</template>
+					</div>
 				</div>
 
 				<!-- Mobile button -->

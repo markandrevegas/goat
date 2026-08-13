@@ -66,7 +66,7 @@ useSeoMeta({
 </script>
 
 <template>
-	<div class="container mx-auto max-w-4xl px-4 py-12">
+	<div class="container mx-auto max-w-6xl p-8 py-12">
 		<div v-if="pending" class="flex flex-col items-center justify-center space-y-4 py-24">
 			<div class="h-12 w-12 animate-spin rounded-full border-b-4 border-indigo-600"></div>
 			<p class="animate-pulse text-sm font-medium text-slate-500">Loading content...</p>

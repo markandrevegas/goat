@@ -88,7 +88,7 @@ useSeoMeta({
 				{ logo: 'https://placehold.co/64x64', label: 'Globex' },
 				{ logo: 'https://placehold.co/64x64', label: 'Initech' }
 			]"
-			:speed="20"
+			:speed="20" class="hidden"
 		/>
 		<FirstRow />
 		<CardScroller
