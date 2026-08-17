@@ -20,6 +20,7 @@ const {
 		<div class="relative z-10 flex min-h-screen flex-col">
 			<main class="flex-grow">
 				<slot></slot>
+				<CookieBanner />
 			</main>
 
 			<MainFooter />

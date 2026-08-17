@@ -20,7 +20,6 @@ const landing = computed(() => page.value?.acf || {})
 const seoTitle = computed(() => {
 	return page.value?.title?.rendered?.replace("&#8211;", "").trim()
 })
-console.log(landing.value)
 
 /*const excerpt = computed(() => {
 	return homePage.value?.excerpt?.rendered

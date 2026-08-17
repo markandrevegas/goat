@@ -79,7 +79,7 @@ export default defineNuxtConfig({
 	compatibilityDate: "2025-07-15",
 	css: ["~/assets/css/main.css"],
 	devtools: { enabled: true },
-	modules: ["@tailwindcss/typography", "@nuxt/scripts", "nuxt-svgo", "nuxt-gtag", "@nuxt/fonts", "@vueuse/nuxt", "@vueuse/motion/nuxt", "@nuxtjs/i18n", "@nuxt/image"],
+	modules: ["@tailwindcss/typography", "@nuxt/scripts", "nuxt-svgo", "nuxt-gtag", "@nuxt/fonts", "@vueuse/nuxt", "@vueuse/motion/nuxt", "@nuxtjs/i18n", "@nuxt/image", '@dargmuesli/nuxt-cookie-control'],
 	runtimeConfig: {
 		public: {
 			gaMeasurementId: process.env.NUXT_PUBLIC_GA_MEASUREMENT_ID,
