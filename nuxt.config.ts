@@ -85,6 +85,7 @@ export default defineNuxtConfig({
 			gaMeasurementId: process.env.NUXT_PUBLIC_GA_MEASUREMENT_ID,
 			wordpressUrl: process.env.NUXT_PUBLIC_WORDPRESS_URL,
 			gtagId: process.env.NUXT_PUBLIC_GTAG_ID,
+			goatWordpressUrl: process.env.NUXT_PUBLIC_GOAT_WORDPRESS_URL
 		},
 	},
 	future: {
