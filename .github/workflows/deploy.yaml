@@ -36,6 +36,6 @@ jobs:
           ssh-keyscan -p "$SSH_PORT" -H "$SSH_HOST" >> ~/.ssh/known_hosts
 
           rsync -avz --delete \
-            -e "ssh -i ~/.ssh/deploy_key -p $SSH_PORT" \
+            -e "ssh -i ~/.ssh/id_rsa -p $SSH_PORT" \
             ./.output/public/ \
             "$SSH_USER@$SSH_HOST:~/domains/floatinggoat.dk/app/"
