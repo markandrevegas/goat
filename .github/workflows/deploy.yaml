@@ -38,4 +38,4 @@ jobs:
           rsync -avz --delete \
             -e "ssh -i ~/.ssh/floatinggoat_deploy -p $SSH_PORT" \
             ./.output/public/ \
-            "$SSH_USER@$SSH_HOST:/httpd.www/app/"
+            "$SSH_USER@$SSH_HOST:~/httpd.www/app/"
