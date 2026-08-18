@@ -64,7 +64,7 @@ declare module "nuxt/schema" {
 }
 export default defineNuxtConfig({
 	app: {
-		baseURL: process.env.NODE_ENV === "production" ? "/goat/" : "/",
+		baseURL: process.env.NODE_ENV === "production" ? "/app/" : "/",
 		head: {
 			htmlAttrs: {
 				lang: "da-DK"
