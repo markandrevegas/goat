@@ -1,49 +1,41 @@
-name: Deploy Nuxt 4 to GitHub Pages
+name: Deploy to floatinggoat.dk
 
 on:
   push:
-    branches: [ main ]
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: true
+    branches: [main]
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v5
 
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v2
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v1
         with:
           bun-version: latest
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
-      - name: Build Application
+      - name: Generate static site
         run: bun run generate
         env:
-          NUXT_TELEMETRY_DISABLED: 1
-          NUXT_PUBLIC_WORDPRESS_URL: ${{ secrets.NUXT_PUBLIC_WORDPRESS_URL }}
-          NUXT_PUBLIC_GA_MEASUREMENT_ID: ${{ secrets.NUXT_PUBLIC_GA_MEASUREMENT_ID }}
-          NUXT_PUBLIC_GTAG_ID: ${{ secrets.NUXT_PUBLIC_GTAG_ID }}
+          NUXT_PUBLIC_WORDPRESS_API_URL: ${{ secrets.NUXT_PUBLIC_WORDPRESS_API_URL }}
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v5
-        with:
-          path: '.output/public'
+      - name: Deploy to floatinggoat.dk via SSH
+        env:
+          SSH_KEY: ${{ secrets.FLOATINGGOAT_SSH_KEY }}
+          SSH_HOST: ${{ secrets.FLOATINGGOAT_SSH_HOST }}
+          SSH_PORT: 22
+          SSH_USER: ${{ secrets.FLOATINGGOAT_USER }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -p "$SSH_PORT" -H "$SSH_HOST" >> ~/.ssh/known_hosts
 
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v5
+          rsync -avz --delete \
+            -e "ssh -i ~/.ssh/deploy_key -p $SSH_PORT" \
+            ./.output/public/ \
+            "$SSH_USER@$SSH_HOST:~/domains/floatinggoat.dk/app/"
