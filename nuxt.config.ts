@@ -82,9 +82,8 @@ export default defineNuxtConfig({
 	runtimeConfig: {
 		public: {
 			gaMeasurementId: process.env.NUXT_PUBLIC_GA_MEASUREMENT_ID,
-			wordpressUrl: process.env.NUXT_PUBLIC_WORDPRESS_URL,
 			gtagId: process.env.NUXT_PUBLIC_GTAG_ID,
-			goatWordpressUrl: process.env.NUXT_PUBLIC_GOAT_WORDPRESS_URL
+			goatWordpressUrl: process.env.NUXT_PUBLIC_GOAT_WORDPRESS_URL || '/wp-api'
 		}
 	},
 	future: {
@@ -117,6 +116,9 @@ export default defineNuxtConfig({
 			routes: ["/"]
 		},
 		routeRules: {
+			'/wp-api/**': { 
+				proxy: 'https://floatinggoat.dk/wp-json/wp/v2/**' 
+			},
 			"/_nuxt/**": { headers: { "cache-control": "public, max-age=31536000, immutable" } },
 			"/**": {
 				headers: {

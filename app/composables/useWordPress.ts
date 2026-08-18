@@ -13,14 +13,14 @@ interface WordPressPost extends WordPressPage {}
 
 export const useWordPress = () => {
 	const config = useRuntimeConfig()
-	const wordpressUrl = config.public.wordpressUrl
+	const goatWordpressUrl = config.public.goatWordpressUrl
 
 	const getPages = async (ids: number[] = []) => {
 		if (!ids.length) {
 			return []
 		}
 
-		return await $fetch<WordPressPage[]>(`${wordpressUrl}/pages`, {
+		return await $fetch<WordPressPage[]>(`${goatWordpressUrl}/pages`, {
 			baseURL: "",
 			query: {
 				include: ids.join(","),
@@ -35,7 +35,7 @@ export const useWordPress = () => {
 			return []
 		}
 
-		return await $fetch<WordPressPost[]>(`${wordpressUrl}/posts`, {
+		return await $fetch<WordPressPost[]>(`${goatWordpressUrl}/posts`, {
 			baseURL: "",
 			query: {
 				include: ids.join(","),

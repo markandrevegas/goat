@@ -16,10 +16,10 @@ interface WordPressLandingPage {
 
 export const useGoatWordPress = () => {
 	const config = useRuntimeConfig()
-	const wordpressUrl = config.public.goatWordpressUrl
+	const goatWordpressUrl = config.public.goatWordpressUrl
 
 	const getLandingPage = async (slug: string) => {
-		const results = await $fetch<WordPressLandingPage[]>(`${wordpressUrl}/landingpage`, {
+		const results = await $fetch<WordPressLandingPage[]>(`${goatWordpressUrl}/landingpage`, {
 			baseURL: "",
 			query: {
 				slug,

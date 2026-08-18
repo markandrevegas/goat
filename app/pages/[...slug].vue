@@ -1,7 +1,7 @@
 <script setup>
 const route = useRoute()
 const config = useRuntimeConfig()
-const wordpressUrl = config.public.wordpressUrl
+const goatWordpressUrl = config.public.goatWordpressUrl
 definePageMeta({
 	layout: "page"
 })
@@ -17,7 +17,7 @@ const {
 } = await useFetch(
 	() => {
 		const targetSlug = slug.value || "home"
-		return `${wordpressUrl}/pages?slug=${targetSlug}`
+		return `${goatWordpressUrl}/pages?slug=${targetSlug}`
 	},
 	{
 		watch: [slug]
@@ -28,7 +28,7 @@ const {
 	data: postData,
 	pending: postPending,
 	error: postError
-} = await useFetch(() => `${wordpressUrl}/posts?slug=${slug.value}`, {
+} = await useFetch(() => `${goatWordpressUrl}/posts?slug=${slug.value}`, {
 	watch: [slug],
 	immediate: !!slug.value
 })

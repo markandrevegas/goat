@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const { data: menuItems, status } = await useWordPressMenu({
-	pages: [4619, 6652, 3, 8530],
-	posts: [9505]
+	pages: [],
+	posts: [1]
 })
 </script>
 
@@ -17,9 +17,10 @@ const { data: menuItems, status } = await useWordPressMenu({
 		<div class="relative z-10 flex min-h-screen flex-col">
 			<main class="flex-grow">
 				<slot></slot>
-				<CookieBanner />
 			</main>
-
+			<ClientOnly>
+				<CookieBanner />
+			</ClientOnly>
 			<MainFooter />
 		</div>
 	</div>

@@ -72,33 +72,6 @@ const seoDescription = computed(() => {
 				{ img: eventsImg, title: 'Workshops og teambuilding', description: 'Omsæt indsigt til handling. Floating G.O.A.T. er et perfekt sted til at tænke nye tanker og blive inspireret.' }
 			]"
 		/>
-		<!--<ServicesGrid />-->
-		<div class="mx-auto hidden max-w-6xl px-4 py-12">
-			<ClientOnly>
-				<div v-if="status === 'pending'">
-					<span class="animate-pulse text-sm text-gray-400"> Loading... </span>
-				</div>
-				<div v-else-if="error" class="mb-8 rounded-md border border-red-200 bg-red-50 p-4 text-red-800">
-					<p class="font-semibold">Failed to load content from WordPress.</p>
-					<p class="text-sm opacity-90">{{ error.message }}</p>
-				</div>
-
-				<div class="grid gap-12 md:grid-cols-2" v-else>
-					<section>
-						<h2 class="mb-6 flex items-center gap-2 text-2xl font-bold">
-							Pages
-							<span class="text-sm font-normal text-gray-500">({{ pages?.length || 0 }})</span>
-						</h2>
-
-						<!--<ul class="space-y-3">
-							<li v-for="page in pages" :key="page.id" class="border-b pb-3 last:border-0">
-								<NuxtLink :to="`/${page.slug}`" class="font-medium text-blue-600 transition-colors hover:text-blue-800" v-html="page.title.rendered" />
-							</li>
-						</ul>-->
-					</section>
-				</div>
-			</ClientOnly>
-		</div>
 		<ImageScrollWindow />
 		<FerryVideo />
 	</NuxtLayout>
