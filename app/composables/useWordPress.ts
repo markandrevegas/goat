@@ -13,7 +13,9 @@ interface WordPressPost extends WordPressPage {}
 
 export const useWordPress = () => {
 	const config = useRuntimeConfig()
-	const goatWordpressUrl = config.public.goatWordpressUrl
+	const goatWordpressUrl = import.meta.dev 
+		? '/wp-api' 
+		: (config.public.goatWordpressUrl || 'https://floatinggoat.dk/wp-json/wp/v2')
 
 	const getPages = async (ids: number[] = []) => {
 		if (!ids.length) {
