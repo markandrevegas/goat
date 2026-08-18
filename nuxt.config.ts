@@ -60,6 +60,10 @@ declare module "nuxt/schema" {
 			}
 			routeRules?: Record<string, NitroRouteConfig>
 		}
+		sourcemap?: {
+			server?: boolean
+			client?: boolean
+		}
 	}
 }
 export default defineNuxtConfig({
@@ -75,6 +79,10 @@ export default defineNuxtConfig({
 			]
 		}
 	},
+	sourcemap: {
+    server: false,
+    client: false
+  },
 	compatibilityDate: "2025-07-15",
 	css: ["~/assets/css/main.css"],
 	devtools: { enabled: true },
