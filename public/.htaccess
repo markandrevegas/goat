@@ -1,0 +1,31 @@
+RewriteEngine On
+
+# WordPress's own paths — let WP handle these normally
+RewriteCond %{REQUEST_URI} ^/(wp-admin|wp-login\.php|wp-includes|wp-content|xmlrpc\.php)
+RewriteRule ^ - [L]
+
+# REST API — needs explicit routing to index.php since wp-json isn't a real path
+RewriteRule ^wp-json/(.*)$ index.php?rest_route=/$1 [L,QSA]
+
+# Everything else — serve from the /app subfolder, URL stays clean
+RewriteCond %{DOCUMENT_ROOT}/app%{REQUEST_URI} -f
+RewriteRule ^(.*)$ /app/$1 [L]
+
+RewriteCond %{REQUEST_URI} !^/app/
+RewriteRule ^ /app/index.html [L]
+
+# BEGIN WordPress
+# The directives (lines) between "BEGIN WordPress" and "END WordPress" are
+# dynamically generated, and should only be modified via WordPress filters.
+# Any changes to the directives between these markers will be overwritten.
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>
+
+# END WordPress
