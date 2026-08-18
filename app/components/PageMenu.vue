@@ -8,12 +8,12 @@ defineProps<{
 }>()
 const isMobileMenuOpen = ref(false)
 const {
-  data: menuItems,
-  status,
-  error
+	data: menuItems,
+	status,
+	error
 } = await useWordPressMenu({
-  pages: [4619, 6652, 3, 8530],
-  posts: [9505]
+	pages: [4619, 6652, 3, 8530],
+	posts: [9505]
 })
 // const menuItems = computed(() => data.value || [])
 </script>

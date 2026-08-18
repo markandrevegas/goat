@@ -1,43 +1,45 @@
 @import "tailwindcss";
 @theme {
-  --color-brand: #13283B;
-  --color-palladian: #EEE9DF;
-  --color-action: #1689D4;
-  --font-display: 'Fraunces', sans-serif;
-  --font-sans: 'Inter', sans-serif;
-  --font-serif: 'Playfair Display', serif;
+	--color-brand: #13283b;
+	--color-palladian: #eee9df;
+	--color-action: #1689d4;
+	--font-display: "Fraunces", sans-serif;
+	--font-sans: "Inter", sans-serif;
+	--font-serif: "Playfair Display", serif;
 }
 
 @layer base {
-  body {
-    @apply bg-palladian text-brand font-sans;
-  }
-  /*.dark body {
+	body {
+		@apply bg-palladian text-brand font-sans;
+	}
+	/*.dark body {
     @apply bg-brand text-palladian;
   }*/
-  h1, h2, h3 {
-    @apply font-display;
-  }
+	h1,
+	h2,
+	h3 {
+		@apply font-display;
+	}
 }
 
 @keyframes marquee-scroll {
-  from {
-    transform: translateX(0);
-  }
+	from {
+		transform: translateX(0);
+	}
 
-  to {
-    transform: translateX(-50%);
-  }
+	to {
+		transform: translateX(-50%);
+	}
 }
 
 @utility animate-marquee {
-  animation-name: marquee-scroll;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
+	animation-name: marquee-scroll;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
 }
 
 @utility pause-on-hover {
-  &:hover {
-    animation-play-state: paused;
-  }
+	&:hover {
+		animation-play-state: paused;
+	}
 }

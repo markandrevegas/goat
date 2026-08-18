@@ -15,14 +15,14 @@ import SecondaryButton from "./ui/SecondaryButton.vue"
 			Your browser does not support the video tag.
 		</video>
 
-		<div class="absolute inset-0 z-10 bg-brand/60"></div>
+		<div class="bg-brand/60 absolute inset-0 z-10"></div>
 
-		<div class="relative pt-16 sm:pb-16 z-20 mx-auto flex h-full max-w-6xl flex-col px-8 sm:justify-center sm:text-center">
+		<div class="relative z-20 mx-auto flex h-full max-w-6xl flex-col px-8 pt-16 sm:justify-center sm:pb-16 sm:text-center">
 			<slot>
 				<span class="text-sm uppercase">Find os på airbnb</span>
 				<h1 class="text-3xl font-bold tracking-tight md:text-4xl">Floating G.O.A.T.</h1>
 				<p class="mx-auto my-4 line-clamp-4 max-w-2xl text-xl/6">Mødelokaler, eventspace, private selskaber og ferielejligheder. <br /><br />På en færge midt i København.</p>
-				<div class="w-full flex flex-row gap-4 sm:justify-center">
+				<div class="flex w-full flex-row gap-4 sm:justify-center">
 					<PrimaryButton :text="'Primary Button'" class="bg-brand text-palladian text-lg" />
 					<SecondaryButton :text="'Secondary Button'" class="text-lg" />
 				</div>

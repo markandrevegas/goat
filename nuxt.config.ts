@@ -67,67 +67,66 @@ export default defineNuxtConfig({
 		baseURL: process.env.NODE_ENV === "production" ? "/goat/" : "/",
 		head: {
 			htmlAttrs: {
-				lang: "da-DK",
+				lang: "da-DK"
 			},
 			meta: [
 				{ name: "viewport", content: "width=device-width, initial-scale=1" },
-				{ name: 'robots', content: 'noindex, nofollow' }
-			],
-			
-		},
+				{ name: "robots", content: "noindex, nofollow" }
+			]
+		}
 	},
 	compatibilityDate: "2025-07-15",
 	css: ["~/assets/css/main.css"],
 	devtools: { enabled: true },
-	modules: ["@tailwindcss/typography", "@nuxt/scripts", "nuxt-svgo", "nuxt-gtag", "@nuxt/fonts", "@vueuse/nuxt", "@vueuse/motion/nuxt", "@nuxtjs/i18n", "@nuxt/image", '@dargmuesli/nuxt-cookie-control'],
+	modules: ["@tailwindcss/typography", "@nuxt/scripts", "nuxt-svgo", "nuxt-gtag", "@nuxt/fonts", "@vueuse/nuxt", "@vueuse/motion/nuxt", "@nuxtjs/i18n", "@nuxt/image", "@dargmuesli/nuxt-cookie-control"],
 	runtimeConfig: {
 		public: {
 			gaMeasurementId: process.env.NUXT_PUBLIC_GA_MEASUREMENT_ID,
 			wordpressUrl: process.env.NUXT_PUBLIC_WORDPRESS_URL,
 			gtagId: process.env.NUXT_PUBLIC_GTAG_ID,
 			goatWordpressUrl: process.env.NUXT_PUBLIC_GOAT_WORDPRESS_URL
-		},
+		}
 	},
 	future: {
-		compatibilityVersion: 4,
+		compatibilityVersion: 4
 	},
 	vite: {
 		plugins: [tailwindcss()],
 		optimizeDeps: {
-			include: ["@vue/devtools-core", "@vue/devtools-kit"],
-		},
+			include: ["@vue/devtools-core", "@vue/devtools-kit"]
+		}
 	},
 	scripts: {
 		registry: {
 			googleAnalytics: {
-				id: process.env.NUXT_PUBLIC_GTAG_ID,
-			},
-		},
+				id: process.env.NUXT_PUBLIC_GTAG_ID
+			}
+		}
 	},
 	typescript: {
 		tsConfig: {
 			compilerOptions: {
-				types: ["bun"],
-			},
-		},
+				types: ["bun"]
+			}
+		}
 	},
 	nitro: {
 		preset: "github-pages",
 		prerender: {
 			crawlLinks: true,
-			routes: ["/"],
+			routes: ["/"]
 		},
 		routeRules: {
 			"/_nuxt/**": { headers: { "cache-control": "public, max-age=31536000, immutable" } },
 			"/**": {
 				headers: {
-					"Content-Security-Policy": "style-src 'self' 'unsafe-inline'",
-				},
-			},
-		},
+					"Content-Security-Policy": "style-src 'self' 'unsafe-inline'"
+				}
+			}
+		}
 	},
 	svgo: {
-		dts: true,
+		dts: true
 	},
 	gtag: {
 		id: process.env.NUXT_PUBLIC_GTAG_ID || "G-0TNS5Z0421",
@@ -146,8 +145,8 @@ export default defineNuxtConfig({
 	},
 	image: {
 		quality: 80,
-    provider: 'none',
-    dir: 'assets/images',
+		provider: "none",
+		dir: "assets/images",
 		domains: []
-  }
+	}
 })

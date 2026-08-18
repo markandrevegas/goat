@@ -11,10 +11,7 @@ definePageMeta({
 })
 
 const { getLandingPage } = useGoatWordPress()
-const { data: page, status, error } = await useAsyncData(
-	'wp-index',
-	() => getLandingPage('index-page')
-)
+const { data: page, status, error } = await useAsyncData("wp-index", () => getLandingPage("index-page"))
 const landing = computed(() => page.value?.acf || {})
 
 const seoTitle = computed(() => {

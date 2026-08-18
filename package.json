@@ -8,7 +8,7 @@
 		"generate": "nuxt generate",
 		"preview": "nuxt preview",
 		"postinstall": "nuxt prepare",
-		"format": "bun x prettier --write '**/*.vue'",
+		"format": "bun x prettier --write '**/*.{vue,ts,css}'",
 		"export": "bun scripts/export-wp.ts",
 		"fresh": "rm -rf .nuxt .output node_modules/.cache"
 	},

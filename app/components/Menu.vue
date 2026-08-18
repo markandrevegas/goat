@@ -5,14 +5,13 @@ import MenuIcon from "./ui/MenuIcon.vue"
 
 const isMobileMenuOpen = ref(false)
 const {
-  data: menuItems,
-  status,
-  error
+	data: menuItems,
+	status,
+	error
 } = await useWordPressMenu({
-  pages: [6652, 3, 8530],
-  posts: [9505]
+	pages: [6652, 3, 8530],
+	posts: [9505]
 })
-
 </script>
 
 <template>
