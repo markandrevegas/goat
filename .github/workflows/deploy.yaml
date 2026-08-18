@@ -38,4 +38,4 @@ jobs:
           rsync -avz --delete \
             -e "ssh -i ~/.ssh/id_rsa -p $SSH_PORT" \
             ./.output/public/ \
-            "$SSH_USER@$SSH_HOST:~/www/app/"
+            "$SSH_USER@$SSH_HOST:/app/"
