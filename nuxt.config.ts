@@ -89,9 +89,9 @@ export default defineNuxtConfig({
 	modules: ["@tailwindcss/typography", "@nuxt/scripts", "nuxt-svgo", "nuxt-gtag", "@nuxt/fonts", "@vueuse/nuxt", "@vueuse/motion/nuxt", "@nuxtjs/i18n", "@nuxt/image", "@dargmuesli/nuxt-cookie-control"],
 	runtimeConfig: {
 		public: {
-			gaMeasurementId: process.env.NUXT_PUBLIC_GA_MEASUREMENT_ID,
-			gtagId: process.env.NUXT_PUBLIC_GTAG_ID,
-			goatWordpressUrl: process.env.NUXT_PUBLIC_GOAT_WORDPRESS_URL || '/wp-api'
+			ga4StreamId: process.env.NUXT_PUBLIC_GA4_STREAM_ID,
+			ga4PropertyId: process.env.NUXT_PUBLIC_GA4_PROPERTY_ID,
+			goatWordpressUrl: process.env.NUXT_PUBLIC_GOAT_WORDPRESS_URL
 		}
 	},
 	future: {
@@ -106,7 +106,7 @@ export default defineNuxtConfig({
 	scripts: {
 		registry: {
 			googleAnalytics: {
-				id: process.env.NUXT_PUBLIC_GTAG_ID
+				id: process.env.NUXT_PUBLIC_GA4_ID
 			}
 		}
 	},
@@ -136,9 +136,9 @@ export default defineNuxtConfig({
 		dts: true
 	},
 	gtag: {
-		id: process.env.NUXT_PUBLIC_GTAG_ID || "G-0TNS5Z0421",
+		id: process.env.NUXT_PUBLIC_GA4_ID,
 		config: {
-			page_title: "Nuxt App",
+			page_title: "FloatingGoat Testing",
 			send_page_view: true,
 			debug_mode: false
 		}
