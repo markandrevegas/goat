@@ -54,7 +54,7 @@ const seoDescription = computed(() => {
 		<template #bg-video>
 			<IndexVideo :title="seoTitle" :subtitle="seoDescription" />
 		</template>
-		<Marquee
+		<!--<Marquee
 			:items="[
 				{ logo: 'https://placehold.co/64x64', label: 'Acme Corp' },
 				{ logo: 'https://placehold.co/64x64', label: 'Globex' },
@@ -62,7 +62,7 @@ const seoDescription = computed(() => {
 			]"
 			:speed="20"
 			class="hidden"
-		/>
+		/>-->
 		<FirstRow />
 		<CardScroller
 			:items="[
