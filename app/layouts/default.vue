@@ -1,7 +1,17 @@
 <script setup lang="ts">
+import { onMounted } from "vue"
+const { loadConsent } = useCookieConsent()
 const { data: menuItems, status } = await useWordPressMenu({
 	pages: [],
 	posts: [1]
+})
+const resetConsent = () => {
+	window.localStorage.removeItem("cookie-consent")
+	window.localStorage.removeItem("cookie-consent-timestamp")
+	location.reload()
+}
+onMounted(() => {
+	loadConsent()
 })
 </script>
 
@@ -12,6 +22,7 @@ const { data: menuItems, status } = await useWordPressMenu({
 		</div>
 		<div class="absolute top-0 right-0 left-0 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
 			<ClientOnly>
+				<button v-if="import.meta.dev" class="fixed right-2 bottom-2 z-50 rounded bg-black px-3 py-1 text-xs text-white opacity-70 hover:opacity-100" @@click="resetConsent">Reset consent (dev)</button>
 				<Menu :items="menuItems || []" />
 			</ClientOnly>
 		</div>
@@ -20,10 +31,10 @@ const { data: menuItems, status } = await useWordPressMenu({
 			<main class="flex-grow">
 				<slot></slot>
 			</main>
+			<MainFooter />
 			<ClientOnly>
 				<CookieBanner />
 			</ClientOnly>
-			<MainFooter />
 		</div>
 	</div>
 </template>
