@@ -1,7 +1,4 @@
-// composables/useWordPress.ts
-
 interface LandingPageACF {
-	// fill in your actual ACF field names/types once confirmed from the API response
 	[key: string]: any
 }
 

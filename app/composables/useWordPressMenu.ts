@@ -16,8 +16,7 @@ export const useWordPressMenu = (options: WordPressMenuOptions = {}) => {
 			return [...pageItems, ...postItems]
 		},
 		{
-			lazy: true,
-			server: false
+			lazy: true
 		}
 	)
 }
