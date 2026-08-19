@@ -18,8 +18,7 @@ const {
 // const menuItems = computed(() => data.value || [])
 </script>
 <template>
-	<ClientOnly>
-		<nav class="text-brand mx-auto flex max-w-6xl flex-col">
+	<nav class="text-brand mx-auto flex max-w-6xl flex-col">
 			<div class="w-full">
 				<!-- Desktop -->
 				<div class="flex items-center justify-between md:pt-16">
@@ -67,5 +66,4 @@ const {
 				</Transition>
 			</div>
 		</nav>
-	</ClientOnly>
 </template>

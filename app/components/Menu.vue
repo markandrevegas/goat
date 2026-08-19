@@ -15,8 +15,7 @@ const {
 </script>
 
 <template>
-	<ClientOnly>
-		<nav class="mx-auto flex max-w-6xl flex-col-reverse sm:flex-col">
+	<nav class="mx-auto flex max-w-6xl flex-col-reverse sm:flex-col">
 			<div class="flex justify-center py-8">
 				<NuxtLink to="/">
 					<Logo class="fill-palladian h-24 w-auto" />
@@ -59,5 +58,4 @@ const {
 				</Transition>
 			</div>
 		</nav>
-	</ClientOnly>
 </template>

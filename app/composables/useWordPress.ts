@@ -13,9 +13,13 @@ interface WordPressPost extends WordPressPage {}
 
 export const useWordPress = () => {
 	const config = useRuntimeConfig()
-	const goatWordpressUrl = import.meta.dev 
-		? '/wp-api' 
-		: (config.public.goatWordpressUrl || 'https://floatinggoat.dk/wp-json/wp/v2')
+	const goatWordpressUrl = config.public.goatWordpressUrl
+
+	const buildQuery = (ids: number[], fields: string) => ({
+		include: ids.join(","),
+		orderby: "include",
+		_fields: fields
+	})
 
 	const getPages = async (ids: number[] = []) => {
 		if (!ids.length) {
@@ -24,11 +28,7 @@ export const useWordPress = () => {
 
 		return await $fetch<WordPressPage[]>(`${goatWordpressUrl}/pages`, {
 			baseURL: "",
-			query: {
-				include: ids.join(","),
-				orderby: "include",
-				_fields: "id,title,slug"
-			}
+			query: buildQuery(ids, "id,title,slug")
 		})
 	}
 
@@ -39,11 +39,7 @@ export const useWordPress = () => {
 
 		return await $fetch<WordPressPost[]>(`${goatWordpressUrl}/posts`, {
 			baseURL: "",
-			query: {
-				include: ids.join(","),
-				orderby: "include",
-				_fields: "id,title,slug,excerpt"
-			}
+			query: buildQuery(ids, "id,title,slug,excerpt")
 		})
 	}
 

@@ -124,9 +124,6 @@ export default defineNuxtConfig({
 			routes: ["/"]
 		},
 		routeRules: {
-			'/wp-api/**': { 
-				proxy: 'https://floatinggoat.dk/wp-json/wp/v2/**' 
-			},
 			"/_nuxt/**": { headers: { "cache-control": "public, max-age=31536000, immutable" } },
 			"/**": {
 				headers: {
