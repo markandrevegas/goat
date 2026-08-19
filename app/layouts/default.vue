@@ -22,7 +22,6 @@ onMounted(() => {
 		</div>
 		<div class="absolute top-0 right-0 left-0 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
 			<ClientOnly>
-				<button v-if="import.meta.dev" class="fixed right-2 bottom-2 z-50 rounded bg-black px-3 py-1 text-xs text-white opacity-70 hover:opacity-100" @@click="resetConsent">Reset consent (dev)</button>
 				<Menu :items="menuItems || []" />
 			</ClientOnly>
 		</div>
@@ -33,6 +32,7 @@ onMounted(() => {
 			</main>
 			<MainFooter />
 			<ClientOnly>
+				<button class="fixed right-24 bottom-24 z-50 rounded bg-black px-3 py-1 text-xs text-white opacity-70 hover:opacity-100" @@click="resetConsent">Reset consent (dev)</button>
 				<CookieBanner />
 			</ClientOnly>
 		</div>
