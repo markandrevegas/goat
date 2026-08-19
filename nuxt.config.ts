@@ -136,11 +136,11 @@ export default defineNuxtConfig({
 		dts: true
 	},
 	gtag: {
-		id: process.env.NUXT_PUBLIC_GA4_ID,
+		id: process.env.NUXT_PUBLIC_GA4_PROPERTY_ID,
 		config: {
 			page_title: "FloatingGoat Testing",
 			send_page_view: true,
-			debug_mode: false
+			debug_mode: true
 		}
 	},
 	fonts: {
