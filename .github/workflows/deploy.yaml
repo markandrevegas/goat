@@ -21,6 +21,7 @@ jobs:
       - name: Generate static site
         run: bun run generate
         env:
+          NUXT_PUBLIC_GTM_ID: ${{ secrets.NUXT_PUBLIC_GTM_ID }}
           NUXT_PUBLIC_GOAT_WORDPRESS_URL: ${{ secrets.NUXT_PUBLIC_GOAT_WORDPRESS_URL }}
           NUXT_PUBLIC_GA4_PROPERTY_ID: ${{ secrets.NUXT_PUBLIC_GA4_PROPERTY_ID }}
           NUXT_PUBLIC_GA4_STREAM_ID: ${{ secrets.NUXT_PUBLIC_GA4_STREAM_ID }}
