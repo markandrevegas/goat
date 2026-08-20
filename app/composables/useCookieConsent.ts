@@ -22,15 +22,7 @@ export function useCookieConsent() {
   const storedConsent = resolveStoredConsent()
 
   // This runs at module scope so defaultConsent gets the right value on first paint
-  const { consent } = useScriptGoogleTagManager({
-    id: gtmId,
-    defaultConsent: {
-      ad_storage: storedConsent?.marketing ? 'granted' : 'denied',
-      ad_user_data: storedConsent?.marketing ? 'granted' : 'denied',
-      ad_personalization: storedConsent?.marketing ? 'granted' : 'denied',
-      analytics_storage: storedConsent?.analytics ? 'granted' : 'denied',
-    },
-  })
+  const { consent } = useScriptGoogleTagManager()
 
   function loadConsent() {
     const stored = resolveStoredConsent()
