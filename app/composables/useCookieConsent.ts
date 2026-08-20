@@ -1,55 +1,87 @@
-type ConsentState = {
-	necessary: true
-	analytics: boolean
-	marketing: boolean
-}
+// composables/useCookieConsent.ts
+export function useCookieConsent() {
+	const { public: { gtmId } } = useRuntimeConfig()
+  const showBanner = useState('cookie-banner-visible', () => false)
+  const analyticsGranted = useState('consent-analytics', () => false)
+  const marketingGranted = useState('consent-marketing', () => false)
 
-const CONSENT_KEY = "cookie-consent"
+  // Resolve stored state synchronously — this runs BEFORE GTM initializes
+  function resolveStoredConsent() {
+    if (import.meta.server) return null
 
-export const useCookieConsent = () => {
-	const consent = useState<ConsentState | null>("cookie-consent", () => null)
-	const showBanner = useState<boolean>("cookie-banner-visible", () => false)
+    const stored = localStorage.getItem('cookie-consent')
+    if (!stored) return null
 
-	const loadConsent = () => {
-		if (import.meta.server) return
-		const stored = localStorage.getItem(CONSENT_KEY)
-		if (stored) {
-			consent.value = JSON.parse(stored)
-			showBanner.value = false
-		} else {
-			showBanner.value = true
-		}
-	}
+    try {
+      return JSON.parse(stored) as { analytics: boolean, marketing: boolean }
+    } catch {
+      return null
+    }
+  }
 
-	const saveConsent = (state: Omit<ConsentState, "necessary">) => {
-		const full: ConsentState = { necessary: true, ...state }
-		consent.value = full
-		if (import.meta.client) {
-			localStorage.setItem(CONSENT_KEY, JSON.stringify(full))
-			localStorage.setItem(`${CONSENT_KEY}-timestamp`, new Date().toISOString())
-		}
-		showBanner.value = false
-	}
+  const storedConsent = resolveStoredConsent()
 
-	const acceptAll = () => saveConsent({ analytics: true, marketing: true })
-	const rejectAll = () => saveConsent({ analytics: false, marketing: false })
+  // This runs at module scope so defaultConsent gets the right value on first paint
+  const { consent } = useScriptGoogleTagManager({
+    id: gtmId,
+    defaultConsent: {
+      ad_storage: storedConsent?.marketing ? 'granted' : 'denied',
+      ad_user_data: storedConsent?.marketing ? 'granted' : 'denied',
+      ad_personalization: storedConsent?.marketing ? 'granted' : 'denied',
+      analytics_storage: storedConsent?.analytics ? 'granted' : 'denied',
+    },
+  })
 
-	const openSettings = () => {
-		showBanner.value = true
-	}
+  function loadConsent() {
+    const stored = resolveStoredConsent()
+    if (stored) {
+      analyticsGranted.value = stored.analytics
+      marketingGranted.value = stored.marketing
+      showBanner.value = false
+    } else {
+      showBanner.value = true
+    }
+  }
 
-	const isConsentGiven = (category: "analytics" | "marketing") => {
-		return consent.value?.[category] === true
-	}
+  function saveConsent(choices: { analytics: boolean, marketing: boolean }) {
+    localStorage.setItem('cookie-consent', JSON.stringify(choices))
+    localStorage.setItem('cookie-consent-timestamp', Date.now().toString())
 
-	return {
-		consent,
-		showBanner,
-		loadConsent,
-		saveConsent,
-		acceptAll,
-		rejectAll,
-		openSettings,
-		isConsentGiven
-	}
+    analyticsGranted.value = choices.analytics
+    marketingGranted.value = choices.marketing
+    showBanner.value = false
+
+    // Push the update to GTM/gtag
+    consent?.update({
+      analytics_storage: choices.analytics ? 'granted' : 'denied',
+      ad_storage: choices.marketing ? 'granted' : 'denied',
+      ad_user_data: choices.marketing ? 'granted' : 'denied',
+      ad_personalization: choices.marketing ? 'granted' : 'denied',
+    })
+  }
+
+  function acceptAll() {
+    saveConsent({ analytics: true, marketing: true })
+  }
+
+  function rejectAll() {
+    saveConsent({ analytics: false, marketing: false })
+  }
+
+  function resetConsent() {
+    localStorage.removeItem('cookie-consent')
+    localStorage.removeItem('cookie-consent-timestamp')
+    showBanner.value = true
+  }
+
+  return {
+    showBanner,
+    analyticsGranted,
+    marketingGranted,
+    loadConsent,
+    saveConsent,
+    acceptAll,
+    rejectAll,
+    resetConsent,
+  }
 }

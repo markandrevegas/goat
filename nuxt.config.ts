@@ -36,6 +36,34 @@ declare module "nuxt/schema" {
 					}
 					[key: string]: unknown
 				}
+				googleTagManager?: {
+					id?: string
+					trigger?: "onNuxtReady" | "manual" | string
+					defaultConsent?:
+						| {
+							ad_storage?: "granted" | "denied"
+							ad_user_data?: "granted" | "denied"
+							ad_personalization?: "granted" | "denied"
+							analytics_storage?: "granted" | "denied"
+							region?: string[]
+							wait_for_update?: number
+							[key: string]: unknown
+						}
+						| Array<{
+							ad_storage?: "granted" | "denied"
+							ad_user_data?: "granted" | "denied"
+							ad_personalization?: "granted" | "denied"
+							analytics_storage?: "granted" | "denied"
+							region?: string[]
+							wait_for_update?: number
+							[key: string]: unknown
+						}>
+					l?: string
+					auth?: string
+					preview?: string
+					envName?: string
+					[key: string]: unknown
+				}
 				[key: string]: unknown
 			}
 			[key: string]: unknown
@@ -91,7 +119,8 @@ export default defineNuxtConfig({
 		public: {
 			ga4StreamId: process.env.NUXT_PUBLIC_GA4_STREAM_ID,
 			ga4PropertyId: process.env.NUXT_PUBLIC_GA4_PROPERTY_ID,
-			goatWordpressUrl: process.env.NUXT_PUBLIC_GOAT_WORDPRESS_URL
+			goatWordpressUrl: process.env.NUXT_PUBLIC_GOAT_WORDPRESS_URL,
+			gtmId: process.env.NUXT_PUBLIC_GTM_ID
 		}
 	},
 	future: {
@@ -107,6 +136,15 @@ export default defineNuxtConfig({
 		registry: {
 			googleAnalytics: {
 				id: process.env.NUXT_PUBLIC_GA4_ID
+			},
+			googleTagManager: {
+				id: process.env.NUXT_PUBLIC_GTM_ID,
+				defaultConsent: {
+					ad_storage: "denied",
+					analytics_storage: "denied",
+					ad_user_data: "denied",
+					ad_personalization: "denied"
+				}
 			}
 		}
 	},

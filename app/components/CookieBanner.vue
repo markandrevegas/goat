@@ -1,10 +1,21 @@
 <script setup lang="ts">
 import { useCookieConsent } from "~/composables/useCookieConsent"
-const { showBanner, acceptAll, rejectAll, saveConsent, consent } = useCookieConsent()
+
+const { showBanner, acceptAll, rejectAll, saveConsent, analyticsGranted, marketingGranted } = useCookieConsent()
 
 const showDetails = ref(false)
-const analyticsChecked = ref(consent.value?.analytics ?? false)
-const marketingChecked = ref(consent.value?.marketing ?? false)
+const analyticsChecked = ref(analyticsGranted.value)
+const marketingChecked = ref(marketingGranted.value)
+
+// Keep local checkbox state in sync if global consent changes externally
+// (e.g. reset button, or banner reopened without remount)
+watch(analyticsGranted, (newVal) => {
+	analyticsChecked.value = newVal
+})
+
+watch(marketingGranted, (newVal) => {
+	marketingChecked.value = newVal
+})
 
 const savePreferences = () => {
 	saveConsent({
