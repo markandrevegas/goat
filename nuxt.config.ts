@@ -133,9 +133,6 @@ export default defineNuxtConfig({
 	},
 	scripts: {
 		registry: {
-			googleAnalytics: {
-				id: process.env.NUXT_PUBLIC_GA4_ID
-			},
 			googleTagManager: {
 				id: process.env.NUXT_PUBLIC_GTM_ID,
 				defaultConsent: {
@@ -171,6 +168,14 @@ export default defineNuxtConfig({
 	},
 	svgo: {
 		dts: true
+	},
+	gtag: {
+		id: process.env.NUXT_PUBLIC_GA4_PROPERTY_ID,
+		config: {
+			page_title: "FloatingGoat Testing",
+			send_page_view: true,
+			debug_mode: true
+		}
 	},
 	fonts: {
 		defaults: {
