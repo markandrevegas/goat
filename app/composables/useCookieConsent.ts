@@ -3,7 +3,12 @@ export function useCookieConsent() {
 	const analyticsGranted = useState('consent-analytics', () => false)
 	const marketingGranted = useState('consent-marketing', () => false)
 
-	const { consent } = useScriptGoogleTagManager()
+	const { consent, proxy } = useScriptGoogleTagManager({
+    scriptOptions: { bundle: false }
+  })
+
+  console.log('GTM consent object:', consent)
+  console.log('GTM proxy:', proxy)
 
 	function resolveStoredConsent() {
 		if (import.meta.server) return null
