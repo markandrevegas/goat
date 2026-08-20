@@ -37,7 +37,7 @@ export default defineNuxtConfig({
 	},
 	sourcemap: {
 		server: false,
-		client: false
+		client: true
 	},
 	compatibilityDate: "2025-07-15",
 	css: ["~/assets/css/main.css"],
@@ -45,8 +45,6 @@ export default defineNuxtConfig({
 	modules: ["@tailwindcss/typography", "@nuxt/scripts", "nuxt-svgo", "@nuxt/fonts", "@vueuse/nuxt", "@vueuse/motion/nuxt", "@nuxtjs/i18n", "@nuxt/image", "@dargmuesli/nuxt-cookie-control"],
 	runtimeConfig: {
 		public: {
-			ga4StreamId: process.env.NUXT_PUBLIC_GA4_STREAM_ID,
-			ga4PropertyId: process.env.NUXT_PUBLIC_GA4_PROPERTY_ID,
 			goatWordpressUrl: process.env.NUXT_PUBLIC_GOAT_WORDPRESS_URL,
 			gtmId: process.env.NUXT_PUBLIC_GTM_ID
 		}
