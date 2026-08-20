@@ -38,7 +38,6 @@ declare module "nuxt/schema" {
 				}
 				googleTagManager?: {
 					id?: string
-					trigger?: "onNuxtReady" | "manual" | string
 					defaultConsent?:
 						| {
 							ad_storage?: "granted" | "denied"
