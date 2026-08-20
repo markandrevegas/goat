@@ -7,16 +7,6 @@ declare module "nuxt/schema" {
 			name?: string
 			[key: string]: unknown
 		}
-		gtag?: {
-			id?: string
-			config?: {
-				page_title?: string
-				send_page_view?: boolean
-				debug_mode?: boolean
-				[key: string]: unknown
-			}
-			[key: string]: unknown
-		}
 		schemaOrg?: {
 			identity?: {
 				type?: string
@@ -25,67 +15,6 @@ declare module "nuxt/schema" {
 				[key: string]: unknown
 			}
 			[key: string]: unknown
-		}
-		scripts?: {
-			registry?: {
-				googleAnalytics?: {
-					id?: string
-					queryParams?: {
-						debug_mode?: boolean
-						[key: string]: unknown
-					}
-					[key: string]: unknown
-				}
-				googleTagManager?: {
-					id?: string
-					defaultConsent?:
-						| {
-							ad_storage?: "granted" | "denied"
-							ad_user_data?: "granted" | "denied"
-							ad_personalization?: "granted" | "denied"
-							analytics_storage?: "granted" | "denied"
-							region?: string[]
-							wait_for_update?: number
-							[key: string]: unknown
-						}
-						| Array<{
-							ad_storage?: "granted" | "denied"
-							ad_user_data?: "granted" | "denied"
-							ad_personalization?: "granted" | "denied"
-							analytics_storage?: "granted" | "denied"
-							region?: string[]
-							wait_for_update?: number
-							[key: string]: unknown
-						}>
-					l?: string
-					auth?: string
-					preview?: string
-					envName?: string
-					[key: string]: unknown
-				}
-				[key: string]: unknown
-			}
-			[key: string]: unknown
-		}
-		image?: {
-			dir?: string
-			provider: string
-			quality?: number
-			domains?: string[]
-		}
-		nitro?: {
-			preset?: string
-			prerender?: {
-				crawlLinks?: boolean
-				routes?: string[]
-			}
-			externals?: {
-				inline?: string[]
-			}
-			experimental?: {
-				openAPI?: boolean
-			}
-			routeRules?: Record<string, NitroRouteConfig>
 		}
 		sourcemap?: {
 			server?: boolean
