@@ -71,6 +71,10 @@ export default defineNuxtConfig({
 					ad_personalization: "denied"
 				}
 			}
+		},
+		defaultScriptOptions: {
+			trigger: 'onNuxtReady',
+			bundle: false
 		}
 	},
 	typescript: {
