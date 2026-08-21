@@ -2,11 +2,6 @@ import type { NitroRouteConfig } from "nitropack"
 import tailwindcss from "@tailwindcss/vite"
 declare module "nuxt/schema" {
 	interface NuxtConfig {
-		site?: {
-			url?: string
-			name?: string
-			[key: string]: unknown
-		}
 		schemaOrg?: {
 			identity?: {
 				type?: string
@@ -42,13 +37,16 @@ export default defineNuxtConfig({
 	compatibilityDate: "2025-07-15",
 	css: ["~/assets/css/main.css"],
 	devtools: { enabled: true },
-	modules: ["@tailwindcss/typography", "@nuxt/scripts", "nuxt-svgo", "@nuxt/fonts", "@vueuse/nuxt", "@vueuse/motion/nuxt", "@nuxtjs/i18n", "@nuxt/image", "@dargmuesli/nuxt-cookie-control"],
+	modules: ["@tailwindcss/typography", "@nuxt/scripts", "nuxt-svgo", "@nuxt/fonts", "@vueuse/nuxt", "@vueuse/motion/nuxt", "@nuxtjs/i18n", "@nuxt/image", "@dargmuesli/nuxt-cookie-control", '@nuxtjs/sitemap'],
 	runtimeConfig: {
 		public: {
 			goatWordpressUrl: process.env.NUXT_PUBLIC_GOAT_WORDPRESS_URL,
 			gtmId: process.env.NUXT_PUBLIC_GTM_ID
 		}
 	},
+	site: {
+    url: 'https://www.floatinggoat.dk'
+  },
 	future: {
 		compatibilityVersion: 4
 	},
