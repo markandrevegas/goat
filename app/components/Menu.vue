@@ -9,7 +9,7 @@ const {
 	status,
 	error
 } = await useWordPressMenu({
-	pages: [],
+	pages: [2],
 	posts: [1]
 })
 </script>
