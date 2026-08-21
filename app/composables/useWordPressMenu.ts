@@ -1,22 +1,47 @@
-interface WordPressMenuOptions {
-	pages?: number[]
-	posts?: number[]
-}
+// composables/useWordPressMenu.ts
+export const useWordPressMenu = async (options: { pages?: number[]; posts?: number[] } = {}) => {
+	const config = useRuntimeConfig()
+	const goatWordpressUrl = config.public.goatWordpressUrl
 
-export const useWordPressMenu = (options: WordPressMenuOptions = {}) => {
-	const { pages = [], posts = [] } = options
-
-	const { getPages, getPosts } = useWordPress()
-
-	return useAsyncData(
-		`wp-menu-${pages.join("-")}-${posts.join("-")}`,
-		async () => {
-			const [pageItems, postItems] = await Promise.all([getPages(pages), getPosts(posts)])
-
-			return [...pageItems, ...postItems]
-		},
-		{
-			lazy: true
+	const pageIds = options.pages || []
+	const postIds = options.posts || []
+	return await useAsyncData(`wp-menu-${pageIds.join("-")}-${postIds.join("-")}`, async () => {
+		const fetches = []
+		if (pageIds.length > 0) {
+			fetches.push(
+				$fetch<any[]>(`${goatWordpressUrl}/pages`, {
+					query: {
+						include: pageIds.join(","),
+						_fields: "id,title,slug"
+					}
+				})
+			)
+		} else {
+			fetches.push(
+				$fetch<any[]>(`${goatWordpressUrl}/pages`, {
+					query: {
+						per_page: 100,
+						_fields: "id,title,slug"
+					}
+				})
+			)
 		}
-	)
+
+		// Fetch Posts if requested
+		if (postIds.length > 0) {
+			fetches.push(
+				$fetch<any[]>(`${goatWordpressUrl}/posts`, {
+					query: {
+						include: postIds.join(","),
+						_fields: "id,title,slug"
+					}
+				})
+			)
+		}
+
+		const results = await Promise.all(fetches)
+
+		// Flatten and combine page and post items into a single array
+		return results.flat()
+	})
 }

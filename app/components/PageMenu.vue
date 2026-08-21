@@ -13,19 +13,19 @@ const {
 	error
 } = await useWordPressMenu({
 	pages: [],
-	posts: [1,5]
+	posts: [1, 5]
 })
 // const menuItems = computed(() => data.value || [])
 </script>
 <template>
 	<nav class="text-brand mx-auto flex max-w-6xl flex-col">
-		<div class="w-full">
+		<div class="flex w-full justify-between">
 			<!-- Desktop -->
-			<div class="flex items-center justify-between md:pt-16">
+			<div class="w-max md:pt-16">
 				<NuxtLink to="/">
 					<Logo class="fill-brand h-16 w-auto" />
 				</NuxtLink>
-				<div class="flex space-x-8">
+				<div class="hidden space-x-8 sm:flex">
 					<span v-if="status === 'pending'" class="animate-pulse text-sm text-gray-400"> Loading... </span>
 
 					<span v-else-if="error" class="text-sm text-red-400"> Failed loading menu </span>
@@ -37,7 +37,7 @@ const {
 			</div>
 
 			<!-- Mobile button -->
-			<div class="flex w-full flex-row justify-end md:hidden">
+			<div class="flex w-max justify-end md:hidden">
 				<button @click="isMobileMenuOpen = !isMobileMenuOpen" type="button" class="text-brand flex w-full justify-end rounded-md p-2 hover:bg-gray-100 hover:text-gray-900 focus:outline-none" aria-controls="mobile-menu" :aria-expanded="isMobileMenuOpen">
 					<MenuIcon :is-open="isMobileMenuOpen" />
 					<span class="sr-only">Open main menu</span>

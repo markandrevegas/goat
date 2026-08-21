@@ -5,7 +5,7 @@ const {
 	error
 } = await useWordPressMenu({
 	pages: [],
-	posts: [1,5]
+	posts: [1, 5]
 })
 </script>
 

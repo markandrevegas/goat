@@ -1,7 +1,7 @@
 <script setup>
-import Instagram from '~/components/icons/Instagram.vue'
-import Facebook from '~/components/icons/Facebook.vue'
-import Linkedin from '~/components/icons/Linkedin.vue'
+import Instagram from "~/components/icons/Instagram.vue"
+import Facebook from "~/components/icons/Facebook.vue"
+import Linkedin from "~/components/icons/Linkedin.vue"
 
 const route = useRoute()
 const { getPost, getPage } = useWordPressContent()
@@ -38,13 +38,23 @@ const contentSlug = computed(() => rawContentData.value?.slug || "")
 const contentBody = computed(() => rawContentData.value?.content?.rendered || "")
 const contentAcf = computed(() => rawContentData.value?.acf || {})
 const datePublished = computed(() => rawContentData.value?.date || null)
+
 const formattedDate = computed(() => {
 	if (!datePublished.value) return ""
-	return new Date(datePublished.value).toLocaleDateString("en-US", {
+
+	// Append UTC explicitly to force consistent SSR date rendering
+	const dateString = datePublished.value.endsWith("Z") ? datePublished.value : `${datePublished.value}Z`
+
+	const parsedDate = new Date(dateString)
+
+	if (isNaN(parsedDate.getTime())) return ""
+
+	return new Intl.DateTimeFormat("en-US", {
 		year: "numeric",
 		month: "long",
-		day: "numeric"
-	})
+		day: "numeric",
+		timeZone: "UTC"
+	}).format(parsedDate)
 })
 const authorDetails = computed(() => rawContentData.value?._embedded?.author?.[0] || null)
 const authorName = computed(() => authorDetails.value?.name || "")
@@ -112,31 +122,39 @@ useSeoMeta({
 		</div>
 
 		<article v-else-if="hasContent" class="w-full">
-			<header class="mb-8 text-brand">
+			<header class="text-brand mx-auto mb-8 flex max-w-3xl flex-col items-center">
 				<h1 class="text-4xl tracking-tight md:text-5xl" v-html="contentTitle"></h1>
 				<div v-if="authorName || formattedDate" class="mt-4 flex items-center space-x-2 text-sm">
-					<span v-if="authorName" class="font-medium text-slate-700">By {{ authorName }}</span>
-					<span v-if="authorName && formattedDate">•</span>
+					<span v-if="authorName" class="hidden font-medium">By {{ authorName }}</span>
+					<span class="font-medium">Published</span>
+					<span v-if="formattedDate">|</span>
 					<time v-if="formattedDate" :datetime="datePublished">{{ formattedDate }}</time>
 				</div>
+				<div class="flex items-center justify-start gap-2 mt-4">
+					<Instagram class="size-6" />
+					<Facebook class="size-6" />
+					<Linkedin class="size-6" />
+				</div>
 			</header>
-			<main v-if="contentBody" class="flex flex-col gap-4">
-				<div>
-					<p class="text-sm uppercase tracking-tight mb-2">Share Content</p>
-					<div class="flex items-center justify-start gap-2">
+			<main v-if="contentBody" class="flex flex-col gap-4 md:grid md:grid-cols-4">
+				<div class="col-span-1">
+					<p class="hidden md:block mb-2 text-sm tracking-tight uppercase">Share Content</p>
+					<div class="hidden md:flex items-center justify-start gap-2">
 						<Instagram class="size-6" />
 						<Facebook class="size-6" />
 						<Linkedin class="size-6" />
 					</div>
 				</div>
-				<div class="flex flex-col gap-4">
+				<div class="col-span-2 md:pr-8 flex flex-col gap-2">
 					<!-- Featured Image -->
 					<NuxtImg v-if="featuredImageUrl" :src="featuredImageUrl" :alt="featuredImageAlt" :width="featuredImageWidth" :height="featuredImageHeight" sizes="sm:100vw md:50vw lg:800px" loading="lazy" format="webp" />
-					<div v-if="contentBody" class="prose prose-slate prose-lg max-w-2xl focus:outline-none" v-html="contentBody"></div>
+					<div v-if="contentBody" class="mt-4 md:mt-0 prose prose-slate prose-lg/5 prose-headings:font-semibold prose-headings:tracking-tight prose-a:text-indigo-600 prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl prose-img:shadow-md max-w-none" v-html="contentBody"></div>
 					<!-- Empty Content Fallback -->
 					<p v-else-if="!contentBody" class="font-display text-brand italic">This page has no content body text.</p>
 				</div>
-				<div></div>
+				<div class="col-span-1">
+					<p class="mb-2 text-sm tracking-tight uppercase">Recent Posts</p>
+				</div>
 			</main>
 			<!-- Rendered Post / Page Content -->
 		</article>

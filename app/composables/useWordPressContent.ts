@@ -16,6 +16,7 @@ interface AuthorDetails {
 
 export interface WordPressPostOrPage {
 	id: number
+	date: string
 	title: {
 		rendered: string
 	}
@@ -39,7 +40,7 @@ export const useWordPressContent = () => {
 			query: {
 				slug,
 				_embed: 1,
-				_fields: "id,title,slug,content,acf,_links,_embedded"
+				_fields: "id,date,title,slug,content,acf,_links,_embedded"
 			}
 		})
 

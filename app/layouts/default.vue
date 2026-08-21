@@ -4,7 +4,7 @@ import { onMounted } from "vue"
 const { loadConsent, resetConsent } = useCookieConsent()
 const { data: menuItems, status } = await useWordPressMenu({
 	pages: [],
-	posts: [1,5]
+	posts: [1, 5]
 })
 
 onMounted(() => {
