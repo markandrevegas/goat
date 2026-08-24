@@ -1,13 +1,19 @@
 <template>
-	<div class="hover:bg-accent flex cursor-pointer items-center justify-center rounded-md p-1.5 transition-colors duration-200 select-none" @click="toggle" role="button" tabindex="0" :aria-expanded="isOpen" aria-label="Toggle Navigation Menu">
+	<div class="hover:bg-accent flex cursor-pointer items-center justify-center rounded-md p-1.5 transition-colors duration-200 select-none" @click="toggle" @mouseenter="isHovering = true" @mouseleave="isHovering = false" role="button" tabindex="0" :aria-expanded="isOpen" aria-label="Toggle Navigation Menu">
 		<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 			<Motion is="line" v-for="(line, index) in lines" :key="`${line.x1}_${line.x2}_${line.y1}_${line.y2}`" :ref="(el) => (targetList[index] = el)" stroke="currentColor" :x1="line.x1" :y1="line.y1" :x2="line.x2" :y2="line.y2" :transform-origin="variants.transformOrigin[index]" />
 		</svg>
 	</div>
 </template>
 
+<script>
+export default {
+	name: "MenuIcon"
+}
+</script>
+
 <script setup>
-import { ref, reactive, watch, onMounted } from "vue"
+import { ref, reactive, computed, watch, onMounted } from "vue"
 import { MotionComponent as Motion, useMotion } from "@vueuse/motion"
 
 const props = defineProps({
@@ -50,16 +56,21 @@ const len = lines.length
 const targetList = ref(new Array(len).fill(null))
 const targetInstanceList = reactive([])
 
+const isHovering = ref(false)
+
+// While closed, hover previews the "X" shape. Once open, it stays "X"
+// regardless of hover — hover only matters for the closed -> preview case.
+const isActive = computed(() => props.isOpen || isHovering.value)
+
 onMounted(() => {
 	for (let i = 0; i < len; i++) {
 		targetInstanceList[i] = useMotion(targetList.value[i], {
-			initial: props.isOpen ? variants.animate(i) : variants.normal
+			initial: isActive.value ? variants.animate(i) : variants.normal
 		})
 	}
-	animateState(props.isOpen)
+	animateState(isActive.value)
 })
 
-// Function to trigger animation based on boolean state
 function animateState(active) {
 	for (let i = 0; i < len; i++) {
 		const variant = active ? variants.animate(i) : variants.normal
@@ -73,15 +84,10 @@ function animateState(active) {
 	}
 }
 
-// Watch for prop changes (e.g. if parent modifies state)
-watch(
-	() => props.isOpen,
-	(newValue) => {
-		animateState(newValue)
-	}
-)
+watch(isActive, (newValue) => {
+	animateState(newValue)
+})
 
-// Handle click event locally and emit state update
 function toggle() {
 	const nextState = !props.isOpen
 	emit("update:isOpen", nextState)
