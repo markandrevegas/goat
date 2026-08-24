@@ -12,18 +12,17 @@ const {
 	status,
 	error
 } = await useWordPressMenu({
-	pages: [],
-	posts: [1, 5]
+	pages: [2],
+	posts: [1]
 })
-// const menuItems = computed(() => data.value || [])
 </script>
 <template>
 	<nav class="text-brand mx-auto flex max-w-6xl flex-col">
-		<div class="flex w-full justify-between">
+		<div class="flex w-full justify-center">
 			<!-- Desktop -->
-			<div class="w-max md:pt-16">
+			<div class="w-max md:pt-16 text-center">
 				<NuxtLink to="/">
-					<Logo class="fill-brand h-16 w-auto" />
+					<Logo class="fill-brand h-16 w-auto mx-auto mb-8" />
 				</NuxtLink>
 				<div class="hidden space-x-8 sm:flex">
 					<span v-if="status === 'pending'" class="animate-pulse text-sm text-gray-400"> Loading... </span>

@@ -8,7 +8,7 @@ const {
 })
 </script>
 <template>
-	<footer class="bg-palladian text-brand text-sm">
+	<footer class="text-sm">
 		<div class="grid flex-shrink-0 grid-cols-1 gap-4 p-8 py-24 sm:mx-auto sm:max-w-6xl sm:grid-cols-2 md:grid-cols-4">
 			<div class="flex flex-col gap-1">
 				<p class="font-display text-lg font-semibold">Floating G.O.A.T.</p>

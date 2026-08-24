@@ -11,7 +11,7 @@
 
 @layer base {
 	body {
-		@apply bg-palladian text-brand font-sans;
+		@apply bg-brand text-palladian font-sans;
 	}
 	/*.dark body {
     @apply bg-brand text-palladian;
