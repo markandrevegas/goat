@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 <template>
 	<div class="relative h-screen w-full">
-		<svg class="block fill-palladian" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="6912" zoomAndPan="magnify" viewBox="0 0 5184 2592.000001" height="3456" preserveAspectRatio="xMidYMid meet" version="1.0">
+		<svg class="fill-palladian block" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="6912" zoomAndPan="magnify" viewBox="0 0 5184 2592.000001" height="3456" preserveAspectRatio="xMidYMid meet" version="1.0">
 			<defs>
 				<g />
 				<clipPath id="e3a712f2be"><rect x="0" width="4836" y="0" height="467" /></clipPath>

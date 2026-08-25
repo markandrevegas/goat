@@ -7,7 +7,11 @@ import MenuIcon from "./icons/MenuIcon.vue"
 const { y } = useWindowScroll()
 const isMobileMenuOpen = ref(false)
 const { getMenu } = useWordPress()
-const { data: menuItems, status, error } = await getMenu({
+const {
+	data: menuItems,
+	status,
+	error
+} = await getMenu({
 	posts: []
 })
 </script>
@@ -49,7 +53,7 @@ const { data: menuItems, status, error } = await getMenu({
 				<span v-else-if="error" class="block py-2 text-sm text-red-400"> Failed loading menu </span>
 
 				<div v-else class="flex flex-col gap-4 pt-8">
-					<NuxtLink v-for="page in menuItems" :key="page.id" :to="`/${page.slug}`" @click="isMobileMenuOpen = false" class="text-brand text-base font-medium transition-colors w-max" active-class="border-b-2 font-semibold" v-html="page.title.rendered" />
+					<NuxtLink v-for="page in menuItems" :key="page.id" :to="`/${page.slug}`" @click="isMobileMenuOpen = false" class="text-brand w-max text-base font-medium transition-colors" active-class="border-b-2 font-semibold" v-html="page.title.rendered" />
 				</div>
 			</div>
 		</Transition>

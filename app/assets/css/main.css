@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+
 @theme {
 	--color-brand: #13283b;
 	--color-palladian: #eee9df;
@@ -18,11 +19,38 @@
   }*/
 	h1,
 	h2,
-	h3 {
+								h3,
+								h4 {
 		@apply font-display;
 	}
 }
 
+@layer components {
+	.prose {
+		@apply text-palladian text-base/5;
+	}
+
+	.prose :where(h1, h2, h3, h4, h5, h6) {
+		@apply !text-palladian font-display tracking-tight;
+	}
+	.prose h3>strong,
+	.prose h2>strong,
+	.prose h4>strong {
+		@apply text-xl !font-normal;
+	}
+
+	.prose a {
+		@apply !text-palladian/80 no-underline font-semibold hover:text-palladian;
+	}
+
+	.prose a:hover {
+		@apply underline;
+	}
+
+	.prose img {
+		@apply rounded-xl shadow-md;
+	}
+}
 @keyframes marquee-scroll {
 	from {
 		transform: translateX(0);
