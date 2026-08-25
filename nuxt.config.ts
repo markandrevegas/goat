@@ -17,6 +17,37 @@ declare module "nuxt/schema" {
 		}
 	}
 }
+
+/**
+ * Fetches every slug for a given WP endpoint, paginating through
+ * per_page=100 until exhausted. Used by the prerender:routes hook
+ * below so unlinked content (e.g. campaign landing pages) still
+ * gets built into the static export, since crawlLinks alone only
+ * follows <a href> links found starting from "/".
+ */
+async function fetchAllSlugs(wpUrl: string, endpoint: string): Promise<string[]> {
+	const slugs: string[] = []
+	let page = 1
+
+	while (true) {
+		const res = await fetch(`${wpUrl}/${endpoint}?per_page=100&page=${page}&_fields=slug`)
+		if (!res.ok) {
+			// Some endpoints (e.g. a missing custom post type) 400 on an
+			// out-of-range page instead of returning []. Treat any
+			// non-ok response as "no more results" rather than failing
+			// the whole build.
+			break
+		}
+		const data = (await res.json()) as { slug: string }[]
+		if (!Array.isArray(data) || data.length === 0) break
+		slugs.push(...data.map((item) => item.slug))
+		if (data.length < 100) break
+		page++
+	}
+
+	return slugs
+}
+
 export default defineNuxtConfig({
 	app: {
 		baseURL: "/",
@@ -83,7 +114,8 @@ export default defineNuxtConfig({
 	nitro: {
 		prerender: {
 			crawlLinks: true,
-			routes: ["/"]
+			routes: ["/"],
+			failOnError: false
 		},
 		routeRules: {
 			"/_nuxt/**": { headers: { "cache-control": "public, max-age=31536000, immutable" } },
@@ -92,6 +124,29 @@ export default defineNuxtConfig({
 					"Content-Security-Policy": "style-src 'self' 'unsafe-inline'"
 				}
 			}
+		}
+	},
+	hooks: {
+		"nitro:config": async (nitroConfig) => {
+			const wpUrl = process.env.NUXT_PUBLIC_GOAT_WORDPRESS_URL
+			if (!wpUrl) {
+				console.warn("NUXT_PUBLIC_GOAT_WORDPRESS_URL not set — skipping WP route discovery")
+				return
+			}
+
+			const [pageSlugs, postSlugs] = await Promise.all([fetchAllSlugs(wpUrl, "pages"), fetchAllSlugs(wpUrl, "posts")])
+
+			// Landing pages (e.g. pages/sample-page.vue) are individual
+			// file-based routes, not served through [...slug].vue, so
+			// Nuxt already includes them in the static build on its own
+			// — no WP lookup needed for those.
+			nitroConfig.prerender = nitroConfig.prerender || {}
+			nitroConfig.prerender.routes = nitroConfig.prerender.routes || []
+			for (const slug of [...pageSlugs, ...postSlugs]) {
+				nitroConfig.prerender.routes.push(`/${slug}`)
+			}
+
+			console.log(`Prerender: added ${pageSlugs.length} pages, ${postSlugs.length} posts`)
 		}
 	},
 	svgo: {

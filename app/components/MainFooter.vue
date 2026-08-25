@@ -1,11 +1,6 @@
 <script setup lang="ts">
-const {
-	data: menuItems,
-	status,
-	error
-} = await useWordPressMenu({
-	pages: []
-})
+const { getMenu } = useWordPress()
+const { data: menuItems } = await getMenu()
 </script>
 <template>
 	<footer class="text-sm">

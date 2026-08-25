@@ -1,13 +1,6 @@
 <script setup>
-import Instagram from "~/components/icons/Instagram.vue"
-import Facebook from "~/components/icons/Facebook.vue"
-import Linkedin from "~/components/icons/Linkedin.vue"
-
 const route = useRoute()
-const { getPost, getPage } = useWordPressContent()
-definePageMeta({
-	layout: "page"
-})
+const { getPost, getPage } = useWordPress()
 
 const slug = computed(() => {
 	const params = route.params.slug
@@ -30,6 +23,13 @@ const error = computed(() => (pageError.value && postError.value ? pageError.val
 const rawContentData = computed(() => rawPageData.value || rawPostData.value || null)
 const isPost = computed(() => !rawPageData.value && !!rawPostData.value)
 const hasContent = computed(() => !!rawContentData.value)
+
+// Which layout wraps this route — decided by content type, not by the
+// route itself, since both pages and posts share the same flat slug space.
+definePageMeta({
+	layout: false
+})
+const layoutName = computed(() => (isPost.value ? "blog" : "page"))
 
 // Itemized Computed Exports from WP Data
 const contentId = computed(() => rawContentData.value?.id || null)
@@ -110,52 +110,32 @@ useSeoMeta({
 </script>
 
 <template>
-	<div class="container mx-auto max-w-6xl p-8">
-		<div v-if="pending" class="flex flex-col items-center justify-center space-y-4 py-24">
-			<div class="h-12 w-12 animate-spin rounded-full border-b-4 border-indigo-600"></div>
-			<p class="animate-pulse text-sm font-medium text-slate-500">Loading content...</p>
-		</div>
+	<NuxtLayout :name="layoutName">
+		<div class="container mx-auto max-w-6xl p-8">
+			<div v-if="pending" class="flex flex-col items-center justify-center space-y-4 py-24">
+				<div class="h-12 w-12 animate-spin rounded-full border-b-4 border-indigo-600"></div>
+				<p class="animate-pulse text-sm font-medium text-slate-500">Loading content...</p>
+			</div>
 
-		<div v-else-if="error" class="rounded-2xl border border-red-100 bg-red-50 px-6 py-24 text-center">
-			<h2 class="mb-2 text-xl font-bold text-red-800">Failed to load content</h2>
-			<p class="text-sm text-red-600">Could not resolve route or the target slug is missing/unpublished.</p>
-		</div>
+			<div v-else-if="error" class="rounded-2xl border border-red-100 bg-red-50 px-6 py-24 text-center">
+				<h2 class="mb-2 text-xl font-bold text-red-800">Failed to load content</h2>
+				<p class="text-sm text-red-600">Could not resolve route or the target slug is missing/unpublished.</p>
+			</div>
 
-		<article v-else-if="hasContent" class="w-full">
-			<header class="mx-auto mb-8 flex max-w-3xl flex-col items-center">
-				<h1 class="text-4xl tracking-tight md:text-5xl" v-html="contentTitle"></h1>
-				<div v-if="authorName || formattedDate" class="mt-4 flex items-center space-x-2 text-sm">
-					<span v-if="authorName" class="hidden font-medium">By {{ authorName }}</span>
-					<span class="font-medium">Published</span>
-					<span v-if="formattedDate">|</span>
-					<time v-if="formattedDate" :datetime="datePublished">{{ formattedDate }}</time>
-				</div>
-				<div class="mt-4 flex items-center justify-start gap-2">
-					<Instagram class="size-6" />
-					<Facebook class="size-6" />
-					<Linkedin class="size-6" />
-				</div>
-			</header>
-			<main v-if="contentBody" class="flex flex-col gap-4 md:grid md:grid-cols-4">
-				<div class="col-span-1">
-					<p class="mb-2 hidden text-sm tracking-tight uppercase md:block">Share Content</p>
-					<div class="hidden items-center justify-start gap-2 md:flex">
-						<Instagram class="size-6" />
-						<Facebook class="size-6" />
-						<Linkedin class="size-6" />
-					</div>
-				</div>
-				<div class="col-span-2 flex flex-col gap-2 md:pr-8">
-					<!-- Featured Image -->
-					<NuxtImg v-if="featuredImageUrl" :src="featuredImageUrl" :alt="featuredImageAlt" :width="featuredImageWidth" :height="featuredImageHeight" sizes="sm:100vw md:50vw lg:800px" loading="lazy" format="webp" />
-					<div v-if="contentBody" class="text-palladian prose prose-lg/5 prose-headings:font-semibold prose-headings:tracking-tight prose-a:text-palladian prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl prose-img:shadow-md mt-4 max-w-none md:mt-0" v-html="contentBody"></div>
-					<!-- Empty Content Fallback -->
-					<p v-else-if="!contentBody" class="font-display italic">This page has no content body text.</p>
-				</div>
-				<div class="col-span-1">
-					<p class="mb-2 text-sm tracking-tight uppercase">Recent Posts</p>
-				</div>
-			</main>
-		</article>
-	</div>
+			<PostContent
+				v-else-if="hasContent && isPost"
+				:title="contentTitle"
+				:body="contentBody"
+				:author-name="authorName"
+				:formatted-date="formattedDate"
+				:date-published="datePublished"
+				:featured-image-url="featuredImageUrl"
+				:featured-image-alt="featuredImageAlt"
+				:featured-image-width="featuredImageWidth"
+				:featured-image-height="featuredImageHeight"
+			/>
+
+			<PageContent v-else-if="hasContent" :title="contentTitle" :body="contentBody" />
+		</div>
+	</NuxtLayout>
 </template>

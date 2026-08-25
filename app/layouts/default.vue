@@ -2,7 +2,8 @@
 import { onMounted } from "vue"
 
 const { loadConsent, resetConsent } = useCookieConsent()
-const { data: menuItems, status } = await useWordPressMenu({
+const { getMenu } = useWordPress()
+const { data: menuItems, status } = await getMenu({
 	pages: [2],
 	posts: [1]
 })
