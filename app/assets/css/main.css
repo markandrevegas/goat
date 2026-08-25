@@ -19,8 +19,8 @@
   }*/
 	h1,
 	h2,
-								h3,
-								h4 {
+	h3,
+	h4 {
 		@apply font-display;
 	}
 }
@@ -33,14 +33,14 @@
 	.prose :where(h1, h2, h3, h4, h5, h6) {
 		@apply !text-palladian font-display tracking-tight;
 	}
-	.prose h3>strong,
-	.prose h2>strong,
-	.prose h4>strong {
+	.prose h3 > strong,
+	.prose h2 > strong,
+	.prose h4 > strong {
 		@apply text-xl !font-normal;
 	}
 
 	.prose a {
-		@apply !text-palladian/80 no-underline font-semibold hover:text-palladian;
+		@apply !text-palladian/80 hover:text-palladian font-semibold no-underline;
 	}
 
 	.prose a:hover {

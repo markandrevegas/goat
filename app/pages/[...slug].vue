@@ -1,6 +1,6 @@
 <script setup>
 const route = useRoute()
-const { getPost, getPage } = useWordPress()
+const { getPost, getPage, getPages } = useWordPress()
 
 const slug = computed(() => {
 	const params = route.params.slug
@@ -38,6 +38,13 @@ const contentSlug = computed(() => rawContentData.value?.slug || "")
 const contentBody = computed(() => rawContentData.value?.content?.rendered || "")
 const contentAcf = computed(() => rawContentData.value?.acf || {})
 const datePublished = computed(() => rawContentData.value?.date || null)
+
+// Other page menu items for the "Related" column in PageContent. Only
+// fetched for actual pages — post pages never render PageContent, so
+// skip the request there instead of firing it unconditionally. Watching
+// isPost re-runs this correctly on client-side route changes too.
+const { data: allPages } = await useAsyncData("wp-related-pages", () => (isPost.value ? Promise.resolve([]) : getPages()), { watch: [isPost] })
+const relatedPages = computed(() => (allPages.value || []).filter((page) => page.id !== contentId.value))
 
 const formattedDate = computed(() => {
 	if (!datePublished.value) return ""
@@ -122,20 +129,9 @@ useSeoMeta({
 				<p class="text-sm text-red-600">Could not resolve route or the target slug is missing/unpublished.</p>
 			</div>
 
-			<PostContent
-				v-else-if="hasContent && isPost"
-				:title="contentTitle"
-				:body="contentBody"
-				:author-name="authorName"
-				:formatted-date="formattedDate"
-				:date-published="datePublished"
-				:featured-image-url="featuredImageUrl"
-				:featured-image-alt="featuredImageAlt"
-				:featured-image-width="featuredImageWidth"
-				:featured-image-height="featuredImageHeight"
-			/>
+			<PostContent v-else-if="hasContent && isPost" :title="contentTitle" :body="contentBody" :author-name="authorName" :formatted-date="formattedDate" :date-published="datePublished" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" />
 
-			<PageContent v-else-if="hasContent" :title="contentTitle" :body="contentBody" :slug="contentSlug" />
+			<PageContent v-else-if="hasContent" :relatedPages="relatedPages" :title="contentTitle" :body="contentBody" :slug="contentSlug" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" :related-pages="relatedPages" />
 		</div>
 	</NuxtLayout>
 </template>
