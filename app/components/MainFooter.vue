@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const { getMenu } = useWordPress()
 const { data: menuItems } = await getMenu({
+	pages: [61, 64],
 	excludePages: [59, 56]
 })
 </script>
