@@ -60,8 +60,10 @@ export const useWordPress = () => {
 	 * All published items of a type, paginated past WP's per_page=100 cap.
 	 * Used anywhere you want the full set rather than specific pinned ids
 	 * (e.g. a "Recent Posts" sidebar, or a full page index).
+	 * Pass excludeIds to omit specific items (e.g. ones already pinned
+	 * elsewhere in nav, or pages that shouldn't appear in a listing).
 	 */
-	const getAllByType = async (endpoint: "pages" | "posts") => {
+	const getAllByType = async (endpoint: "pages" | "posts", excludeIds: number[] = []) => {
 		const results: WordPressMenuItem[] = []
 		let page = 1
 
@@ -72,6 +74,7 @@ export const useWordPress = () => {
 				page,
 				orderby: "date",
 				order: "desc",
+				...(excludeIds.length ? { exclude: excludeIds.join(",") } : {}),
 				_fields: "id,title,slug"
 			})
 			if (!batch.length) break
@@ -83,19 +86,20 @@ export const useWordPress = () => {
 		return results
 	}
 
-	const getPages = () => getAllByType("pages")
-	const getPosts = () => getAllByType("posts")
+	const getPages = (excludeIds: number[] = []) => getAllByType("pages", excludeIds)
+	const getPosts = (excludeIds: number[] = []) => getAllByType("posts", excludeIds)
 
 	/**
 	 * Nav menu data. If no page ids are given, falls back to fetching
 	 * all pages (matches the old useWordPressMenu behaviour).
 	 */
-	const getMenu = (options: { pages?: number[]; posts?: number[] } = {}) => {
+	const getMenu = (options: { pages?: number[]; posts?: number[]; excludePages?: number[] } = {}) => {
 		const pageIds = options.pages || []
 		const postIds = options.posts || []
+		const excludePages = options.excludePages || []
 
-		return useAsyncData(`wp-menu-${pageIds.join("-")}-${postIds.join("-")}`, async () => {
-			const [pages, posts] = await Promise.all([pageIds.length ? getPagesByIds(pageIds) : getPages(), postIds.length ? getPostsByIds(postIds) : Promise.resolve([])])
+		return useAsyncData(`wp-menu-${pageIds.join("-")}-${postIds.join("-")}-${excludePages.join("-")}`, async () => {
+			const [pages, posts] = await Promise.all([pageIds.length ? getPagesByIds(pageIds) : getPages(excludePages), postIds.length ? getPostsByIds(postIds) : Promise.resolve([])])
 			return [...pages, ...posts]
 		})
 	}

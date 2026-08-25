@@ -122,9 +122,20 @@ useSeoMeta({
 				<p class="text-sm text-red-600">Could not resolve route or the target slug is missing/unpublished.</p>
 			</div>
 
-			<PostContent v-else-if="hasContent && isPost" :title="contentTitle" :body="contentBody" :author-name="authorName" :formatted-date="formattedDate" :date-published="datePublished" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" />
+			<PostContent
+				v-else-if="hasContent && isPost"
+				:title="contentTitle"
+				:body="contentBody"
+				:author-name="authorName"
+				:formatted-date="formattedDate"
+				:date-published="datePublished"
+				:featured-image-url="featuredImageUrl"
+				:featured-image-alt="featuredImageAlt"
+				:featured-image-width="featuredImageWidth"
+				:featured-image-height="featuredImageHeight"
+			/>
 
-			<PageContent v-else-if="hasContent" :title="contentTitle" :body="contentBody" />
+			<PageContent v-else-if="hasContent" :title="contentTitle" :body="contentBody" :slug="contentSlug" />
 		</div>
 	</NuxtLayout>
 </template>

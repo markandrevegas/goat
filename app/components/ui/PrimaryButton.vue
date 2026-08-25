@@ -1,12 +1,17 @@
 <script setup lang="ts">
+import { useTrackEvent } from "~/composables/useTrackEvent"
+
 defineProps({
 	text: {
 		type: String,
 		required: true
 	}
 })
+
+const { trackEvent } = useTrackEvent()
+
 const handleButtonClick = () => {
-	useTrackEvent("test_click", {
+	trackEvent("test_click", {
 		button_name: "primary_cta"
 	})
 }

@@ -7,12 +7,8 @@ import MenuIcon from "./icons/MenuIcon.vue"
 const { y } = useWindowScroll()
 const isMobileMenuOpen = ref(false)
 const { getMenu } = useWordPress()
-const {
-	data: menuItems,
-	status,
-	error
-} = await getMenu({
-	posts: []
+const { data: menuItems, status, error } = await getMenu({
+	excludePages: [59, 56]
 })
 </script>
 

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 const { getMenu } = useWordPress()
-const { data: menuItems } = await getMenu()
+const { data: menuItems } = await getMenu({
+	excludePages: [59, 56]
+})
 </script>
 <template>
 	<footer class="text-sm">
