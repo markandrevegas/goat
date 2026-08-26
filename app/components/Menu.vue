@@ -12,7 +12,7 @@ const {
 	status,
 	error
 } = await getMenu({
-	pages: [61, 64],
+	pages: [61, 64, 71],
 	excludePages: [59, 56]
 })
 </script>
