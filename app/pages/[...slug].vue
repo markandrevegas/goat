@@ -40,6 +40,10 @@ const contentTitle = computed(() => rawContentData.value?.title?.rendered || "")
 const contentSlug = computed(() => rawContentData.value?.slug || "")
 const contentBody = computed(() => rawContentData.value?.content?.rendered || "")
 const contentAcf = computed(() => rawContentData.value?.acf || {})
+
+if (import.meta.dev) {
+	console.log(`[WP ACF] slug=${contentSlug.value}`, contentAcf.value)
+}
 const datePublished = computed(() => rawContentData.value?.date || null)
 
 // Other page menu items for the "Related" column in PageContent. Only
