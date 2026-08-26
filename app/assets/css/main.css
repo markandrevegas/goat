@@ -2,10 +2,14 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-	--color-brand: #13283b;
+	--color-fg: #12283b;
+	--color-brand: #12283b;
 	--color-palladian: #eee9df;
+	--color-beige: #ece7e0;
+	--color-brown: #c2b092;
 	--color-action: #1689d4;
-	--font-display: "Fraunces", sans-serif;
+	--font-display: "Fraunces", serif;
+	/*--font-display: "Bodoni Moda", sans-serif;*/
 	--font-sans: "Inter", sans-serif;
 	--font-serif: "Playfair Display", serif;
 }

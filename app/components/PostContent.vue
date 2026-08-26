@@ -8,6 +8,7 @@ defineProps<{
 	title: string
 	body: string
 	slug: string
+	acf: Record<string, any>
 	authorName: string
 	formattedDate: string
 	datePublished: string | null
@@ -20,8 +21,8 @@ defineProps<{
 
 <template>
 	<article class="w-full">
-		<header class="mx-auto mb-8 flex max-w-3xl md:max-w-4xl flex-col items-center">
-			<h1 class="text-4xl tracking-tight md:text-5xl text-center" v-html="title"></h1>
+		<header class="mx-auto mb-8 flex max-w-3xl flex-col items-center md:max-w-4xl">
+			<h1 class="text-center text-4xl tracking-tight md:text-5xl" v-html="title"></h1>
 			<div v-if="authorName || formattedDate" class="mt-4 flex items-center space-x-2 text-sm">
 				<span v-if="authorName" class="hidden font-medium">By {{ authorName }}</span>
 				<span class="font-medium">Published</span>
@@ -52,6 +53,6 @@ defineProps<{
 				<p class="mb-2 text-sm tracking-tight uppercase">Recent Posts</p>
 			</div>
 		</main>
-		<ThreeCardLayout v-if="slug === 'information-for-guests'"></ThreeCardLayout>
+		<ThreeCardLayout v-if="slug === 'information-for-guests'" :acf="acf"></ThreeCardLayout>
 	</article>
 </template>
