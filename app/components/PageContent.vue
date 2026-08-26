@@ -44,10 +44,9 @@ defineProps<{
 					<NuxtLink :to="'/lejebetingelser-for-private'" class="block w-max font-semibold underline">Betingelser for private</NuxtLink>
 					<NuxtLink :to="'/lejebetingelser-for-erhverv'" class="block w-max font-semibold underline">Betingelser for erhverv</NuxtLink>
 				</div>
-				<ThreeCardLayout v-if="slug ==='information-for-guests'"></ThreeCardLayout>
 			</div>
 			<div class="col-span-1">
-				<p class="mb-2 tracking-tight uppercase font-display">Related</p>
+				<p class="font-display mb-2 tracking-tight uppercase">Related</p>
 				<ul>
 					<li v-for="item in relatedPages">
 						<NuxtLink :to="item.slug">{{ item.title?.rendered }}</NuxtLink>

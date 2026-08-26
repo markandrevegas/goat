@@ -1,8 +1,8 @@
 <script setup lang="ts"></script>
 <template>
 	<section class="flex flex-col gap-4">
-		<div class="bg-white h-24"></div>
-		<div class="bg-white h-24"></div>
-		<div class="bg-white h-24"></div>
+		<div class="h-24 bg-white"></div>
+		<div class="h-24 bg-white"></div>
+		<div class="h-24 bg-white"></div>
 	</section>
 </template>

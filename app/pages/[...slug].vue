@@ -26,10 +26,13 @@ const hasContent = computed(() => !!rawContentData.value)
 
 // Which layout wraps this route — decided by content type, not by the
 // route itself, since both pages and posts share the same flat slug space.
+// information-for-guests is an exception: it's a WP page, but should
+// render with the post layout/component instead of the page one.
 definePageMeta({
 	layout: false
 })
-const layoutName = computed(() => (isPost.value ? "blog" : "page"))
+const useBlogLayout = computed(() => isPost.value || rawContentData.value?.slug === "information-for-guests")
+const layoutName = computed(() => (useBlogLayout.value ? "blog" : "page"))
 
 // Itemized Computed Exports from WP Data
 const contentId = computed(() => rawContentData.value?.id || null)
@@ -43,7 +46,7 @@ const datePublished = computed(() => rawContentData.value?.date || null)
 // fetched for actual pages — post pages never render PageContent, so
 // skip the request there instead of firing it unconditionally. Watching
 // isPost re-runs this correctly on client-side route changes too.
-const { data: allPages } = await useAsyncData("wp-related-pages", () => (isPost.value ? Promise.resolve([]) : getPages()), { watch: [isPost] })
+const { data: allPages } = await useAsyncData("wp-related-pages", () => (useBlogLayout.value ? Promise.resolve([]) : getPages()), { watch: [useBlogLayout] })
 const relatedPages = computed(() => (allPages.value || []).filter((page) => page.id !== contentId.value))
 
 const formattedDate = computed(() => {
@@ -56,7 +59,7 @@ const formattedDate = computed(() => {
 
 	if (isNaN(parsedDate.getTime())) return ""
 
-	return new Intl.DateTimeFormat("en-US", {
+	return new Intl.DateTimeFormat("da-DK", {
 		year: "numeric",
 		month: "long",
 		day: "numeric",
@@ -129,9 +132,9 @@ useSeoMeta({
 				<p class="text-sm text-red-600">Could not resolve route or the target slug is missing/unpublished.</p>
 			</div>
 
-			<PostContent v-else-if="hasContent && isPost" :title="contentTitle" :body="contentBody" :author-name="authorName" :formatted-date="formattedDate" :date-published="datePublished" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" />
+			<PostContent v-else-if="hasContent && useBlogLayout" :slug="slug" :title="contentTitle" :body="contentBody" :author-name="authorName" :formatted-date="formattedDate" :date-published="datePublished" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" />
 
-			<PageContent v-else-if="hasContent" :relatedPages="relatedPages" :title="contentTitle" :body="contentBody" :slug="contentSlug" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" :related-pages="relatedPages" />
+			<PageContent v-else-if="hasContent" :title="contentTitle" :body="contentBody" :slug="contentSlug" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" :related-pages="relatedPages" />
 		</div>
 	</NuxtLayout>
 </template>

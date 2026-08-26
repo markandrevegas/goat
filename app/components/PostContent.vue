@@ -2,10 +2,12 @@
 import Instagram from "~/components/icons/Instagram.vue"
 import Facebook from "~/components/icons/Facebook.vue"
 import Linkedin from "~/components/icons/Linkedin.vue"
+import ThreeCardLayout from "./ui/ThreeCardLayout.vue"
 
 defineProps<{
 	title: string
 	body: string
+	slug: string
 	authorName: string
 	formattedDate: string
 	datePublished: string | null
@@ -18,8 +20,8 @@ defineProps<{
 
 <template>
 	<article class="w-full">
-		<header class="mx-auto mb-8 flex max-w-3xl flex-col items-center">
-			<h1 class="text-4xl tracking-tight md:text-5xl" v-html="title"></h1>
+		<header class="mx-auto mb-8 flex max-w-3xl md:max-w-4xl flex-col items-center">
+			<h1 class="text-4xl tracking-tight md:text-5xl text-center" v-html="title"></h1>
 			<div v-if="authorName || formattedDate" class="mt-4 flex items-center space-x-2 text-sm">
 				<span v-if="authorName" class="hidden font-medium">By {{ authorName }}</span>
 				<span class="font-medium">Published</span>
@@ -50,5 +52,6 @@ defineProps<{
 				<p class="mb-2 text-sm tracking-tight uppercase">Recent Posts</p>
 			</div>
 		</main>
+		<ThreeCardLayout v-if="slug === 'information-for-guests'"></ThreeCardLayout>
 	</article>
 </template>
