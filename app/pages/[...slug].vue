@@ -88,12 +88,12 @@ if (error.value) {
 	})
 }
 
-if (!pending.value && !hasContent.value) {
-	throw createError({
-		statusCode: 404,
-		statusMessage: `Page '/${slug.value}' not found`,
-		fatal: true
-	})
+if (!rawContentData.value || rawPageData.value.length === 0) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'WordPress Post Not Found',
+    fatal: true
+  })
 }
 
 // SEO Metadata computed properties
