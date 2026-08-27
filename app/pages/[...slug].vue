@@ -52,11 +52,7 @@ const datePublished = computed(() => rawContentData.value?.date || null)
 // isPost re-runs this correctly on client-side route changes too.
 const { data: allPages } = await useAsyncData("wp-related-pages", () => (useBlogLayout.value ? Promise.resolve([]) : getPages()), { watch: [useBlogLayout] })
 
-const relatedPages = computed(() =>
-  (allPages.value || []).filter(
-    (page) => ![contentId.value, 59, 56, 71].includes(page.id)
-  )
-)
+const relatedPages = computed(() => (allPages.value || []).filter((page) => ![contentId.value, 59, 56, 71].includes(page.id)))
 
 const formattedDate = computed(() => {
 	if (!datePublished.value) return ""

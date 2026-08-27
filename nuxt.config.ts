@@ -91,6 +91,7 @@ export default defineNuxtConfig({
 		registry: {
 			googleTagManager: {
 				id: process.env.NUXT_PUBLIC_GTM_ID,
+				trigger: "onNuxtReady",
 				defaultConsent: {
 					ad_storage: "denied",
 					analytics_storage: "denied",
@@ -164,5 +165,11 @@ export default defineNuxtConfig({
 		provider: "none",
 		dir: "assets/images",
 		domains: ["https://www.floatinggoat.dk"]
+	},
+	i18n: {
+		defaultLocale: "en",
+		strategy: "prefix_except_default",
+		langDir: "locales/",
+		locales: []
 	}
 })
