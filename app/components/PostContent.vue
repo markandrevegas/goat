@@ -80,27 +80,16 @@ defineProps<{
 			</div>
 		</main>
 
-		<main v-if="body && slug === 'information-for-guests'" class="mt-[320px] md:mt-[360px] md:mb-16 flex flex-col gap-4 md:grid md:grid-cols-4">
-			<!--<div class="col-span-1">
-				<p class="mb-2 hidden text-sm tracking-tight uppercase md:block">Share Content</p>
-				<div class="hidden items-center justify-start gap-2 md:flex">
-					<Instagram class="size-6" />
-					<Facebook class="size-6" />
-					<Linkedin class="size-6" />
-				</div>
-			</div>-->
+		<main v-if="body && slug === 'information-for-guests'" class="mt-[320px] flex flex-col gap-4 md:mt-[360px] md:mb-16 md:grid md:grid-cols-4">
 			<div class="col-span-1"></div>
 			<div class="col-span-2 flex flex-col gap-2 md:pr-8">
-				<div v-if="body" class="prose mt-4 max-w-none md:mt-0 text-center" v-html="body"></div>
+				<div v-if="body" class="prose mt-4 max-w-none text-center md:mt-0" v-html="body"></div>
 				<p v-else class="font-display italic">This page has no content body text.</p>
 			</div>
 			<div class="col-span-1"></div>
-			<!--<div class="col-span-1">
-				<p class="mb-2 text-sm tracking-tight uppercase">Recent Posts</p>
-			</div>-->
 		</main>
 
 		<ThreeCardLayout v-if="slug === 'information-for-guests'" :acf="acf"></ThreeCardLayout>
-		<MapEmbed v-if="slug === 'information-for-guests'" :query="acf?.ferryaddress" />
+		<MapEmbed v-if="slug === 'information-for-guests'" :query="acf?.ferryaddress" :address="acf?.ferryaddress" :email="acf?.email" :tel="acf?.tel" />
 	</article>
 </template>

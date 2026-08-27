@@ -51,7 +51,12 @@ const datePublished = computed(() => rawContentData.value?.date || null)
 // skip the request there instead of firing it unconditionally. Watching
 // isPost re-runs this correctly on client-side route changes too.
 const { data: allPages } = await useAsyncData("wp-related-pages", () => (useBlogLayout.value ? Promise.resolve([]) : getPages()), { watch: [useBlogLayout] })
-const relatedPages = computed(() => (allPages.value || []).filter((page) => page.id !== contentId.value))
+
+const relatedPages = computed(() =>
+  (allPages.value || []).filter(
+    (page) => ![contentId.value, 59, 56, 71].includes(page.id)
+  )
+)
 
 const formattedDate = computed(() => {
 	if (!datePublished.value) return ""
@@ -89,11 +94,11 @@ if (error.value) {
 }
 
 if (!rawContentData.value || rawPageData.value.length === 0) {
-  throw createError({
-    statusCode: 404,
-    statusMessage: 'WordPress Post Not Found',
-    fatal: true
-  })
+	throw createError({
+		statusCode: 404,
+		statusMessage: "WordPress Post Not Found",
+		fatal: true
+	})
 }
 
 // SEO Metadata computed properties

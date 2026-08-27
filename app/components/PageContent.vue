@@ -23,7 +23,7 @@ defineProps<{
 
 <template>
 	<article class="flex w-full flex-col">
-		<header class="flex max-w-3xl flex-col sm:mx-auto">
+		<header class="flex max-w-3xl flex-col sm:mx-auto mb-16">
 			<h1 class="text-4xl tracking-tight md:text-5xl" v-html="title"></h1>
 		</header>
 

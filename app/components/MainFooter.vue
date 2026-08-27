@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import Linkedin from "./icons/Linkedin.vue"
+import Instagram from "./icons/Instagram.vue"
+import Facebook from "./icons/Facebook.vue"
+
 const { getMenu } = useWordPress()
 const { data: menuItems } = await getMenu({
 	pages: [61, 64],
@@ -30,6 +34,11 @@ const { data: menuItems } = await getMenu({
 			</div>
 			<div class="flex flex-col">
 				<p class="font-display text-lg font-semibold">Find os</p>
+				<div class="fill-palladian flex w-full justify-start gap-4">
+					<Instagram class="size-6" />
+					<Facebook class="size-6" />
+					<Linkedin class="size-6" />
+				</div>
 			</div>
 		</div>
 		<div class="py-8 text-center">&copy; {{ new Date().getFullYear() }}</div>
