@@ -55,16 +55,16 @@ const seoDescription = computed(() => {
 </script>
 <template>
 	<NuxtLayout name="default">
-		<template #bg-video>
+		<!--<template #bg-video>
 			<IndexVideo :title="seoTitle" :subtitle="seoDescription" />
-		</template>
-		<!--<ThreeColumns
+		</template>-->
+		<ThreeColumns
 			:items="[
-				{ img: meetingImg, title: 'Møder og strategidage', description: 'Hold møde med panoramaudsigt ud over vandet og til Københavns spir og tage.' },
-				{ img: eventsImg, title: 'Events og receptioner', description: 'Skab en helt særlig ramme om jeres arrangement med byens liv og vandets ro som baggrundstæppe.' },
+				{ img: meetingImg, title: 'Private selskaber', description: 'Hold møde med panoramaudsigt ud over vandet og til Københavns spir og tage.' },
+				{ img: eventsImg, title: 'Simple Meetings', description: 'Skab en helt særlig ramme om jeres arrangement med byens liv og vandets ro som baggrundstæppe.' },
 				{ img: workshopImg, title: 'Apartments', description: 'Omsæt indsigt til handling. Floating G.O.A.T. er et perfekt sted til at tænke nye tanker og blive inspireret.' }
 			]"
-		/>-->
+		/>
 		<!--<Marquee
 			:items="[
 				{ logo: 'https://placehold.co/64x64', label: 'Acme Corp' },
