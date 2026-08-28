@@ -2,11 +2,6 @@
 import { onMounted } from "vue"
 
 const { loadConsent, resetConsent } = useCookieConsent()
-const { getMenu } = useWordPress()
-const { data: menuItems, status } = await getMenu({
-	pages: [2],
-	posts: [1]
-})
 
 onMounted(() => {
 	loadConsent()
@@ -16,7 +11,7 @@ onMounted(() => {
 <template>
 	<div class="relative min-h-screen">
 		<ClientOnly>
-			<Menu :items="menuItems || []" />
+			<Menu />
 		</ClientOnly>
 		<div v-if="$slots['bg-video']" class="relative min-h-screen w-full overflow-hidden">
 			<slot name="bg-video"></slot>
