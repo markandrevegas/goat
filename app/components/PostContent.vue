@@ -22,7 +22,7 @@ defineProps<{
 
 <template>
 	<article class="w-full">
-		<div v-if="slug === 'information-for-guests'" class="absolute top-0 right-0 left-0 mb-8 flex min-h-[420px] w-full flex-col items-center justify-center p-8 md:min-h-[450px]">
+		<div v-if="slug === 'information-for-guests' || 'simple-meetings' || 'apartments' || 'private-selskaber'" class="absolute top-0 right-0 left-0 mb-8 flex min-h-[420px] w-full flex-col items-center justify-center p-8 md:min-h-[450px]">
 			<header class="relative z-20 mx-auto flex max-w-3xl flex-col items-center text-white md:max-w-4xl">
 				<h1 class="text-center text-4xl tracking-tight md:text-5xl" v-html="title"></h1>
 				<div v-if="authorName || formattedDate" class="mt-4 flex items-center space-x-2 text-sm">

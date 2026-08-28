@@ -9,19 +9,32 @@ import Linkedin from "./icons/Linkedin.vue"
 
 const { y } = useWindowScroll()
 const isMobileMenuOpen = ref(false)
-const { getMenu, getPosts } = useWordPress()
+const { getMenu } = useWordPress()
 const {
 	data: menuItems,
 	status,
 	error
 } = await getMenu({
-	pages: [61, 64, 71],
-	excludePages: [59, 56]
+	pages: ["apartments", "simple-meetings", "private-selskaber", "information-for-guests"],
+	excludePages: ["privacy-policy", "terms-of-service"]
 })
+if (menuItems.value) {
+	menuItems.value = menuItems.value.map((item) => {
+		if (item.slug === "information-for-guests") {
+			return {
+				...item,
+				title: {
+					...item.title,
+					rendered: "Information for guests"
+				}
+			}
+		}
+		return item
+	})
+}
 const { data: postItems } = await getMenu({
-	posts: [51, 1],
-	pages: [],
-	excludePages: [59, 56, 64, 61, 71, 69]
+	posts: ['sample-page'],
+	pages: []
 })
 </script>
 

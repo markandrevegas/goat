@@ -13,11 +13,7 @@ const wpFetch = <T>(endpoint: string, query: Record<string, any>) => {
 export const useWordPress = () => {
 	/**
 	 * Single page or post by slug. Includes _embed data (featured image,
-	 * author) plus excerpt and yoast_head_json, both of which the old
-	 * useWordPressContent left out of _fields despite [...slug].vue
-	 * reading rawContentData.value?.excerpt and .yoast_head_json — so
-	 * seoDescription/ogImage were silently always falling back to
-	 * their defaults. Fixed here.
+	 * author) plus excerpt and yoast_head_json.
 	 */
 	const getContentBySlug = async (endpoint: "posts" | "pages", slug: string) => {
 		const results = await wpFetch<WordPressPostOrPage[]>(endpoint, {
@@ -43,29 +39,33 @@ export const useWordPress = () => {
 		return results[0] ?? null
 	}
 
-	/** Batch fetch by id, preserving the order the ids were given in. */
-	const getByIds = async (endpoint: "pages" | "posts", ids: number[]) => {
-		if (!ids.length) return []
-		return await wpFetch<WordPressMenuItem[]>(endpoint, {
-			include: ids.join(","),
-			orderby: "include",
+	/** 
+	 * Batch fetch by array of slugs, preserving the order of the provided slugs.
+	 */
+	const getBySlugs = async (endpoint: "pages" | "posts", slugs: string[]) => {
+		if (!slugs.length) return []
+		const results = await wpFetch<WordPressMenuItem[]>(endpoint, {
+			slug: slugs.join(","),
 			_fields: "id,title,slug"
 		})
+
+		// Preserve input order since WP REST API doesn't support orderby="slug_in"
+		return slugs
+			.map((slug) => results.find((item) => item.slug === slug))
+			.filter((item): item is WordPressMenuItem => item !== undefined)
 	}
 
-	const getPagesByIds = (ids: number[]) => getByIds("pages", ids)
-	const getPostsByIds = (ids: number[]) => getByIds("posts", ids)
+	const getPagesBySlugs = (slugs: string[]) => getBySlugs("pages", slugs)
+	const getPostsBySlugs = (slugs: string[]) => getBySlugs("posts", slugs)
 
 	/**
 	 * All published items of a type, paginated past WP's per_page=100 cap.
-	 * Used anywhere you want the full set rather than specific pinned ids
-	 * (e.g. a "Recent Posts" sidebar, or a full page index).
-	 * Pass excludeIds to omit specific items (e.g. ones already pinned
-	 * elsewhere in nav, or pages that shouldn't appear in a listing).
+	 * Filters out any items whose slug matches excludeSlugs in memory.
 	 */
-	const getAllByType = async (endpoint: "pages" | "posts", excludeIds: number[] = []) => {
+	const getAllByType = async (endpoint: "pages" | "posts", excludeSlugs: string[] = []) => {
 		const results: WordPressMenuItem[] = []
 		let page = 1
+		const excludeSet = new Set(excludeSlugs)
 
 		while (true) {
 			const batch = await wpFetch<WordPressMenuItem[]>(endpoint, {
@@ -74,11 +74,15 @@ export const useWordPress = () => {
 				page,
 				orderby: "date",
 				order: "desc",
-				...(excludeIds.length ? { exclude: excludeIds.join(",") } : {}),
 				_fields: "id,title,slug"
 			})
 			if (!batch.length) break
-			results.push(...batch)
+
+			const filteredBatch = excludeSlugs.length
+				? batch.filter((item) => !excludeSet.has(item.slug))
+				: batch
+
+			results.push(...filteredBatch)
 			if (batch.length < 100) break
 			page++
 		}
@@ -86,20 +90,24 @@ export const useWordPress = () => {
 		return results
 	}
 
-	const getPages = (excludeIds: number[] = []) => getAllByType("pages", excludeIds)
-	const getPosts = (excludeIds: number[] = []) => getAllByType("posts", excludeIds)
+	const getPages = (excludeSlugs: string[] = []) => getAllByType("pages", excludeSlugs)
+	const getPosts = (excludeSlugs: string[] = []) => getAllByType("posts", excludeSlugs)
 
 	/**
-	 * Nav menu data. If no page ids are given, falls back to fetching
-	 * all pages (matches the old useWordPressMenu behaviour).
+	 * Nav menu data. Accepts array of page slugs, post slugs, and excluded page slugs.
 	 */
-	const getMenu = (options: { pages?: number[]; posts?: number[]; excludePages?: number[] } = {}) => {
-		const pageIds = options.pages || []
-		const postIds = options.posts || []
+	const getMenu = (options: { pages?: string[]; posts?: string[]; excludePages?: string[] } = {}) => {
+		const pageSlugs = options.pages || []
+		const postSlugs = options.posts || []
 		const excludePages = options.excludePages || []
 
-		return useAsyncData(`wp-menu-${pageIds.join("-")}-${postIds.join("-")}-${excludePages.join("-")}`, async () => {
-			const [pages, posts] = await Promise.all([pageIds.length ? getPagesByIds(pageIds) : getPages(excludePages), postIds.length ? getPostsByIds(postIds) : Promise.resolve([])])
+		const key = `wp-menu-${pageSlugs.join("-")}-${postSlugs.join("-")}-${excludePages.join("-")}`
+
+		return useAsyncData(key, async () => {
+			const [pages, posts] = await Promise.all([
+				pageSlugs.length ? getPagesBySlugs(pageSlugs) : getPages(excludePages),
+				postSlugs.length ? getPostsBySlugs(postSlugs) : Promise.resolve([])
+			])
 			return [...pages, ...posts]
 		})
 	}
@@ -110,8 +118,8 @@ export const useWordPress = () => {
 		getLandingPage,
 		getPages,
 		getPosts,
-		getPagesByIds,
-		getPostsByIds,
+		getPagesBySlugs,
+		getPostsBySlugs,
 		getMenu
 	}
 }
