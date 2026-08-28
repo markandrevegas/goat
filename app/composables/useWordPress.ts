@@ -39,7 +39,7 @@ export const useWordPress = () => {
 		return results[0] ?? null
 	}
 
-	/** 
+	/**
 	 * Batch fetch by array of slugs, preserving the order of the provided slugs.
 	 */
 	const getBySlugs = async (endpoint: "pages" | "posts", slugs: string[]) => {
@@ -50,9 +50,7 @@ export const useWordPress = () => {
 		})
 
 		// Preserve input order since WP REST API doesn't support orderby="slug_in"
-		return slugs
-			.map((slug) => results.find((item) => item.slug === slug))
-			.filter((item): item is WordPressMenuItem => item !== undefined)
+		return slugs.map((slug) => results.find((item) => item.slug === slug)).filter((item): item is WordPressMenuItem => item !== undefined)
 	}
 
 	const getPagesBySlugs = (slugs: string[]) => getBySlugs("pages", slugs)
@@ -78,9 +76,7 @@ export const useWordPress = () => {
 			})
 			if (!batch.length) break
 
-			const filteredBatch = excludeSlugs.length
-				? batch.filter((item) => !excludeSet.has(item.slug))
-				: batch
+			const filteredBatch = excludeSlugs.length ? batch.filter((item) => !excludeSet.has(item.slug)) : batch
 
 			results.push(...filteredBatch)
 			if (batch.length < 100) break
@@ -104,10 +100,7 @@ export const useWordPress = () => {
 		const key = `wp-menu-${pageSlugs.join("-")}-${postSlugs.join("-")}-${excludePages.join("-")}`
 
 		return useAsyncData(key, async () => {
-			const [pages, posts] = await Promise.all([
-				pageSlugs.length ? getPagesBySlugs(pageSlugs) : getPages(excludePages),
-				postSlugs.length ? getPostsBySlugs(postSlugs) : Promise.resolve([])
-			])
+			const [pages, posts] = await Promise.all([pageSlugs.length ? getPagesBySlugs(pageSlugs) : getPages(excludePages), postSlugs.length ? getPostsBySlugs(postSlugs) : Promise.resolve([])])
 			return [...pages, ...posts]
 		})
 	}

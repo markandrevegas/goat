@@ -33,7 +33,7 @@ if (menuItems.value) {
 	})
 }
 const { data: postItems } = await getMenu({
-	posts: ['sample-page'],
+	posts: ["sample-page"],
 	pages: []
 })
 </script>

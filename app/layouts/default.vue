@@ -1,6 +1,30 @@
 <script setup lang="ts">
 import { onMounted } from "vue"
 
+const { getMenu } = useWordPress()
+const {
+	data: menuItems,
+	status,
+	error
+} = await getMenu({
+	pages: ["apartments", "simple-meetings", "private-selskaber", "information-for-guests"],
+	excludePages: ["privacy-policy"]
+})
+if (menuItems.value) {
+	menuItems.value = menuItems.value.map((item) => {
+		if (item.slug === "information-for-guests") {
+			return {
+				...item,
+				title: {
+					...item.title,
+					rendered: "Information for guests"
+				}
+			}
+		}
+		return item
+	})
+}
+
 const { loadConsent, resetConsent } = useCookieConsent()
 
 onMounted(() => {

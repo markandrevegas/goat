@@ -1,21 +1,7 @@
-// composables/useCookieConsent.ts
 export function useCookieConsent() {
 	const showBanner = useState("cookie-banner-visible", () => false)
 	const analyticsGranted = useState("consent-analytics", () => false)
 	const marketingGranted = useState("consent-marketing", () => false)
-
-	// Resolve saved local storage before setting up GTM
-	const initialStored = resolveStoredConsent()
-
-	const { consent } = useScriptGoogleTagManager({
-		// GCMv2: Pass initial default state so GTM fires default consent before gtm.js loads
-		defaultConsent: {
-			analytics_storage: initialStored?.analytics ? "granted" : "denied",
-			ad_storage: initialStored?.marketing ? "granted" : "denied",
-			ad_user_data: initialStored?.marketing ? "granted" : "denied",
-			ad_personalization: initialStored?.marketing ? "granted" : "denied"
-		}
-	})
 
 	function resolveStoredConsent() {
 		if (import.meta.server) return null
@@ -39,6 +25,22 @@ export function useCookieConsent() {
 		}
 	}
 
+	// 1. Resolve stored consent synchronously during composable init
+	const initialConsent = resolveStoredConsent()
+	const initialAnalytics = initialConsent ? initialConsent.analytics : false
+	const initialMarketing = initialConsent ? initialConsent.marketing : false
+
+	// 2. Pass existing consent status directly into defaultConsent
+	const { consent } = useScriptGoogleTagManager({
+		scriptOptions: { bundle: false },
+		defaultConsent: {
+			analytics_storage: initialAnalytics ? "granted" : "denied",
+			ad_storage: initialMarketing ? "granted" : "denied",
+			ad_user_data: initialMarketing ? "granted" : "denied",
+			ad_personalization: initialMarketing ? "granted" : "denied"
+		}
+	})
+
 	function saveConsent(choices: { analytics: boolean; marketing: boolean }) {
 		localStorage.setItem("cookie-consent", JSON.stringify(choices))
 		localStorage.setItem("cookie-consent-timestamp", Date.now().toString())
@@ -47,13 +49,17 @@ export function useCookieConsent() {
 		marketingGranted.value = choices.marketing
 		showBanner.value = false
 
-		// Push updated consent to GTM
 		consent?.update({
 			analytics_storage: choices.analytics ? "granted" : "denied",
 			ad_storage: choices.marketing ? "granted" : "denied",
 			ad_user_data: choices.marketing ? "granted" : "denied",
 			ad_personalization: choices.marketing ? "granted" : "denied"
 		})
+
+		if (import.meta.client) {
+			window.dataLayer = window.dataLayer || []
+			window.dataLayer.push({ event: "consent_update" })
+		}
 	}
 
 	function acceptAll() {
@@ -67,6 +73,8 @@ export function useCookieConsent() {
 	function resetConsent() {
 		localStorage.removeItem("cookie-consent")
 		localStorage.removeItem("cookie-consent-timestamp")
+		analyticsGranted.value = false
+		marketingGranted.value = false
 		showBanner.value = true
 	}
 
