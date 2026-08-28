@@ -92,6 +92,9 @@ export default defineNuxtConfig({
 			googleTagManager: {
 				id: process.env.NUXT_PUBLIC_GTM_ID,
 				trigger: "onNuxtReady",
+				scriptOptions: {
+          bundle: false 
+        },
 				defaultConsent: {
 					ad_storage: "denied",
 					analytics_storage: "denied",

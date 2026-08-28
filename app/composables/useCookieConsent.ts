@@ -1,14 +1,21 @@
+// composables/useCookieConsent.ts
 export function useCookieConsent() {
 	const showBanner = useState("cookie-banner-visible", () => false)
 	const analyticsGranted = useState("consent-analytics", () => false)
 	const marketingGranted = useState("consent-marketing", () => false)
 
-	const { consent, proxy } = useScriptGoogleTagManager({
-		scriptOptions: { bundle: false }
-	})
+	// Resolve saved local storage before setting up GTM
+	const initialStored = resolveStoredConsent()
 
-	// console.log("GTM consent object:", consent)
-	// console.log("GTM proxy:", proxy)
+	const { consent } = useScriptGoogleTagManager({
+		// GCMv2: Pass initial default state so GTM fires default consent before gtm.js loads
+		defaultConsent: {
+			analytics_storage: initialStored?.analytics ? "granted" : "denied",
+			ad_storage: initialStored?.marketing ? "granted" : "denied",
+			ad_user_data: initialStored?.marketing ? "granted" : "denied",
+			ad_personalization: initialStored?.marketing ? "granted" : "denied"
+		}
+	})
 
 	function resolveStoredConsent() {
 		if (import.meta.server) return null
@@ -40,6 +47,7 @@ export function useCookieConsent() {
 		marketingGranted.value = choices.marketing
 		showBanner.value = false
 
+		// Push updated consent to GTM
 		consent?.update({
 			analytics_storage: choices.analytics ? "granted" : "denied",
 			ad_storage: choices.marketing ? "granted" : "denied",
