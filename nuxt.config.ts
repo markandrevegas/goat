@@ -127,7 +127,11 @@ export default defineNuxtConfig({
 				headers: {
 					"Content-Security-Policy": "style-src 'self' 'unsafe-inline'"
 				}
-			}
+			},
+			"/sitemap_index.xml": { proxy: "https://www.floatinggoat.dk/sitemap_index.xml" },
+			"/sitemap.xml": { proxy: "https://www.floatinggoat.dk/sitemap_index.xml" },
+			"/*.xml": { proxy: "https://www.floatinggoat.dk/*.xml" },
+			"/*.xsl": { proxy: "https://www.floatinggoat.dk/*.xsl" }
 		}
 	},
 	hooks: {

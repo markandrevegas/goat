@@ -42,40 +42,40 @@ export function useCookieConsent() {
 	})
 
 	// composables/useCookieConsent.ts
-function saveConsent(choices: { analytics: boolean; marketing: boolean }) {
-	localStorage.setItem("cookie-consent", JSON.stringify(choices))
-	localStorage.setItem("cookie-consent-timestamp", Date.now().toString())
+	function saveConsent(choices: { analytics: boolean; marketing: boolean }) {
+		localStorage.setItem("cookie-consent", JSON.stringify(choices))
+		localStorage.setItem("cookie-consent-timestamp", Date.now().toString())
 
-	analyticsGranted.value = choices.analytics
-	marketingGranted.value = choices.marketing
-	showBanner.value = false
+		analyticsGranted.value = choices.analytics
+		marketingGranted.value = choices.marketing
+		showBanner.value = false
 
-	// 1. Pass valid ConsentState properties
-	consent?.update({
-		analytics_storage: choices.analytics ? "granted" : "denied",
-		ad_storage: choices.marketing ? "granted" : "denied",
-		ad_user_data: choices.marketing ? "granted" : "denied",
-		ad_personalization: choices.marketing ? "granted" : "denied",
-		personalization_storage: choices.analytics ? "granted" : "denied",
-		functionality_storage: "granted",
-		security_storage: "granted"
-	})
-
-	// 2. Pass additional config flags and signal update via dataLayer
-	if (import.meta.client) {
-		window.dataLayer = window.dataLayer || []
-		
-		// Push ads_data_redaction and url_passthrough parameters separately
-		window.dataLayer.push({
-			set: {
-				ads_data_redaction: choices.marketing ? false : true,
-				url_passthrough: choices.analytics || choices.marketing
-			}
+		// 1. Pass valid ConsentState properties
+		consent?.update({
+			analytics_storage: choices.analytics ? "granted" : "denied",
+			ad_storage: choices.marketing ? "granted" : "denied",
+			ad_user_data: choices.marketing ? "granted" : "denied",
+			ad_personalization: choices.marketing ? "granted" : "denied",
+			personalization_storage: choices.analytics ? "granted" : "denied",
+			functionality_storage: "granted",
+			security_storage: "granted"
 		})
 
-		window.dataLayer.push({ event: "consent_update" })
+		// 2. Pass additional config flags and signal update via dataLayer
+		if (import.meta.client) {
+			window.dataLayer = window.dataLayer || []
+
+			// Push ads_data_redaction and url_passthrough parameters separately
+			window.dataLayer.push({
+				set: {
+					ads_data_redaction: choices.marketing ? false : true,
+					url_passthrough: choices.analytics || choices.marketing
+				}
+			})
+
+			window.dataLayer.push({ event: "consent_update" })
+		}
 	}
-}
 
 	function acceptAll() {
 		saveConsent({ analytics: true, marketing: true })
