@@ -76,7 +76,7 @@ export default defineNuxtConfig({
 		}
 	},
 	site: {
-		url: "https://www.floatinggoat.dk"
+		url: "https://floatinggoat.dk"
 	},
 	future: {
 		compatibilityVersion: 4
