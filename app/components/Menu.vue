@@ -18,9 +18,7 @@ const {
 	pages: [61, 64, 71],
 	excludePages: [59, 56]
 })
-const {
-	data: postItems
-} = await getMenu({
+const { data: postItems } = await getMenu({
 	posts: [51, 1],
 	pages: [],
 	excludePages: [59, 56, 64, 61, 71, 69]
@@ -32,8 +30,8 @@ const {
 		<div class="flex w-full items-center justify-between p-4">
 			<div class="max-content flex items-center">
 				<NuxtLink to="/">
-					<Logo class="fill-palladian h-16 w-auto hidden" />
-					<span class="inline-block h-8 w-8 rounded-full bg-palladian mr-4"></span>
+					<Logo class="fill-palladian hidden h-16 w-auto" />
+					<span class="bg-palladian mr-4 inline-block h-8 w-8 rounded-full"></span>
 				</NuxtLink>
 				<div class="hidden md:flex md:flex-col">
 					<span class="font-display text-2xl font-light">Floating G.O.A.T.</span>
@@ -64,20 +62,20 @@ const {
 
 				<span v-else-if="error" class="block py-2 text-sm text-red-400"> Failed loading menu </span>
 
-				<div v-else class="flex flex-col gap-4 pt-8 text-brand">
+				<div v-else class="text-brand flex flex-col gap-4 pt-8">
 					<h3 class="text-sm font-semibold uppercase">Main menu</h3>
 					<ul class="space-y-1">
 						<li v-for="page in menuItems" :key="page.id">
 							<NuxtLink :to="`/${page.slug}`" @click="isMobileMenuOpen = false" class="text-brand w-max text-sm transition-colors" active-class="border-b-2 font-semibold" v-html="page.title.rendered" />
 						</li>
 					</ul>
-					<h3 class="text-sm font-semibold uppercase mt-4">Follow us</h3>
+					<h3 class="mt-4 text-sm font-semibold uppercase">Follow us</h3>
 					<div class="flex justify-start gap-2">
 						<Instagram />
 						<Facebook />
 						<Linkedin />
 					</div>
-					<h3 class="text-sm font-semibold uppercase mt-4">Recent posts</h3>
+					<h3 class="mt-4 text-sm font-semibold uppercase">Recent posts</h3>
 					<ul class="space-y-1">
 						<li v-for="post in postItems" :key="post.id">
 							<NuxtLink :to="`/${post.slug}`" @click="isMobileMenuOpen = false" class="text-brand w-max text-sm transition-colors" active-class="border-b-2 font-semibold" v-html="post.title.rendered" />
