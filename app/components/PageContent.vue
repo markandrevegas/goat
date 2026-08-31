@@ -13,6 +13,10 @@ defineProps<{
 	title: string
 	body: string
 	slug: string
+	acf: Record<string, any>
+	authorName: string
+	datePublished: string | null
+	formattedDate: string
 	featuredImageUrl?: string | null
 	featuredImageAlt?: string
 	featuredImageWidth?: number
@@ -23,8 +27,35 @@ defineProps<{
 
 <template>
 	<article class="flex w-full flex-col">
-		<header class="mb-16 flex h-48 max-w-3xl flex-col justify-center sm:mx-auto">
-			<h1 class="text-4xl tracking-tight md:text-5xl" v-html="title"></h1>
+		<header v-if="acf.layoutStyle === 'hero'" class="relative -top-[2rem] right-1/2 left-1/2 -mx-[50vw] mb-12 flex h-[calc(100vh-80px)] w-screen flex-col items-center justify-center overflow-hidden p-8 text-white">
+			<div class="relative z-20 mx-auto flex max-w-3xl flex-col items-center md:max-w-4xl">
+				<h1 class="text-center text-4xl tracking-tight md:text-5xl" v-html="title"></h1>
+				<div v-if="authorName || formattedDate" class="mt-4 flex items-center space-x-2 text-sm">
+					<span v-if="authorName" class="hidden font-medium">By {{ authorName }}</span>
+					<span class="font-medium">Published</span>
+					<span v-if="formattedDate">|</span>
+					<time v-if="formattedDate" :datetime="datePublished ?? undefined">{{ formattedDate }}</time>
+				</div>
+			</div>
+			<div v-if="featuredImageUrl" class="absolute inset-0 z-10 size-full">
+				<NuxtImg :src="featuredImageUrl" :alt="featuredImageAlt" :width="featuredImageWidth" :height="featuredImageHeight" sizes="100vw" loading="eager" format="webp" class="size-full object-cover object-center" />
+				<div class="pointer-events-none absolute inset-0 bg-black/40"></div>
+			</div>
+		</header>
+
+		<header v-else class="mx-auto mb-8 flex h-72 max-w-3xl flex-col items-center justify-center md:max-w-4xl">
+			<h1 class="text-center text-4xl tracking-tight md:text-5xl" v-html="title"></h1>
+			<div v-if="authorName || formattedDate" class="mt-4 flex items-center space-x-2 text-sm">
+				<span v-if="authorName" class="hidden font-medium">By {{ authorName }}</span>
+				<span class="font-medium">Published</span>
+				<span v-if="formattedDate">|</span>
+				<time v-if="formattedDate" :datetime="datePublished ?? undefined">{{ formattedDate }}</time>
+			</div>
+			<div class="mt-4 flex items-center justify-start gap-2">
+				<Instagram class="size-6" />
+				<Facebook class="size-6" />
+				<Linkedin class="size-6" />
+			</div>
 		</header>
 
 		<main v-if="body" class="flex flex-col gap-4 md:grid md:grid-cols-4">

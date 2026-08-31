@@ -1,8 +1,6 @@
 <script setup>
-/*import { onMounted } from "vue"
-onMounted(() => {
-	console.log("Client-side ACF Data:", contentAcf.value)
-})*/
+import { onMounted } from "vue"
+
 const route = useRoute()
 const { getPost, getPage, getPages } = useWordPress()
 
@@ -13,28 +11,21 @@ const slug = computed(() => {
 
 const targetSlug = computed(() => slug.value || "home")
 
-// Call getPage and getPost directly (both return useAsyncData instances)
-const { data: contentResult, error } = await useAsyncData(
-	`wp-combined-${targetSlug.value}`,
+// Combine fetching inside a single top-level useAsyncData block
+const { data: rawContentData, error } = await useAsyncData(
+	`wp-content-${targetSlug.value}`,
 	async () => {
+		// Fetch page and post in parallel
 		const [pageRes, postRes] = await Promise.all([
 			getPage(targetSlug.value),
 			getPost(targetSlug.value)
 		])
-		
-		const page = pageRes.data.value
-		const post = postRes.data.value
-		
-		return {
-			content: page || post || null,
-			isPost: !page && !!post
-		}
+		return pageRes.data.value || postRes.data.value || null
 	},
 	{ watch: [targetSlug] }
 )
 
-// Combined status states
-const pending = computed(() => pagePending.value || postPending.value)
+// 404 Guard: Executes ONLY after the async promise resolves
 if (error.value) {
 	throw createError({
 		statusCode: error.value?.statusCode || 500,
@@ -42,7 +33,8 @@ if (error.value) {
 		fatal: true
 	})
 }
-if (!hasContent.value) {
+
+if (!rawContentData.value) {
 	throw createError({
 		statusCode: 404,
 		statusMessage: "WordPress Content Not Found",
@@ -50,31 +42,32 @@ if (!hasContent.value) {
 	})
 }
 
-// Gracefully fall back to post if page isn't matched
-const rawContentData = computed(() => contentResult.value?.content || null)
-const isPost = computed(() => contentResult.value?.isPost || false)
+// Flags & Layout determination
+const isPost = computed(() => rawContentData.value?.type === "post")
 const hasContent = computed(() => !!rawContentData.value)
 
-// Determine layout dynamically
-definePageMeta({
-	layout: false
-})
+definePageMeta({ layout: false })
+
 const useBlogLayout = computed(() => isPost.value || rawContentData.value?.slug === "information-for-guests")
 const layoutName = computed(() => (useBlogLayout.value ? "blog" : "page"))
 
-// Itemized Computed Exports from WP Data
+// Content Field Mappings
 const contentId = computed(() => rawContentData.value?.id || null)
 const contentTitle = computed(() => rawContentData.value?.title?.rendered || "")
 const contentSlug = computed(() => rawContentData.value?.slug || "")
 const contentBody = computed(() => rawContentData.value?.content?.rendered || "")
 const contentAcf = computed(() => rawContentData.value?.acf || {})
-
-/*if (import.meta.client) {
-	console.log(`[WP ACF] slug=${contentSlug.value}`, contentAcf.value)
-}*/
 const datePublished = computed(() => rawContentData.value?.date || null)
 
-// Fetch related pages directly without double-wrapping in useAsyncData
+onMounted(() => {
+	console.log("Client-side ACF Data:", contentAcf.value)
+})
+
+if (import.meta.client) {
+	console.log(`[WP ACF] slug=${contentSlug.value}`, contentAcf.value)
+}
+
+// Fetch related pages
 const { data: allPages } = await getPages()
 
 const relatedPages = computed(() => {
@@ -84,11 +77,8 @@ const relatedPages = computed(() => {
 
 const formattedDate = computed(() => {
 	if (!datePublished.value) return ""
-
-	// Append UTC explicitly to force consistent SSR date rendering
 	const dateString = datePublished.value.endsWith("Z") ? datePublished.value : `${datePublished.value}Z`
 	const parsedDate = new Date(dateString)
-
 	if (isNaN(parsedDate.getTime())) return ""
 
 	return new Intl.DateTimeFormat("da-DK", {
@@ -102,40 +92,21 @@ const formattedDate = computed(() => {
 const authorDetails = computed(() => rawContentData.value?._embedded?.author?.[0] || null)
 const authorName = computed(() => authorDetails.value?.name || "")
 
-// Featured Image Data Extraction
+// Featured Media
 const featuredMedia = computed(() => rawContentData.value?._embedded?.["wp:featuredmedia"]?.[0] || null)
 const featuredImageUrl = computed(() => featuredMedia.value?.source_url || null)
 const featuredImageAlt = computed(() => featuredMedia.value?.alt_text || contentTitle.value)
 const featuredImageWidth = computed(() => featuredMedia.value?.media_details?.width || 1200)
 const featuredImageHeight = computed(() => featuredMedia.value?.media_details?.height || 630)
 
-// Unified Error & 404 Guarding
-if (error.value) {
-	throw createError({
-		statusCode: error.value?.statusCode || 500,
-		statusMessage: "Failed to fetch content from WordPress",
-		fatal: true
-	})
-}
-
-if (!hasContent.value) {
-	throw createError({
-		statusCode: 404,
-		statusMessage: "WordPress Content Not Found",
-		fatal: true
-	})
-}
-
-// SEO Metadata computed properties
+// SEO Metadata
 const seoTitle = computed(() => contentTitle.value || "Page")
 const seoDescription = computed(() => {
 	const excerpt = rawContentData.value?.excerpt?.rendered
 	if (!excerpt) return "Welcome to our site."
 	return excerpt.replace(/<[^>]*>?/gm, "").trim()
 })
-const ogImage = computed(() => {
-	return rawContentData.value?.yoast_head_json?.og_image?.[0]?.url || featuredImageUrl.value || "/default-og.jpg"
-})
+const ogImage = computed(() => rawContentData.value?.yoast_head_json?.og_image?.[0]?.url || featuredImageUrl.value || "/default-og.jpg")
 
 useSeoMeta({
 	title: seoTitle,
@@ -168,7 +139,7 @@ useSeoMeta({
 
 			<PostContent v-else-if="hasContent && useBlogLayout" :title="contentTitle" :body="contentBody" :slug="contentSlug" :acf="contentAcf" :author-name="authorName" :formatted-date="formattedDate" :date-published="datePublished" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" />
 
-			<PageContent v-else-if="hasContent" :title="contentTitle" :body="contentBody" :slug="contentSlug" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" :related-pages="relatedPages" />
+			<PageContent v-else-if="hasContent" :acf="contentAcf" :title="contentTitle" :body="contentBody" :slug="contentSlug" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" :related-pages="relatedPages" />
 		</div>
 	</NuxtLayout>
 </template>
