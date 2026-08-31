@@ -12,7 +12,7 @@ const slug = computed(() => {
 const targetSlug = computed(() => slug.value || "home")
 
 // Combine fetching inside a single top-level useAsyncData block
-const { data: rawContentData, error } = await useAsyncData(
+const { data: rawContentData, error, pending } = await useAsyncData(
 	`wp-content-${targetSlug.value}`,
 	async () => {
 		// Fetch page and post in parallel
