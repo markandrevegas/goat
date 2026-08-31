@@ -14,16 +14,45 @@ const slug = computed(() => {
 const targetSlug = computed(() => slug.value || "home")
 
 // Call getPage and getPost directly (both return useAsyncData instances)
-const { data: rawPageData, pending: pagePending, error: pageError } = await getPage(targetSlug.value)
-const { data: rawPostData, pending: postPending, error: postError } = await getPost(targetSlug.value)
+const { data: contentResult, error } = await useAsyncData(
+	`wp-combined-${targetSlug.value}`,
+	async () => {
+		const [pageRes, postRes] = await Promise.all([
+			getPage(targetSlug.value),
+			getPost(targetSlug.value)
+		])
+		
+		const page = pageRes.data.value
+		const post = postRes.data.value
+		
+		return {
+			content: page || post || null,
+			isPost: !page && !!post
+		}
+	},
+	{ watch: [targetSlug] }
+)
 
 // Combined status states
 const pending = computed(() => pagePending.value || postPending.value)
-const error = computed(() => (pageError.value && postError.value ? pageError.value : null))
+if (error.value) {
+	throw createError({
+		statusCode: error.value?.statusCode || 500,
+		statusMessage: "Failed to fetch content from WordPress",
+		fatal: true
+	})
+}
+if (!hasContent.value) {
+	throw createError({
+		statusCode: 404,
+		statusMessage: "WordPress Content Not Found",
+		fatal: true
+	})
+}
 
 // Gracefully fall back to post if page isn't matched
-const rawContentData = computed(() => rawPageData.value || rawPostData.value || null)
-const isPost = computed(() => !rawPageData.value && !!rawPostData.value)
+const rawContentData = computed(() => contentResult.value?.content || null)
+const isPost = computed(() => contentResult.value?.isPost || false)
 const hasContent = computed(() => !!rawContentData.value)
 
 // Determine layout dynamically
