@@ -15,6 +15,9 @@ declare module "nuxt/schema" {
 			server?: boolean
 			client?: boolean
 		}
+		generate?: {
+			fallback?: string
+		}
 	}
 }
 
@@ -49,6 +52,7 @@ async function fetchAllSlugs(wpUrl: string, endpoint: string): Promise<string[]>
 }
 
 export default defineNuxtConfig({
+	ssr: true,
 	app: {
 		baseURL: "/",
 		head: {
@@ -134,29 +138,32 @@ export default defineNuxtConfig({
 			"/*.xsl": { proxy: "https://www.floatinggoat.dk/*.xsl" }
 		}
 	},
-	hooks: {
-		"nitro:config": async (nitroConfig) => {
-			const wpUrl = process.env.NUXT_PUBLIC_GOAT_WORDPRESS_URL
-			if (!wpUrl) {
-				console.warn("NUXT_PUBLIC_GOAT_WORDPRESS_URL not set — skipping WP route discovery")
-				return
-			}
-
-			const [pageSlugs, postSlugs] = await Promise.all([fetchAllSlugs(wpUrl, "pages"), fetchAllSlugs(wpUrl, "posts")])
-
-			// Landing pages (e.g. pages/sample-page.vue) are individual
-			// file-based routes, not served through [...slug].vue, so
-			// Nuxt already includes them in the static build on its own
-			// — no WP lookup needed for those.
-			nitroConfig.prerender = nitroConfig.prerender || {}
-			nitroConfig.prerender.routes = nitroConfig.prerender.routes || []
-			for (const slug of [...pageSlugs, ...postSlugs]) {
-				nitroConfig.prerender.routes.push(`/${slug}`)
-			}
-
-			console.log(`Prerender: added ${pageSlugs.length} pages, ${postSlugs.length} posts`)
-		}
+	generate: {
+		fallback: '404.html'
 	},
+	hooks: {
+    async 'prerender:routes'(ctx) {
+      const wpUrl = process.env.NUXT_PUBLIC_GOAT_WORDPRESS_URL
+      if (!wpUrl) return
+
+      try {
+        // Fetch pages & posts to prerender
+        const [pagesRes, postsRes] = await Promise.all([
+          fetch(`${wpUrl}/pages?per_page=100&_fields=slug`),
+          fetch(`${wpUrl}/posts?per_page=100&_fields=slug`)
+        ])
+
+        const pages = await pagesRes.json()
+        const posts = await postsRes.json()
+
+        // Push paths into Nitro's prerender context
+        pages.forEach((page: { slug: string }) => ctx.routes.add(`/${page.slug}`))
+        posts.forEach((post: { slug: string }) => ctx.routes.add(`/${post.slug}`))
+      } catch (err) {
+        console.error('Failed to prerender WP routes:', err)
+      }
+    }
+  },
 	svgo: {
 		dts: true
 	},

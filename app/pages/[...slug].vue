@@ -4,13 +4,12 @@ import { onMounted } from "vue"
 const route = useRoute()
 const { getPost, getPage, getPages } = useWordPress()
 
-const slug = computed(() => {
-	const params = route.params.slug
-	return Array.isArray(params) ? params.join("/") : params || ""
+const slugParam = computed(() => {
+  const params = route.params.slug
+  return Array.isArray(params) ? params : [params || ""]
 })
 
-const targetSlug = computed(() => slug.value || "home")
-
+const targetSlug = computed(() => slugParam.value[slugParam.value.length - 1] || "home")
 // Combine fetching inside a single top-level useAsyncData block
 const { data: rawContentData, error, pending } = await useAsyncData(
 	`wp-content-${targetSlug.value}`,

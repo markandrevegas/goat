@@ -16,21 +16,21 @@ export const useWordPress = () => {
 	 * author) plus excerpt and yoast_head_json.
 	 */
 	const getContentBySlug = (endpoint: "posts" | "pages", slug: string) => {
-		const key = `wp-single-${endpoint}-${slug}`
+    // Explicit, deterministic key for static hydration
+    const key = `wp-content-${endpoint}-${slug}`
 
-		return useAsyncData(key, async () => {
-			if (!slug) return null
+    return useAsyncData(key, async () => {
+      if (!slug) return null
 
-			const results = await wpFetch<WordPressPostOrPage[]>(endpoint, {
-				slug,
-				_embed: 1,
-				_fields: "id,date,title,slug,content,excerpt,acf,yoast_head_json,_links,_embedded"
-			})
+      const results = await wpFetch<WordPressPostOrPage[]>(endpoint, {
+        slug,
+        _embed: 1,
+        _fields: "id,date,title,slug,content,excerpt,acf,yoast_head_json,_links,_embedded"
+      })
 
-			// Return null explicitly if item isn't found
-			return results?.[0] ?? null
-		})
-	}
+      return results?.[0] ?? null
+    })
+  }
 
 	const getPage = (slug: string) => getContentBySlug("pages", slug)
 	const getPost = (slug: string) => getContentBySlug("posts", slug)
