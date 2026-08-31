@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const { getPosts } = useWordPress()
 const { data: postItems } = await getPosts({
-	exclude: ["uncategorized-sample-post"]
+	exclude: ["hello-world"]
 })
 </script>
 
@@ -11,7 +11,7 @@ const { data: postItems } = await getPosts({
 			<Menu :items="postItems || []" />
 		</div>
 
-		<div class="relative z-10 flex min-h-screen flex-col pt-24">
+		<div class="relative z-10 flex min-h-screen flex-col">
 			<main class="flex-grow">
 				<slot></slot>
 			</main>

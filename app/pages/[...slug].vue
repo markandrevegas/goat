@@ -1,4 +1,8 @@
 <script setup>
+import { onMounted } from "vue"
+onMounted(() => {
+	console.log("Client-side ACF Data:", contentAcf.value)
+})
 const route = useRoute()
 const { getPost, getPage, getPages } = useWordPress()
 
@@ -36,7 +40,7 @@ const contentSlug = computed(() => rawContentData.value?.slug || "")
 const contentBody = computed(() => rawContentData.value?.content?.rendered || "")
 const contentAcf = computed(() => rawContentData.value?.acf || {})
 
-if (import.meta.dev) {
+if (import.meta.client) {
 	console.log(`[WP ACF] slug=${contentSlug.value}`, contentAcf.value)
 }
 const datePublished = computed(() => rawContentData.value?.date || null)

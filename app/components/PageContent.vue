@@ -2,7 +2,7 @@
 import Instagram from "~/components/icons/Instagram.vue"
 import Facebook from "~/components/icons/Facebook.vue"
 import Linkedin from "~/components/icons/Linkedin.vue"
-import ThreeCardLayout from "./ui/ThreeCardLayout.vue"
+
 interface RelatedPage {
 	id: number
 	title: { rendered: string }
@@ -23,7 +23,7 @@ defineProps<{
 
 <template>
 	<article class="flex w-full flex-col">
-		<header class="mb-16 flex max-w-3xl flex-col sm:mx-auto">
+		<header class="mb-16 flex h-48 max-w-3xl flex-col justify-center sm:mx-auto">
 			<h1 class="text-4xl tracking-tight md:text-5xl" v-html="title"></h1>
 		</header>
 
