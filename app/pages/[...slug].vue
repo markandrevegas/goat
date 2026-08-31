@@ -9,11 +9,9 @@ const slug = computed(() => {
 
 const targetSlug = computed(() => slug.value || "home")
 
-// Fetch page data dynamically based on the current slug
-const { data: rawPageData, pending: pagePending, error: pageError } = await useAsyncData(`wp-page-${targetSlug.value}`, () => getPage(targetSlug.value), { watch: [targetSlug] })
-
-// Fetch post data dynamically based on the current slug
-const { data: rawPostData, pending: postPending, error: postError } = await useAsyncData(`wp-post-${slug.value}`, () => (slug.value ? getPost(slug.value) : Promise.resolve(null)), { watch: [slug] })
+// Call getPage and getPost directly (both return useAsyncData instances)
+const { data: rawPageData, pending: pagePending, error: pageError } = await getPage(targetSlug.value)
+const { data: rawPostData, pending: postPending, error: postError } = await getPost(targetSlug.value)
 
 // Combined status states
 const pending = computed(() => pagePending.value || postPending.value)
@@ -24,10 +22,7 @@ const rawContentData = computed(() => rawPageData.value || rawPostData.value || 
 const isPost = computed(() => !rawPageData.value && !!rawPostData.value)
 const hasContent = computed(() => !!rawContentData.value)
 
-// Which layout wraps this route — decided by content type, not by the
-// route itself, since both pages and posts share the same flat slug space.
-// information-for-guests is an exception: it's a WP page, but should
-// render with the post layout/component instead of the page one.
+// Determine layout dynamically
 definePageMeta({
 	layout: false
 })
@@ -46,20 +41,19 @@ if (import.meta.dev) {
 }
 const datePublished = computed(() => rawContentData.value?.date || null)
 
-// Other page menu items for the "Related" column in PageContent. Only
-// fetched for actual pages — post pages never render PageContent, so
-// skip the request there instead of firing it unconditionally. Watching
-// isPost re-runs this correctly on client-side route changes too.
-const { data: allPages } = await useAsyncData("wp-related-pages", () => (useBlogLayout.value ? Promise.resolve([]) : getPages()), { watch: [useBlogLayout] })
+// Fetch related pages directly without double-wrapping in useAsyncData
+const { data: allPages } = await getPages()
 
-const relatedPages = computed(() => (allPages.value || []).filter((page) => ![contentId.value, 59, 56, 71].includes(page.id)))
+const relatedPages = computed(() => {
+	if (useBlogLayout.value || !allPages.value) return []
+	return allPages.value.filter((page) => ![contentId.value, 59, 56, 71].includes(page.id))
+})
 
 const formattedDate = computed(() => {
 	if (!datePublished.value) return ""
 
 	// Append UTC explicitly to force consistent SSR date rendering
 	const dateString = datePublished.value.endsWith("Z") ? datePublished.value : `${datePublished.value}Z`
-
 	const parsedDate = new Date(dateString)
 
 	if (isNaN(parsedDate.getTime())) return ""
@@ -71,8 +65,10 @@ const formattedDate = computed(() => {
 		timeZone: "UTC"
 	}).format(parsedDate)
 })
+
 const authorDetails = computed(() => rawContentData.value?._embedded?.author?.[0] || null)
 const authorName = computed(() => authorDetails.value?.name || "")
+
 // Featured Image Data Extraction
 const featuredMedia = computed(() => rawContentData.value?._embedded?.["wp:featuredmedia"]?.[0] || null)
 const featuredImageUrl = computed(() => featuredMedia.value?.source_url || null)
@@ -80,19 +76,19 @@ const featuredImageAlt = computed(() => featuredMedia.value?.alt_text || content
 const featuredImageWidth = computed(() => featuredMedia.value?.media_details?.width || 1200)
 const featuredImageHeight = computed(() => featuredMedia.value?.media_details?.height || 630)
 
-// Error handling & 404 navigation
+// Unified Error & 404 Guarding
 if (error.value) {
 	throw createError({
-		statusCode: error.value?.status || 500,
+		statusCode: error.value?.statusCode || 500,
 		statusMessage: "Failed to fetch content from WordPress",
 		fatal: true
 	})
 }
 
-if (!rawContentData.value || rawPageData.value.length === 0) {
+if (!hasContent.value) {
 	throw createError({
 		statusCode: 404,
-		statusMessage: "WordPress Post Not Found",
+		statusMessage: "WordPress Content Not Found",
 		fatal: true
 	})
 }

@@ -1,17 +1,13 @@
 <script setup lang="ts">
 import { onMounted } from "vue"
 
-const { getMenu } = useWordPress()
-const {
-	data: menuItems,
-	status,
-	error
-} = await getMenu({
-	pages: ["apartments", "simple-meetings", "private-selskaber", "information-for-guests"],
-	excludePages: ["privacy-policy"]
+const { getPages } = useWordPress()
+const { data: menuPages } = await getPages({
+	include: ["apartments", "simple-meetings", "private-selskaber", "information-for-guests"],
+	exclude: ["privacy-policy", "terms-of-service"]
 })
-if (menuItems.value) {
-	menuItems.value = menuItems.value.map((item) => {
+if (menuPages.value) {
+	menuPages.value = menuPages.value.map((item) => {
 		if (item.slug === "information-for-guests") {
 			return {
 				...item,
@@ -25,7 +21,7 @@ if (menuItems.value) {
 	})
 }
 
-const { loadConsent, resetConsent } = useCookieConsent()
+const { loadConsent } = useCookieConsent()
 
 onMounted(() => {
 	loadConsent()
@@ -47,7 +43,7 @@ onMounted(() => {
 			</main>
 			<MainFooter />
 			<ClientOnly>
-				<button class="fixed right-24 bottom-24 z-50 hidden rounded bg-black px-3 py-1 text-xs text-white opacity-70 hover:opacity-100" @click="resetConsent">Reset consent (dev)</button>
+				<!--<button class="fixed right-24 bottom-24 z-50 hidden rounded bg-black px-3 py-1 text-xs text-white opacity-70 hover:opacity-100" @click="resetConsent">Reset consent (dev)</button>-->
 				<CookieBanner />
 			</ClientOnly>
 		</div>

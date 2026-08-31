@@ -162,8 +162,8 @@ export default defineNuxtConfig({
 	},
 	fonts: {
 		providers: {
-      fontshare: false
-    },
+			fontshare: false
+		},
 		defaults: {
 			weights: [300, 400, 500, 600, 700],
 			styles: ["normal", "italic"],

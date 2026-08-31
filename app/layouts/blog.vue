@@ -1,19 +1,14 @@
 <script setup lang="ts">
-const { getMenu } = useWordPress()
-const {
-	data: menuItems,
-	status,
-	error
-} = await getMenu({
-	pages: [],
-	posts: [1, 5]
+const { getPosts } = useWordPress()
+const { data: postItems } = await getPosts({
+	exclude: ["uncategorized-sample-post"]
 })
 </script>
 
 <template>
 	<div class="relative min-h-screen overflow-hidden">
 		<div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-			<Menu :items="menuItems || []" />
+			<Menu :items="postItems || []" />
 		</div>
 
 		<div class="relative z-10 flex min-h-screen flex-col pt-24">

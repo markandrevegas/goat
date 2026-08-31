@@ -9,32 +9,30 @@ import Linkedin from "./icons/Linkedin.vue"
 
 const { y } = useWindowScroll()
 const isMobileMenuOpen = ref(false)
-const { getMenu } = useWordPress()
+const { getPages, getPosts } = useWordPress()
 const {
-	data: menuItems,
+	data: menuPages,
 	status,
 	error
-} = await getMenu({
-	pages: ["apartments", "simple-meetings", "private-selskaber", "information-for-guests"],
-	excludePages: ["privacy-policy", "terms-of-service"]
+} = await getPages({
+	include: ["apartments", "simple-meetings", "private-selskaber", "information-for-guests"],
+	exclude: ["privacy-policy", "terms-of-service"]
 })
-if (menuItems.value) {
-	menuItems.value = menuItems.value.map((item) => {
+// Transform page titles if needed
+const pageItems = computed(() => {
+	if (!menuPages.value) return []
+	return menuPages.value.map((item) => {
 		if (item.slug === "information-for-guests") {
 			return {
 				...item,
-				title: {
-					...item.title,
-					rendered: "Information for guests"
-				}
+				title: { ...item.title, rendered: "Information for guests" }
 			}
 		}
 		return item
 	})
-}
-const { data: postItems } = await getMenu({
-	posts: ["sample-page"],
-	pages: []
+})
+const { data: postItems } = await getPosts({
+	exclude: ["uncategorized-sample-post"]
 })
 </script>
 
@@ -78,7 +76,7 @@ const { data: postItems } = await getMenu({
 				<div v-else class="text-brand flex flex-col gap-4 pt-8">
 					<h3 class="text-sm font-semibold uppercase">Main menu</h3>
 					<ul class="space-y-1">
-						<li v-for="page in menuItems" :key="page.id">
+						<li v-for="page in pageItems" :key="page.id">
 							<NuxtLink :to="`/${page.slug}`" @click="isMobileMenuOpen = false" class="text-brand w-max text-sm transition-colors" active-class="border-b-2 font-semibold" v-html="page.title.rendered" />
 						</li>
 					</ul>

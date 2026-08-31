@@ -1,15 +1,15 @@
 <script setup lang="ts">
-const { getMenu } = useWordPress()
-const { data: menuItems, status } = await getMenu({
-	pages: [2],
-	posts: [1]
+const { getPages } = useWordPress()
+const { data: menuPages } = await getPages({
+	include: ["apartments", "simple-meetings", "private-selskaber", "information-for-guests"],
+	exclude: ["privacy-policy", "terms-of-service"]
 })
 </script>
 
 <template>
 	<div class="relative min-h-screen overflow-hidden">
 		<div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-			<Menu :items="menuItems || []" />
+			<Menu :items="menuPages || []" />
 		</div>
 
 		<div class="relative z-10 flex min-h-screen flex-col pt-24">

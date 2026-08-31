@@ -15,13 +15,21 @@ export const useWordPress = () => {
 	 * Single page or post by slug. Includes _embed data (featured image,
 	 * author) plus excerpt and yoast_head_json.
 	 */
-	const getContentBySlug = async (endpoint: "posts" | "pages", slug: string) => {
-		const results = await wpFetch<WordPressPostOrPage[]>(endpoint, {
-			slug,
-			_embed: 1,
-			_fields: "id,date,title,slug,content,excerpt,acf,yoast_head_json,_links,_embedded"
+	const getContentBySlug = (endpoint: "posts" | "pages", slug: string) => {
+		const key = `wp-single-${endpoint}-${slug}`
+
+		return useAsyncData(key, async () => {
+			if (!slug) return null
+
+			const results = await wpFetch<WordPressPostOrPage[]>(endpoint, {
+				slug,
+				_embed: 1,
+				_fields: "id,date,title,slug,content,excerpt,acf,yoast_head_json,_links,_embedded"
+			})
+
+			// Return null explicitly if item isn't found
+			return results?.[0] ?? null
 		})
-		return results[0] ?? null
 	}
 
 	const getPage = (slug: string) => getContentBySlug("pages", slug)
@@ -86,22 +94,37 @@ export const useWordPress = () => {
 		return results
 	}
 
-	const getPages = (excludeSlugs: string[] = []) => getAllByType("pages", excludeSlugs)
-	const getPosts = (excludeSlugs: string[] = []) => getAllByType("posts", excludeSlugs)
-
 	/**
-	 * Nav menu data. Accepts array of page slugs, post slugs, and excluded page slugs.
+	 * Flexible fetcher for Pages with optional inclusion/exclusion lists.
 	 */
-	const getMenu = (options: { pages?: string[]; posts?: string[]; excludePages?: string[] } = {}) => {
-		const pageSlugs = options.pages || []
-		const postSlugs = options.posts || []
-		const excludePages = options.excludePages || []
-
-		const key = `wp-menu-${pageSlugs.join("-")}-${postSlugs.join("-")}-${excludePages.join("-")}`
+	const getPages = (options: { include?: string[]; exclude?: string[] } = {}) => {
+		const include = options.include || []
+		const exclude = options.exclude || []
+		const key = `wp-pages-inc-${include.join("-")}-exc-${exclude.join("-")}`
 
 		return useAsyncData(key, async () => {
-			const [pages, posts] = await Promise.all([pageSlugs.length ? getPagesBySlugs(pageSlugs) : getPages(excludePages), postSlugs.length ? getPostsBySlugs(postSlugs) : Promise.resolve([])])
-			return [...pages, ...posts]
+			if (include.length > 0) {
+				const items = await getPagesBySlugs(include)
+				return exclude.length ? items.filter((item) => !exclude.includes(item.slug)) : items
+			}
+			return getAllByType("pages", exclude)
+		})
+	}
+
+	/**
+	 * Flexible fetcher for Posts with optional inclusion/exclusion lists.
+	 */
+	const getPosts = (options: { include?: string[]; exclude?: string[] } = {}) => {
+		const include = options.include || []
+		const exclude = options.exclude || []
+		const key = `wp-posts-inc-${include.join("-")}-exc-${exclude.join("-")}`
+
+		return useAsyncData(key, async () => {
+			if (include.length > 0) {
+				const items = await getPostsBySlugs(include)
+				return exclude.length ? items.filter((item) => !exclude.includes(item.slug)) : items
+			}
+			return getAllByType("posts", exclude)
 		})
 	}
 
@@ -112,7 +135,6 @@ export const useWordPress = () => {
 		getPages,
 		getPosts,
 		getPagesBySlugs,
-		getPostsBySlugs,
-		getMenu
+		getPostsBySlugs
 	}
 }
