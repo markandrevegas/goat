@@ -1,10 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue"
 const { getPosts } = useWordPress()
-const { data: postItems } = await getPosts({
-	include: [],
-	exclude: ["hello-world"]
-})
+
 
 import Instagram from "~/components/icons/Instagram.vue"
 import Facebook from "~/components/icons/Facebook.vue"
@@ -25,6 +22,10 @@ const props = defineProps<{
 	featuredImageWidth: number
 	featuredImageHeight: number
 }>()
+
+const { data: postItems } = await getPosts({
+	exclude: [props.slug]
+})
 
 const layoutStyle = computed(() => {
 	return props.acf?.layouttype
