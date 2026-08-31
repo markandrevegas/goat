@@ -14,9 +14,9 @@ export const useTrackEvent = () => {
 
 			window.gtag("event", eventName, payload)
 
-			if (isDev) {
+			/*if (isDev) {
 				console.log(`[GA4 Event Fired]: ${eventName}`, payload)
-			}
+			}*/
 		}
 	}
 
