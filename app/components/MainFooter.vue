@@ -5,16 +5,16 @@ import Facebook from "./icons/Facebook.vue"
 
 const { getMenu } = useWordPress()
 const { data: menuItems } = await getMenu({
-	pages: [61, 64],
-	excludePages: [59, 56]
+	pages: ["betingelser", "lejebetingelser-for-private", "lejebetingelser-for-erhverv"],
+	excludePages: ["privacy-policy", "terms-of-service"]
 })
 </script>
 <template>
-	<footer class="text-sm">
+	<footer class="text-sm/6">
 		<div class="grid flex-shrink-0 grid-cols-1 gap-4 p-8 py-24 sm:mx-auto sm:max-w-6xl sm:grid-cols-2 md:grid-cols-4">
 			<div class="flex flex-col gap-1">
 				<p class="font-display text-lg font-semibold">Floating G.O.A.T.</p>
-				<p class="text-sm">Langebrogade 1C<br />1411 København K<br />CVR: 44307987</p>
+				<p>Langebrogade 1C<br />1411 København K<br />CVR: 44307987</p>
 			</div>
 			<div class="flex flex-col">
 				<p class="font-display text-lg font-semibold">Kontakt</p>
