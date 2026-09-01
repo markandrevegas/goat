@@ -5,20 +5,21 @@ const route = useRoute()
 const { getPost, getPage, getPages } = useWordPress()
 
 const slugParam = computed(() => {
-  const params = route.params.slug
-  return Array.isArray(params) ? params : [params || ""]
+	const params = route.params.slug
+	return Array.isArray(params) ? params : [params || ""]
 })
 
 const targetSlug = computed(() => slugParam.value[slugParam.value.length - 1] || "home")
 // Combine fetching inside a single top-level useAsyncData block
-const { data: rawContentData, error, pending } = await useAsyncData(
+const {
+	data: rawContentData,
+	error,
+	pending
+} = await useAsyncData(
 	`wp-content-${targetSlug.value}`,
 	async () => {
 		// Fetch page and post in parallel
-		const [pageRes, postRes] = await Promise.all([
-			getPage(targetSlug.value),
-			getPost(targetSlug.value)
-		])
+		const [pageRes, postRes] = await Promise.all([getPage(targetSlug.value), getPost(targetSlug.value)])
 		return pageRes.data.value || postRes.data.value || null
 	},
 	{ watch: [targetSlug] }

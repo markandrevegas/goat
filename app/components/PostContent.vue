@@ -2,7 +2,6 @@
 import { computed } from "vue"
 const { getPosts } = useWordPress()
 
-
 import Instagram from "~/components/icons/Instagram.vue"
 import Facebook from "~/components/icons/Facebook.vue"
 import Linkedin from "~/components/icons/Linkedin.vue"

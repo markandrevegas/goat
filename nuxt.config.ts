@@ -22,27 +22,55 @@ declare module "nuxt/schema" {
 }
 
 /**
+ * fetch() with retry + backoff + timeout. 429/5xx and network errors are
+ * retried; other non-ok statuses (401/403/404 etc.) are returned as-is so
+ * the caller can decide what they mean rather than being retried blindly.
+ */
+async function fetchWithRetry(url: string, retries = 3, backoffMs = 500): Promise<Response> {
+	let lastErr: unknown
+
+	for (let attempt = 1; attempt <= retries; attempt++) {
+		try {
+			const res = await fetch(url, { signal: AbortSignal.timeout(10_000) })
+			if (res.ok || (res.status !== 429 && res.status < 500)) return res
+			lastErr = new Error(`HTTP ${res.status} from ${url}`)
+		} catch (err) {
+			lastErr = err
+		}
+		if (attempt < retries) await new Promise((r) => setTimeout(r, backoffMs * attempt))
+	}
+
+	throw lastErr instanceof Error ? lastErr : new Error(String(lastErr))
+}
+
+/**
  * Fetches every slug for a given WP endpoint, paginating through
  * per_page=100 until exhausted. Used by the prerender:routes hook
  * below so unlinked content (e.g. campaign landing pages) still
  * gets built into the static export, since crawlLinks alone only
  * follows <a href> links found starting from "/".
+ *
+ * A 400 (rest_post_invalid_page_number) past page 1 is WP's real
+ * "end of results" signal and is treated as such. Any other non-ok
+ * status — including a non-ok on page 1 — is a genuine failure and
+ * is thrown, not swallowed, so a bad WP response doesn't silently
+ * look like "no more pages."
  */
 async function fetchAllSlugs(wpUrl: string, endpoint: string): Promise<string[]> {
 	const slugs: string[] = []
 	let page = 1
 
 	while (true) {
-		const res = await fetch(`${wpUrl}/${endpoint}?per_page=100&page=${page}&_fields=slug`)
+		const res = await fetchWithRetry(`${wpUrl}/${endpoint}?per_page=100&page=${page}&_fields=slug`)
+
 		if (!res.ok) {
-			// Some endpoints (e.g. a missing custom post type) 400 on an
-			// out-of-range page instead of returning []. Treat any
-			// non-ok response as "no more results" rather than failing
-			// the whole build.
-			break
+			if (page > 1 && res.status === 400) break
+			throw new Error(`[fetchAllSlugs] ${endpoint} page ${page} returned HTTP ${res.status}`)
 		}
+
 		const data = (await res.json()) as { slug: string }[]
 		if (!Array.isArray(data) || data.length === 0) break
+
 		slugs.push(...data.map((item) => item.slug))
 		if (data.length < 100) break
 		page++
@@ -123,7 +151,11 @@ export default defineNuxtConfig({
 		prerender: {
 			crawlLinks: true,
 			routes: ["/"],
-			failOnError: false
+			// Flipped to true: a prerender-time error anywhere (including
+			// the WP route-enumeration hook below) should fail the build,
+			// not silently ship a partial static export. Revert to false
+			// if this turns out to be too strict for other prerender steps.
+			failOnError: true
 		},
 		routeRules: {
 			"/_nuxt/**": { headers: { "cache-control": "public, max-age=31536000, immutable" } },
@@ -142,28 +174,46 @@ export default defineNuxtConfig({
 		fallback: '404.html'
 	},
 	hooks: {
-    async 'prerender:routes'(ctx) {
-      const wpUrl = process.env.NUXT_PUBLIC_GOAT_WORDPRESS_URL
-      if (!wpUrl) return
+		async 'prerender:routes'(ctx) {
+			const wpUrl = process.env.NUXT_PUBLIC_GOAT_WORDPRESS_URL
+			if (!wpUrl) {
+				throw new Error('[prerender] NUXT_PUBLIC_GOAT_WORDPRESS_URL is not set — aborting build')
+			}
 
-      try {
-        // Fetch pages & posts to prerender
-        const [pagesRes, postsRes] = await Promise.all([
-          fetch(`${wpUrl}/pages?per_page=100&_fields=slug`),
-          fetch(`${wpUrl}/posts?per_page=100&_fields=slug`)
-        ])
+			const [pagesResult, postsResult] = await Promise.allSettled([
+				fetchAllSlugs(wpUrl, 'pages'),
+				fetchAllSlugs(wpUrl, 'posts')
+			])
 
-        const pages = await pagesRes.json()
-        const posts = await postsRes.json()
+			const failures = [
+				pagesResult.status === 'rejected' ? `pages: ${pagesResult.reason}` : null,
+				postsResult.status === 'rejected' ? `posts: ${postsResult.reason}` : null
+			].filter(Boolean)
 
-        // Push paths into Nitro's prerender context
-        pages.forEach((page: { slug: string }) => ctx.routes.add(`/${page.slug}`))
-        posts.forEach((post: { slug: string }) => ctx.routes.add(`/${post.slug}`))
-      } catch (err) {
-        console.error('Failed to prerender WP routes:', err)
-      }
-    }
-  },
+			if (failures.length) {
+				// Fail loudly. A build that silently ships with missing
+				// routes is worse than one that fails in CI where you'll
+				// actually see it.
+				throw new Error(`[prerender] Failed to enumerate WP routes:\n${failures.join('\n')}`)
+			}
+
+			const pageSlugs = pagesResult.status === 'fulfilled' ? pagesResult.value : []
+			const postSlugs = postsResult.status === 'fulfilled' ? postsResult.value : []
+
+			// A live WP site should never legitimately return zero pages.
+			// If it does, something's wrong upstream (wrong URL, auth,
+			// empty DB) — better to catch that here than ship a site
+			// with no routes.
+			if (pageSlugs.length === 0) {
+				throw new Error('[prerender] WP returned 0 pages — aborting build rather than shipping an empty site')
+			}
+
+			pageSlugs.forEach((slug) => ctx.routes.add(`/${slug}`))
+			postSlugs.forEach((slug) => ctx.routes.add(`/${slug}`))
+
+			console.log(`[prerender] queued ${pageSlugs.length} pages, ${postSlugs.length} posts`)
+		}
+	},
 	svgo: {
 		dts: true
 	},
