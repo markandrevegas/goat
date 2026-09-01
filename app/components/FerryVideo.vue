@@ -23,8 +23,8 @@ import SecondaryButton from "./ui/SecondaryButton.vue"
 				<h1 class="text-3xl font-bold tracking-tight md:text-4xl">Floating G.O.A.T.</h1>
 				<p class="mx-auto my-4 line-clamp-4 max-w-2xl text-xl/6">Mødelokaler, eventspace, private selskaber og ferielejligheder. <br /><br />På en færge midt i København.</p>
 				<div class="flex w-full flex-row gap-4 sm:justify-center">
-					<PrimaryButton :text="'Primary Button'" class="bg-brand text-palladian text-lg" />
-					<SecondaryButton :text="'Secondary Button'" class="text-lg" />
+					<PrimaryButton :event-name="'ferry_book'" :event-params="{ button_name: 'primary_cta' }" :text="'Primary Button'" class="bg-brand text-palladian text-lg" />
+					<SecondaryButton :text="'Secondary Button'" :event-params="{ button_name: 'secondary_cta' }" class="text-lg" />
 				</div>
 			</slot>
 		</div>

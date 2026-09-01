@@ -29,7 +29,7 @@ defineProps<Props>()
 						{{ item.description }}
 					</p>
 
-					<PrimaryButton :text="'Book nu'" />
+					<PrimaryButton :text="'Book nu'" :event-name="'book_meeting'" :event-params="{ button_name: 'secondary_cta' }" />
 				</div>
 			</div>
 

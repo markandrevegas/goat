@@ -27,7 +27,7 @@ import PrimaryButton from "~/components/ui/PrimaryButton.vue"
 						<h2 class="mt-4 text-4xl font-semibold">Hold jeres selskab på Floating G.O.A.T.</h2>
 						<p class="mt-6 text-lg">I kommer i de bedste hænder hos os. Uanset om I ønsker at holde bryllup med de nærmeste, arrangere et foredrag, fejre en fødselsdag eller noget helt fjerde. Vi er klar til at hjælpe jer med at skabe de bedste rammer, så I kan fokusere på jeres gæster.</p>
 						<p class="mt-4 mb-6">Priserne starter fra 12.500 kr.</p>
-						<PrimaryButton :text="'Reserver nu'" class="bg-brand text-palladian w-max flex-shrink" />
+						<PrimaryButton :text="'Reserver nu'" :event-name="'feature_book'" :event-params="{ button_name: 'secondary_cta' }" class="bg-brand text-palladian w-max flex-shrink" />
 					</div>
 				</div>
 			</section>

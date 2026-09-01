@@ -20,7 +20,7 @@ defineProps<Props>()
 			<div class="relative z-20 px-4 text-center sm:px-16">
 				<p class="font-display relative mb-4 text-2xl md:text-4xl" v-html="item.title"></p>
 				<p v-html="item.description" class="mb-4 line-clamp-2 min-h-[2lh]"></p>
-				<PrimaryButton :text="'Button'" event-name="download_pdf" :event-params="{ button_name: 'primary_cta' }"></PrimaryButton>
+				<PrimaryButton :text="'Button'" :event-name="'download_pdf'" :event-params="{ button_name: 'primary_cta' }"></PrimaryButton>
 			</div>
 			<div class="from-brand/70 to-brand/20 absolute inset-0 bg-gradient-to-t" />
 		</div>
