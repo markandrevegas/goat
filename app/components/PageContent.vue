@@ -27,7 +27,7 @@ const props = defineProps<{
 </script>
 
 <template>
-	<article class="relative flex w-full flex-col" :class="{ 'pt-[100vh]': acf?.layoutstyle === 'hero' }">
+	<article class="w-full" :class="{ 'pt-[100vh]': acf?.layoutstyle === 'hero' }">
 		<EntryHeader :layout-style="acf?.layoutstyle" :title="title" :author-name="authorName" :formatted-date="formattedDate" :date-published="datePublished" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" />
 
 		<main v-if="body" class="flex flex-col gap-4 md:grid md:grid-cols-4">
