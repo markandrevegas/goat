@@ -14,9 +14,9 @@ defineProps<{
 	body: string
 	slug: string
 	acf: Record<string, any>
-	authorName: string
-	datePublished: string | null
-	formattedDate: string
+	authorName?: string
+	datePublished?: string | null
+	formattedDate?: string
 	featuredImageUrl?: string | null
 	featuredImageAlt?: string
 	featuredImageWidth?: number
