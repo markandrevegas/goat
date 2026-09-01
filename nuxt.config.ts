@@ -155,7 +155,13 @@ export default defineNuxtConfig({
 			// the WP route-enumeration hook below) should fail the build,
 			// not silently ship a partial static export. Revert to false
 			// if this turns out to be too strict for other prerender steps.
-			failOnError: true
+			failOnError: true,
+			// Capped low deliberately: [...slug].vue fires 2 WP requests per
+			// route (page + post) plus a full getPages() re-fetch of the
+			// whole catalog on every route render, so even moderate
+			// concurrency here bursts enough simultaneous requests at WP
+			// to trip its rate limiting (seen as HTTP 429s during generate).
+			concurrency: 2
 		},
 		routeRules: {
 			"/_nuxt/**": { headers: { "cache-control": "public, max-age=31536000, immutable" } },

@@ -5,21 +5,34 @@ const route = useRoute()
 const { getPost, getPage, getPages } = useWordPress()
 
 const slugParam = computed(() => {
-	const params = route.params.slug
-	return Array.isArray(params) ? params : [params || ""]
+  const params = route.params.slug
+  return Array.isArray(params) ? params : [params || ""]
 })
 
 const targetSlug = computed(() => slugParam.value[slugParam.value.length - 1] || "home")
 // Combine fetching inside a single top-level useAsyncData block
-const {
-	data: rawContentData,
-	error,
-	pending
-} = await useAsyncData(
+const { data: rawContentData, error, pending } = await useAsyncData(
 	`wp-content-${targetSlug.value}`,
 	async () => {
 		// Fetch page and post in parallel
-		const [pageRes, postRes] = await Promise.all([getPage(targetSlug.value), getPost(targetSlug.value)])
+		const [pageRes, postRes] = await Promise.all([
+			getPage(targetSlug.value),
+			getPost(targetSlug.value)
+		])
+
+		// Each getPage/getPost call swallows its own fetch errors into its
+		// own local `error` ref rather than throwing — so a rate-limited
+		// or failed request looks identical to "no content" unless we
+		// check error.value explicitly here and re-throw it as a real
+		// failure instead of letting it fall through to a false 404.
+		if (pageRes.error.value && postRes.error.value) {
+			throw createError({
+				statusCode: 500,
+				statusMessage: `WordPress fetch failed for "${targetSlug.value}": ${pageRes.error.value?.message || postRes.error.value?.message}`,
+				fatal: true
+			})
+		}
+
 		return pageRes.data.value || postRes.data.value || null
 	},
 	{ watch: [targetSlug] }
