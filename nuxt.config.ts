@@ -177,41 +177,35 @@ export default defineNuxtConfig({
 		}
 	},
 	generate: {
-		fallback: '404.html'
+		fallback: "404.html"
 	},
 	hooks: {
-		async 'prerender:routes'(ctx) {
+		async "prerender:routes"(ctx) {
 			const wpUrl = process.env.NUXT_PUBLIC_GOAT_WORDPRESS_URL
 			if (!wpUrl) {
-				throw new Error('[prerender] NUXT_PUBLIC_GOAT_WORDPRESS_URL is not set — aborting build')
+				throw new Error("[prerender] NUXT_PUBLIC_GOAT_WORDPRESS_URL is not set — aborting build")
 			}
 
-			const [pagesResult, postsResult] = await Promise.allSettled([
-				fetchAllSlugs(wpUrl, 'pages'),
-				fetchAllSlugs(wpUrl, 'posts')
-			])
+			const [pagesResult, postsResult] = await Promise.allSettled([fetchAllSlugs(wpUrl, "pages"), fetchAllSlugs(wpUrl, "posts")])
 
-			const failures = [
-				pagesResult.status === 'rejected' ? `pages: ${pagesResult.reason}` : null,
-				postsResult.status === 'rejected' ? `posts: ${postsResult.reason}` : null
-			].filter(Boolean)
+			const failures = [pagesResult.status === "rejected" ? `pages: ${pagesResult.reason}` : null, postsResult.status === "rejected" ? `posts: ${postsResult.reason}` : null].filter(Boolean)
 
 			if (failures.length) {
 				// Fail loudly. A build that silently ships with missing
 				// routes is worse than one that fails in CI where you'll
 				// actually see it.
-				throw new Error(`[prerender] Failed to enumerate WP routes:\n${failures.join('\n')}`)
+				throw new Error(`[prerender] Failed to enumerate WP routes:\n${failures.join("\n")}`)
 			}
 
-			const pageSlugs = pagesResult.status === 'fulfilled' ? pagesResult.value : []
-			const postSlugs = postsResult.status === 'fulfilled' ? postsResult.value : []
+			const pageSlugs = pagesResult.status === "fulfilled" ? pagesResult.value : []
+			const postSlugs = postsResult.status === "fulfilled" ? postsResult.value : []
 
 			// A live WP site should never legitimately return zero pages.
 			// If it does, something's wrong upstream (wrong URL, auth,
 			// empty DB) — better to catch that here than ship a site
 			// with no routes.
 			if (pageSlugs.length === 0) {
-				throw new Error('[prerender] WP returned 0 pages — aborting build rather than shipping an empty site')
+				throw new Error("[prerender] WP returned 0 pages — aborting build rather than shipping an empty site")
 			}
 
 			pageSlugs.forEach((slug) => ctx.routes.add(`/${slug}`))

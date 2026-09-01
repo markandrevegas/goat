@@ -1,18 +1,20 @@
 <script setup lang="ts">
 import { computed } from "vue"
-const { getPosts } = useWordPress()
-
 import Instagram from "~/components/icons/Instagram.vue"
 import Facebook from "~/components/icons/Facebook.vue"
 import Linkedin from "~/components/icons/Linkedin.vue"
+
+import EntryHeader from "~/layouts/EntryHeader.vue"
 import ThreeCardLayout from "./ui/ThreeCardLayout.vue"
 import MapEmbed from "./ui/MapEmbed.vue"
+
+const { getPosts } = useWordPress()
 
 const props = defineProps<{
 	title: string
 	body: string
 	slug: string
-	acf: Record<string, any>
+	acf?: Record<string, any>
 	authorName: string
 	formattedDate: string
 	datePublished: string | null
@@ -21,48 +23,18 @@ const props = defineProps<{
 	featuredImageWidth: number
 	featuredImageHeight: number
 }>()
-
 const { data: postItems } = await getPosts({
 	exclude: [props.slug]
 })
 
 const layoutStyle = computed(() => {
-	return props.acf?.layouttype
+	return props.acf?.layoutstyle
 })
 </script>
 
 <template>
-	<article class="w-full">
-		<header v-if="layoutStyle === 'hero'" class="relative -top-[2rem] right-1/2 left-1/2 -mx-[50vw] mb-12 flex h-[calc(100vh-80px)] w-screen flex-col items-center justify-center overflow-hidden p-8 text-white">
-			<div class="relative z-20 mx-auto flex max-w-3xl flex-col items-center md:max-w-4xl">
-				<h1 class="text-center text-4xl tracking-tight md:text-5xl" v-html="title"></h1>
-				<div v-if="authorName || formattedDate" class="mt-4 flex items-center space-x-2 text-sm">
-					<span v-if="authorName" class="hidden font-medium">By {{ authorName }}</span>
-					<span class="font-medium">Published</span>
-					<span v-if="formattedDate">|</span>
-					<time v-if="formattedDate" :datetime="datePublished ?? undefined">{{ formattedDate }}</time>
-				</div>
-			</div>
-			<div v-if="featuredImageUrl" class="absolute inset-0 z-10 size-full">
-				<NuxtImg :src="featuredImageUrl" :alt="featuredImageAlt" :width="featuredImageWidth" :height="featuredImageHeight" sizes="100vw" loading="eager" format="webp" class="size-full object-cover object-center" />
-				<div class="pointer-events-none absolute inset-0 bg-black/40"></div>
-			</div>
-		</header>
-
-		<header v-else class="mx-auto mb-8 flex h-72 max-w-3xl flex-col items-center justify-center md:max-w-4xl">
-			<h1 class="text-center text-4xl tracking-tight md:text-5xl" v-html="title"></h1>
-			<div v-if="authorName || formattedDate" class="mt-4 flex items-center space-x-2 text-sm">
-				<span v-if="authorName" class="hidden font-medium">By {{ authorName }}</span>
-				<span class="font-medium">Published</span>
-				<span v-if="formattedDate">|</span>
-				<time v-if="formattedDate" :datetime="datePublished ?? undefined">{{ formattedDate }}</time>
-			</div>
-			<div class="mt-4 flex items-center justify-start gap-2">
-				<Instagram class="size-6" />
-				<Facebook class="size-6" />
-				<Linkedin class="size-6" />
-			</div>
-		</header>
+	<article class="w-full" :class="{ 'pt-[100vh]': layoutStyle === 'hero' }">
+		<EntryHeader :layout-style="layoutStyle" :title="title" :author-name="authorName" :formatted-date="formattedDate" :date-published="datePublished" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" />
 
 		<!-- Main 3-Column Content Grid -->
 		<main v-if="body && slug !== 'information-for-guests'" class="flex flex-col gap-4 md:grid md:grid-cols-4">
@@ -78,7 +50,7 @@ const layoutStyle = computed(() => {
 
 			<!-- Column 2 (Middle): Standard Mode Image rendering first, followed by content -->
 			<div class="col-span-2 flex flex-col gap-4 md:pr-8">
-				<NuxtImg v-if="layoutStyle === 'standard' && featuredImageUrl" :src="featuredImageUrl" :alt="featuredImageAlt" :width="featuredImageWidth" :height="featuredImageHeight" sizes="(max-width: 768px) 100vw, 50vw" loading="lazy" format="webp" class="w-full rounded-xl object-cover shadow-sm" />
+				<NuxtImg v-if="layoutStyle !== 'hero' && featuredImageUrl" :src="featuredImageUrl" :alt="featuredImageAlt" :width="featuredImageWidth" :height="featuredImageHeight" sizes="(max-width: 768px) 100vw, 50vw" loading="lazy" format="webp" class="w-full rounded-xl object-cover shadow-sm" />
 
 				<div v-if="body" class="text-palladian prose prose-lg/5 prose-headings:font-semibold prose-headings:tracking-tight prose-a:text-palladian prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl prose-img:shadow-md max-w-none" v-html="body"></div>
 				<p v-else class="font-display italic">This page has no content body text.</p>

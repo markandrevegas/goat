@@ -9,14 +9,12 @@ const wpFetch = <T>(endpoint: string, query: Record<string, any>) => {
 	const config = useRuntimeConfig()
 
 	if (!config.public.goatWordpressUrl) {
-		throw new Error(
-			"[wpFetch] NUXT_PUBLIC_GOAT_WORDPRESS_URL is not set. Add it to a local .env file and restart the dev server."
-		)
+		throw new Error("[wpFetch] NUXT_PUBLIC_GOAT_WORDPRESS_URL is not set. Add it to a local .env file and restart the dev server.")
 	}
 
 	const fullUrl = `${config.public.goatWordpressUrl}/${endpoint}`
 	// TEMP: remove once we've confirmed the request target and response
-	console.log(`[wpFetch] → ${fullUrl}`, query)
+	/*console.log(`[wpFetch] → ${fullUrl}`, query)*/
 
 	return $fetch<T>(fullUrl, {
 		query,
@@ -29,11 +27,11 @@ const wpFetch = <T>(endpoint: string, query: Record<string, any>) => {
 	})
 		.then((result) => {
 			const count = Array.isArray(result) ? result.length : "n/a"
-			console.log(`[wpFetch] ← ${fullUrl} slug=${query.slug ?? "(none)"} → ${count} result(s)`)
+			/*console.log(`[wpFetch] ← ${fullUrl} slug=${query.slug ?? "(none)"} → ${count} result(s)`)*/
 			return result
 		})
 		.catch((err) => {
-			console.log(`[wpFetch] ✗ ${fullUrl} slug=${query.slug ?? "(none)"} FAILED:`, err?.status ?? err?.message ?? err)
+			/*console.log(`[wpFetch] ✗ ${fullUrl} slug=${query.slug ?? "(none)"} FAILED:`, err?.status ?? err?.message ?? err)*/
 			throw err
 		})
 }
@@ -44,21 +42,21 @@ export const useWordPress = () => {
 	 * author) plus excerpt and yoast_head_json.
 	 */
 	const getContentBySlug = (endpoint: "posts" | "pages", slug: string) => {
-    // Explicit, deterministic key for static hydration
-    const key = `wp-content-${endpoint}-${slug}`
+		// Explicit, deterministic key for static hydration
+		const key = `wp-content-${endpoint}-${slug}`
 
-    return useAsyncData(key, async () => {
-      if (!slug) return null
+		return useAsyncData(key, async () => {
+			if (!slug) return null
 
-      const results = await wpFetch<WordPressPostOrPage[]>(endpoint, {
-        slug,
-        _embed: 1,
-        _fields: "id,date,title,slug,content,excerpt,acf,yoast_head_json,_links,_embedded"
-      })
+			const results = await wpFetch<WordPressPostOrPage[]>(endpoint, {
+				slug,
+				_embed: 1,
+				_fields: "id,date,title,slug,content,excerpt,acf,yoast_head_json,_links,_embedded"
+			})
 
-      return results?.[0] ?? null
-    })
-  }
+			return results?.[0] ?? null
+		})
+	}
 
 	const getPage = (slug: string) => getContentBySlug("pages", slug)
 	const getPost = (slug: string) => getContentBySlug("posts", slug)
