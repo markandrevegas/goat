@@ -13,7 +13,7 @@ export default {
 </script>
 
 <script setup>
-import { ref, reactive, computed, watch, onMounted } from "vue"
+import { ref, reactive, watch, onMounted } from "vue"
 import { MotionComponent as Motion, useMotion } from "@vueuse/motion"
 
 const props = defineProps({
@@ -38,16 +38,17 @@ const defaultTransition = {
 }
 
 const variants = {
-	normal: {
+	normal: (i, hovering) => ({
 		rotate: 0,
+		x: i === 1 && hovering ? 8 : 0,
 		y: 0,
 		opacity: 1
-	},
+	}),
 	animate: (i) => ({
 		rotate: i === 0 ? 45 : i === 2 ? -45 : 0,
+		x: 0,
 		y: i === 0 ? 6 : i === 2 ? -6 : 0,
-		opacity: i === 1 ? 0 : 1,
-		transition: defaultTransition
+		opacity: i === 1 ? 0 : 1
 	}),
 	transformOrigin: ["12 6", "0 0", "12 18"]
 }
@@ -58,22 +59,24 @@ const targetInstanceList = reactive([])
 
 const isHovering = ref(false)
 
-// While closed, hover previews the "X" shape. Once open, it stays "X"
-// regardless of hover — hover only matters for the closed -> preview case.
-const isActive = computed(() => props.isOpen || isHovering.value)
+function getVariant(i) {
+	return props.isOpen 
+		? variants.animate(i) 
+		: variants.normal(i, isHovering.value)
+}
 
 onMounted(() => {
 	for (let i = 0; i < len; i++) {
 		targetInstanceList[i] = useMotion(targetList.value[i], {
-			initial: isActive.value ? variants.animate(i) : variants.normal
+			initial: getVariant(i)
 		})
 	}
-	animateState(isActive.value)
+	animateState()
 })
 
-function animateState(active) {
+function animateState() {
 	for (let i = 0; i < len; i++) {
-		const variant = active ? variants.animate(i) : variants.normal
+		const variant = getVariant(i)
 		const instance = targetInstanceList[i]
 		if (instance) {
 			instance.apply({
@@ -84,8 +87,8 @@ function animateState(active) {
 	}
 }
 
-watch(isActive, (newValue) => {
-	animateState(newValue)
+watch([() => props.isOpen, isHovering], () => {
+	animateState()
 })
 
 function toggle() {

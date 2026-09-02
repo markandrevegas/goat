@@ -15,7 +15,7 @@ import PrimaryButton from "~/components/ui/PrimaryButton.vue"
 		<div class="relative z-10 -mt-[50vh]">
 			<section class="text-palladian flex h-[50vh] items-center justify-center px-6">
 				<div class="max-w-2xl text-center">
-					<h1 class="text-5xl">Vandets ro og byens puls</h1>
+					<h2 class="text-5xl">Vandets ro og byens puls</h2>
 				</div>
 			</section>
 
