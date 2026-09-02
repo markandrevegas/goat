@@ -3,6 +3,10 @@ import Instagram from "~/components/icons/Instagram.vue"
 import Facebook from "~/components/icons/Facebook.vue"
 import Linkedin from "~/components/icons/Linkedin.vue"
 
+const facebookUrl = "https://facebook.com/FloatingGOATCopenhagen"
+const instagramUrl = "https://instagram.com/floating_goat_cph/"
+const linkedinUrl = "https://linkedin.com/company/mar-k-waterside"
+
 defineProps<{
 	layoutStyle?: string
 	title: string
@@ -13,6 +17,9 @@ defineProps<{
 	featuredImageAlt?: string
 	featuredImageWidth?: number
 	featuredImageHeight?: number
+	instagramUrl?: string
+	facebookUrl?: string
+	linkedinUrl?: string
 }>()
 </script>
 
@@ -27,15 +34,15 @@ defineProps<{
 				<time v-if="formattedDate" :datetime="datePublished ?? undefined">{{ formattedDate }}</time>
 			</div>
 
-			<div class="mt-4 flex items-center justify-center gap-2">
-				<Instagram class="size-6" />
-				<Facebook class="size-6" />
-				<Linkedin class="size-6" />
+			<div class="mt-4 flex items-center justify-center gap-4">
+				<Instagram class="size-6 transition-transform duration-300 hover:scale-110 hover:cursor-pointer" :url="instagramUrl ?? instagramUrl" :size="24" />
+				<Facebook class="size-6 transition-transform duration-300 hover:scale-110 hover:cursor-pointer" :url="facebookUrl ?? facebookUrl" :size="24" />
+				<Linkedin class="size-6 transition-transform duration-300 hover:scale-110 hover:cursor-pointer" :url="linkedinUrl ?? linkedinUrl" :size="24" />
 			</div>
 		</div>
 
 		<div v-if="featuredImageUrl" class="absolute inset-0 z-10 h-screen w-full">
-			<img :src="featuredImageUrl" :alt="featuredImageAlt" sizes="100vw" loading="eager" fetchpriority="high" class="h-screen w-full bg-red-500 object-cover object-center" />
+			<img :src="featuredImageUrl" :alt="featuredImageAlt" sizes="100vw" loading="eager" fetchpriority="high" class="h-screen w-full object-cover object-center" />
 			<div class="pointer-events-none absolute inset-0 bg-black/40"></div>
 		</div>
 	</header>

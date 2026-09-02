@@ -33,7 +33,7 @@ const savePreferences = () => {
 				<!-- Simple view -->
 				<div v-if="!showDetails" class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
 					<div class="sm:max-w-xl">
-						<p class="text-brand text-xs">Vi bruger cookies til at forbedre din oplevelse og analysere brugen af siden. Du kan acceptere alle cookies, afvise ikke-nødvendige cookies eller administrere dine præferencer.</p>
+						<p class="text-brand">Vi bruger cookies til at forbedre din oplevelse og analysere brugen af siden. Du kan acceptere alle cookies, afvise ikke-nødvendige cookies eller administrere dine præferencer.</p>
 						<a @click="showDetails = true" class="text-xs font-semibold">Indstillinger</a>
 					</div>
 
