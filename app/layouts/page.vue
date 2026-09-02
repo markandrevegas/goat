@@ -2,7 +2,7 @@
 const { getPages } = useWordPress()
 const { data: menuPages } = await getPages({
 	include: ["apartments", "simple-meetings", "private-selskaber", "information-for-guests"],
-	exclude: ["privacy-policy", "terms-of-service"]
+	exclude: ["privatlivspolitik", "cookiepolitik"]
 })
 </script>
 

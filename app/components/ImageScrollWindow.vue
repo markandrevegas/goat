@@ -7,7 +7,7 @@ import PrimaryButton from "~/components/ui/PrimaryButton.vue"
 	<section class="relative">
 		<!-- Background -->
 		<div class="sticky top-0 h-[50vh]">
-			<NuxtImg :src="moodImg" loading="lazy" class="block h-full w-full object-cover" alt="Events" sizes="100vw" />
+			<img :src="moodImg" loading="lazy" class="block h-[50vh] w-full object-cover" alt="Events"  />
 			<div class="absolute inset-0 bg-black/30" />
 		</div>
 
@@ -21,7 +21,7 @@ import PrimaryButton from "~/components/ui/PrimaryButton.vue"
 
 			<section class="bg-brand text-palladian flex min-h-screen items-center justify-center pb-8">
 				<div class="flex max-w-5xl flex-col sm:grid sm:grid-cols-3">
-					<NuxtImg :src="posterImg" loading="lazy" class="mb-6 h-full w-full object-cover" alt="Events" sizes="100vw" />
+					<img :src="posterImg" loading="lazy" class="mb-6 h-full w-full object-cover" alt="Events" sizes="100vw" />
 					<div class="px-4 py-16 sm:col-span-2 sm:px-8">
 						<span class="text-center text-sm uppercase">private selskaber</span>
 						<h2 class="mt-4 text-4xl font-semibold">Hold jeres selskab på Floating G.O.A.T.</h2>
