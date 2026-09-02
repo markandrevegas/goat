@@ -38,7 +38,7 @@ defineProps<{
 		<!-- Hero Full Width Image -->
 		<!-- Inside EntryHeader.vue -->
 		<div v-if="featuredImageUrl" class="absolute inset-y-0 left-1/2 z-10 w-screen -translate-x-1/2">
-			<NuxtImg :src="featuredImageUrl" :alt="featuredImageAlt" :width="featuredImageWidth" :height="featuredImageHeight" sizes="100vw" loading="eager" format="webp" class="h-full w-full object-cover" />
+			<NuxtImg :src="featuredImageUrl" :alt="featuredImageAlt" :width="featuredImageWidth" :height="featuredImageHeight" sizes="100vw" loading="eager" format="webp" class="size-full object-cover object-center md:object-center" />
 			<div class="pointer-events-none absolute inset-0 bg-black/40"></div>
 		</div>
 	</header>
