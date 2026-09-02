@@ -52,11 +52,6 @@ defineProps<{
 				<span v-if="authorName && formattedDate">|</span>
 				<time v-if="formattedDate" :datetime="datePublished ?? undefined">{{ formattedDate }}</time>
 			</div>
-			<div class="mt-4 flex items-center justify-center gap-2">
-				<Instagram class="size-6" />
-				<Facebook class="size-6" />
-				<Linkedin class="size-6" />
-			</div>
 		</div>
 	</header>
 </template>
