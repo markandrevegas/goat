@@ -35,7 +35,7 @@ defineProps<{
 		</div>
 
 		<div v-if="featuredImageUrl" class="absolute inset-0 z-10 h-screen w-full">
-			<NuxtImg :src="featuredImageUrl" :alt="featuredImageAlt" sizes="100vw" loading="eager" format="webp" class="h-screen w-full bg-red-500 object-cover object-center" />
+			<img :src="featuredImageUrl" :alt="featuredImageAlt" sizes="100vw" loading="eager" fetchpriority="high" class="h-screen w-full bg-red-500 object-cover object-center" />
 			<div class="pointer-events-none absolute inset-0 bg-black/40"></div>
 		</div>
 	</header>

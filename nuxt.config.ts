@@ -228,9 +228,6 @@ export default defineNuxtConfig({
 		}
 	},
 	image: {
-		quality: 80,
-		provider: "none",
-		dir: "assets/images",
-		domains: ["https://www.floatinggoat.dk"]
+		provider: 'none'
 	}
 })
