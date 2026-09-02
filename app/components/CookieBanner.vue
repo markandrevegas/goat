@@ -37,7 +37,7 @@ const savePreferences = () => {
 						<a @click="showDetails = true" class="text-xs font-semibold">Indstillinger</a>
 					</div>
 
-					<div class="mt-4 sm:mt-0 flex shrink-0">
+					<div class="mt-4 flex shrink-0 sm:mt-0">
 						<button type="button" class="hidden rounded-md border border-gray-300 px-4 py-2 text-xs font-medium text-gray-700 hover:bg-gray-50">Indstillinger</button>
 						<button type="button" class="rounded-md border border-gray-300 px-4 py-2 text-xs font-medium text-gray-700 hover:bg-gray-50" @click="rejectAll">Afvis</button>
 						<button type="button" class="rounded-md bg-gray-900 px-4 py-2 text-xs font-medium text-white hover:bg-gray-800" @click="acceptAll">Accepter</button>

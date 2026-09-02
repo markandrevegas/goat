@@ -17,7 +17,7 @@ defineProps<{
 </script>
 
 <template>
-	<header v-if="layoutStyle === 'hero'" class="absolute top-0 right-0 left-0 z-0 flex h-screen w-full flex-col items-center justify-center overflow-hidden text-palladian">
+	<header v-if="layoutStyle === 'hero'" class="text-palladian absolute inset-0 z-0 flex h-screen w-full flex-col items-center justify-center overflow-hidden">
 		<div class="relative z-20 mx-auto flex max-w-3xl flex-col items-center px-4 md:max-w-4xl">
 			<h1 class="text-center text-4xl tracking-tight md:text-5xl" v-html="title"></h1>
 
@@ -34,8 +34,8 @@ defineProps<{
 			</div>
 		</div>
 
-		<div v-if="featuredImageUrl" class="absolute inset-0 z-10 w-full h-screen">
-			<NuxtImg :src="featuredImageUrl" :alt="featuredImageAlt" :width="featuredImageWidth" :height="featuredImageHeight" sizes="100vw" loading="eager" format="webp" class="object-cover object-center h-screen w-full" />
+		<div v-if="featuredImageUrl" class="absolute inset-0 z-10 h-screen w-full">
+			<NuxtImg :src="featuredImageUrl" :alt="featuredImageAlt" width="1920" height="1080" sizes="100vw" loading="eager" format="webp" class="h-screen w-full object-cover object-center" />
 			<div class="pointer-events-none absolute inset-0 bg-black/40"></div>
 		</div>
 	</header>
