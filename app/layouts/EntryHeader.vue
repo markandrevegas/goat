@@ -17,7 +17,6 @@ defineProps<{
 </script>
 
 <template>
-	<!-- Hero Header Layout -->
 	<header v-if="layoutStyle === 'hero'" class="absolute top-0 right-0 left-0 z-0 flex h-screen w-full flex-col items-center justify-center overflow-hidden text-white">
 		<div class="relative z-20 mx-auto flex max-w-3xl flex-col items-center px-4 md:max-w-4xl">
 			<h1 class="text-center text-4xl tracking-tight md:text-5xl" v-html="title"></h1>
@@ -35,15 +34,12 @@ defineProps<{
 			</div>
 		</div>
 
-		<!-- Hero Full Width Image -->
-		<!-- Inside EntryHeader.vue -->
-		<div v-if="featuredImageUrl" class="absolute inset-y-0 left-1/2 z-10 w-screen -translate-x-1/2">
+		<div v-if="featuredImageUrl" class="absolute inset-0 z-10 size-full">
 			<NuxtImg :src="featuredImageUrl" :alt="featuredImageAlt" :width="featuredImageWidth" :height="featuredImageHeight" sizes="100vw" loading="eager" format="webp" class="size-full object-cover object-center md:object-center" />
 			<div class="pointer-events-none absolute inset-0 bg-black/40"></div>
 		</div>
 	</header>
 
-	<!-- Standard Header Layout -->
 	<header v-else class="bg-brand text-palladian mb-8 flex min-h-[18rem] w-full flex-col items-center justify-center p-8">
 		<div class="mx-auto flex max-w-3xl flex-col items-center md:max-w-4xl">
 			<h1 class="text-center text-4xl tracking-tight md:text-5xl" v-html="title"></h1>
