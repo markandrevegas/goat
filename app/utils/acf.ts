@@ -6,10 +6,7 @@ export interface CardItem {
 	alt?: string
 }
 
-export function extractColumns(
-	acfData: Record<string, any>,
-	prefixes: string[]
-): CardItem[] {
+export function extractColumns(acfData: Record<string, any>, prefixes: string[]): CardItem[] {
 	if (!acfData) return []
 
 	return prefixes

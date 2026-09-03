@@ -15,15 +15,20 @@ const { data: page, status, error } = await useAsyncData("wp-index", () => getLa
 
 const landing = computed(() => page.value?.acf || {})
 
+if (import.meta.dev) {
+	console.log(landing.value)
+}
+
 // 1. First set: 'firstcolumnheader', 'secondcolumnheader', etc.
-const standardCards = computed(() => 
-	extractColumns(landing.value, ["first", "second", "third", "fourth"])
-)
+const standardCards = computed(() => extractColumns(landing.value, ["first", "second", "third", "fourth"]))
 
 // 2. Second set: 'header_one', 'header_two', 'header_three'
-const threeColumnItems = computed(() => 
-	extractColumns(landing.value, ["one", "two", "three"])
-)
+const threeColumnItems = computed(() => extractColumns(landing.value, ["one", "two", "three"]))
+
+const featureHeaderSm = computed(() => landing.value?.feature_header_sm || "")
+const featureHeaderLg = computed(() => landing.value?.feature_header_lg || "")
+const featureImage = computed(() => landing.value?.feature_image || "")
+const featureText = computed(() => landing.value?.reservations_text || "")
 
 const seoTitle = computed(() => {
 	return page.value?.title?.rendered?.replace("&#8211;", "").trim()
@@ -59,24 +64,13 @@ const seoDescription = computed(() => {
 	twitterDescription: seoDescription,
 	twitterImage: ogImage
 })*/
-/*watchEffect(() => {
-	if (page.value) {
-		console.log("Full WordPress Page Data:", page.value)
-		console.log("Current ACF Fields:", page.value.acf)
-	}
-	if (error.value) {
-		console.error("Error fetching landing page:", error.value)
-	}
-})*/
 </script>
 <template>
 	<NuxtLayout name="default">
 		<!--<template #bg-video>
 			<IndexVideo :title="seoTitle" :subtitle="seoDescription" />
 		</template>-->
-		<ThreeColumns
-			:items="threeColumnItems"
-		/>
+		<ThreeColumns :items="threeColumnItems" />
 		<!--<Marquee
 			:items="[
 				{ logo: 'https://placehold.co/64x64', label: 'Acme Corp' },
@@ -90,16 +84,7 @@ const seoDescription = computed(() => {
 		<ClientOnly>
 			<CardScroller :items="standardCards" />
 		</ClientOnly>
-
-		<!--<CardScroller
-			:items="[
-				{ img: eventsImg, title: 'Events og receptioner', description: 'Skab en helt særlig ramme om jeres arrangement med byens liv og vandets ro som baggrundstæppe.' },
-				{ img: meetingImg, title: 'Møder og strategidage', description: 'Hold møde med panoramaudsigt ud over vandet og til Københavns spir og tage.' },
-				{ img: workshopImg, title: 'Workshops og teambuilding', description: 'Omsæt indsigt til handling. Floating G.O.A.T. er et perfekt sted til at tænke nye tanker og blive inspireret.' },
-				{ img: eventsImg, title: 'Workshops og teambuilding', description: 'Omsæt indsigt til handling. Floating G.O.A.T. er et perfekt sted til at tænke nye tanker og blive inspireret.' }
-			]"
-		/>-->
-		<ImageScrollWindow />
+		<ImageScrollWindow :feature-header-sm="featureHeaderSm" :feature-header-lg="featureHeaderLg" :feature-image="featureImage" :feature-text="featureText" />
 		<FerryVideo />
 	</NuxtLayout>
 </template>
