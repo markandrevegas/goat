@@ -7,7 +7,7 @@ import PrimaryButton from "~/components/ui/PrimaryButton.vue"
 	<section class="relative">
 		<!-- Background -->
 		<div class="sticky top-0 h-[50vh]">
-			<img :src="moodImg" loading="lazy" class="block h-[50vh] w-full object-cover" alt="Events"  />
+			<img :src="moodImg" loading="lazy" class="block h-[50vh] w-full object-cover" alt="Events" />
 			<div class="absolute inset-0 bg-black/30" />
 		</div>
 

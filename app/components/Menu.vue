@@ -42,7 +42,7 @@ const { data: postItems } = await getPosts({
 			<div class="max-content flex items-center">
 				<NuxtLink to="/">
 					<Logo class="fill-palladian hidden h-16 w-auto" />
-					<span class="hidden bg-palladian mr-4 inline-block h-8 w-8 rounded-full"></span>
+					<span class="bg-palladian mr-4 hidden inline-block h-8 w-8 rounded-full"></span>
 				</NuxtLink>
 				<div class="hidden md:flex md:flex-col">
 					<span class="font-display text-2xl font-light">Floating G.O.A.T.</span>

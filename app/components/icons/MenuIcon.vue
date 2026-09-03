@@ -60,9 +60,7 @@ const targetInstanceList = reactive([])
 const isHovering = ref(false)
 
 function getVariant(i) {
-	return props.isOpen 
-		? variants.animate(i) 
-		: variants.normal(i, isHovering.value)
+	return props.isOpen ? variants.animate(i) : variants.normal(i, isHovering.value)
 }
 
 onMounted(() => {
