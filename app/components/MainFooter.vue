@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import Linkedin from "./icons/Linkedin.vue"
-import Instagram from "./icons/Instagram.vue"
-import Facebook from "./icons/Facebook.vue"
+import Social from "./ui/Social.vue"
 
 const { getPages } = useWordPress()
 const { data: menuPages } = await getPages({
@@ -46,11 +44,7 @@ const pageItems = computed(() => {
 			</div>
 			<div class="flex flex-col">
 				<p class="font-display mb-2 text-xl font-semibold">Find os</p>
-				<div class="fill-palladian flex w-full justify-start gap-4">
-					<Instagram class="size-6" />
-					<Facebook class="size-6" />
-					<Linkedin class="size-6" />
-				</div>
+				<Social />
 			</div>
 		</div>
 		<div class="py-8 text-center">&copy; {{ new Date().getFullYear() }}</div>

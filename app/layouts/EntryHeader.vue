@@ -35,9 +35,9 @@ defineProps<{
 			</div>
 
 			<div class="mt-4 flex items-center justify-center gap-4">
-				<Instagram class="size-6 transition-transform duration-300 hover:scale-110 hover:cursor-pointer" :url="instagramUrl ?? instagramUrl" :size="24" />
-				<Facebook class="size-6 transition-transform duration-300 hover:scale-110 hover:cursor-pointer" :url="facebookUrl ?? facebookUrl" :size="24" />
-				<Linkedin class="size-6 transition-transform duration-300 hover:scale-110 hover:cursor-pointer" :url="linkedinUrl ?? linkedinUrl" :size="24" />
+				<Instagram class="transition-transform duration-300 hover:scale-110 hover:cursor-pointer" :url="instagramUrl ?? instagramUrl" :size="24" />
+				<Facebook class="transition-transform duration-300 hover:scale-110 hover:cursor-pointer" :url="facebookUrl ?? facebookUrl" :size="24" />
+				<Linkedin class="transition-transform duration-300 hover:scale-110 hover:cursor-pointer" :url="linkedinUrl ?? linkedinUrl" :size="24" />
 			</div>
 		</div>
 

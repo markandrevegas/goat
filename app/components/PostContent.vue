@@ -7,6 +7,7 @@ import Linkedin from "~/components/icons/Linkedin.vue"
 import EntryHeader from "~/layouts/EntryHeader.vue"
 import ThreeCardLayout from "./ui/ThreeCardLayout.vue"
 import MapEmbed from "./ui/MapEmbed.vue"
+import Social from "./ui/Social.vue"
 
 const { getPosts } = useWordPress()
 
@@ -41,11 +42,7 @@ const layoutStyle = computed(() => {
 			<!-- Column 1: Share icons -->
 			<div class="col-span-1">
 				<p class="mb-2 hidden text-sm tracking-tight uppercase md:block">Share Content</p>
-				<div class="hidden items-center justify-start gap-2 md:flex">
-					<Instagram class="size-6" />
-					<Facebook class="size-6" />
-					<Linkedin class="size-6" />
-				</div>
+				<Social />
 			</div>
 
 			<!-- Column 2 (Middle): Standard Mode Image rendering first, followed by content -->

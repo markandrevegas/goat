@@ -3,9 +3,7 @@ import { ref } from "vue"
 import { useWindowScroll } from "@vueuse/core"
 import Logo from "~/assets/svg/anchor.svg?component"
 import MenuIcon from "./icons/MenuIcon.vue"
-import Facebook from "./icons/Facebook.vue"
-import Instagram from "./icons/Instagram.vue"
-import Linkedin from "./icons/Linkedin.vue"
+import Social from "./ui/Social.vue"
 
 const { y } = useWindowScroll()
 const isMobileMenuOpen = ref(false)
@@ -37,14 +35,14 @@ const { data: postItems } = await getPosts({
 </script>
 
 <template>
-	<nav class="fixed top-0 right-0 left-0 z-50 h-24 w-full transition-colors duration-300" :class="y > 0 ? 'bg-brand' : 'bg-transparent'">
-		<div class="flex w-full items-center justify-between p-4">
+	<nav class="fixed top-0 right-0 left-0 z-50 w-full transition-colors duration-300" :class="y > 0 ? 'bg-palladian text-brand' : 'bg-brand text-palladian'">
+		<div class="flex w-full items-start justify-between px-4 py-2">
 			<div class="max-content flex items-center">
 				<NuxtLink to="/">
 					<Logo class="fill-palladian hidden h-16 w-auto" />
-					<span class="bg-palladian mr-4 hidden inline-block h-8 w-8 rounded-full"></span>
+					<span class="bg-palladian mr-4 hidden h-8 w-8 rounded-full"></span>
 				</NuxtLink>
-				<div class="hidden md:flex md:flex-col">
+				<div class="flex flex-col">
 					<span class="font-display text-2xl font-light">Floating G.O.A.T.</span>
 					<span class="text-[11px] uppercase">Events, Meetings, Apartments</span>
 				</div>
@@ -81,11 +79,7 @@ const { data: postItems } = await getPosts({
 						</li>
 					</ul>
 					<h3 class="mt-4 text-sm font-semibold uppercase">Follow us</h3>
-					<div class="flex justify-start gap-2">
-						<Instagram />
-						<Facebook />
-						<Linkedin />
-					</div>
+					<Social />
 					<h3 class="mt-4 text-sm font-semibold uppercase">Recent posts</h3>
 					<ul class="space-y-1">
 						<li v-for="post in postItems" :key="post.id">

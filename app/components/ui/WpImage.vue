@@ -8,7 +8,7 @@ const props = defineProps<{
 }>()
 
 const config = useRuntimeConfig()
-const wpBaseUrl = (config.public.goatWordpressUrl as string) || ''
+const wpBaseUrl = (config.public.goatWordpressUrl as string) || ""
 const isUrl = computed(() => typeof props.imageId === "string" && props.imageId.startsWith("http"))
 const shouldFetch = computed(() => !!props.imageId && !isUrl.value)
 

@@ -6,18 +6,21 @@ export interface CardItem {
 	alt?: string
 }
 
-/**
- * Maps flat ACF column fields into a structured CardItem array
- */
-export function extractColumns(acfData: Record<string, any>, prefixes = ["first", "second", "third", "fourth"]): CardItem[] {
+export function extractColumns(
+	acfData: Record<string, any>,
+	prefixes: string[]
+): CardItem[] {
 	if (!acfData) return []
 
 	return prefixes
 		.map((prefix): CardItem | null => {
-			const title = acfData[`${prefix}columnheader`]
-			const description = acfData[`${prefix}columntext`]
-			const img = acfData[`${prefix}columnimage`]
-			const buttonText = acfData[`${prefix}columnbutton`]
+			const p = prefix.toLowerCase()
+
+			// Check exact pattern prefix matches first
+			const title = acfData[`header_${p}`] ?? acfData[`${p}columnheader`] ?? acfData[`${p}header`]
+			const description = acfData[`header_${p}_text`] ?? acfData[`${p}columntext`] ?? acfData[`${p}text`]
+			const img = acfData[`header_${p}_image`] ?? acfData[`${p}columnimage`] ?? acfData[`${p}image`]
+			const buttonText = acfData[`header_${p}_button`] ?? acfData[`${p}columnbutton`] ?? acfData[`${p}button`]
 
 			if (!title && !description) return null
 

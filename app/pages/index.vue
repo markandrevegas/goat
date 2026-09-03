@@ -5,9 +5,6 @@ import Goat from "~/components/icons/Goat.vue"
 
 import ThreeColumns from "~/components/ui/ThreeColumns.vue"
 import CardScroller from "~/components/ui/CardScroller.vue"
-import meetingImg from "~/assets/images/meeting.webp"
-import eventsImg from "~/assets/images/events.webp"
-import workshopImg from "~/assets/images/workshop.webp"
 
 definePageMeta({
 	layout: false
@@ -17,9 +14,16 @@ const { getLandingPage } = useWordPress()
 const { data: page, status, error } = await useAsyncData("wp-index", () => getLandingPage("index-page"))
 
 const landing = computed(() => page.value?.acf || {})
-const columns = computed(() => {
-	return extractColumns(landing.value)
-})
+
+// 1. First set: 'firstcolumnheader', 'secondcolumnheader', etc.
+const standardCards = computed(() => 
+	extractColumns(landing.value, ["first", "second", "third", "fourth"])
+)
+
+// 2. Second set: 'header_one', 'header_two', 'header_three'
+const threeColumnItems = computed(() => 
+	extractColumns(landing.value, ["one", "two", "three"])
+)
 
 const seoTitle = computed(() => {
 	return page.value?.title?.rendered?.replace("&#8211;", "").trim()
@@ -71,11 +75,7 @@ watchEffect(() => {
 			<IndexVideo :title="seoTitle" :subtitle="seoDescription" />
 		</template>-->
 		<ThreeColumns
-			:items="[
-				{ img: meetingImg, title: 'Private selskaber', description: 'Hold møde med panoramaudsigt ud over vandet og til Københavns spir og tage.' },
-				{ img: eventsImg, title: 'Simple Meetings', description: 'Skab en helt særlig ramme om jeres arrangement med byens liv og vandets ro som baggrundstæppe.' },
-				{ img: workshopImg, title: 'Apartments', description: 'Omsæt indsigt til handling. Floating G.O.A.T. er et perfekt sted til at tænke nye tanker og blive inspireret.' }
-			]"
+			:items="threeColumnItems"
 		/>
 		<!--<Marquee
 			:items="[
@@ -87,7 +87,9 @@ watchEffect(() => {
 			class="hidden"
 		/>-->
 		<FirstRow />
-		<ClientOnly><CardScroller :items="columns" /></ClientOnly>
+		<ClientOnly>
+			<CardScroller :items="standardCards" />
+		</ClientOnly>
 
 		<!--<CardScroller
 			:items="[

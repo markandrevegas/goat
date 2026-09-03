@@ -19,20 +19,20 @@ defineProps<Props>()
 
 <template>
 	<div class="text-palladian my-16 flex w-full snap-x snap-mandatory [scrollbar-width:none] gap-4 overflow-x-auto scroll-smooth px-8 pb-2 [-ms-overflow-style:none] lg:grid lg:snap-none lg:grid-cols-4 lg:overflow-visible [&::-webkit-scrollbar]:hidden">
-		<div v-for="(item, index) in items" :key="index" class="relative flex h-[45vh] w-[85%] flex-shrink-0 snap-start flex-col items-center overflow-hidden sm:w-[calc(50%-0.5rem)] lg:w-auto">
+		<div v-for="(item, index) in items" :key="index" class="relative flex h-[60vh] w-[90%] flex-shrink-0 snap-start flex-col items-center overflow-hidden sm:h-[50vh] sm:w-[calc(50%-0.5rem)] lg:h-[40vh] lg:w-auto">
 			<WpImage :image-id="item.img" :alt="item.alt ?? item.title" class="absolute inset-0 size-full object-cover" />
 			<!--<img :src="item.img" loading="lazy" class="absolute inset-0 size-full object-cover" :alt="item.alt ?? item.title" />-->
 			<div class="absolute inset-0 z-10 flex flex-col justify-end">
-				<div class="absolute right-0 bottom-0 left-0 flex min-h-40 flex-col gap-4 p-4 sm:p-6">
+				<div class="absolute right-0 bottom-0 left-0 flex min-h-40 flex-col gap-4 p-8">
 					<p class="font-display text-xl/6 font-semibold sm:text-lg/5">
 						{{ item.title }}
 					</p>
 
-					<p class="font-light sm:text-sm/5">
+					<p class="text-sm/5 font-light">
 						{{ item.description }}
 					</p>
 
-					<PrimaryButton :text="item.buttonText || 'Book nu'":event-name="'book_meeting'" :event-params="{ button_name: 'secondary_cta' }" />
+					<PrimaryButton :text="item.buttonText || 'Book nu'" :event-name="'book_meeting'" :event-params="{ button_name: 'secondary_cta' }" />
 				</div>
 			</div>
 
