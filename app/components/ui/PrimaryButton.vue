@@ -20,7 +20,7 @@ const handleButtonClick = (event: MouseEvent) => {
 </script>
 
 <template>
-	<button @click="handleButtonClick" class="bg-brand text-palladian hover:bg-palladian hover:text-brand w-max rounded px-3 py-2 font-medium transition-colors duration-400">
+	<button @click="handleButtonClick" class="bg-palladian text-brand hover:bg-brand hover:text-palladian w-max rounded px-3 py-2 font-medium transition-colors duration-400">
 		{{ text }}
 	</button>
 </template>

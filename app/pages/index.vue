@@ -17,6 +17,9 @@ const { getLandingPage } = useWordPress()
 const { data: page, status, error } = await useAsyncData("wp-index", () => getLandingPage("index-page"))
 
 const landing = computed(() => page.value?.acf || {})
+const columns = computed(() => {
+	return extractColumns(landing.value)
+})
 
 const seoTitle = computed(() => {
 	return page.value?.title?.rendered?.replace("&#8211;", "").trim()
@@ -52,6 +55,15 @@ const seoDescription = computed(() => {
 	twitterDescription: seoDescription,
 	twitterImage: ogImage
 })*/
+watchEffect(() => {
+	if (page.value) {
+		console.log("Full WordPress Page Data:", page.value)
+		console.log("Current ACF Fields:", page.value.acf)
+	}
+	if (error.value) {
+		console.error("Error fetching landing page:", error.value)
+	}
+})
 </script>
 <template>
 	<NuxtLayout name="default">
@@ -75,14 +87,16 @@ const seoDescription = computed(() => {
 			class="hidden"
 		/>-->
 		<FirstRow />
-		<CardScroller
+		<ClientOnly><CardScroller :items="columns" /></ClientOnly>
+
+		<!--<CardScroller
 			:items="[
 				{ img: eventsImg, title: 'Events og receptioner', description: 'Skab en helt særlig ramme om jeres arrangement med byens liv og vandets ro som baggrundstæppe.' },
 				{ img: meetingImg, title: 'Møder og strategidage', description: 'Hold møde med panoramaudsigt ud over vandet og til Københavns spir og tage.' },
 				{ img: workshopImg, title: 'Workshops og teambuilding', description: 'Omsæt indsigt til handling. Floating G.O.A.T. er et perfekt sted til at tænke nye tanker og blive inspireret.' },
 				{ img: eventsImg, title: 'Workshops og teambuilding', description: 'Omsæt indsigt til handling. Floating G.O.A.T. er et perfekt sted til at tænke nye tanker og blive inspireret.' }
 			]"
-		/>
+		/>-->
 		<ImageScrollWindow />
 		<FerryVideo />
 	</NuxtLayout>
