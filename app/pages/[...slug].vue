@@ -73,13 +73,13 @@ const contentBody = computed(() => rawContentData.value?.content?.rendered || ""
 const contentAcf = computed(() => rawContentData.value?.acf || {})
 const datePublished = computed(() => rawContentData.value?.date || null)
 
-onMounted(() => {
+/*onMounted(() => {
 	console.log("Client-side ACF Data:", contentAcf.value)
 })
 
 if (import.meta.client) {
 	console.log(`[WP ACF] slug=${contentSlug.value}`, contentAcf.value)
-}
+}*/
 
 // Fetch related pages
 const { data: allPages } = await getPages()

@@ -59,7 +59,7 @@ const seoDescription = computed(() => {
 	twitterDescription: seoDescription,
 	twitterImage: ogImage
 })*/
-watchEffect(() => {
+/*watchEffect(() => {
 	if (page.value) {
 		console.log("Full WordPress Page Data:", page.value)
 		console.log("Current ACF Fields:", page.value.acf)
@@ -67,7 +67,7 @@ watchEffect(() => {
 	if (error.value) {
 		console.error("Error fetching landing page:", error.value)
 	}
-})
+})*/
 </script>
 <template>
 	<NuxtLayout name="default">
