@@ -3,7 +3,7 @@ import { computed } from "vue"
 import Marquee from "~/components/ui/Marquee.vue"
 import Goat from "~/components/icons/Goat.vue"
 
-import posterImg from "~/assets/images/ferry-poster.webp" 
+import posterImg from "~/assets/images/ferry-poster.webp"
 
 import ThreeColumns from "~/components/ui/ThreeColumns.vue"
 import CardScroller from "~/components/ui/CardScroller.vue"

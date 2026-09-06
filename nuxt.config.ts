@@ -97,9 +97,12 @@ export default defineNuxtConfig({
 		server: false,
 		client: true
 	},
+	features: {
+		inlineStyles: true
+	},
 	compatibilityDate: "2025-07-15",
 	css: ["~/assets/css/main.css"],
-	devtools: { enabled: true },
+	devtools: { enabled: process.env.NODE_ENV !== "production" },
 	modules: ["@tailwindcss/typography", "@nuxt/scripts", "nuxt-svgo", "@nuxt/fonts", "@vueuse/nuxt", "@vueuse/motion/nuxt", "@nuxt/image", "@dargmuesli/nuxt-cookie-control", "@nuxtjs/sitemap"],
 	runtimeConfig: {
 		public: {
@@ -167,7 +170,8 @@ export default defineNuxtConfig({
 			"/_nuxt/**": { headers: { "cache-control": "public, max-age=31536000, immutable" } },
 			"/**": {
 				headers: {
-					"Content-Security-Policy": "style-src 'self' 'unsafe-inline'"
+					"Content-Security-Policy": "style-src 'self' 'unsafe-inline'",
+					"cache-control": "public, max-age=86400"
 				}
 			},
 			"/sitemap_index.xml": { proxy: "https://www.floatinggoat.dk/sitemap_index.xml" },
