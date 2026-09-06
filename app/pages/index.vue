@@ -3,6 +3,8 @@ import { computed } from "vue"
 import Marquee from "~/components/ui/Marquee.vue"
 import Goat from "~/components/icons/Goat.vue"
 
+import posterImg from "~/assets/images/ferry-poster.webp" 
+
 import ThreeColumns from "~/components/ui/ThreeColumns.vue"
 import CardScroller from "~/components/ui/CardScroller.vue"
 
@@ -50,20 +52,20 @@ const seoDescription = computed(() => {
 	return homePage.value?.yoast_head_json?.og_image?.[0]?.url || "/default-og.jpg"
 })*/
 
-/*useSeoMeta({
+useSeoMeta({
 	title: seoTitle,
 	titleTemplate: null,
 	metaTitle: seoTitle,
 	description: seoDescription,
 	ogTitle: seoTitle,
 	ogDescription: seoDescription,
-	ogImage: ogImage,
+	ogImage: posterImg,
 	ogType: "website",
 	twitterCard: "summary_large_image",
 	twitterTitle: seoTitle,
 	twitterDescription: seoDescription,
-	twitterImage: ogImage
-})*/
+	twitterImage: posterImg
+})
 </script>
 <template>
 	<NuxtLayout name="default">
