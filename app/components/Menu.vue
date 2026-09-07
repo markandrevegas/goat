@@ -35,7 +35,7 @@ const { data: postItems } = await getPosts({
 </script>
 
 <template>
-	<nav class="fixed top-0 right-0 left-0 z-50 w-full transition-colors duration-300" :class="y > 0 ? 'bg-palladian text-brand' : 'bg-brand text-palladian'">
+	<nav aria-label="Main navigation" class="fixed top-0 right-0 left-0 z-50 w-full transition-colors duration-300" :class="y > 0 ? 'bg-palladian text-brand' : 'bg-brand text-palladian'">
 		<div class="flex w-full items-start justify-between px-4 py-2">
 			<div class="max-content flex items-center">
 				<NuxtLink to="/">
@@ -59,11 +59,10 @@ const { data: postItems } = await getPosts({
 		</Transition>
 
 		<Transition enter-active-class="transition-transform duration-300 ease-out" enter-from-class="translate-x-full" enter-to-class="translate-x-0" leave-active-class="transition-transform duration-200 ease-in" leave-from-class="translate-x-0" leave-to-class="translate-x-full">
-			<div v-if="isMobileMenuOpen" id="mobile-menu" class="bg-palladian fixed top-0 right-0 z-50 h-full w-full max-w-[80vw] overflow-y-auto px-4 pt-6 pb-4 shadow-xl sm:w-84">
+			<div v-if="isMobileMenuOpen" id="mobile-menu" aria-label="Mobile navigation" class="bg-palladian fixed top-0 right-0 z-50 h-full w-full max-w-[80vw] overflow-y-auto px-4 pt-6 pb-4 shadow-xl sm:w-84">
 				<div class="mb-4 flex justify-end">
-					<button @click="isMobileMenuOpen = false" type="button" class="text-brand focus:outline-none">
-						<MenuIcon v-model:is-open="isMobileMenuOpen" />
-						<span class="sr-only">Close main menu</span>
+					<button @click="isMobileMenuOpen = false" :aria-label="isMobileMenuOpen ? 'Close main menu' : 'Open main menu'" type="button" class="text-brand focus-visible:outline-2 focus-visible:outline-offset-2">
+						<MenuIcon :is-open="isMobileMenuOpen" />
 					</button>
 				</div>
 
