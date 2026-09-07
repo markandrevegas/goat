@@ -105,7 +105,7 @@ export default defineNuxtConfig({
 			],
 			link: wpOrigin
 				? [
-						{ rel: "preconnect", href: wpOrigin },
+						{ rel: "preconnect", href: wpOrigin + '_fonts' },
 						{ rel: "preconnect", href: wpOrigin, crossorigin: "" },
 						{ rel: "dns-prefetch", href: wpOrigin }
 					]
