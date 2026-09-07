@@ -32,7 +32,7 @@ const props = defineProps<{
 		<main v-if="body" class="flex flex-col gap-4 md:grid md:grid-cols-4">
 			<div class="col-span-1">
 				<p class="mb-2 hidden text-sm tracking-tight uppercase md:block">Share Content</p>
-				<Social />
+				<Social class="mr-auto" />
 			</div>
 			<div class="col-span-2 flex flex-col gap-2 md:pr-8">
 				<!-- Only display inline featured image if standard layout is used -->

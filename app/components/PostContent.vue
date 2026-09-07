@@ -40,7 +40,7 @@ const layoutStyle = computed(() => {
 			<!-- Column 1: Share icons -->
 			<div class="col-span-1">
 				<p class="mb-2 hidden text-sm tracking-tight uppercase md:block">Share Content</p>
-				<Social />
+				<Social class="mr-auto" />
 			</div>
 
 			<!-- Column 2 (Middle): Standard Mode Image rendering first, followed by content -->
