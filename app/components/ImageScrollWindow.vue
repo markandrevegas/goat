@@ -19,7 +19,7 @@ const props = defineProps<Props>()
 	<section class="relative">
 		<!-- Background -->
 		<div class="sticky top-0 h-[60vh]">
-			<WpImage loading="lazy" v-if="props.scrollImage" :image-id="props.scrollImage" :alt="props.featureHeaderLg ?? 'Vandets ro og byens puls'" class="block h-[60vh] w-full object-cover" />
+			<WpImage v-if="props.scrollImage" :image-id="props.scrollImage" :alt="props.featureHeaderLg ?? 'Vandets ro og byens puls'" class="block h-[60vh] w-full object-cover" />
 			<div class="absolute inset-0 bg-black/30" />
 		</div>
 
