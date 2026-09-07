@@ -25,7 +25,7 @@ defineProps<Props>()
 				<p v-html="item.description" class="mb-4 line-clamp-2 min-h-[2lh]"></p>
 				<PrimaryButton :url="item.url" :text="item.buttonText" :event-name="'three_column_click'" :event-params="{ button_name: 'primary_cta' }"></PrimaryButton>
 			</div>
-			<WpImage fetchpriority="high" loading="eager" :image-id="item.img" :alt="item.alt ?? item.title" class="absolute inset-0 size-full object-cover"  />
+			<WpImage :fetchpriority="'high'" :loading="'eager'" :image-id="item.img" :alt="item.alt ?? item.title" class="absolute inset-0 size-full object-cover"  />
 			<div class="from-brand/70 to-brand/20 absolute inset-0 bg-gradient-to-t" />
 		</div>
 	</div>
