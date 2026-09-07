@@ -24,11 +24,11 @@ const props = withDefaults(
     class?: string
     sizes?: string
     loading?: "lazy" | "eager"
-		fetchpriority?: "low" | "high"
+		fetchpriority?: "low" | "high" | "auto"
   }>(),
   {
     loading: "eager",
-		fetchpriority: "high"
+		fetchpriority: "auto"
   }
 )
 
