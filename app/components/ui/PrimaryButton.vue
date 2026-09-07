@@ -5,6 +5,7 @@ const props = defineProps<{
 	text: string
 	eventName: string
 	eventParams?: Record<string, any>
+	url?: string
 }>()
 
 const emit = defineEmits<{
@@ -16,6 +17,9 @@ const { trackEvent } = useTrackEvent()
 const handleButtonClick = (event: MouseEvent) => {
 	trackEvent(props.eventName, props.eventParams ?? {})
 	emit("click", event)
+	if (props.url) {
+		window.open(props.url, "_blank")
+	}
 }
 </script>
 

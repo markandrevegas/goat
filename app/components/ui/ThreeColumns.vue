@@ -8,6 +8,7 @@ interface ColumnItem {
 	description: string
 	alt?: string
 	buttonText: string
+	url?: string
 }
 
 interface Props {
@@ -22,7 +23,7 @@ defineProps<Props>()
 			<div class="relative z-20 px-4 text-center sm:px-16">
 				<p class="font-display relative mb-4 text-2xl md:text-4xl" v-html="item.title"></p>
 				<p v-html="item.description" class="mb-4 line-clamp-2 min-h-[2lh]"></p>
-				<PrimaryButton :text="item.buttonText" :event-name="'download_pdf'" :event-params="{ button_name: 'primary_cta' }"></PrimaryButton>
+				<PrimaryButton :url="item.url" :text="item.buttonText" :event-name="'download_pdf'" :event-params="{ button_name: 'primary_cta' }"></PrimaryButton>
 			</div>
 			<WpImage :image-id="item.img" :alt="item.alt ?? item.title" class="absolute inset-0 size-full object-cover" />
 			<div class="from-brand/70 to-brand/20 absolute inset-0 bg-gradient-to-t" />

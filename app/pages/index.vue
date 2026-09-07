@@ -18,7 +18,7 @@ const { data: page, status, error } = await useAsyncData("wp-index", () => getLa
 const landing = computed(() => page.value?.acf || {})
 
 if (import.meta.dev) {
-	console.log(landing.value)
+	// console.log(landing.value)
 }
 
 // 1. First set: 'firstcolumnheader', 'secondcolumnheader', etc.
