@@ -7,6 +7,7 @@ interface Props {
 	featureHeaderLg: string
 	featureImage: number | string
 	featureText: string
+	featureButton: string
 	featureUrl: string
 	scrollHeader: string
 	scrollImage: number | string
@@ -37,7 +38,7 @@ const props = defineProps<Props>()
 						<span class="text-center text-sm uppercase">{{ featureHeaderSm }}</span>
 						<h2 class="mt-4 text-3xl font-semibold">{{ featureHeaderLg }}</h2>
 						<p class="mt-6 mb-6">{{ featureText }}</p>
-						<SecondaryButton :url="featureUrl" :text="'Reserver nu'" :event-name="'feature_click'" :event-params="{ button_name: 'secondary_cta' }" />
+						<SecondaryButton :url="featureUrl" :text="featureButton" :event-name="'feature_click'" :event-params="{ button_name: 'secondary_cta' }" />
 					</div>
 				</div>
 			</section>

@@ -24,5 +24,7 @@ const handleButtonClick = (event: MouseEvent) => {
 </script>
 
 <template>
-	<button @click="handleButtonClick" class="bg-brand text-palladian rounded px-4 py-2 font-medium shadow transition-colors hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none">Secondary</button>
+	<button @click="handleButtonClick" class="bg-brand text-palladian rounded px-4 py-2 font-medium shadow transition-colors hover:bg-palladian hover:text-brand focus:outline-none">
+		{{ text }}
+	</button>
 </template>
