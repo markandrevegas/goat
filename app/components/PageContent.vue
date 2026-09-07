@@ -30,20 +30,20 @@ const props = defineProps<{
 		<EntryHeader :layout-style="acf?.layoutstyle || ''" :title="title" :author-name="authorName" :formatted-date="formattedDate" :date-published="datePublished" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" />
 
 		<main v-if="body" class="flex flex-col gap-4 md:grid md:grid-cols-4">
-			<div class="col-span-1">
-				<p class="mb-2 hidden text-sm tracking-tight uppercase md:block">Share Content</p>
-				<Social class="mr-auto" />
+			<div class="col-span-1 hidden sm:block">
+				<p class="mb-2 text-sm tracking-tight uppercase md:block">Share Content</p>
+				<Social class="mr-auto w-max" />
 			</div>
 			<div class="col-span-2 flex flex-col gap-2 md:pr-8">
 				<WpImage v-if="acf?.layoutstyle !== 'hero' && featuredImageUrl" :image-id="featuredImageUrl" :alt="featuredImageAlt" />
-				<div v-if="body" class="text-palladian prose prose-lg/5 prose-headings:font-semibold prose-headings:tracking-tight prose-a:text-palladian prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl prose-img:shadow-md mt-4 max-w-none md:mt-0" v-html="body"></div>
+				<div v-if="body" class="prose prose-lg/5 prose-headings:font-semibold prose-headings:tracking-tight prose-a:text-brand prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl prose-img:shadow-md max-w-none" v-html="body"></div>
 				<p v-else class="font-display italic">This page has no content body text.</p>
 				<div v-if="slug === 'betingelser'" class="my-8 flex flex-col gap-2">
 					<NuxtLink :to="'/lejebetingelser-for-private'" class="block w-max font-semibold underline">Betingelser for private</NuxtLink>
 					<NuxtLink :to="'/lejebetingelser-for-erhverv'" class="block w-max font-semibold underline">Betingelser for erhverv</NuxtLink>
 				</div>
 			</div>
-			<div class="col-span-1">
+			<div class="col-span-1 mt-16 sm:mt-0">
 				<p class="font-display mb-2 tracking-tight uppercase">Related</p>
 				<ul>
 					<li v-for="item in relatedPages" :key="item.id">

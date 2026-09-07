@@ -30,7 +30,7 @@
 
 @layer components {
 	.prose {
-		@apply !text-palladian text-base/5;
+		@apply text-base/5;
 	}
 
 	.prose :where(h1, h2, h3, h4, h5, h6) {

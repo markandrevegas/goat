@@ -39,7 +39,7 @@ const layoutStyle = computed(() => {
 		<main v-if="body && slug !== 'information-for-guests'" class="flex flex-col gap-4 md:grid md:grid-cols-4">
 			<!-- Column 1: Share icons -->
 			<div class="col-span-1">
-				<p class="mb-2 hidden text-sm tracking-tight uppercase md:block">Share Content</p>
+				<p class="mb-2 text-sm tracking-tight uppercase md:block">Share Content</p>
 				<Social class="mr-auto" />
 			</div>
 

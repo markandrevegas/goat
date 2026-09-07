@@ -47,7 +47,7 @@ defineProps<{
 		</div>
 	</header>
 
-	<header v-else class="bg-brand text-palladian mb-8 flex min-h-[18rem] w-full flex-col items-center justify-center p-8">
+	<header v-else class="mb-8 flex min-h-[18rem] w-full flex-col items-center justify-center p-8">
 		<div class="mx-auto flex max-w-3xl flex-col items-center md:max-w-4xl">
 			<h1 class="text-center text-4xl tracking-tight md:text-5xl" v-html="title"></h1>
 			<div v-if="authorName || formattedDate" class="mt-4 flex items-center space-x-2 text-sm">
