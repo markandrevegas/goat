@@ -35,7 +35,6 @@ const props = defineProps<{
 				<Social class="mr-auto" />
 			</div>
 			<div class="col-span-2 flex flex-col gap-2 md:pr-8">
-				<!-- Only display inline featured image if standard layout is used -->
 				<WpImage v-if="acf?.layoutstyle !== 'hero' && featuredImageUrl" :image-id="featuredImageUrl" :alt="featuredImageAlt" />
 				<div v-if="body" class="text-palladian prose prose-lg/5 prose-headings:font-semibold prose-headings:tracking-tight prose-a:text-palladian prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl prose-img:shadow-md mt-4 max-w-none md:mt-0" v-html="body"></div>
 				<p v-else class="font-display italic">This page has no content body text.</p>

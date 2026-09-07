@@ -38,7 +38,7 @@ const pageItems = computed(() => {
 				<p class="font-display mb-2 text-xl font-semibold">Information</p>
 				<ul class="list-reset">
 					<li v-for="item in pageItems" :key="item.id">
-						<NuxtLink :to="item.slug" class="underline transition-opacity duration-400 hover:decoration-2">{{ item.title.rendered }}</NuxtLink>
+						<NuxtLink :to="item.slug" class="font-semibold transition-opacity duration-400 hover:border-b-2">{{ item.title.rendered }}</NuxtLink>
 					</li>
 				</ul>
 			</div>
