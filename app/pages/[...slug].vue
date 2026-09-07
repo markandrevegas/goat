@@ -42,7 +42,7 @@ const {
 // 404 Guard: Executes ONLY after the async promise resolves
 if (error.value) {
 	throw createError({
-		statusCode: error.value?.statusCode || 500,
+		statusCode: error.value?.status || 500,
 		statusMessage: "Failed to fetch content from WordPress",
 		fatal: true
 	})
@@ -86,7 +86,7 @@ const { data: allPages } = await getPages()
 
 const relatedPages = computed(() => {
 	if (useBlogLayout.value || !allPages.value) return []
-	return allPages.value.filter((page) => ![contentId.value, 59, 56, 71].includes(page.id))
+	return allPages.value.filter((page) => ![contentId.value, 61, 69, 64, 71, 56, 59].includes(page.id))
 })
 
 const formattedDate = computed(() => {

@@ -1,0 +1,14 @@
+# Floating Goat
+
+> Floating Goat is a Copenhagen venue and accommodation located beside Langebro.
+
+## Products
+
+- [Simple Meetings](https://www.floatinggoat.dk/simple-meetings): Private events and celebrations.
+- [Private Events](https://www.floatinggoat.dk/events/private-selskaber): Events for businesses and organizations.
+
+
+## About
+
+- [About Floating Goat](https://www.floatinggoat.dk/about): About the venue and its location beside Langebro.
+- [Contact](https://www.floatinggoat.dk/contact): Contact and booking information.

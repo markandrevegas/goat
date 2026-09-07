@@ -23,7 +23,7 @@ const props = defineProps<{
 	featuredImageHeight: number
 }>()
 const { data: postItems } = await getPosts({
-	exclude: [props.slug]
+	exclude: [props.slug, "betingelser", "privatslivspolitik"]
 })
 
 const layoutStyle = computed(() => {
