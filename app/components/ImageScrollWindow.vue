@@ -9,6 +9,8 @@ interface Props {
 	featureHeaderLg: string
 	featureImage: number | string
 	featureText: string
+	scrollHeader: string
+	scrollImage: number | string
 }
 
 const props = defineProps<Props>()
@@ -17,7 +19,7 @@ const props = defineProps<Props>()
 	<section class="relative">
 		<!-- Background -->
 		<div class="sticky top-0 h-[60vh]">
-			<img :src="moodImg" loading="lazy" class="block h-[60vh] w-full object-cover" alt="Events" />
+			<WpImage v-if="props.scrollImage" :image-id="props.scrollImage" :alt="props.featureHeaderLg ?? 'Vandets ro og byens puls'" class="block h-[60vh] w-full object-cover" />
 			<div class="absolute inset-0 bg-black/30" />
 		</div>
 
@@ -25,7 +27,7 @@ const props = defineProps<Props>()
 		<div class="relative z-10 -mt-[50vh]">
 			<section class="text-palladian flex h-[50vh] items-center justify-center px-6">
 				<div class="max-w-2xl text-center">
-					<h2 class="text-5xl">Vandets ro og byens puls</h2>
+					<h2 class="text-5xl" v-html="scrollHeader"></h2>
 				</div>
 			</section>
 

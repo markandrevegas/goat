@@ -32,6 +32,9 @@ const featureHeaderLg = computed(() => landing.value?.feature_header_lg || "")
 const featureImage = computed(() => landing.value?.feature_image || "")
 const featureText = computed(() => landing.value?.reservations_text || "")
 
+const scrollHeader = computed(() => landing.value?.scroll_header || "")
+const scrollImage = computed(() => landing.value?.scroll_image || "")
+
 const seoTitle = computed(() => {
 	return page.value?.title?.rendered?.replace("&#8211;", "").trim()
 })
@@ -86,7 +89,7 @@ useSeoMeta({
 		<ClientOnly>
 			<CardScroller :items="standardCards" />
 		</ClientOnly>
-		<ImageScrollWindow :feature-header-sm="featureHeaderSm" :feature-header-lg="featureHeaderLg" :feature-image="featureImage" :feature-text="featureText" />
+		<ImageScrollWindow :feature-header-sm="featureHeaderSm" :feature-header-lg="featureHeaderLg" :feature-image="featureImage" :feature-text="featureText" :scroll-header="scrollHeader" :scroll-image="scrollImage" />
 		<FerryVideo />
 	</NuxtLayout>
 </template>
