@@ -44,7 +44,7 @@ const pageItems = computed(() => {
 			</div>
 			<div class="flex flex-col">
 				<p class="font-display mb-2 text-xl font-semibold">Find os</p>
-				<Social />
+				<Social class="max-content mr-auto" />
 			</div>
 		</div>
 		<div class="py-8 text-center">&copy; {{ new Date().getFullYear() }}</div>

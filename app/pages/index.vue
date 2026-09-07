@@ -34,6 +34,12 @@ const featureUrl = computed(() => landing.value?.feature_url || "")
 const featureButton = computed(() => landing.value?.feature_button || "")
 const featureText = computed(() => landing.value?.reservations_text || "")
 
+const ferryVideoHeader = computed(() => landing.value?.ferry_video_header || "")
+const ferryVideoHeaderSm = computed(() => landing.value?.ferry_video_header_sm || "")
+const ferryVideoText = computed(() => landing.value?.ferry_video_text || "")
+const ferryVideoButton = computed(() => landing.value?.ferry_video_button || "")
+const ferryVideoUrl = computed(() => landing.value?.ferry_video_url || "")
+
 const scrollHeader = computed(() => landing.value?.scroll_header || "")
 const scrollImage = computed(() => landing.value?.scroll_image || "")
 
@@ -92,6 +98,6 @@ useSeoMeta({
 			<CardScroller :items="standardCards" />
 		</ClientOnly>
 		<ImageScrollWindow :feature-header-sm="featureHeaderSm" :feature-header-lg="featureHeaderLg" :feature-image="featureImage" :feature-text="featureText" :feature-button="featureButton" :scroll-header="scrollHeader" :feature-url="featureUrl" :scroll-image="scrollImage" />
-		<FerryVideo />
+		<FerryVideo :header="ferryVideoHeader" :header-sm="ferryVideoHeaderSm" :text="ferryVideoText" :url="ferryVideoUrl" :button="ferryVideoButton" />
 	</NuxtLayout>
 </template>
