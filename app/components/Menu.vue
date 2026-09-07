@@ -13,7 +13,7 @@ const {
 	status,
 	error
 } = await getPages({
-	include: ["apartments", "simple-meetings", "private-selskaber", "information-for-guests"],
+	include: ["apartments", "simple-meetings", "private-events", "information-for-guests"],
 	exclude: ["privacy-policy", "terms-of-service"]
 })
 // Transform page titles if needed
@@ -79,7 +79,7 @@ const { data: postItems } = await getPosts({
 						</li>
 					</ul>
 					<h3 class="mt-4 text-sm font-semibold uppercase">Follow us</h3>
-					<Social />
+					<Social class="mr-auto" />
 					<h3 class="mt-4 text-sm font-semibold uppercase">Recent posts</h3>
 					<ul class="space-y-1">
 						<li v-for="post in postItems" :key="post.id">

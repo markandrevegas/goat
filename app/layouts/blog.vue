@@ -11,7 +11,7 @@ const { data: postItems } = await getPosts({
 			<Menu :items="postItems || []" />
 		</div>
 
-		<div class="relative z-10 flex min-h-screen flex-col">
+		<div class="relative z-10 flex min-h-screen flex-col text-palladian">
 			<main class="flex-grow">
 				<slot></slot>
 			</main>

@@ -24,9 +24,7 @@ if (menuPages.value) {
 
 <template>
 	<div class="relative min-h-screen">
-		<ClientOnly>
-			<Menu />
-		</ClientOnly>
+		<Menu />
 		<div v-if="$slots['bg-video']" class="relative min-h-screen w-full overflow-hidden">
 			<slot name="bg-video"></slot>
 		</div>

@@ -32,7 +32,7 @@ const layoutStyle = computed(() => {
 </script>
 
 <template>
-	<article class="w-full" :class="{ 'pt-[100vh]': layoutStyle === 'hero' }">
+	<article class="w-full pb-16" :class="{ 'pt-[100vh]': layoutStyle === 'hero' }">
 		<EntryHeader :layout-style="layoutStyle || ''" :title="title" :author-name="authorName" :formatted-date="formattedDate" :date-published="datePublished" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" />
 
 		<!-- Main 3-Column Content Grid -->
@@ -54,7 +54,7 @@ const layoutStyle = computed(() => {
 			<!-- Column 3: Sidebar -->
 			<div class="col-span-1">
 				<p class="mb-2 text-sm tracking-tight uppercase">Recent Posts</p>
-				<ul class="space-y-1">
+				<ul class="space-y-2">
 					<li v-for="post in postItems" :key="post.id">
 						<NuxtLink :to="`/${post.slug}`" class="text-palladian w-max text-sm transition-colors" active-class="border-b-2 font-semibold" v-html="post.title.rendered" />
 					</li>
@@ -66,7 +66,7 @@ const layoutStyle = computed(() => {
 		<main v-if="body && slug === 'information-for-guests'" class="mt-8 flex flex-col gap-4 md:mt-12 md:mb-16 md:grid md:grid-cols-4">
 			<div class="col-span-1"></div>
 			<div class="col-span-2 flex flex-col gap-2 md:pr-8">
-				<div v-if="body" class="prose max-w-none text-center" v-html="body"></div>
+				<div v-if="body" class="prose text-palladian max-w-none text-center" v-html="body"></div>
 				<p v-else class="font-display italic">This page has no content body text.</p>
 			</div>
 			<div class="col-span-1"></div>

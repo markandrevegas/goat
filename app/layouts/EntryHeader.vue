@@ -26,7 +26,7 @@ defineProps<{
 <template>
 	<header v-if="layoutStyle === 'hero'" class="text-palladian absolute inset-0 z-0 flex h-screen w-full flex-col items-center justify-center overflow-hidden">
 		<div class="relative z-20 mx-auto flex max-w-3xl flex-col items-center px-4 md:max-w-4xl">
-			<h1 class="text-center text-4xl tracking-tight md:text-5xl" v-html="title"></h1>
+			<h1 class="text-4xl tracking-tight md:text-5xl" v-html="title"></h1>
 
 			<div v-if="authorName || formattedDate" class="mt-4 flex items-center space-x-2 text-sm">
 				<span v-if="authorName" class="font-medium">Published by {{ authorName }}</span>
