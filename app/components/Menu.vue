@@ -43,7 +43,7 @@ const { data: postItems } = await getPosts({
 					<span class="bg-palladian mr-4 hidden h-8 w-8 rounded-full"></span>
 				</NuxtLink>
 				<div class="flex flex-col">
-					<NuxtLink to="/"><span class="font-display font-semibold font-light hover:opacity-70 transition-opacity duration-400">Floating G.O.A.T.</span></NuxtLink>
+					<NuxtLink to="/"><span class="font-display font-light font-semibold transition-opacity duration-400 hover:opacity-70">Floating G.O.A.T.</span></NuxtLink>
 					<span class="text-[11px] uppercase">Events, Meetings, Apartments</span>
 				</div>
 			</div>
@@ -75,7 +75,7 @@ const { data: postItems } = await getPosts({
 					<h3 class="text-sm font-semibold uppercase">Main menu</h3>
 					<ul class="space-y-1">
 						<li v-for="page in pageItems" :key="page.id">
-							<NuxtLink :to="`/${page.slug}`" @click="isMobileMenuOpen = false" class="text-brand w-max text-sm transition-colors duration-400 font-semibold hover:border-b-2" active-class="border-b-2" v-html="page.title.rendered" />
+							<NuxtLink :to="`/${page.slug}`" @click="isMobileMenuOpen = false" class="text-brand w-max text-sm font-semibold transition-colors duration-400 hover:border-b-2" active-class="border-b-2" v-html="page.title.rendered" />
 						</li>
 					</ul>
 					<h3 class="mt-4 text-sm font-semibold uppercase">Follow us</h3>
@@ -83,7 +83,7 @@ const { data: postItems } = await getPosts({
 					<h3 class="mt-4 text-sm font-semibold uppercase">Recent posts</h3>
 					<ul class="space-y-1">
 						<li v-for="post in postItems" :key="post.id">
-							<NuxtLink :to="`/${post.slug}`" @click="isMobileMenuOpen = false" class="text-brand w-max text-sm transition-colors duration-400 font-semibold hover:border-b-2" active-class="border-b-2" v-html="post.title.rendered" />
+							<NuxtLink :to="`/${post.slug}`" @click="isMobileMenuOpen = false" class="text-brand w-max text-sm font-semibold transition-colors duration-400 hover:border-b-2" active-class="border-b-2" v-html="post.title.rendered" />
 						</li>
 					</ul>
 				</div>

@@ -12,7 +12,7 @@ const { data: menuPages } = await getPages({
 			<Menu :items="menuPages || []" />
 		</div>
 
-		<div class="relative z-10 flex min-h-screen flex-col bg-palladian text-brand">
+		<div class="bg-palladian text-brand relative z-10 flex min-h-screen flex-col">
 			<main class="flex-grow">
 				<slot></slot>
 			</main>

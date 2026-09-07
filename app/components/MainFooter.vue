@@ -20,7 +20,7 @@ const pageItems = computed(() => {
 })
 </script>
 <template>
-	<footer class="text-base/7 bg-palladian text-brand">
+	<footer class="bg-palladian text-brand text-base/7">
 		<div class="grid flex-shrink-0 grid-cols-1 gap-8 p-8 py-24 sm:mx-auto sm:max-w-6xl sm:grid-cols-2 md:grid-cols-4">
 			<div class="flex flex-col gap-1">
 				<p class="font-display mb-2 text-xl font-semibold">Floating G.O.A.T.</p>

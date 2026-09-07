@@ -18,18 +18,18 @@ interface WpMedia {
 }
 
 const props = withDefaults(
-  defineProps<{
-    imageId?: number | string
-    alt?: string
-    class?: string
-    sizes?: string
-    loading?: "lazy" | "eager"
-    fetchpriority?: "low" | "high" | "auto"
-  }>(),
-  {
-    loading: "eager",
+	defineProps<{
+		imageId?: number | string
+		alt?: string
+		class?: string
+		sizes?: string
+		loading?: "lazy" | "eager"
+		fetchpriority?: "low" | "high" | "auto"
+	}>(),
+	{
+		loading: "eager",
 		fetchpriority: "auto"
-  }
+	}
 )
 
 const config = useRuntimeConfig()
@@ -77,14 +77,5 @@ const altText = computed(() => props.alt || media.value?.alt_text || "")
 </script>
 
 <template>
-  <img
-    v-if="src"
-    :src="src"
-    :srcset="srcset || undefined"
-    :sizes="props.sizes || '(max-width: 640px) 100vw, 33.33vw'"
-    :alt="altText"
-    :class="props.class"
-    :loading="props.loading"
-    :fetchpriority="props.fetchpriority"
-  />
+	<img v-if="src" :src="src" :srcset="srcset || undefined" :sizes="props.sizes || '(max-width: 640px) 100vw, 33.33vw'" :alt="altText" :class="props.class" :loading="props.loading" :fetchpriority="props.fetchpriority" />
 </template>

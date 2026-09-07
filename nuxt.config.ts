@@ -105,9 +105,11 @@ export default defineNuxtConfig({
 			],
 			link: wpOrigin
 				? [
-						{ rel: "preconnect", href: wpOrigin + '_fonts' },
-						{ rel: "preconnect", href: wpOrigin, crossorigin: "" },
-						{ rel: "dns-prefetch", href: wpOrigin }
+						{
+							rel: "preconnect",
+							href: wpOrigin,
+							crossorigin: ""
+						}
 					]
 				: []
 		}
@@ -244,11 +246,20 @@ export default defineNuxtConfig({
 		providers: {
 			fontshare: false
 		},
-		defaults: {
-			weights: [300, 400, 500, 600, 700],
-			styles: ["normal", "italic"],
-			subsets: ["latin", "latin-ext"]
-		}
+		families: [
+			{
+				name: "Inter",
+				weights: [400, 600],
+				styles: ["normal"],
+				subsets: ["latin"]
+			},
+			{
+				name: "Fraunces",
+				weights: [400,600],
+				styles: ["normal"],
+				subsets: ["latin"]
+			}
+		]
 	},
 	image: {
 		provider: "none"

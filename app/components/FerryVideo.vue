@@ -31,7 +31,7 @@ const props = defineProps<Props>()
 				<span class="text-sm uppercase" v-html="header_sm"></span>
 				<h1 class="text-3xl font-bold tracking-tight md:text-4xl" v-html="header"></h1>
 				<p class="mx-auto my-4 line-clamp-4 max-w-2xl text-xl/8" v-html="text"></p>
-				<OutlinedButton :url="url" :event-name="'secondary_ferry_click'" :text="button" :event-params="{ button_name: 'secondary_cta' }" class="text-lg mx-auto" />
+				<OutlinedButton :url="url" :event-name="'secondary_ferry_click'" :text="button" :event-params="{ button_name: 'secondary_cta' }" class="mx-auto text-lg" />
 			</slot>
 		</div>
 	</div>
