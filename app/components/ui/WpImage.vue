@@ -24,7 +24,7 @@ const props = withDefaults(
     class?: string
     sizes?: string
     loading?: "lazy" | "eager"
-		fetchpriority?: "low" | "high" | "auto"
+    fetchpriority?: "low" | "high" | "auto"
   }>(),
   {
     loading: "eager",
@@ -77,5 +77,14 @@ const altText = computed(() => props.alt || media.value?.alt_text || "")
 </script>
 
 <template>
-	<img v-if="src" :src="src" :srcset="srcset || undefined" :sizes="props.sizes || '(max-width: 640px) 100vw, 33.33vw'" :alt="altText" :class="props.class" />
+  <img
+    v-if="src"
+    :src="src"
+    :srcset="srcset || undefined"
+    :sizes="props.sizes || '(max-width: 640px) 100vw, 33.33vw'"
+    :alt="altText"
+    :class="props.class"
+    :loading="props.loading"
+    :fetchpriority="props.fetchpriority"
+  />
 </template>
