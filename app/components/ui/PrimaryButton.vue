@@ -18,7 +18,7 @@ const handleButtonClick = (event: MouseEvent) => {
 	trackEvent(props.eventName, props.eventParams ?? {})
 	emit("click", event)
 	if (props.url) {
-		window.open(props.url, "_blank")
+		window.open(props.url, "_parent")
 	}
 }
 </script>

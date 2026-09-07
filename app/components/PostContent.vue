@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue"
-import Instagram from "~/components/icons/Instagram.vue"
-import Facebook from "~/components/icons/Facebook.vue"
-import Linkedin from "~/components/icons/Linkedin.vue"
 
+import WpImage from "./ui/WpImage.vue"
 import EntryHeader from "~/layouts/EntryHeader.vue"
 import ThreeCardLayout from "./ui/ThreeCardLayout.vue"
 import MapEmbed from "./ui/MapEmbed.vue"
@@ -35,7 +33,7 @@ const layoutStyle = computed(() => {
 
 <template>
 	<article class="w-full" :class="{ 'pt-[100vh]': layoutStyle === 'hero' }">
-		<EntryHeader :layout-style="layoutStyle" :title="title" :author-name="authorName" :formatted-date="formattedDate" :date-published="datePublished" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" />
+		<EntryHeader :layout-style="layoutStyle || ''" :title="title" :author-name="authorName" :formatted-date="formattedDate" :date-published="datePublished" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" />
 
 		<!-- Main 3-Column Content Grid -->
 		<main v-if="body && slug !== 'information-for-guests'" class="flex flex-col gap-4 md:grid md:grid-cols-4">
@@ -47,7 +45,7 @@ const layoutStyle = computed(() => {
 
 			<!-- Column 2 (Middle): Standard Mode Image rendering first, followed by content -->
 			<div class="col-span-2 flex flex-col gap-4 md:pr-8">
-				<NuxtImg v-if="layoutStyle !== 'hero' && featuredImageUrl" :src="featuredImageUrl" :alt="featuredImageAlt" :width="featuredImageWidth" :height="featuredImageHeight" sizes="(max-width: 768px) 100vw, 50vw" loading="lazy" format="webp" class="w-full rounded-xl object-cover shadow-sm" />
+				<WpImage v-if="acf?.layoutstyle !== 'hero' && featuredImageUrl" :image-id="featuredImageUrl" :alt="featuredImageAlt" sizes="sm:100vw md:50vw lg:800px" />
 
 				<div v-if="body" class="text-palladian prose prose-lg/5 prose-headings:font-semibold prose-headings:tracking-tight prose-a:text-palladian prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl prose-img:shadow-md max-w-none" v-html="body"></div>
 				<p v-else class="font-display italic">This page has no content body text.</p>

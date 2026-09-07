@@ -4,6 +4,7 @@ export interface CardItem {
 	description: string
 	buttonText?: string
 	alt?: string
+	url?: string
 }
 
 export function extractColumns(acfData: Record<string, any>, prefixes: string[]): CardItem[] {
@@ -18,12 +19,14 @@ export function extractColumns(acfData: Record<string, any>, prefixes: string[])
 			const description = acfData[`header_${p}_text`] ?? acfData[`${p}columntext`] ?? acfData[`${p}text`]
 			const img = acfData[`header_${p}_image`] ?? acfData[`${p}columnimage`] ?? acfData[`${p}image`]
 			const buttonText = acfData[`header_${p}_button`] ?? acfData[`${p}columnbutton`] ?? acfData[`${p}button`]
+			const url = acfData[`header_${p}_url`]
 
 			if (!title && !description) return null
 
 			return {
 				title,
 				description,
+				url,
 				img,
 				...(buttonText ? { buttonText } : {})
 			}
