@@ -30,6 +30,7 @@ const threeColumnItems = computed(() => extractColumns(landing.value, ["one", "t
 const featureHeaderSm = computed(() => landing.value?.feature_header_sm || "")
 const featureHeaderLg = computed(() => landing.value?.feature_header_lg || "")
 const featureImage = computed(() => landing.value?.feature_image || "")
+const featureUrl = computed(() => landing.value?.feature_url || "")
 const featureText = computed(() => landing.value?.reservations_text || "")
 
 const scrollHeader = computed(() => landing.value?.scroll_header || "")
@@ -89,7 +90,7 @@ useSeoMeta({
 		<ClientOnly>
 			<CardScroller :items="standardCards" />
 		</ClientOnly>
-		<ImageScrollWindow :feature-header-sm="featureHeaderSm" :feature-header-lg="featureHeaderLg" :feature-image="featureImage" :feature-text="featureText" :scroll-header="scrollHeader" :scroll-image="scrollImage" />
+		<ImageScrollWindow :feature-header-sm="featureHeaderSm" :feature-header-lg="featureHeaderLg" :feature-image="featureImage" :feature-text="featureText" :scroll-header="scrollHeader" :feature-url="featureUrl" :scroll-image="scrollImage" />
 		<FerryVideo />
 	</NuxtLayout>
 </template>
