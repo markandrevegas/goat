@@ -17,10 +17,8 @@ const props = defineProps<Props>()
 <template>
 	<div class="text-palladian relative z-10 -mt-2 h-[60vh]">
 		<video :poster="poster" autoplay muted playsinline class="absolute inset-0 z-0 h-full w-full object-cover hue-rotate-15">
-			<source :src="heroMobile" type="video/mp4" media="(max-width: 767px)" />
-
-			<source :src="heroDesktop" type="video/mp4" media="(min-width: 768px)" />
-
+			<source :src="heroMobile" type="video/mp4" media="(max-width: 639px)" />
+			<source :src="heroDesktop" type="video/mp4" media="(min-width: 640px)" />
 			Your browser does not support the video tag.
 		</video>
 
