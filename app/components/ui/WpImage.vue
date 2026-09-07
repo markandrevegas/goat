@@ -17,12 +17,18 @@ interface WpMedia {
 	}
 }
 
-const props = defineProps<{
-	imageId?: number | string
-	alt?: string
-	class?: string
-	sizes?: string
-}>()
+const props = withDefaults(
+  defineProps<{
+    imageId?: number | string
+    alt?: string
+    class?: string
+    sizes?: string
+    loading?: "lazy" | "eager"
+  }>(),
+  {
+    loading: "lazy"
+  }
+)
 
 const config = useRuntimeConfig()
 const wpBaseUrl = (config.public.goatWordpressUrl as string) || ""
