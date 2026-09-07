@@ -19,7 +19,7 @@ const props = defineProps<Props>()
 	<section class="relative">
 		<!-- Background -->
 		<div class="sticky top-0 h-[60vh]">
-			<WpImage v-if="props.scrollImage" :image-id="props.scrollImage" :alt="props.featureHeaderLg ?? 'Vandets ro og byens puls'" class="block h-[60vh] w-full object-cover" />
+			<WpImage loading="lazy" v-if="props.scrollImage" :image-id="props.scrollImage" :alt="props.featureHeaderLg ?? 'Vandets ro og byens puls'" class="block h-[60vh] w-full object-cover" />
 			<div class="absolute inset-0 bg-black/30" />
 		</div>
 
@@ -33,7 +33,7 @@ const props = defineProps<Props>()
 
 			<section class="bg-palladian text-brand flex min-h-screen items-center justify-center pb-8">
 				<div class="flex max-w-5xl flex-col sm:flex-row sm:items-center">
-					<WpImage v-if="props.featureImage" :image-id="props.featureImage" :alt="props.featureHeaderLg ?? 'Vandets ro og byens puls'" class="block h-[60vh] w-full object-cover" />
+					<WpImage loading="lazy" v-if="props.featureImage" :image-id="props.featureImage" :alt="props.featureHeaderLg ?? 'Vandets ro og byens puls'" class="block h-[60vh] w-full object-cover" />
 					<div class="px-4 py-16 sm:col-span-2 sm:px-8">
 						<span class="text-center text-sm uppercase">{{ featureHeaderSm }}</span>
 						<h2 class="mt-4 text-3xl font-semibold">{{ featureHeaderLg }}</h2>

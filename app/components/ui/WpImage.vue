@@ -26,7 +26,7 @@ const props = withDefaults(
     loading?: "lazy" | "eager"
   }>(),
   {
-    loading: "lazy"
+    loading: "eager"
   }
 )
 

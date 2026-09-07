@@ -45,7 +45,7 @@ const layoutStyle = computed(() => {
 
 			<!-- Column 2 (Middle): Standard Mode Image rendering first, followed by content -->
 			<div class="col-span-2 flex flex-col gap-4 md:pr-8">
-				<WpImage v-if="acf?.layoutstyle !== 'hero' && featuredImageUrl" :image-id="featuredImageUrl" :alt="featuredImageAlt" sizes="sm:100vw md:50vw lg:800px" />
+				<WpImage loading="eager" fetchpriority="high" v-if="acf?.layoutstyle !== 'hero' && featuredImageUrl" :image-id="featuredImageUrl" :alt="featuredImageAlt" sizes="sm:100vw md:50vw lg:800px" />
 
 				<div v-if="body" class="text-palladian prose prose-lg/5 prose-headings:font-semibold prose-headings:tracking-tight prose-a:text-palladian prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl prose-img:shadow-md max-w-none" v-html="body"></div>
 				<p v-else class="font-display italic">This page has no content body text.</p>

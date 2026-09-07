@@ -36,7 +36,7 @@ const props = defineProps<{
 				<Social class="mr-auto w-max" />
 			</div>
 			<div class="col-span-2 flex flex-col gap-2 md:pr-8">
-				<WpImage v-if="acf?.layoutstyle !== 'hero' && featuredImageUrl" :image-id="featuredImageUrl" :alt="featuredImageAlt" />
+				<WpImage loading="eager" fetchpriority="high" v-if="acf?.layoutstyle !== 'hero' && featuredImageUrl" :image-id="featuredImageUrl" :alt="featuredImageAlt" />
 				<div v-if="body" class="prose prose-lg/5 prose-headings:font-semibold prose-headings:tracking-tight prose-a:text-brand prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl prose-img:shadow-md max-w-none" v-html="body"></div>
 				<p v-else class="font-display italic">This page has no content body text.</p>
 				<div v-if="slug === 'simple-meetings'" class="w-full mt-8">
