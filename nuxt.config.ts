@@ -79,6 +79,18 @@ async function fetchAllSlugs(wpUrl: string, endpoint: string): Promise<string[]>
 	return slugs
 }
 
+function wordpressOrigin(): string | null {
+	const wpUrl = process.env.NUXT_PUBLIC_GOAT_WORDPRESS_URL
+	if (!wpUrl) return null
+	try {
+		return new URL(wpUrl).origin
+	} catch {
+		return null
+	}
+}
+
+const wpOrigin = wordpressOrigin()
+
 export default defineNuxtConfig({
 	ssr: true,
 	app: {
@@ -90,7 +102,14 @@ export default defineNuxtConfig({
 			meta: [
 				{ name: "viewport", content: "width=device-width, initial-scale=1" },
 				{ name: "robots", content: "noindex, nofollow" }
-			]
+			],
+			link: wpOrigin
+				? [
+						{ rel: "preconnect", href: wpOrigin },
+						{ rel: "preconnect", href: wpOrigin, crossorigin: "" },
+						{ rel: "dns-prefetch", href: wpOrigin }
+					]
+				: []
 		}
 	},
 	sourcemap: {
