@@ -87,5 +87,5 @@ jobs:
           SSH_PORT: 22
           SSH_USER: ${{ secrets.VPS_SSH_USER }}
         run: |
-          ssh -i ~/.ssh/vps_deploy -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" \
+          ssh -i ~/.ssh/id_ed25519 -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" \
             "cd /var/www/floatinggoat.dk/app && (pm2 restart floatinggoat || pm2 start ecosystem.config.cjs)"
