@@ -5,7 +5,8 @@ on:
     branches: [main]
 
 jobs:
-  build:
+  # Existing static deploy — untouched, still ships to one.com shared hosting.
+  deploy-static:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,6 +24,7 @@ jobs:
         env:
           NUXT_PUBLIC_GTM_ID: ${{ secrets.NUXT_PUBLIC_GTM_ID }}
           NUXT_PUBLIC_GOAT_WORDPRESS_URL: ${{ secrets.NUXT_PUBLIC_GOAT_WORDPRESS_URL }}
+
       - name: Deploy to floatinggoat.dk via SSH
         env:
           SSH_KEY: ${{ secrets.FLOATINGGOAT_SSH_KEY }}
@@ -39,3 +41,51 @@ jobs:
             -e "ssh -i ~/.ssh/floatinggoat_deploy -p $SSH_PORT" \
             ./.output/public/ \
             "$SSH_USER@$SSH_HOST:/customers/1/1/f/floatinggoat.dk/httpd.www/app/"
+
+  # New SSR deploy — ships to the VPS running Nginx + pm2. Runs independently
+  # of deploy-static above (separate runner, separate .output/ build), so
+  # both can succeed or fail without affecting each other.
+  deploy-vps:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build SSR bundle
+        run: NODE_TLS_REJECT_UNAUTHORIZED=0 bun run build
+        env:
+          NUXT_PUBLIC_GTM_ID: ${{ secrets.NUXT_PUBLIC_GTM_ID }}
+          NUXT_PUBLIC_GOAT_WORDPRESS_URL: ${{ secrets.NUXT_PUBLIC_GOAT_WORDPRESS_URL }}
+
+      - name: Deploy to VPS via SSH
+        env:
+          SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+          SSH_HOST: ${{ secrets.VPS_SSH_HOST }}
+          SSH_PORT: 22
+          SSH_USER: ${{ secrets.VPS_SSH_USER }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_KEY" > ~/.ssh/vps_deploy
+          chmod 600 ~/.ssh/vps_deploy
+          ssh-keyscan -p "$SSH_PORT" -H "$SSH_HOST" >> ~/.ssh/known_hosts
+
+          rsync -avz --delete \
+            -e "ssh -i ~/.ssh/vps_deploy -p $SSH_PORT" \
+            ./.output/ \
+            "$SSH_USER@$SSH_HOST:/var/www/floatinggoat.dk/app/.output/"
+
+      - name: Restart the app on the VPS
+        env:
+          SSH_HOST: ${{ secrets.VPS_SSH_HOST }}
+          SSH_PORT: 22
+          SSH_USER: ${{ secrets.VPS_SSH_USER }}
+        run: |
+          ssh -i ~/.ssh/vps_deploy -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" \
+            "cd /var/www/floatinggoat.dk/app && (pm2 restart floatinggoat || pm2 start ecosystem.config.cjs)"
