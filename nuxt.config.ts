@@ -255,7 +255,7 @@ export default defineNuxtConfig({
 			},
 			{
 				name: "Fraunces",
-				weights: [400,600],
+				weights: [400, 600],
 				styles: ["normal"],
 				subsets: ["latin"]
 			}

@@ -1,69 +1,76 @@
-<script setup>
-import { onMounted } from "vue"
+<script setup lang="ts">
+import { computed } from "vue"
 
+// 1. Static macro declarations FIRST
+definePageMeta({ layout: false })
+
+// 2. Route & Composables
 const route = useRoute()
-const { getPost, getPage, getPages } = useWordPress()
+const { getContentBySlug, getPages } = useWordPress()
 
+// 3. Computed params
 const slugParam = computed(() => {
-	const params = route.params.slug
-	return Array.isArray(params) ? params : [params || ""]
+  const params = route.params.slug
+  return Array.isArray(params) ? params : [params || ""]
 })
 
-const targetSlug = computed(() => slugParam.value[slugParam.value.length - 1] || "home")
-// Combine fetching inside a single top-level useAsyncData block
+const targetSlug = computed(() => {
+  const segments = slugParam.value.filter(Boolean)
+  return segments[segments.length - 1] || "home"
+})
+
+// 4. Async Data Fetching
 const {
-	data: rawContentData,
-	error,
-	pending
+  data: rawContentData,
+  error,
+  pending
 } = await useAsyncData(
-	`wp-content-${targetSlug.value}`,
-	async () => {
-		// Fetch page and post in parallel
-		const [pageRes, postRes] = await Promise.all([getPage(targetSlug.value), getPost(targetSlug.value)])
+  `wp-content-${targetSlug.value}`,
+  async () => {
+    const slug = targetSlug.value
+    if (!slug) return null
 
-		// Each getPage/getPost call swallows its own fetch errors into its
-		// own local `error` ref rather than throwing — so a rate-limited
-		// or failed request looks identical to "no content" unless we
-		// check error.value explicitly here and re-throw it as a real
-		// failure instead of letting it fall through to a false 404.
-		if (pageRes.error.value && postRes.error.value) {
-			throw createError({
-				statusCode: 500,
-				statusMessage: `WordPress fetch failed for "${targetSlug.value}": ${pageRes.error.value?.message || postRes.error.value?.message}`,
-				fatal: true
-			})
-		}
+    const page = await getContentBySlug("pages", slug)
+    if (page) return page
 
-		return pageRes.data.value || postRes.data.value || null
-	},
-	{ watch: [targetSlug] }
+    const post = await getContentBySlug("posts", slug)
+    if (post) return post
+
+    const privatePage = await getContentBySlug("private", slug)
+    if (privatePage) return privatePage
+
+    return null
+  },
+  { watch: [targetSlug] }
 )
 
-// 404 Guard: Executes ONLY after the async promise resolves
+// 5. Guards & Error handling
 if (error.value) {
-	throw createError({
-		statusCode: error.value?.status || 500,
-		statusMessage: "Failed to fetch content from WordPress",
-		fatal: true
-	})
+  throw createError({
+    statusCode: error.value?.status || 500,
+    statusMessage: "Failed to fetch content from WordPress",
+    fatal: true
+  })
 }
 
 if (!rawContentData.value) {
-	throw createError({
-		statusCode: 404,
-		statusMessage: "WordPress Content Not Found",
-		fatal: true
-	})
+  throw createError({
+    statusCode: 404,
+    statusMessage: "WordPress Content Not Found",
+    fatal: true
+  })
 }
 
-// Flags & Layout determination
-const isPost = computed(() => rawContentData.value?.type === "post")
+// 6. Reactive Content Computed Properties
+const isPost = computed(() => rawContentData.value?._type === "posts")
+const isPrivatePage = computed(() => rawContentData.value?._type === "private")
 const hasContent = computed(() => !!rawContentData.value)
-
-definePageMeta({ layout: false })
 
 const useBlogLayout = computed(() => isPost.value || rawContentData.value?.slug === "information-for-guests")
 const layoutName = computed(() => (useBlogLayout.value ? "blog" : "page"))
+
+/*const useBlogLayout = computed(() => isPost.value || rawContentData.value?.slug === "information-for-guests")
+const layoutName = computed(() => (useBlogLayout.value ? "blog" : "page"))*/
 
 // Content Field Mappings
 const contentId = computed(() => rawContentData.value?.id || null)
@@ -72,14 +79,6 @@ const contentSlug = computed(() => rawContentData.value?.slug || "")
 const contentBody = computed(() => rawContentData.value?.content?.rendered || "")
 const contentAcf = computed(() => rawContentData.value?.acf || {})
 const datePublished = computed(() => rawContentData.value?.date || null)
-
-/*onMounted(() => {
-	console.log("Client-side ACF Data:", contentAcf.value)
-})
-
-if (import.meta.client) {
-	console.log(`[WP ACF] slug=${contentSlug.value}`, contentAcf.value)
-}*/
 
 // Fetch related pages
 const { data: allPages } = await getPages()
@@ -90,10 +89,13 @@ const relatedPages = computed(() => {
 })
 
 const formattedDate = computed(() => {
-	if (!datePublished.value) return ""
+	if (!datePublished.value || typeof datePublished.value !== "string") return ""
+
 	const dateString = datePublished.value.endsWith("Z") ? datePublished.value : `${datePublished.value}Z`
+
 	const parsedDate = new Date(dateString)
-	if (isNaN(parsedDate.getTime())) return ""
+
+	if (Number.isNaN(parsedDate.getTime())) return ""
 
 	return new Intl.DateTimeFormat("da-DK", {
 		year: "numeric",
@@ -102,7 +104,6 @@ const formattedDate = computed(() => {
 		timeZone: "UTC"
 	}).format(parsedDate)
 })
-
 const authorDetails = computed(() => rawContentData.value?._embedded?.author?.[0] || null)
 const authorName = computed(() => authorDetails.value?.name || "")
 
@@ -125,7 +126,6 @@ const ogImage = computed(() => rawContentData.value?.yoast_head_json?.og_image?.
 useSeoMeta({
 	title: seoTitle,
 	titleTemplate: null,
-	metaTitle: seoTitle,
 	description: seoDescription,
 	ogTitle: seoTitle,
 	ogDescription: seoDescription,
@@ -134,7 +134,8 @@ useSeoMeta({
 	twitterCard: "summary_large_image",
 	twitterTitle: seoTitle,
 	twitterDescription: seoDescription,
-	twitterImage: ogImage
+	twitterImage: ogImage,
+	...(isPrivatePage.value && { robots: "noindex, nofollow" }) // Automatically apply noindex for private pages
 })
 </script>
 

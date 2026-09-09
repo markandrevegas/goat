@@ -1,70 +1,50 @@
-import type { WordPressPostOrPage, WordPressMenuItem, WordPressLandingPage } from "~/types/wordpress"
+import type { WordPressPostOrPage, WordPressMenuItem, WordPressLandingPage, WordPressPrivatePage } from "~/types/wordpress"
 
-/**
- * Single shared fetch helper. Absolute URL means Nuxt's ofetch baseURL
- * is irrelevant here, so there's no need to pass baseURL: "" like the
- * old composables did.
- */
 const wpFetch = <T>(endpoint: string, query: Record<string, any>) => {
 	const config = useRuntimeConfig()
 
 	if (!config.public.goatWordpressUrl) {
-		throw new Error("[wpFetch] NUXT_PUBLIC_GOAT_WORDPRESS_URL is not set. Add it to a local .env file and restart the dev server.")
+		throw new Error("[wpFetch] NUXT_PUBLIC_GOAT_WORDPRESS_URL is not set.")
 	}
 
 	const fullUrl = `${config.public.goatWordpressUrl}/${endpoint}`
-	// TEMP: remove once we've confirmed the request target and response
-	/*console.log(`[wpFetch] → ${fullUrl}`, query)*/
 
 	return $fetch<T>(fullUrl, {
 		query,
 		retry: 4,
-		// A flat 500ms backoff won't outlast a rate-limit window that
-		// typically resets on the order of tens of seconds. 3s is a
-		// safer floor without dragging small, healthy builds out too long.
 		retryDelay: 3_000,
 		timeout: 10_000
 	})
-		.then((result) => {
-			const count = Array.isArray(result) ? result.length : "n/a"
-			/*console.log(`[wpFetch] ← ${fullUrl} slug=${query.slug ?? "(none)"} → ${count} result(s)`)*/
-			return result
-		})
-		.catch((err) => {
-			/*console.log(`[wpFetch] ✗ ${fullUrl} slug=${query.slug ?? "(none)"} FAILED:`, err?.status ?? err?.message ?? err)*/
-			throw err
-		})
 }
 
 export const useWordPress = () => {
 	/**
-	 * Single page or post by slug. Includes _embed data (featured image,
-	 * author) plus excerpt and yoast_head_json.
+	 * Single post, page, or private CPT fetcher
 	 */
-	const getContentBySlug = (endpoint: "posts" | "pages", slug: string) => {
-		// Explicit, deterministic key for static hydration
-		const key = `wp-content-${endpoint}-${slug}`
+	const getContentBySlug = async (endpoint: "posts" | "pages" | "private", slug: string) => {
+	if (!slug) return null
 
-		return useAsyncData(key, async () => {
-			if (!slug) return null
-
-			const results = await wpFetch<WordPressPostOrPage[]>(endpoint, {
-				slug,
-				_embed: 1,
-				_fields: "id,date,title,slug,content,excerpt,acf,yoast_head_json,_links,_embedded"
-			})
-
-			return results?.[0] ?? null
+	try {
+		const results = await wpFetch<WordPressPostOrPage[]>(endpoint, {
+			slug,
+			status: "publish",
+			_embed: 1,
+			_fields: "id,date,title,slug,content,excerpt,acf,yoast_head_json,_links,_embedded"
 		})
+
+		return results?.[0] ? { ...results[0], _type: endpoint } : null
+	} catch (err: any) {
+		// A 404 just means "no such route/content" — let the caller fall
+		// through to the next type instead of blowing up the whole page.
+		if (err?.response?.status === 404) return null
+		throw err
 	}
+}
 
 	const getPage = (slug: string) => getContentBySlug("pages", slug)
 	const getPost = (slug: string) => getContentBySlug("posts", slug)
+	const getPrivatePage = (slug: string) => getContentBySlug("private", slug)
 
-	/**
-	 * Landing pages are a separate custom post type, used for campaign
-	 * pages that are deliberately not linked from nav.
-	 */
 	const getLandingPage = async (slug: string) => {
 		const results = await wpFetch<WordPressLandingPage[]>("landingpage", {
 			slug,
@@ -73,28 +53,21 @@ export const useWordPress = () => {
 		return results[0] ?? null
 	}
 
-	/**
-	 * Batch fetch by array of slugs, preserving the order of the provided slugs.
-	 */
-	const getBySlugs = async (endpoint: "pages" | "posts", slugs: string[]) => {
+	const getBySlugs = async (endpoint: "pages" | "posts" | "private", slugs: string[]) => {
 		if (!slugs.length) return []
 		const results = await wpFetch<WordPressMenuItem[]>(endpoint, {
 			slug: slugs.join(","),
 			_fields: "id,title,slug"
 		})
 
-		// Preserve input order since WP REST API doesn't support orderby="slug_in"
 		return slugs.map((slug) => results.find((item) => item.slug === slug)).filter((item): item is WordPressMenuItem => item !== undefined)
 	}
 
 	const getPagesBySlugs = (slugs: string[]) => getBySlugs("pages", slugs)
 	const getPostsBySlugs = (slugs: string[]) => getBySlugs("posts", slugs)
+	const getPrivatePagesBySlugs = (slugs: string[]) => getBySlugs("private", slugs)
 
-	/**
-	 * All published items of a type, paginated past WP's per_page=100 cap.
-	 * Filters out any items whose slug matches excludeSlugs in memory.
-	 */
-	const getAllByType = async (endpoint: "pages" | "posts", excludeSlugs: string[] = []) => {
+	const getAllByType = async (endpoint: "pages" | "posts" | "private", excludeSlugs: string[] = []) => {
 		const results: WordPressMenuItem[] = []
 		let page = 1
 		const excludeSet = new Set(excludeSlugs)
@@ -120,9 +93,6 @@ export const useWordPress = () => {
 		return results
 	}
 
-	/**
-	 * Flexible fetcher for Pages with optional inclusion/exclusion lists.
-	 */
 	const getPages = (options: { include?: string[]; exclude?: string[] } = {}) => {
 		const include = options.include || []
 		const exclude = options.exclude || []
@@ -137,9 +107,6 @@ export const useWordPress = () => {
 		})
 	}
 
-	/**
-	 * Flexible fetcher for Posts with optional inclusion/exclusion lists.
-	 */
 	const getPosts = (options: { include?: string[]; exclude?: string[] } = {}) => {
 		const include = options.include || []
 		const exclude = options.exclude || []
@@ -154,13 +121,32 @@ export const useWordPress = () => {
 		})
 	}
 
+	const getPrivatePages = (options: { include?: string[]; exclude?: string[] } = {}) => {
+		const include = options.include || []
+		const exclude = options.exclude || []
+		const key = `wp-private-pages-inc-${include.join("-")}-exc-${exclude.join("-")}`
+
+		return useAsyncData(key, async () => {
+			if (include.length > 0) {
+				const items = await getPrivatePagesBySlugs(include)
+				return exclude.length ? items.filter((item) => !exclude.includes(item.slug)) : items
+			}
+			return getAllByType("private", exclude)
+		})
+	}
+
 	return {
 		getPage,
 		getPost,
+		getPrivatePage,
+		getContentBySlug,
 		getLandingPage,
 		getPages,
 		getPosts,
+		getPrivatePages,
 		getPagesBySlugs,
-		getPostsBySlugs
+		getPostsBySlugs,
+		getPrivatePagesBySlugs,
+		getAllByType
 	}
 }

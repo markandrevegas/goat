@@ -28,6 +28,10 @@ export interface WordPressLandingPage extends WordPressBase {
 	acf: Record<string, any>
 }
 
+export interface WordPressPrivatePage extends WordPressPostOrPage {
+	acf: Record<string, any>
+}
+
 export interface WordPressPostOrPage extends WordPressBase {
 	date: string
 	content: {
