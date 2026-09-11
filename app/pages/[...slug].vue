@@ -1,67 +1,59 @@
 <script setup lang="ts">
 import { computed } from "vue"
 
-// 1. Static macro declarations FIRST
 definePageMeta({ layout: false })
 
-// 2. Route & Composables
 const route = useRoute()
-const { getContentBySlug, getPages } = useWordPress()
+const { getContentBySlug, getPages, getPrivatePage } = useWordPress()
 
-// 3. Computed params
+const { getPrivatePages } = useWordPress()
+const { data: privatePages } = await getPrivatePages()
+
+console.log("privates = ", privatePages.value)
+
 const slugParam = computed(() => {
-  const params = route.params.slug
-  return Array.isArray(params) ? params : [params || ""]
+	const params = route.params.slug
+	return Array.isArray(params) ? params : [params || ""]
 })
 
 const targetSlug = computed(() => {
-  const segments = slugParam.value.filter(Boolean)
-  return segments[segments.length - 1] || "home"
+	const segments = slugParam.value.filter(Boolean)
+	return segments[segments.length - 1] || "home"
 })
+console.log(targetSlug.value)
 
-// 4. Async Data Fetching
 const {
-  data: rawContentData,
-  error,
-  pending
+	data: rawContentData,
+	error,
+	pending
 } = await useAsyncData(
-  `wp-content-${targetSlug.value}`,
-  async () => {
-    const slug = targetSlug.value
-    if (!slug) return null
+	`wp-content-${targetSlug.value}`,
+	async () => {
+		const slug = targetSlug.value
+		console.log("[slug.vue] resolving slug:", slug)
+		if (!slug) return null
 
-    const page = await getContentBySlug("pages", slug)
-    if (page) return page
-
-    const post = await getContentBySlug("posts", slug)
-    if (post) return post
-
-    const privatePage = await getContentBySlug("private", slug)
-    if (privatePage) return privatePage
-
-    return null
-  },
-  { watch: [targetSlug] }
+		return (await getContentBySlug("pages", slug)) ?? (await getContentBySlug("posts", slug)) ?? (await getPrivatePage(slug)) ?? null
+	},
+	{ watch: [targetSlug] }
 )
 
-// 5. Guards & Error handling
 if (error.value) {
-  throw createError({
-    statusCode: error.value?.status || 500,
-    statusMessage: "Failed to fetch content from WordPress",
-    fatal: true
-  })
+	throw createError({
+		statusCode: error.value?.status || 500,
+		statusMessage: "Failed to fetch content from WordPress",
+		fatal: true
+	})
 }
 
 if (!rawContentData.value) {
-  throw createError({
-    statusCode: 404,
-    statusMessage: "WordPress Content Not Found",
-    fatal: true
-  })
+	throw createError({
+		statusCode: 404,
+		statusMessage: "WordPress Content Not Found",
+		fatal: true
+	})
 }
-
-// 6. Reactive Content Computed Properties
+console.log(rawContentData.value)
 const isPost = computed(() => rawContentData.value?._type === "posts")
 const isPrivatePage = computed(() => rawContentData.value?._type === "private")
 const hasContent = computed(() => !!rawContentData.value)
@@ -69,10 +61,6 @@ const hasContent = computed(() => !!rawContentData.value)
 const useBlogLayout = computed(() => isPost.value || rawContentData.value?.slug === "information-for-guests")
 const layoutName = computed(() => (useBlogLayout.value ? "blog" : "page"))
 
-/*const useBlogLayout = computed(() => isPost.value || rawContentData.value?.slug === "information-for-guests")
-const layoutName = computed(() => (useBlogLayout.value ? "blog" : "page"))*/
-
-// Content Field Mappings
 const contentId = computed(() => rawContentData.value?.id || null)
 const contentTitle = computed(() => rawContentData.value?.title?.rendered || "")
 const contentSlug = computed(() => rawContentData.value?.slug || "")
@@ -80,7 +68,6 @@ const contentBody = computed(() => rawContentData.value?.content?.rendered || ""
 const contentAcf = computed(() => rawContentData.value?.acf || {})
 const datePublished = computed(() => rawContentData.value?.date || null)
 
-// Fetch related pages
 const { data: allPages } = await getPages()
 
 const relatedPages = computed(() => {
@@ -92,7 +79,6 @@ const formattedDate = computed(() => {
 	if (!datePublished.value || typeof datePublished.value !== "string") return ""
 
 	const dateString = datePublished.value.endsWith("Z") ? datePublished.value : `${datePublished.value}Z`
-
 	const parsedDate = new Date(dateString)
 
 	if (Number.isNaN(parsedDate.getTime())) return ""
@@ -104,17 +90,16 @@ const formattedDate = computed(() => {
 		timeZone: "UTC"
 	}).format(parsedDate)
 })
+
 const authorDetails = computed(() => rawContentData.value?._embedded?.author?.[0] || null)
 const authorName = computed(() => authorDetails.value?.name || "")
 
-// Featured Media
 const featuredMedia = computed(() => rawContentData.value?._embedded?.["wp:featuredmedia"]?.[0] || null)
 const featuredImageUrl = computed(() => featuredMedia.value?.source_url || null)
 const featuredImageAlt = computed(() => featuredMedia.value?.alt_text || contentTitle.value)
 const featuredImageWidth = computed(() => featuredMedia.value?.media_details?.width || 1200)
 const featuredImageHeight = computed(() => featuredMedia.value?.media_details?.height || 630)
 
-// SEO Metadata
 const seoTitle = computed(() => contentTitle.value || "Page")
 const seoDescription = computed(() => {
 	const excerpt = rawContentData.value?.excerpt?.rendered
@@ -135,7 +120,7 @@ useSeoMeta({
 	twitterTitle: seoTitle,
 	twitterDescription: seoDescription,
 	twitterImage: ogImage,
-	...(isPrivatePage.value && { robots: "noindex, nofollow" }) // Automatically apply noindex for private pages
+	...(isPrivatePage.value && { robots: "noindex, nofollow" })
 })
 </script>
 
