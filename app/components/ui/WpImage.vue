@@ -19,7 +19,7 @@ interface WpMedia {
 
 const props = withDefaults(
 	defineProps<{
-		imageId?: number | string
+		imageId?: number | string | null
 		alt?: string
 		class?: string
 		sizes?: string
@@ -38,16 +38,11 @@ const wpBaseUrl = (config.public.goatWordpressUrl as string) || ""
 const isUrl = computed(() => typeof props.imageId === "string" && props.imageId.startsWith("http"))
 const shouldFetch = computed(() => !!props.imageId && !isUrl.value)
 
-const { data: media, execute } = await useAsyncData(
-	`wp-media-${props.imageId}`,
-	() =>
-		$fetch<WpMedia>(`/media/${props.imageId}`, {
-			baseURL: wpBaseUrl
-		}),
-	{
-		immediate: shouldFetch.value
-	}
-)
+const { data: media, execute, error } = await useAsyncData(`wp-media-${props.imageId}`, () => $fetch<WpMedia>(`/media/${props.imageId}`, { baseURL: wpBaseUrl }), { immediate: shouldFetch.value })
+
+watch(error, (err) => {
+	if (err) console.error("[WpImage] fetch failed for imageId", props.imageId, err)
+})
 
 watch(shouldFetch, (newValue) => {
 	if (newValue && !media.value) {

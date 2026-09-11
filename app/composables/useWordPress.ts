@@ -34,7 +34,7 @@ export const useWordPress = () => {
 				slug,
 				status: "publish",
 				_embed: 1,
-				_fields: "id,date,title,slug,content,excerpt,acf,yoast_head_json,_links,_embedded"
+				_fields: "id,date,title,slug,content,excerpt,acf,featured_media,yoast_head_json,_links"
 			})
 
 			return results?.[0] ? { ...results[0], _type: type } : null
@@ -62,7 +62,9 @@ export const useWordPress = () => {
 		try {
 			const results = await wpFetch<WordPressPrivatePage[]>(REST_BASE.private, {
 				slug,
-				_fields: "id,title,slug,acf"
+				status: "publish",
+				_embed: 1,
+				_fields: "id,date,title,slug,content,excerpt,acf,featured_media,yoast_head_json,_links"
 			})
 
 			return results[0] ? { ...results[0], _type: "private" as const } : null

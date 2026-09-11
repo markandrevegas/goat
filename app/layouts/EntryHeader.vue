@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import WpImage from "~/components/ui/WpImage.vue"
 import Instagram from "~/components/icons/Instagram.vue"
 import Facebook from "~/components/icons/Facebook.vue"
 import Linkedin from "~/components/icons/Linkedin.vue"
@@ -7,7 +8,7 @@ const facebookUrl = "https://facebook.com/FloatingGOATCopenhagen"
 const instagramUrl = "https://instagram.com/floating_goat_cph/"
 const linkedinUrl = "https://linkedin.com/company/mar-k-waterside"
 
-defineProps<{
+const props = defineProps<{
 	layoutStyle?: string
 	title: string
 	authorName?: string
@@ -20,13 +21,16 @@ defineProps<{
 	instagramUrl?: string
 	facebookUrl?: string
 	linkedinUrl?: string
+	excerpt?: string
+	privateHeroImageId?: number
 }>()
 </script>
 
 <template>
-	<header v-if="layoutStyle === 'hero'" class="text-palladian absolute inset-0 z-0 flex h-screen w-full flex-col items-center justify-center overflow-hidden">
+	<header v-if="props.layoutStyle === 'hero'" class="text-palladian absolute inset-0 z-0 flex h-screen w-full flex-col items-center justify-center overflow-hidden">
 		<div class="relative z-20 mx-auto flex max-w-3xl flex-col items-center px-4 md:max-w-4xl">
 			<h1 class="text-4xl tracking-tight md:text-5xl" v-html="title"></h1>
+			<p v-html="excerpt"></p>
 
 			<div v-if="authorName || formattedDate" class="mt-4 flex items-center space-x-2 text-sm">
 				<span v-if="authorName" class="font-medium">Published by {{ authorName }}</span>
@@ -34,15 +38,16 @@ defineProps<{
 				<time v-if="formattedDate" :datetime="datePublished ?? undefined">{{ formattedDate }}</time>
 			</div>
 
-			<div class="mt-4 flex items-center justify-center gap-4">
+			<div class="mt-4 flex hidden items-center justify-center gap-4">
 				<Instagram class="transition-transform duration-300 hover:scale-110 hover:cursor-pointer" :url="instagramUrl ?? instagramUrl" :size="24" />
 				<Facebook class="transition-transform duration-300 hover:scale-110 hover:cursor-pointer" :url="facebookUrl ?? facebookUrl" :size="24" />
 				<Linkedin class="transition-transform duration-300 hover:scale-110 hover:cursor-pointer" :url="linkedinUrl ?? linkedinUrl" :size="24" />
 			</div>
 		</div>
 
-		<div v-if="featuredImageUrl" class="absolute inset-0 z-10 h-screen w-full">
-			<img :src="featuredImageUrl" :alt="featuredImageAlt" sizes="100vw" loading="eager" fetchpriority="high" class="h-screen w-full object-cover object-center" />
+		<div class="absolute inset-0 z-10 h-screen w-full">
+			<WpImage v-if="featuredImageUrl" :image-id="featuredImageUrl" class="block h-full w-full object-cover" />
+			<WpImage v-else-if="privateHeroImageId" :image-id="privateHeroImageId" class="block h-full w-full object-cover" />
 			<div class="pointer-events-none absolute inset-0 bg-black/40"></div>
 		</div>
 	</header>

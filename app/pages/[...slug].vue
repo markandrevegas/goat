@@ -9,7 +9,7 @@ const { getContentBySlug, getPages, getPrivatePage } = useWordPress()
 const { getPrivatePages } = useWordPress()
 const { data: privatePages } = await getPrivatePages()
 
-console.log("privates = ", privatePages.value)
+// console.log("privates = ", privatePages.value)
 
 const slugParam = computed(() => {
 	const params = route.params.slug
@@ -20,7 +20,6 @@ const targetSlug = computed(() => {
 	const segments = slugParam.value.filter(Boolean)
 	return segments[segments.length - 1] || "home"
 })
-console.log(targetSlug.value)
 
 const {
 	data: rawContentData,
@@ -53,7 +52,8 @@ if (!rawContentData.value) {
 		fatal: true
 	})
 }
-console.log(rawContentData.value)
+// console.log(rawContentData.value)
+
 const isPost = computed(() => rawContentData.value?._type === "posts")
 const isPrivatePage = computed(() => rawContentData.value?._type === "private")
 const hasContent = computed(() => !!rawContentData.value)
@@ -96,6 +96,10 @@ const authorName = computed(() => authorDetails.value?.name || "")
 
 const featuredMedia = computed(() => rawContentData.value?._embedded?.["wp:featuredmedia"]?.[0] || null)
 const featuredImageUrl = computed(() => featuredMedia.value?.source_url || null)
+console.log(featuredImageUrl.value)
+
+const privateHeroExcerpt = computed(() => rawContentData.value?.acf?.private_hero_excerpt || null)
+// console.log(privateHeroExcerpt.value)
 const featuredImageAlt = computed(() => featuredMedia.value?.alt_text || contentTitle.value)
 const featuredImageWidth = computed(() => featuredMedia.value?.media_details?.width || 1200)
 const featuredImageHeight = computed(() => featuredMedia.value?.media_details?.height || 630)
@@ -108,6 +112,9 @@ const seoDescription = computed(() => {
 })
 const ogImage = computed(() => rawContentData.value?.yoast_head_json?.og_image?.[0]?.url || featuredImageUrl.value || "/default-og.jpg")
 
+// New: separate source for private pages, since the image lives in ACF, not featured_media
+const privateHeroImageId = computed(() => contentAcf.value?.private_hero_image ?? null)
+// console.log(privateHeroImageId.value)
 useSeoMeta({
 	title: seoTitle,
 	titleTemplate: null,
@@ -140,6 +147,8 @@ useSeoMeta({
 			<PostContent v-else-if="hasContent && useBlogLayout" :title="contentTitle" :body="contentBody" :slug="contentSlug" :acf="contentAcf" :author-name="authorName" :formatted-date="formattedDate" :date-published="datePublished" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" />
 
 			<PageContent v-else-if="hasContent" :acf="contentAcf" :title="contentTitle" :body="contentBody" :slug="contentSlug" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" :related-pages="relatedPages" />
+
+			<PrivateContent v-else-if="hasContent && isPrivatePage" :acf="contentAcf" :excerpt="privateHeroExcerpt" :title="contentTitle" :privateHeroImageId="privateHeroImageId" :body="contentBody" :slug="contentSlug" :featured-image-url="privateHeroImageId" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" />
 		</div>
 	</NuxtLayout>
 </template>
