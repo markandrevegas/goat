@@ -2,7 +2,7 @@
 import { useTrackEvent } from "~/composables/useTrackEvent"
 
 const props = defineProps<{
-	text: string
+	text?: string
 	eventName: string
 	eventParams?: Record<string, any>
 	url?: string

@@ -3,6 +3,7 @@ import WpImage from "~/components/ui/WpImage.vue"
 import Instagram from "~/components/icons/Instagram.vue"
 import Facebook from "~/components/icons/Facebook.vue"
 import Linkedin from "~/components/icons/Linkedin.vue"
+import PrimaryButton from "~/components/ui/PrimaryButton.vue"
 
 const facebookUrl = "https://facebook.com/FloatingGOATCopenhagen"
 const instagramUrl = "https://instagram.com/floating_goat_cph/"
@@ -11,6 +12,7 @@ const linkedinUrl = "https://linkedin.com/company/mar-k-waterside"
 const props = defineProps<{
 	layoutStyle?: string
 	title: string
+	buttonText?: string
 	authorName?: string
 	formattedDate?: string
 	datePublished?: string | null
@@ -21,17 +23,20 @@ const props = defineProps<{
 	instagramUrl?: string
 	facebookUrl?: string
 	linkedinUrl?: string
-	excerpt?: string
+	privateHeroExcerpt?: string
 	privateHeroImageId?: number
+	privateFeatureImageId?: number
 }>()
 </script>
 
 <template>
 	<header v-if="props.layoutStyle === 'hero'" class="text-palladian absolute inset-0 z-0 flex h-screen w-full flex-col items-center justify-center overflow-hidden">
-		<div class="relative z-20 mx-auto flex max-w-3xl flex-col items-center px-4 md:max-w-4xl">
-			<h1 class="text-4xl tracking-tight md:text-5xl" v-html="title"></h1>
-			<p v-html="excerpt"></p>
-
+		<div class="relative z-20 mx-auto max-w-3xl px-4 md:max-w-4xl">
+			<h1 class="text-4xl leading-none tracking-tight md:text-5xl" v-html="title"></h1>
+			<p v-if="privateHeroExcerpt" v-html="privateHeroExcerpt" class="mt-6 max-w-lg text-lg/7"></p>
+			<div class="flex w-full justify-start">
+				<PrimaryButton v-if="buttonText" :text="buttonText || 'Book nu'" :event-name="'book_meeting'" :event-params="{ button_name: 'secondary_cta' }" />
+			</div>
 			<div v-if="authorName || formattedDate" class="mt-4 flex items-center space-x-2 text-sm">
 				<span v-if="authorName" class="font-medium">Published by {{ authorName }}</span>
 				<span v-if="authorName && formattedDate">|</span>
@@ -47,8 +52,10 @@ const props = defineProps<{
 
 		<div class="absolute inset-0 z-10 h-screen w-full">
 			<WpImage v-if="featuredImageUrl" :image-id="featuredImageUrl" class="block h-full w-full object-cover" />
-			<WpImage v-else-if="privateHeroImageId" :image-id="privateHeroImageId" class="block h-full w-full object-cover" />
-			<div class="pointer-events-none absolute inset-0 bg-black/40"></div>
+
+			<WpImage v-if="privateHeroImageId" :image-id="privateHeroImageId" class="block h-full w-full object-cover" />
+			<WpImage v-if="privateFeatureImageId" :image-id="privateFeatureImageId" class="block h-full w-full object-cover" />
+			<div class="pointer-events-none absolute inset-0 bg-black/80"></div>
 		</div>
 	</header>
 

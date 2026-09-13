@@ -32,8 +32,11 @@
 		@apply text-base/5;
 	}
 
+	.prose p {
+		@apply !mb-4;
+	}
 	.prose :where(h1, h2, h3, h4, h5, h6) {
-		@apply !text-palladian font-display tracking-tight;
+		@apply font-display mt-0 tracking-tight;
 	}
 	.prose h3 > strong,
 	.prose h2 > strong,
@@ -51,6 +54,91 @@
 
 	.prose img {
 		@apply rounded-xl shadow-md;
+	}
+	:where(.wp-block-paragraph, p) {
+		@apply mb-4 text-base leading-relaxed;
+	}
+	.wp-block-paragraph + h2.wp-block-heading,
+	p + h2.wp-block-heading {
+		@apply !mt-0 mb-2 text-base leading-relaxed;
+	}
+	:where(.wp-block-heading) {
+		@apply m-0;
+	}
+
+	/* Specific Heading Levels */
+	:where(h1.wp-block-heading) {
+		@apply mt-10 text-4xl sm:text-5xl;
+	}
+
+	:where(h2.wp-block-heading) {
+		@apply text-3xl sm:text-4xl;
+	}
+
+	:where(h3.wp-block-heading) {
+		@apply text-2xl sm:text-3xl;
+	}
+
+	:where(h4.wp-block-heading) {
+		@apply text-xl sm:text-2xl;
+	}
+
+	:where(h5.wp-block-heading) {
+		@apply text-lg sm:text-xl;
+	}
+
+	:where(h6.wp-block-heading) {
+		@apply text-base font-semibold tracking-wider text-slate-500 uppercase dark:text-slate-400;
+	}
+
+	/* Drop Cap Support (if enabled in Gutenberg) */
+	:where(.has-drop-cap:not(:focus)::first-letter) {
+		@apply float-left mr-3 text-5xl leading-none font-bold text-slate-900 dark:text-white;
+	}
+	/* Figure Container */
+	:where(figure.wp-block-image) {
+		@apply my-8 overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800;
+	}
+
+	/* Image inside Figure */
+	:where(figure.wp-block-image img) {
+		@apply h-auto w-full max-w-full rounded-xl object-cover shadow-sm transition-opacity duration-300;
+	}
+
+	/* Optional Image Caption */
+	:where(figure.wp-block-image figcaption) {
+		@apply mt-3 text-center text-sm leading-relaxed font-medium text-slate-500 dark:text-slate-400;
+	}
+
+	/* --- Gutenberg Alignment Variants --- */
+
+	/* Center Alignment (Default) */
+	:where(figure.wp-block-image.aligncenter) {
+		@apply mx-auto text-center;
+	}
+
+	/* Left Alignment (Float / Responsive) */
+	:where(figure.wp-block-image.alignleft) {
+		@apply float-none my-4 sm:float-left sm:mr-6 sm:max-w-md;
+	}
+
+	/* Right Alignment (Float / Responsive) */
+	:where(figure.wp-block-image.alignright) {
+		@apply float-none my-4 sm:float-right sm:ml-6 sm:max-w-md;
+	}
+
+	/* Wide Width (.alignwide) */
+	:where(figure.wp-block-image.alignwide) {
+		@apply -mx-4 max-w-none sm:-mx-8 lg:-mx-16;
+	}
+
+	/* Full Width (.alignfull) */
+	:where(figure.wp-block-image.alignfull) {
+		@apply relative right-1/2 left-1/2 -mx-[50vw] w-screen max-w-none rounded-none;
+	}
+
+	:where(figure.wp-block-image.alignfull img) {
+		@apply rounded-none;
 	}
 }
 @keyframes marquee-scroll {
