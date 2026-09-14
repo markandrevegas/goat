@@ -11,18 +11,21 @@ const REST_BASE: Record<ContentType, string> = {
 
 export const useWordPress = () => {
 	const config = useRuntimeConfig()
-	const wpFetch = <T>(endpoint: string, query: Record<string, any>) => {
+	const restRoot = config.public.goatWordpressUrl.replace(/\/wp\/v2\/?$/, "")
+
+	const wpFetch = <T>(endpoint: string, query: Record<string, any>, base: string = config.public.goatWordpressUrl) => {
 		if (!config.public.goatWordpressUrl) {
 			throw new Error("[wpFetch] NUXT_PUBLIC_GOAT_WORDPRESS_URL is not set.")
 		}
 
-		return $fetch<T>(`${config.public.goatWordpressUrl}/${endpoint}`, {
+		return $fetch<T>(`${base}/${endpoint}`, {
 			query,
 			retry: 4,
 			retryDelay: 3_000,
 			timeout: 10_000
 		})
 	}
+	
 	/**
 	 * Single post or page fetcher by slug
 	 */
@@ -80,21 +83,21 @@ export const useWordPress = () => {
 	 */
 	const resolveContentBySlug = async (slug: string) => {
 		if (!slug) return null
-		console.log("[resolveContentBySlug] START", slug)
+		// console.log("[resolveContentBySlug] START", slug)
 
 		const page = await getContentBySlug("pages", slug)
-		console.log("[resolveContentBySlug] pages result:", page)
+		// console.log("[resolveContentBySlug] pages result:", page)
 		if (page) return page
 
 		const post = await getContentBySlug("posts", slug)
-		console.log("[resolveContentBySlug] posts result:", post)
+		// console.log("[resolveContentBySlug] posts result:", post)
 		if (post) return post
 
 		const privatePage = await getPrivatePage(slug)
-		console.log("[resolveContentBySlug] private result:", privatePage)
+		// console.log("[resolveContentBySlug] private result:", privatePage)
 		if (privatePage) return privatePage
 
-		console.log("[resolveContentBySlug] nothing matched")
+		// console.log("[resolveContentBySlug] nothing matched")
 		return null
 	}
 
@@ -164,6 +167,15 @@ export const useWordPress = () => {
 	const getPagesBySlugs = (slugs: string[]) => getBySlugs("pages", slugs)
 	const getPostsBySlugs = (slugs: string[]) => getBySlugs("posts", slugs)
 	const getPrivatePagesBySlugs = (slugs: string[]) => getBySlugs("private", slugs)
+	const getGalleryImages = () => {
+		return useAsyncData("wp-gallery-images", async () => {
+		console.log("[getGalleryImages] restRoot:", restRoot)
+		const result = await wpFetch<{ url: string; name: string }[]>("site/v1/gallery", {}, restRoot)
+		console.log("[getGalleryImages] result:", result)
+		return result
+	})
+		/*return useAsyncData("wp-gallery-images", () => wpFetch<{ url: string; name: string }[]>("site/v1/gallery", {}, restRoot))*/
+	}
 
 	return {
 		getPage,
@@ -179,6 +191,7 @@ export const useWordPress = () => {
 		getAllByType,
 		getPagesBySlugs,
 		getPostsBySlugs,
-		getPrivatePagesBySlugs
+		getPrivatePagesBySlugs,
+		getGalleryImages
 	}
 }

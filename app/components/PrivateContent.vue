@@ -2,6 +2,7 @@
 import WpImage from "./ui/WpImage.vue"
 import EntryHeader from "~/layouts/EntryHeader.vue"
 import Social from "./ui/Social.vue"
+import ImageGallery from "./ImageGallery.vue"
 
 interface RelatedPage {
 	id: number
@@ -44,6 +45,7 @@ const props = defineProps<{
 			</div>
 			<div class="col-span-1 mt-16 sm:mt-0"></div>
 		</main>
+		<ImageGallery v-if="slug ==='6-person-apartment'" />
 		<TwoColumnFeature v-if="slug === 'about'" :header="acf?.private_feature_header" :text="acf?.private_feature_text" :image="acf?.private_feature_image"></TwoColumnFeature>
 	</article>
 </template>
