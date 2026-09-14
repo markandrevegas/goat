@@ -25,7 +25,7 @@ export const useWordPress = () => {
 			timeout: 10_000
 		})
 	}
-	
+
 	/**
 	 * Single post or page fetcher by slug
 	 */
@@ -169,11 +169,11 @@ export const useWordPress = () => {
 	const getPrivatePagesBySlugs = (slugs: string[]) => getBySlugs("private", slugs)
 	const getGalleryImages = () => {
 		return useAsyncData("wp-gallery-images", async () => {
-		console.log("[getGalleryImages] restRoot:", restRoot)
-		const result = await wpFetch<{ url: string; name: string }[]>("site/v1/gallery", {}, restRoot)
-		console.log("[getGalleryImages] result:", result)
-		return result
-	})
+			console.log("[getGalleryImages] restRoot:", restRoot)
+			const result = await wpFetch<{ url: string; name: string }[]>("site/v1/gallery", {}, restRoot)
+			console.log("[getGalleryImages] result:", result)
+			return result
+		})
 		/*return useAsyncData("wp-gallery-images", () => wpFetch<{ url: string; name: string }[]>("site/v1/gallery", {}, restRoot))*/
 	}
 

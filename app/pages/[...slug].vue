@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { computed } from "vue"
 
-definePageMeta({ layout: false })
+definePageMeta({ layout: false, key: (route) => route.fullPath })
 
 const route = useRoute()
 const { getContentBySlug, getPages, getPrivatePage } = useWordPress()
 
 const { getPrivatePages } = useWordPress()
-const { data: privatePages } = await getPrivatePages()
+// const { data: privatePages } = await getPrivatePages()
 
 // console.log("privates = ", privatePages.value)
 

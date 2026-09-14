@@ -52,10 +52,9 @@ const props = defineProps<{
 
 		<div class="absolute inset-0 z-10 h-screen w-full">
 			<WpImage v-if="featuredImageUrl" :image-id="featuredImageUrl" class="block h-full w-full object-cover" />
-
 			<WpImage v-if="privateHeroImageId" :image-id="privateHeroImageId" class="block h-full w-full object-cover" />
 			<WpImage v-if="privateFeatureImageId" :image-id="privateFeatureImageId" class="block h-full w-full object-cover" />
-			<div class="pointer-events-none absolute inset-0 bg-black/80"></div>
+			<div class="pointer-events-none absolute inset-0 bg-black/60"></div>
 		</div>
 	</header>
 
