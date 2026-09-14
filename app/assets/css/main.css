@@ -33,7 +33,7 @@
 	}
 
 	.prose p {
-		@apply !mb-4;
+		@apply !mb-0;
 	}
 	.prose :where(h1, h2, h3, h4, h5, h6) {
 		@apply font-display mt-0 tracking-tight;
@@ -45,25 +45,15 @@
 	}
 
 	.prose a {
-		@apply !text-palladian/80 hover:text-palladian font-semibold no-underline;
-	}
-
-	.prose a:hover {
-		@apply underline;
+		@apply text-brand hover:text-brand/60 hover:border-brand/60 border-b-2 font-semibold hover:border-b-2;
+		text-decoration: none !important;
 	}
 
 	.prose img {
 		@apply rounded-xl shadow-md;
 	}
-	:where(.wp-block-paragraph, p) {
-		@apply mb-4 text-base leading-relaxed;
-	}
-	.wp-block-paragraph + h2.wp-block-heading,
-	p + h2.wp-block-heading {
-		@apply !mt-0 mb-2 text-base leading-relaxed;
-	}
-	:where(.wp-block-heading) {
-		@apply m-0;
+	.wp-block-list {
+		@apply !mt-0 list-disc space-y-1;
 	}
 
 	/* Specific Heading Levels */

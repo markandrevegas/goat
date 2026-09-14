@@ -31,22 +31,24 @@ const props = defineProps<{
 
 <template>
 	<header v-if="props.layoutStyle === 'hero'" class="text-palladian absolute inset-0 z-0 flex h-screen w-full flex-col items-center justify-center overflow-hidden">
-		<div class="relative z-20 mx-auto max-w-3xl px-4 md:max-w-4xl">
-			<h1 class="text-4xl leading-none tracking-tight md:text-5xl" v-html="title"></h1>
-			<p v-if="privateHeroExcerpt" v-html="privateHeroExcerpt" class="mt-6 max-w-lg text-lg/7"></p>
-			<div class="flex w-full justify-start">
-				<PrimaryButton v-if="buttonText" :text="buttonText || 'Book nu'" :event-name="'book_meeting'" :event-params="{ button_name: 'secondary_cta' }" />
-			</div>
-			<div v-if="authorName || formattedDate" class="mt-4 flex items-center space-x-2 text-sm">
-				<span v-if="authorName" class="font-medium">Published by {{ authorName }}</span>
-				<span v-if="authorName && formattedDate">|</span>
-				<time v-if="formattedDate" :datetime="datePublished ?? undefined">{{ formattedDate }}</time>
-			</div>
+		<div class="grid grid-cols-4 max-w-6xl">
+			<div class="relative z-20 mx-auto sm:col-start-2 sm:col-span-2">
+				<h1 class="text-4xl leading-none tracking-tight md:text-5xl" v-html="title"></h1>
+				<p v-if="privateHeroExcerpt" v-html="privateHeroExcerpt" class="mt-6 max-w-lg text-lg/7"></p>
+				<div class="flex w-full justify-start">
+					<PrimaryButton v-if="buttonText" :text="buttonText || 'Book nu'" :event-name="'book_meeting'" :event-params="{ button_name: 'secondary_cta' }" />
+				</div>
+				<div v-if="authorName || formattedDate" class="mt-4 flex items-center space-x-2 text-sm">
+					<span v-if="authorName" class="font-medium">Published by {{ authorName }}</span>
+					<span v-if="authorName && formattedDate">|</span>
+					<time v-if="formattedDate" :datetime="datePublished ?? undefined">{{ formattedDate }}</time>
+				</div>
 
-			<div class="mt-4 flex hidden items-center justify-center gap-4">
-				<Instagram class="transition-transform duration-300 hover:scale-110 hover:cursor-pointer" :url="instagramUrl ?? instagramUrl" :size="24" />
-				<Facebook class="transition-transform duration-300 hover:scale-110 hover:cursor-pointer" :url="facebookUrl ?? facebookUrl" :size="24" />
-				<Linkedin class="transition-transform duration-300 hover:scale-110 hover:cursor-pointer" :url="linkedinUrl ?? linkedinUrl" :size="24" />
+				<div class="mt-4 flex hidden items-center justify-center gap-4">
+					<Instagram class="transition-transform duration-300 hover:scale-110 hover:cursor-pointer" :url="instagramUrl ?? instagramUrl" :size="24" />
+					<Facebook class="transition-transform duration-300 hover:scale-110 hover:cursor-pointer" :url="facebookUrl ?? facebookUrl" :size="24" />
+					<Linkedin class="transition-transform duration-300 hover:scale-110 hover:cursor-pointer" :url="linkedinUrl ?? linkedinUrl" :size="24" />
+				</div>
 			</div>
 		</div>
 

@@ -54,6 +54,7 @@ if (!rawContentData.value) {
 }
 // console.log(rawContentData.value)
 
+const isPage = computed(() => rawContentData.value?._type === "pages")
 const isPost = computed(() => rawContentData.value?._type === "posts")
 const isPrivatePage = computed(() => rawContentData.value?._type === "private")
 const hasContent = computed(() => !!rawContentData.value)
@@ -155,7 +156,7 @@ useSeoMeta({
 
 			<PostContent v-else-if="hasContent && useBlogLayout" :title="contentTitle" :body="contentBody" :slug="contentSlug" :acf="contentAcf" :author-name="authorName" :formatted-date="formattedDate" :date-published="datePublished" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" />
 
-			<PageContent v-else-if="hasContent && isPost" :acf="contentAcf" :title="contentTitle" :body="contentBody" :slug="contentSlug" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" :related-pages="relatedPages" />
+			<PageContent v-else-if="hasContent && isPage" :acf="contentAcf" :title="contentTitle" :body="contentBody" :slug="contentSlug" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" :related-pages="relatedPages" />
 
 			<PrivateContent v-else-if="hasContent && isPrivatePage" :acf="contentAcf" :privateHeroExcerpt="contentAcf?.private_hero_excerpt" :buttonText="contentAcf?.private_hero_button" :title="contentTitle" :privateHeroImageId="privateHeroImageId" :privateFeatureImageId="privateFeatureImageId" :body="contentBody" :slug="contentSlug" />
 		</div>
