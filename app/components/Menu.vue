@@ -30,7 +30,7 @@ const pageItems = computed(() => {
 	})
 })
 const { data: postItems } = await getPosts({
-	exclude: ["uncategorized-sample-post"]
+	exclude: ["uncategorized-sample-post", "hello-world"]
 })
 </script>
 

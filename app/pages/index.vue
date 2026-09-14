@@ -2,6 +2,7 @@
 import { computed } from "vue"
 import Marquee from "~/components/ui/Marquee.vue"
 import Goat from "~/components/icons/Goat.vue"
+import TrustindexWidget from "~/components/ui/TrustindexWidget.vue"
 
 import posterImg from "~/assets/images/ferry-poster.webp"
 
@@ -93,6 +94,7 @@ useSeoMeta({
 			:speed="20"
 			class="hidden"
 		/>-->
+		<TrustindexWidget />
 		<FirstRow />
 		<ClientOnly>
 			<CardScroller :items="standardCards" />
