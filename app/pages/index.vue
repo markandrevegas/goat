@@ -17,9 +17,12 @@ const { getLandingPage } = useWordPress()
 const { data: page, status, error } = await useAsyncData("wp-index", () => getLandingPage("index-page"))
 
 const landing = computed(() => page.value?.acf || {})
+const showReviews = computed(() => {
+	return landing.value.acf?.show_reviews
+})
 
 if (import.meta.dev) {
-	// console.log(landing.value)
+	console.log(landing.value)
 }
 
 // 1. First set: 'firstcolumnheader', 'secondcolumnheader', etc.
@@ -94,7 +97,7 @@ useSeoMeta({
 			:speed="20"
 			class="hidden"
 		/>-->
-		<TrustindexWidget />
+		<TrustindexWidget v-if="showReviews = 'true'" />
 		<FirstRow />
 		<ClientOnly>
 			<CardScroller :items="standardCards" />
