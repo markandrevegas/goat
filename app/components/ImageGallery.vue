@@ -1,8 +1,8 @@
 <script setup lang="ts">
 interface Props {
-	header: string
+	header?: string
 	headerSm?: string
-	text: string
+	text?: string
 	url?: string
 	button?: string
 }
