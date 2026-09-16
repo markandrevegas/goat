@@ -39,9 +39,9 @@ const savePreferences = () => {
 					</div>
 
 					<div class="mt-4 flex shrink-0 gap-4 sm:mt-0">
-						<button type="button" class="hidden rounded-md border border-gray-300 px-4 py-2 font-medium text-gray-700 hover:bg-gray-50">Indstillinger</button>
-						<button type="button" class="rounded-md border border-gray-300 px-4 py-2 font-medium text-gray-700 hover:bg-gray-50" @click="rejectAll">Afvis</button>
-						<button type="button" class="rounded-md bg-gray-900 px-4 py-2 font-medium text-white hover:bg-gray-800" @click="acceptAll">Accepter</button>
+						<button type="button" aria-label="Settings" class="hidden rounded-md border border-gray-300 px-4 py-2 font-medium text-gray-700 hover:bg-gray-50">Indstillinger</button>
+						<button type="button" aria-label="Reject all" class="rounded-md border border-gray-300 px-4 py-2 font-medium text-gray-700 hover:bg-gray-50" @click="rejectAll">Afvis</button>
+						<button type="button" aria-label="Accept all" class="rounded-md bg-gray-900 px-4 py-2 font-medium text-white hover:bg-gray-800" @click="acceptAll">Accepter</button>
 					</div>
 				</div>
 
@@ -49,7 +49,7 @@ const savePreferences = () => {
 				<div v-else class="flex flex-col gap-4">
 					<div class="flex items-center justify-between">
 						<h2 class="font-sans font-semibold">Administrer cookiepræferencer</h2>
-						<button type="button" class="text-sm text-gray-500 hover:text-gray-700" @click="showDetails = false">Back</button>
+						<button type="button" aria-label="Go back" class="text-sm text-gray-500 hover:text-gray-700" @click="showDetails = false">Back</button>
 					</div>
 
 					<div class="space-y-3">
@@ -79,8 +79,8 @@ const savePreferences = () => {
 					</div>
 
 					<div class="flex justify-between gap-2 py-8 sm:justify-end">
-						<button type="button" class="rounded-md border border-gray-300 px-4 py-2 font-medium text-gray-700 hover:bg-gray-50" @click="rejectAll">Afvis alle</button>
-						<button type="button" class="rounded-md bg-gray-900 px-4 py-2 font-medium text-white hover:bg-gray-800" @click="savePreferences">Gem præferencer</button>
+						<button type="button" aria-label="Reject all" class="rounded-md border border-gray-300 px-4 py-2 font-medium text-gray-700 hover:bg-gray-50" @click="rejectAll">Afvis alle</button>
+						<button type="button" aria-label="Save your settings" class="rounded-md bg-gray-900 px-4 py-2 font-medium text-white hover:bg-gray-800" @click="savePreferences">Gem præferencer</button>
 					</div>
 				</div>
 			</div>

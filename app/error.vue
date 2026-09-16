@@ -28,7 +28,7 @@ const handleError = () => {
 				</p>
 			</template>
 
-			<button @click="handleError" class="bg-palladian text-brand hover:bg-brand hover:text-palladian mt-8 w-max rounded px-3 py-2 font-medium transition-colors duration-400">Tilbage til forsiden</button>
+			<button @click="handleError" aria-label="Return to the homepage" class="bg-palladian text-brand hover:bg-brand hover:text-palladian mt-8 w-max rounded px-3 py-2 font-medium transition-colors duration-400">Tilbage til forsiden</button>
 		</div>
 	</NuxtLayout>
 </template>

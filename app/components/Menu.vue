@@ -48,9 +48,8 @@ const { data: postItems } = await getPosts({
 				</div>
 			</div>
 
-			<button @click="isMobileMenuOpen = !isMobileMenuOpen" type="button" aria-controls="mobile-menu" :aria-expanded="isMobileMenuOpen">
+			<button @click="isMobileMenuOpen = !isMobileMenuOpen" type="button" aria-label="Open main menu" aria-controls="mobile-menu" :aria-expanded="isMobileMenuOpen">
 				<MenuIcon :is-open="isMobileMenuOpen" />
-				<span class="sr-only">Open main menu</span>
 			</button>
 		</div>
 

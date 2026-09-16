@@ -1,5 +1,5 @@
 <template>
-	<button :class="isDark ? 'bg-transparent text-slate-300' : 'text-palladian bg-transparent'" @click="toggle">
+	<button :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'" :class="isDark ? 'bg-transparent text-slate-300' : 'text-palladian bg-transparent'" @click="toggle">
 		<span v-if="isDark">
 			<!-- Sun icon -->
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4">

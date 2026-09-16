@@ -31,10 +31,10 @@ const props = defineProps<{
 
 <template>
 	<header v-if="props.layoutStyle === 'hero'" class="text-palladian absolute inset-0 z-0 flex h-screen w-full flex-col items-center justify-center overflow-hidden">
-		<div class="grid max-w-6xl grid-cols-4">
-			<div class="relative z-20 mx-auto sm:col-span-2 sm:col-start-2">
-				<h1 class="text-4xl leading-none tracking-tight md:text-5xl" v-html="title"></h1>
-				<p v-if="privateHeroExcerpt" v-html="privateHeroExcerpt" class="mt-6 max-w-lg text-lg/7"></p>
+		<div class="grid max-w-6xl grid-cols-4 px-8">
+			<div class="relative z-20 mx-auto col-span-4 sm:col-span-2 sm:col-start-2">
+				<h1 class="text-4xl tracking-tighter" v-html="title"></h1>
+				<p v-if="privateHeroExcerpt" v-html="privateHeroExcerpt" class="mt-6 max-w-lg text-base/7"></p>
 				<div class="flex w-full justify-start">
 					<PrimaryButton v-if="buttonText" :text="buttonText || 'Book nu'" :event-name="'book_meeting'" :event-params="{ button_name: 'secondary_cta' }" />
 				</div>
@@ -52,7 +52,7 @@ const props = defineProps<{
 			</div>
 		</div>
 
-		<div class="absolute inset-0 z-10 h-screen w-full">
+		<div class="absolute inset-0 z-10 h-full w-full">
 			<WpImage v-if="featuredImageUrl" :image-id="featuredImageUrl" class="block h-full w-full object-cover" />
 			<WpImage v-if="privateHeroImageId" :image-id="privateHeroImageId" class="block h-full w-full object-cover" />
 			<WpImage v-if="privateFeatureImageId" :image-id="privateFeatureImageId" class="block h-full w-full object-cover" />

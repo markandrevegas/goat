@@ -28,12 +28,12 @@ const prev = () => (current.value = (current.value - 1 + (images.value?.length ?
 				<img v-for="img in images" :key="img.name" :src="img.url" :alt="img.name" class="aspect-video w-full shrink-0 object-cover" />
 			</div>
 
-			<button @click="prev" class="absolute top-1/2 left-2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full bg-black/40 text-white hover:bg-black/60">‹</button>
-			<button @click="next" class="absolute top-1/2 right-2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full bg-black/40 text-white hover:bg-black/60">›</button>
+			<button @click="prev" aria-label="Previous slide" class="absolute top-1/2 left-2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full bg-black/40 text-white hover:bg-black/60">‹</button>
+			<button @click="next" aria-label="Next slide" class="absolute top-1/2 right-2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full bg-black/40 text-white hover:bg-black/60">›</button>
 		</div>
 
 		<div class="mt-4 flex justify-center gap-1">
-			<button v-for="(img, i) in images" :key="img.name" @click="current = i" class="size-2 rounded-full" :class="i === current ? 'bg-brand' : 'bg-brand/30'" />
+			<button v-for="(img, i) in images" :key="img.name" @click="current = i" :aria-label="'Slide' + i" class="size-2 rounded-full" :class="i === current ? 'bg-brand' : 'bg-brand/30'" />
 		</div>
 	</div>
 </template>
