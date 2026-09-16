@@ -27,7 +27,7 @@ const props = withDefaults(
 		fetchpriority?: "low" | "high" | "auto"
 	}>(),
 	{
-		loading: "eager",
+		loading: "lazy",
 		fetchpriority: "auto"
 	}
 )
@@ -52,13 +52,11 @@ watch(shouldFetch, (newValue) => {
 
 const src = computed(() => {
 	if (isUrl.value) return props.imageId as string
-
 	return media.value?.source_url || ""
 })
 
 const srcset = computed(() => {
 	const sizes = media.value?.media_details?.sizes
-
 	if (!sizes) return ""
 
 	return Object.values(sizes)
