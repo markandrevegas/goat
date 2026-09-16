@@ -18,22 +18,22 @@ const props = withDefaults(defineProps<Props>(), {
 	iconSize: 24
 })
 
-function sharePage(platform: 'instagram' | 'facebook' | 'linkedin', profileUrl?: string) {
+function sharePage(platform: "instagram" | "facebook" | "linkedin", profileUrl?: string) {
 	if (!process.client) return
 
 	const currentUrl = encodeURIComponent(window.location.href)
 
-	if (platform === 'instagram') {
+	if (platform === "instagram") {
 		if (profileUrl) {
-			window.open(profileUrl, '_blank', 'noopener,noreferrer')
+			window.open(profileUrl, "_blank", "noopener,noreferrer")
 		}
 		return
 	}
 
-	let shareEndpoint = ''
-	if (platform === 'facebook') {
+	let shareEndpoint = ""
+	if (platform === "facebook") {
 		shareEndpoint = `https://www.facebook.com/sharer/sharer.php?u=${currentUrl}`
-	} else if (platform === 'linkedin') {
+	} else if (platform === "linkedin") {
 		shareEndpoint = `https://www.linkedin.com/sharing/share-offsite/?url=${currentUrl}`
 	}
 
@@ -42,18 +42,13 @@ function sharePage(platform: 'instagram' | 'facebook' | 'linkedin', profileUrl?:
 	const left = (window.innerWidth - width) / 2
 	const top = (window.innerHeight - height) / 2
 
-	window.open(
-		shareEndpoint,
-		'ShareDialog',
-		`width=${width},height=${height},top=${top},left=${left},toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes`
-	)
+	window.open(shareEndpoint, "ShareDialog", `width=${width},height=${height},top=${top},left=${left},toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes`)
 }
 </script>
 
 <template>
 	<div class="mt-4 flex items-center justify-center gap-4">
-		<Instagram v-if="props.instagramUrl" 
-			@click="sharePage('instagram', props.instagramUrl)" class="transition-transform duration-300 hover:scale-110 hover:cursor-pointer" :url="props.instagramUrl" :size="props.iconSize" />
+		<Instagram v-if="props.instagramUrl" @click="sharePage('instagram', props.instagramUrl)" class="transition-transform duration-300 hover:scale-110 hover:cursor-pointer" :url="props.instagramUrl" :size="props.iconSize" />
 		<Facebook v-if="props.facebookUrl" @click="sharePage('facebook')" class="transition-transform duration-300 hover:scale-110 hover:cursor-pointer" :url="props.facebookUrl" :size="props.iconSize" />
 		<Linkedin v-if="props.linkedinUrl" @click="sharePage('linkedin')" class="transition-transform duration-300 hover:scale-110 hover:cursor-pointer" :url="props.linkedinUrl" :size="props.iconSize" />
 	</div>

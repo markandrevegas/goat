@@ -122,20 +122,26 @@ const seoDescription = computed(() => {
 })
 const ogImage = computed(() => rawContentData.value?.yoast_head_json?.og_image?.[0]?.url || featuredImageUrl.value || "/default-og.jpg")
 
+function decodeEntities(str: string): string {
+	if (!str) return ""
+	return str.replace(/&#(\d+);/g, (_, dec) => String.fromCharCode(dec)).replace(/&#x([0-9a-f]+);/gi, (_, hex) => String.fromCharCode(parseInt(hex, 16)))
+}
+const cleanSeoTitle = computed(() => decodeEntities(seoTitle.value))
+const cleanSeoDescription = computed(() => decodeEntities(seoDescription.value))
 // New: separate source for private pages, since the image lives in ACF, not featured_media
 const privateHeroImageId = computed(() => contentAcf.value?.private_hero_image ?? null)
 console.log(privateHeroImageId.value)
 useSeoMeta({
-	title: seoTitle,
+	title: cleanSeoTitle.value,
 	titleTemplate: null,
-	description: seoDescription,
-	ogTitle: seoTitle,
-	ogDescription: seoDescription,
+	description: cleanSeoDescription.value,
+	ogTitle: cleanSeoTitle.value,
+	ogDescription: cleanSeoDescription.value,
 	ogImage: ogImage,
 	ogType: "website",
 	twitterCard: "summary_large_image",
-	twitterTitle: seoTitle,
-	twitterDescription: seoDescription,
+	twitterTitle: cleanSeoTitle.value,
+	twitterDescription: cleanSeoDescription.value,
 	twitterImage: ogImage,
 	...(isPrivatePage.value && { robots: "noindex, nofollow" })
 })
