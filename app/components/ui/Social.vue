@@ -48,8 +48,8 @@ function sharePage(platform: "instagram" | "facebook" | "linkedin", profileUrl?:
 
 <template>
 	<div class="mt-4 flex items-center justify-center gap-4">
-		<Instagram v-if="props.instagramUrl" @click="sharePage('instagram', props.instagramUrl)" class="transition-transform duration-300 hover:scale-110 hover:cursor-pointer" :url="props.instagramUrl" :size="props.iconSize" />
-		<Facebook v-if="props.facebookUrl" @click="sharePage('facebook')" class="transition-transform duration-300 hover:scale-110 hover:cursor-pointer" :url="props.facebookUrl" :size="props.iconSize" />
-		<Linkedin v-if="props.linkedinUrl" @click="sharePage('linkedin')" class="transition-transform duration-300 hover:scale-110 hover:cursor-pointer" :url="props.linkedinUrl" :size="props.iconSize" />
+		<Instagram v-if="props.instagramUrl" aria-label="Go to Instagram profile" @click="sharePage('instagram', props.instagramUrl)" class="transition-transform duration-300 hover:scale-110 hover:cursor-pointer" :url="props.instagramUrl" :size="props.iconSize" />
+		<Facebook v-if="props.facebookUrl" aria-label="Share on Facebook" @click="sharePage('facebook')" class="transition-transform duration-300 hover:scale-110 hover:cursor-pointer" :url="props.facebookUrl" :size="props.iconSize" />
+		<Linkedin v-if="props.linkedinUrl" aria-label="Share on LinkedIn" @click="sharePage('linkedin')" class="transition-transform duration-300 hover:scale-110 hover:cursor-pointer" :url="props.linkedinUrl" :size="props.iconSize" />
 	</div>
 </template>
