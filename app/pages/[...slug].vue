@@ -29,7 +29,7 @@ const {
 	`wp-content-${targetSlug.value}`,
 	async () => {
 		const slug = targetSlug.value
-		console.log("[slug.vue] resolving slug:", slug)
+		// console.log("[slug.vue] resolving slug:", slug)
 		if (!slug) return null
 
 		return (await getContentBySlug("pages", slug)) ?? (await getContentBySlug("posts", slug)) ?? (await getPrivatePage(slug)) ?? null
@@ -67,7 +67,7 @@ const contentTitle = computed(() => rawContentData.value?.title?.rendered || "")
 const contentSlug = computed(() => rawContentData.value?.slug || "")
 const contentBody = computed(() => rawContentData.value?.content?.rendered || "")
 const contentAcf = computed(() => rawContentData.value?.acf || {})
-console.log(contentAcf.value)
+// console.log(contentAcf.value)
 const datePublished = computed(() => rawContentData.value?.date || null)
 
 const { data: allPages } = await getPages()
@@ -130,7 +130,7 @@ const cleanSeoTitle = computed(() => decodeEntities(seoTitle.value))
 const cleanSeoDescription = computed(() => decodeEntities(seoDescription.value))
 // New: separate source for private pages, since the image lives in ACF, not featured_media
 const privateHeroImageId = computed(() => contentAcf.value?.private_hero_image ?? null)
-console.log(privateHeroImageId.value)
+// console.log(privateHeroImageId.value)
 useSeoMeta({
 	title: cleanSeoTitle.value,
 	titleTemplate: null,

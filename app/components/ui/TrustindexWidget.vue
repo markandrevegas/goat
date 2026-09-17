@@ -29,7 +29,7 @@ const { data, pending, error } = await useFetch<AirbnbApiResponse>("https://floa
 </script>
 
 <template>
-	<section class="bg-palladian text-brand flex h-full w-full flex-col justify-center overflow-hidden px-4 font-sans md:h-screen md:px-8 relative -top-[2px]">
+	<section class="bg-palladian text-brand relative -top-[2px] flex h-full w-full flex-col justify-center overflow-hidden px-4 font-sans md:h-screen md:px-8">
 		<div v-if="pending" class="text-brand text-center font-bold">Loading reviews...</div>
 
 		<div v-else-if="error" class="text-center font-bold text-red-800">Could not load reviews.</div>

@@ -169,11 +169,7 @@ export const useWordPress = () => {
 	const getPrivatePagesBySlugs = (slugs: string[]) => getBySlugs("private", slugs)
 	const getGalleryImages = (folder: string) => {
 		return useAsyncData(`wp-gallery-images-${folder}`, async () => {
-			const result = await wpFetch<{ url: string; name: string }[]>(
-				"site/v1/gallery",
-				{ folder }, // wpFetch passes this directly to ofetch's 'query' option
-				restRoot
-			)
+			const result = await wpFetch<{ id: number | null; url: string; name: string }[]>("site/v1/gallery", { folder }, restRoot)
 			return result
 		})
 	}
