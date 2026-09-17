@@ -25,7 +25,7 @@ const loopItems = computed(() => {
 </script>
 
 <template>
-	<div class="text-brand bg-palladian pt-24">
+	<div class="text-brand bg-palladian pt-24 pb-24">
 		<div class="flex flex-col sm:grid sm:grid-cols-2 sm:gap-8 sm:max-w-5xl sm:mx-auto px-4">
 			<div class="flex items-center justify-start sm:col-span-1">
 				<div>
@@ -34,7 +34,7 @@ const loopItems = computed(() => {
 					<p class="py-4">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere placeat officiis deserunt nobis atqu.</p>
 				</div>
 			</div>
-			<div class="relative mx-auto sm:pt-8 w-full max-w-3xl overflow-hidden sm:col-span-1">
+			<div class="relative mx-auto pt-8 w-full max-w-3xl overflow-hidden sm:col-span-1">
 				<div class="pointer-events-none absolute inset-y-0 left-0 z-10 w-32 bg-gradient-to-r from-palladian to-transparent" />
 				<div class="pointer-events-none absolute inset-y-0 right-0 z-10 w-32 bg-gradient-to-l from-palladian to-transparent" />
 				<div class="marquee-track animate-marquee flex w-max items-center gap-12" :class="{ 'pause-on-hover': pauseOnHover }" :style="{ animationDuration: `${speed}s` }">

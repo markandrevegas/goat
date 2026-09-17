@@ -94,7 +94,7 @@ useSeoMeta({
 		</ClientOnly>
 		<Marquee folder="clients" :speed="60" />
 		<TrustindexWidget v-if="showReviews = 'true'" />
-		<ImageScrollWindow :feature-header-sm="featureHeaderSm" :feature-header-lg="featureHeaderLg" :feature-image="featureImage" :feature-text="featureText" :feature-button="featureButton" :scroll-header="scrollHeader" :feature-url="featureUrl" :scroll-image="scrollImage" />
+		<!--<ImageScrollWindow :feature-header-sm="featureHeaderSm" :feature-header-lg="featureHeaderLg" :feature-image="featureImage" :feature-text="featureText" :feature-button="featureButton" :scroll-header="scrollHeader" :feature-url="featureUrl" :scroll-image="scrollImage" />-->
 		<FerryVideo :header="ferryVideoHeader" :header-sm="ferryVideoHeaderSm" :text="ferryVideoText" :url="ferryVideoUrl" :button="ferryVideoButton" />
 	</NuxtLayout>
 </template>
