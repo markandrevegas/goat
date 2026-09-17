@@ -1,13 +1,11 @@
 <script setup>
 import { computed } from "vue"
 import Marquee from "~/components/ui/Marquee.vue"
-import Goat from "~/components/icons/Goat.vue"
 import TrustindexWidget from "~/components/ui/TrustindexWidget.vue"
-
 import posterImg from "~/assets/images/ferry-poster.webp"
-
 import ThreeColumns from "~/components/ui/ThreeColumns.vue"
 import CardScroller from "~/components/ui/CardScroller.vue"
+import Goat from "~/components/icons/Goat.vue"
 
 definePageMeta({
 	layout: false
@@ -90,19 +88,11 @@ useSeoMeta({
 			<IndexVideo :title="seoTitle" :subtitle="seoDescription" />
 		</template>-->
 		<ThreeColumns :items="threeColumnItems" />
-		<!--<Marquee
-			:items="[
-				{ logo: 'https://placehold.co/64x64', label: 'Acme Corp' },
-				{ logo: 'https://placehold.co/64x64', label: 'Globex' },
-				{ logo: 'https://placehold.co/64x64', label: 'Initech' }
-			]"
-			:speed="20"
-			class="hidden"
-		/>-->
 		<FirstRow />
 		<ClientOnly>
 			<CardScroller :items="standardCards" />
 		</ClientOnly>
+		<Marquee folder="clients" :speed="60" />
 		<TrustindexWidget v-if="showReviews = 'true'" />
 		<ImageScrollWindow :feature-header-sm="featureHeaderSm" :feature-header-lg="featureHeaderLg" :feature-image="featureImage" :feature-text="featureText" :feature-button="featureButton" :scroll-header="scrollHeader" :feature-url="featureUrl" :scroll-image="scrollImage" />
 		<FerryVideo :header="ferryVideoHeader" :header-sm="ferryVideoHeaderSm" :text="ferryVideoText" :url="ferryVideoUrl" :button="ferryVideoButton" />

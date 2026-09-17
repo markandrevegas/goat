@@ -9,7 +9,7 @@ interface Props {
 
 const props = defineProps<Props>()
 const { getGalleryImages } = useWordPress()
-const { data: images, error } = await getGalleryImages()
+const { data: images, error } = await getGalleryImages("images")
 if (error.value) {
 	console.error("[ImageGallery] fetch failed:", error.value)
 }

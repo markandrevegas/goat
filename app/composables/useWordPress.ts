@@ -167,14 +167,15 @@ export const useWordPress = () => {
 	const getPagesBySlugs = (slugs: string[]) => getBySlugs("pages", slugs)
 	const getPostsBySlugs = (slugs: string[]) => getBySlugs("posts", slugs)
 	const getPrivatePagesBySlugs = (slugs: string[]) => getBySlugs("private", slugs)
-	const getGalleryImages = () => {
-		return useAsyncData("wp-gallery-images", async () => {
-			console.log("[getGalleryImages] restRoot:", restRoot)
-			const result = await wpFetch<{ url: string; name: string }[]>("site/v1/gallery", {}, restRoot)
-			console.log("[getGalleryImages] result:", result)
+	const getGalleryImages = (folder: string) => {
+		return useAsyncData(`wp-gallery-images-${folder}`, async () => {
+			const result = await wpFetch<{ url: string; name: string }[]>(
+				"site/v1/gallery",
+				{ folder }, // wpFetch passes this directly to ofetch's 'query' option
+				restRoot
+			)
 			return result
 		})
-		/*return useAsyncData("wp-gallery-images", () => wpFetch<{ url: string; name: string }[]>("site/v1/gallery", {}, restRoot))*/
 	}
 
 	return {
