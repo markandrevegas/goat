@@ -1,0 +1,91 @@
+<script setup lang="ts">
+import { ref } from "vue"
+import { useWindowScroll } from "@vueuse/core"
+import Logo from "~/assets/svg/anchor.svg?component"
+import MenuIcon from "./icons/MenuIcon.vue"
+import Social from "./ui/Social.vue"
+
+const { y } = useWindowScroll()
+const isMobileMenuOpen = ref(false)
+const { getPages, getPosts } = useWordPress()
+const {
+	data: menuPages,
+	status,
+	error
+} = await getPages({
+	include: ["meetings-and-events", "rooftop-terrace", "apartments", "simple-meetings", "information-for-guests"],
+	exclude: ["privacy-policy", "terms-of-service"]
+})
+// Transform page titles if needed
+const pageItems = computed(() => {
+	if (!menuPages.value) return []
+	return menuPages.value.map((item) => {
+		if (item.slug === "information-for-guests") {
+			return {
+				...item,
+				title: { ...item.title, rendered: "Information for guests" }
+			}
+		}
+		return item
+	})
+})
+const { data: postItems } = await getPosts({
+	exclude: ["uncategorized-sample-post", "hello-world"]
+})
+</script>
+
+<template>
+	<nav aria-label="Main navigation" class="fixed top-0 right-0 left-0 z-50 w-full transition-colors duration-300" :class="y > 0 ? 'bg-palladian text-brand' : 'bg-brand text-palladian'">
+		<div class="flex w-full items-start justify-between px-4 py-2">
+			<div class="max-content flex items-center">
+				<!--<NuxtLink to="/">
+					<Logo class="fill-palladian hidden h-16 w-auto" />
+					<span class="bg-palladian mr-4 hidden h-8 w-8 rounded-full"></span>
+				</NuxtLink>-->
+				<div class="flex flex-col">
+					<NuxtLink to="/"><span class="font-display font-light font-semibold transition-opacity duration-400 hover:opacity-70">Floating G.O.A.T.</span></NuxtLink>
+					<span class="text-[11px] uppercase">Events, Meetings, Apartments</span>
+				</div>
+			</div>
+
+			<button @click="isMobileMenuOpen = !isMobileMenuOpen" type="button" aria-label="Open main menu" aria-controls="mobile-menu" :aria-expanded="isMobileMenuOpen">
+				<MenuIcon :is-open="isMobileMenuOpen" />
+			</button>
+		</div>
+
+		<Transition enter-active-class="transition-opacity duration-300 ease-out" enter-from-class="opacity-0" enter-to-class="opacity-100" leave-active-class="transition-opacity duration-200 ease-in" leave-from-class="opacity-100" leave-to-class="opacity-0">
+			<div v-if="isMobileMenuOpen" class="fixed inset-0 z-40 bg-black/70" @click="isMobileMenuOpen = false"></div>
+		</Transition>
+
+		<Transition enter-active-class="transition-transform duration-300 ease-out" enter-from-class="translate-x-full" enter-to-class="translate-x-0" leave-active-class="transition-transform duration-200 ease-in" leave-from-class="translate-x-0" leave-to-class="translate-x-full">
+			<div v-if="isMobileMenuOpen" id="mobile-menu" aria-label="Mobile navigation" class="bg-palladian fixed top-0 right-0 z-50 h-full w-full max-w-[80vw] overflow-y-auto px-4 pt-6 pb-4 shadow-xl sm:w-84">
+				<div class="mb-4 flex justify-end">
+					<button @click="isMobileMenuOpen = false" :aria-label="isMobileMenuOpen ? 'Close main menu' : 'Open main menu'" type="button" class="text-brand focus-visible:outline-2 focus-visible:outline-offset-2">
+						<MenuIcon :is-open="isMobileMenuOpen" />
+					</button>
+				</div>
+
+				<span v-if="status === 'pending'" class="block animate-pulse py-2 text-sm text-gray-400"> Loading menu... </span>
+
+				<span v-else-if="error" class="block py-2 text-sm text-red-400"> Failed loading menu </span>
+
+				<div v-else class="text-brand flex flex-col gap-4 pt-8">
+					<h3 class="text-sm font-semibold uppercase">Main menu</h3>
+					<ul class="space-y-1">
+						<li v-for="page in pageItems" :key="page.id">
+							<NuxtLink :to="`/${page.slug}`" @click="isMobileMenuOpen = false" class="text-brand w-max text-sm font-semibold transition-colors duration-400 hover:border-b-2" active-class="border-b-2" v-html="page.title.rendered" />
+						</li>
+					</ul>
+					<h3 class="mt-4 text-sm font-semibold uppercase">Follow us</h3>
+					<Social class="mr-auto" />
+					<h3 class="mt-4 text-sm font-semibold uppercase">Recent posts</h3>
+					<ul class="space-y-1">
+						<li v-for="post in postItems" :key="post.id">
+							<NuxtLink :to="`/${post.slug}`" @click="isMobileMenuOpen = false" class="text-brand w-max text-sm font-semibold transition-colors duration-400 hover:border-b-2" active-class="border-b-2" v-html="post.title.rendered" />
+						</li>
+					</ul>
+				</div>
+			</div>
+		</Transition>
+	</nav>
+</template>

@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import WpImage from "~/components/ui/WpImage.vue"
-import Instagram from "~/components/icons/Instagram.vue"
-import Facebook from "~/components/icons/Facebook.vue"
-import Linkedin from "~/components/icons/Linkedin.vue"
-import PrimaryButton from "~/components/ui/PrimaryButton.vue"
+import WpImage from "~/assets/components/ui/WpImage.vue"
+import Instagram from "~/assets/components/icons/Instagram.vue"
+import Facebook from "~/assets/components/icons/Facebook.vue"
+import Linkedin from "~/assets/components/icons/Linkedin.vue"
+import PrimaryButton from "~/assets/components/ui/PrimaryButton.vue"
 
 const facebookUrl = "https://facebook.com/FloatingGOATCopenhagen"
 const instagramUrl = "https://instagram.com/floating_goat_cph/"

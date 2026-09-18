@@ -2,7 +2,7 @@
 import { useTrackEvent } from "~/composables/useTrackEvent"
 
 const props = defineProps<{
-	text?: string
+	text: string
 	eventName: string
 	eventParams?: Record<string, any>
 	url?: string
@@ -24,7 +24,7 @@ const handleButtonClick = (event: MouseEvent) => {
 </script>
 
 <template>
-	<button @click="handleButtonClick" class="bg-brand text-palladian hover:bg-palladian hover:text-brand rounded px-4 py-2 font-medium shadow transition-colors duration-400 focus:outline-none">
+	<button @click="handleButtonClick" class="border-palladian text-palladian hover:bg-palladian hover:text-brand border-palladian w-max rounded border px-3 py-2 font-medium transition-colors duration-400 hover:border-transparent">
 		{{ text }}
 	</button>
 </template>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import PrimaryButton from "../ui/PrimaryButton.vue"
+import PrimaryButton from "./PrimaryButton.vue"
 import WpImage from "./WpImage.vue"
 
 interface ColumnItem {

@@ -1,11 +1,12 @@
 <script setup>
 import { computed } from "vue"
-import Marquee from "~/components/ui/Marquee.vue"
-import TrustindexWidget from "~/components/ui/TrustindexWidget.vue"
+import Marquee from "~/assets/components/ui/Marquee.vue"
+import TrustindexWidget from "~/assets/components/ui/TrustindexWidget.vue"
 import posterImg from "~/assets/images/ferry-poster.webp"
-import ThreeColumns from "~/components/ui/ThreeColumns.vue"
-import CardScroller from "~/components/ui/CardScroller.vue"
-import Goat from "~/components/icons/Goat.vue"
+import ThreeColumns from "~/assets/components/ui/ThreeColumns.vue"
+import CardScroller from "~/assets/components/ui/CardScroller.vue"
+import Goat from "~/assets/components/icons/Goat.vue"
+import VideoHeader from "~/assets/components/ui/VideoHeader.vue"
 
 definePageMeta({
 	layout: false
@@ -22,6 +23,21 @@ const showReviews = computed(() => {
 if (import.meta.dev) {
 	console.log(landing.value)
 }
+
+const layoutStyle = computed(() => landing.value?.layoutstyle)
+console.log(layoutStyle.value)
+
+const videoHeaderVideoUrl = computed(() => landing.value?.video_header_video_url || "")
+const videoHeaderPoster = computed(() => landing.value?.video_header_video_poster || "")
+
+const videoHeaderTitle = computed(() => landing.value?.video_header_title || "")
+const videoHeaderExcerpt = computed(() => landing.value?.video_header_excerpt || "")
+const videoHeaderPrimaryButton = computed(() => landing.value?.video_header_primary_button || "")
+const videoHeaderPrimaryButtonUrl = computed(() => landing.value?.video_header_primary_button_url || "")
+const videoHeaderSecondaryButton = computed(() => landing.value?.video_header_secondary_button || "")
+const videoHeaderSecondaryButtonUrl = computed(() => landing.value?.video_header_secondary_button_url || "")
+console.log(videoHeaderPrimaryButtonUrl.value)
+
 
 // 1. First set: 'firstcolumnheader', 'secondcolumnheader', etc.
 const standardCards = computed(() => extractColumns(landing.value, ["first", "second", "third", "fourth"]))
@@ -82,9 +98,10 @@ useSeoMeta({
 </script>
 <template>
 	<NuxtLayout name="default">
-		<!--<template #bg-video>
-			<IndexVideo :title="seoTitle" :subtitle="seoDescription" />
-		</template>-->
+		<template v-if="layoutStyle === 'video'" #bg-video>
+			<VideoHeader v-if="layoutStyle === 'video'" :title="videoHeaderTitle" :excerpt="videoHeaderExcerpt" :videoUrl="videoHeaderVideoUrl" :posterUrl="videoHeaderPoster"
+			:primaryButtonText="videoHeaderPrimaryButton" :primaryButtonUrl="videoHeaderPrimaryButtonUrl" :secondaryButtonText="videoHeaderSecondaryButton" :secondaryButtonUrl="videoHeaderSecondaryButtonUrl" />
+		</template>
 		<ThreeColumns :items="threeColumnItems" />
 		<FirstRow />
 		<ClientOnly>
