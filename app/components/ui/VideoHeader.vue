@@ -24,16 +24,14 @@ defineProps<Props>()
 
 		<div class="absolute inset-0 z-10 bg-black/40"></div>
 
-		<div class="relative z-20 mx-auto flex h-full max-w-6xl flex-col justify-center gap-2 px-8 text-center">
-			<slot>
-				<h1 v-if="title" class="text-3xl font-bold tracking-tight md:text-4xl" v-html="title">Title</h1>
-				<p v-if="excerpt" class="mx-auto my-4 max-w-2xl text-xl/5" v-html="excerpt"></p>
+		<div class="relative z-30 mx-auto flex h-full max-w-6xl flex-col justify-center gap-2 px-8 text-center">
+			<h1 v-if="title" class="text-xl font-bold tracking-tight md:text-4xl" v-html="title">Title</h1>
+			<p v-if="excerpt" class="mx-auto my-4 max-w-2xl" v-html="excerpt"></p>
 
-				<div class="flex flex-row justify-center gap-4">
-					<PrimaryButton :url="primaryButtonUrl" :event-name="''" :text="primaryButtonText" class="bg-brand text-palladian text-lg" />
-					<SecondaryButton :url="secondaryButtonUrl" :event-name="''" :text="secondaryButtonText" class="text-lg" />
-				</div>
-			</slot>
+			<div class="hidden flex flex-row justify-center gap-4">
+				<PrimaryButton :url="primaryButtonUrl" :event-name="''" :text="primaryButtonText" class="bg-brand text-palladian" />
+				<!--<SecondaryButton :url="secondaryButtonUrl" :event-name="''" :text="secondaryButtonText" />-->
+			</div>
 		</div>
 	</div>
 </template>

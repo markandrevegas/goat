@@ -25,7 +25,6 @@ if (import.meta.dev) {
 }
 
 const layoutStyle = computed(() => landing.value?.layoutstyle)
-console.log(layoutStyle.value)
 
 const videoHeaderVideoUrl = computed(() => landing.value?.video_header_video_url || "")
 const videoHeaderPoster = computed(() => landing.value?.video_header_video_poster || "")
@@ -34,6 +33,7 @@ const videoHeaderTitle = computed(() => landing.value?.video_header_title || "")
 const videoHeaderExcerpt = computed(() => landing.value?.video_header_excerpt || "")
 const videoHeaderPrimaryButton = computed(() => landing.value?.video_header_primary_button || "")
 const videoHeaderPrimaryButtonUrl = computed(() => landing.value?.video_header_primary_button_url || "")
+console.log(videoHeaderPrimaryButtonUrl.value)
 const videoHeaderSecondaryButton = computed(() => landing.value?.video_header_secondary_button || "")
 const videoHeaderSecondaryButtonUrl = computed(() => landing.value?.video_header_secondary_button_url || "")
 console.log(videoHeaderPrimaryButtonUrl.value)

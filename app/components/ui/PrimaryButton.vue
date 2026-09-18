@@ -14,17 +14,28 @@ const emit = defineEmits<{
 
 const { trackEvent } = useTrackEvent()
 
-const handleButtonClick = (event: MouseEvent) => {
-	trackEvent(props.eventName, props.eventParams ?? {})
+const handleButtonClick = async (event: MouseEvent) => {
 	emit("click", event)
+
 	if (props.url) {
-		window.open(props.url, "_parent")
+		const isExternal = props.url.startsWith("http://") || props.url.startsWith("https://")
+		if (isExternal) {
+			window.open(props.url, "_blank")
+		} else {
+			await navigateTo(props.url)
+		}
+	}
+
+	try {
+		trackEvent(props.eventName, props.eventParams ?? {})
+	} catch (e) {
+		console.error("trackEvent failed:", e)
 	}
 }
 </script>
 
 <template>
-	<button @click="handleButtonClick" class="bg-palladian text-brand hover:bg-brand hover:text-palladian w-max rounded px-3 py-2 font-medium transition-colors duration-400">
+	<button @click="handleButtonClick" class="w-max rounded px-3 py-2 font-medium transition-colors duration-400">
 		{{ text }}
 	</button>
 </template>

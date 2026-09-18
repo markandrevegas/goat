@@ -16,7 +16,7 @@ defineProps<Props>()
 </script>
 
 <template>
-	<div class="text-palladian absolute inset-0 -z-10 overflow-hidden">
+	<div class="text-palladian absolute inset-0 z-10 overflow-hidden">
 		<video v-if="videoUrl" :poster="posterUrl" autoplay muted playsinline loop class="absolute inset-0 z-0 h-full w-full object-cover">
 			<source :src="videoUrl" type="video/mp4" />
 			Your browser does not support the video tag.
