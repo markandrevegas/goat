@@ -102,7 +102,7 @@ useSeoMeta({
 			<VideoHeader v-if="layoutStyle === 'video'" :title="videoHeaderTitle" :excerpt="videoHeaderExcerpt" :videoUrl="videoHeaderVideoUrl" :posterUrl="videoHeaderPoster"
 			:primaryButtonText="videoHeaderPrimaryButton" :primaryButtonUrl="videoHeaderPrimaryButtonUrl" :secondaryButtonText="videoHeaderSecondaryButton" :secondaryButtonUrl="videoHeaderSecondaryButtonUrl" />
 		</template>
-		<ThreeColumns :items="threeColumnItems" />
+		<!--<ThreeColumns :items="threeColumnItems" />-->
 		<FirstRow />
 		<ClientOnly>
 			<CardScroller :items="standardCards" />
