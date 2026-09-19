@@ -38,7 +38,6 @@ const videoHeaderSecondaryButton = computed(() => landing.value?.video_header_se
 const videoHeaderSecondaryButtonUrl = computed(() => landing.value?.video_header_secondary_button_url || "")
 console.log(videoHeaderPrimaryButtonUrl.value)
 
-
 // 1. First set: 'firstcolumnheader', 'secondcolumnheader', etc.
 const standardCards = computed(() => extractColumns(landing.value, ["first", "second", "third", "fourth"]))
 
@@ -99,8 +98,7 @@ useSeoMeta({
 <template>
 	<NuxtLayout name="default">
 		<template v-if="layoutStyle === 'video'" #bg-video>
-			<VideoHeader v-if="layoutStyle === 'video'" :title="videoHeaderTitle" :excerpt="videoHeaderExcerpt" :videoUrl="videoHeaderVideoUrl" :posterUrl="videoHeaderPoster"
-			:primaryButtonText="videoHeaderPrimaryButton" :primaryButtonUrl="videoHeaderPrimaryButtonUrl" :secondaryButtonText="videoHeaderSecondaryButton" :secondaryButtonUrl="videoHeaderSecondaryButtonUrl" />
+			<VideoHeader v-if="layoutStyle === 'video'" :title="videoHeaderTitle" :excerpt="videoHeaderExcerpt" :videoUrl="videoHeaderVideoUrl" :posterUrl="videoHeaderPoster" :primaryButtonText="videoHeaderPrimaryButton" :primaryButtonUrl="videoHeaderPrimaryButtonUrl" :secondaryButtonText="videoHeaderSecondaryButton" :secondaryButtonUrl="videoHeaderSecondaryButtonUrl" />
 		</template>
 		<!--<ThreeColumns :items="threeColumnItems" />-->
 		<FirstRow />

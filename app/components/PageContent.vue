@@ -53,7 +53,7 @@ const props = defineProps<{
 					<NuxtLink :to="'/lejebetingelser-for-private'" class="block w-max font-semibold underline">Betingelser for private</NuxtLink>
 					<NuxtLink :to="'/lejebetingelser-for-erhverv'" class="block w-max font-semibold underline">Betingelser for erhverv</NuxtLink>
 				</div>
-				<ImageGallery :header="acf?.gallery_header" :text="acf?.gallery_text" :button="acf?.gallery_button" :url="acf?.gallery_url" class="md:col-span-2 md:col-start-2" />
+				<ImageGallery v-if="slug == 'rooftop-terrace'" :header="acf?.gallery_header" :text="acf?.gallery_text" :button="acf?.gallery_button" :url="acf?.gallery_url" class="md:col-span-2 md:col-start-2" />
 			</div>
 			<div class="col-span-1 mt-16 sm:mt-0">
 				<p class="font-display mb-4 font-bold md:block">Related</p>

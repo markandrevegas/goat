@@ -30,9 +30,9 @@ const props = defineProps<{
 </script>
 
 <template>
-	<header v-if="props.layoutStyle === 'hero'" class="text-palladian absolute inset-0 z-0 flex h-screen w-full flex-col items-center justify-center overflow-hidden">
-		<div class="grid max-w-6xl grid-cols-4 px-8">
-			<div class="relative z-20 col-span-4 mx-auto sm:col-span-2 sm:col-start-2">
+	<header v-if="props.layoutStyle === 'hero'" class="text-palladian absolute inset-0 z-0 flex h-screen w-full flex-col justify-center overflow-hidden">
+		<div class="grid grid-cols-4 gap-4 mx-auto">
+			<div class="relative z-20 col-span-2 sm:col-start-1">
 				<h1 class="text-4xl tracking-tighter" v-html="title"></h1>
 				<p v-if="privateHeroExcerpt" v-html="privateHeroExcerpt" class="mt-6 max-w-lg text-base/7"></p>
 				<div class="flex w-full justify-start">
@@ -60,13 +60,15 @@ const props = defineProps<{
 		</div>
 	</header>
 
-	<header v-else class="mb-8 flex min-h-[18rem] w-full flex-col items-center justify-center p-8">
-		<div class="mx-auto flex max-w-3xl flex-col items-center md:max-w-4xl">
-			<h1 class="text-center text-4xl tracking-tight md:text-5xl" v-html="title"></h1>
-			<div v-if="authorName || formattedDate" class="mt-4 flex items-center space-x-2 text-sm">
-				<span v-if="authorName" class="font-medium">By {{ authorName }}</span>
-				<span v-if="authorName && formattedDate">|</span>
-				<time v-if="formattedDate" :datetime="datePublished ?? undefined">{{ formattedDate }}</time>
+	<header v-else class="mb-8 flex min-h-[18rem] w-full flex-col justify-center py-8">
+		<div class="grid grid-cols-4">
+			<div class="relative z-20 col-span-2 sm:col-start-2">
+				<h1 class="text-4xl tracking-tight md:text-5xl" v-html="title"></h1>
+				<div v-if="authorName || formattedDate" class="mt-4 flex items-center space-x-2 text-sm">
+					<span v-if="authorName" class="font-medium">By {{ authorName }}</span>
+					<span v-if="authorName && formattedDate">|</span>
+					<time v-if="formattedDate" :datetime="datePublished ?? undefined">{{ formattedDate }}</time>
+				</div>
 			</div>
 		</div>
 	</header>

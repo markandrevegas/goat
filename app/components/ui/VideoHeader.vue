@@ -25,10 +25,10 @@ defineProps<Props>()
 		<div class="absolute inset-0 z-10 bg-black/40"></div>
 
 		<div class="relative z-30 mx-auto flex h-full max-w-6xl flex-col justify-center gap-2 px-8 text-center">
-			<h1 v-if="title" class="text-xl font-bold tracking-tight md:text-4xl" v-html="title">Title</h1>
+			<h1 v-if="title" class="text-xl font-bold tracking-tight md:text-4xl" v-html="title"></h1>
 			<p v-if="excerpt" class="mx-auto my-4 max-w-2xl" v-html="excerpt"></p>
 
-			<div class="hidden flex flex-row justify-center gap-4">
+			<div class="flex hidden flex-row justify-center gap-4">
 				<PrimaryButton :url="primaryButtonUrl" :event-name="''" :text="primaryButtonText" class="bg-brand text-palladian" />
 				<!--<SecondaryButton :url="secondaryButtonUrl" :event-name="''" :text="secondaryButtonText" />-->
 			</div>

@@ -3,7 +3,7 @@ import Social from "./ui/Social.vue"
 
 const { getPages } = useWordPress()
 const { data: menuPages } = await getPages({
-	include: ["betingelser", "lejebetingleser-for-private", "lejebetingleser-for-erhverv", "information-for-guests", "privatlivspolitik"],
+	include: ["terms-and-conditions", "information-for-guests"],
 	exclude: ["privacy-policy", "terms-of-service", "cookiepolitik"]
 })
 const pageItems = computed(() => {
@@ -38,7 +38,7 @@ const pageItems = computed(() => {
 				<p class="font-display mb-2 text-xl font-semibold">Information</p>
 				<ul class="list-reset">
 					<li v-for="item in pageItems" :key="item.id">
-						<NuxtLink :to="item.slug" class="font-semibold transition-opacity duration-400 hover:border-b-2">{{ item.title.rendered }}</NuxtLink>
+						<NuxtLink :to="item.slug" class="font-semibold transition-opacity duration-400 hover:border-b-2" v-html="item.title.rendered"></NuxtLink>
 					</li>
 				</ul>
 			</div>
