@@ -1,12 +1,12 @@
 <script setup>
 import { computed } from "vue"
-import Marquee from "~/assets/components/ui/Marquee.vue"
-import TrustindexWidget from "~/assets/components/ui/TrustindexWidget.vue"
-import posterImg from "~/assets/images/ferry-poster.webp"
-import ThreeColumns from "~/assets/components/ui/ThreeColumns.vue"
-import CardScroller from "~/assets/components/ui/CardScroller.vue"
-import Goat from "~/assets/components/icons/Goat.vue"
-import VideoHeader from "~/assets/components/ui/VideoHeader.vue"
+import Marquee from "~/components/ui/Marquee.vue"
+import TrustindexWidget from "~/components/ui/TrustindexWidget.vue"
+import posterImg from "~/images/ferry-poster.webp"
+import ThreeColumns from "~/components/ui/ThreeColumns.vue"
+import CardScroller from "~/components/ui/CardScroller.vue"
+import Goat from "~/components/icons/Goat.vue"
+import VideoHeader from "~/components/ui/VideoHeader.vue"
 
 definePageMeta({
 	layout: false
@@ -20,9 +20,9 @@ const showReviews = computed(() => {
 	return landing.value.acf?.show_reviews
 })
 
-if (import.meta.dev) {
+/*if (import.meta.dev) {
 	console.log(landing.value)
-}
+}*/
 
 const layoutStyle = computed(() => landing.value?.layoutstyle)
 
