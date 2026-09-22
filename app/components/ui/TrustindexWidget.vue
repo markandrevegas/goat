@@ -36,7 +36,7 @@ const { data, pending, error } = await useLazyFetch<AirbnbApiResponse>(
 </script>
 
 <template>
-	<section class="relative -top-[2px] mx-auto flex h-full w-4/5 flex-col justify-center overflow-hidden px-4 font-sans md:h-screen">
+	<section class="relative -top-[2px] mx-auto flex h-full w-4/5 flex-col justify-center overflow-hidden px-4 py-24 font-sans md:h-screen">
 		<div v-if="pending" class="text-brand text-center font-bold">Loading reviews...</div>
 
 		<div v-else-if="error" class="text-center font-bold text-red-800">Could not load reviews.</div>

@@ -4,7 +4,7 @@ import Social from "./ui/Social.vue"
 const { getPages } = useWordPress()
 const { data: menuPages } = await getPages({
 	include: ["terms-and-conditions", "information-for-guests"],
-	exclude: ["privacy-policy", "terms-of-service", "cookiepolitik"]
+	exclude: []
 })
 const pageItems = computed(() => {
 	if (!menuPages.value) return []
@@ -36,9 +36,9 @@ const pageItems = computed(() => {
 			</div>
 			<div class="flex flex-col">
 				<p class="font-display mb-2 text-xl font-semibold">Information</p>
-				<ul class="list-reset">
-					<li v-for="item in pageItems" :key="item.id">
-						<NuxtLink :to="item.slug" class="font-semibold transition-opacity duration-400 hover:border-b-2" v-html="item.title.rendered"></NuxtLink>
+				<ul class="list-reset flex flex-col w-full">
+					<li v-for="item in pageItems" :key="item.slug">
+						<NuxtLink :to="item.slug" class="w-max font-semibold transition-opacity duration-400 hover:border-b-2" v-html="item.title.rendered"/>
 					</li>
 				</ul>
 			</div>

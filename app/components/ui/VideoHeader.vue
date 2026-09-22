@@ -27,7 +27,7 @@ defineProps<Props>()
 
 			<div class="absolute inset-0 z-10 bg-black/40"></div>
 
-			<div class="relative z-30 mx-auto flex h-full max-w-6xl flex-col justify-center gap-2 px-8 text-center">
+			<div class="relative z-20 mx-auto flex h-full max-w-6xl flex-col justify-center gap-2 px-8 text-center">
 				<h1 v-if="title" class="text-4xl tracking-tight" v-html="title"></h1>
 				<p v-if="excerpt" class="mx-auto my-4 max-w-[320px] text-base/7 sm:max-w-lg sm:px-4" v-html="excerpt"></p>
 
@@ -37,7 +37,7 @@ defineProps<Props>()
 				</div>
 			</div>
 		</div>
-		<div class="absolute bottom-0 z-50 h-[60px] w-full">
+		<div class="absolute bottom-0 z-20 h-[60px] w-full">
 			<div class="button-group bg-palladian text-brand absolute top-0 left-1/2 z-50 flex -translate-x-1/2 -translate-y-1/2 flex-row">
 				<span class="button-group__item">
 					<PrimaryButton :url="primaryButtonUrl" :event-name="''" :text="primaryButtonText" class="rounded-r-none border-0 px-6 text-xl uppercase" />

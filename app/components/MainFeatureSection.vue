@@ -12,7 +12,7 @@ interface Props {
 const props = defineProps<Props>()
 </script>
 <template>
-	<section class="flex items-center justify-center pb-8">
+	<section class="flex items-center justify-center">
 		<div class="flex max-w-5xl flex-col flex-col-reverse sm:flex-row sm:items-center">
 			<WpImage loading="lazy" v-if="props.featureImage" :image-id="props.featureImage" :alt="props.featureHeaderLg ?? 'Vandets ro og byens puls'" class="block h-[60vh] w-full object-cover" />
 			<div class="px-4 py-16 sm:col-span-2 sm:px-8">
