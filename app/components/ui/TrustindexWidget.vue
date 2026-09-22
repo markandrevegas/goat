@@ -28,8 +28,7 @@ interface AirbnbApiResponse {
 const { data, pending, error } = useFetch<AirbnbApiResponse>(
 	"https://floatinggoat.dk/wp-json/custom/v1/airbnb-rating",
 	{
-		key: "airbnb-reviews-carousel",
-		server: false
+		key: "airbnb-reviews-carousel"
 	}
 )
 </script>
