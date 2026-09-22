@@ -25,7 +25,7 @@ interface AirbnbApiResponse {
 	reviews: Review[]
 }
 
-const { data, pending, error } = useLazyFetch<AirbnbApiResponse>(
+const { data, pending, error } = useFetch<AirbnbApiResponse>(
 	"https://floatinggoat.dk/wp-json/custom/v1/airbnb-rating",
 	{
 		key: "airbnb-reviews-carousel",
@@ -35,7 +35,7 @@ const { data, pending, error } = useLazyFetch<AirbnbApiResponse>(
 </script>
 
 <template>
-	<section class="relative -top-[2px] mx-auto flex h-full w-4/5 flex-col justify-center overflow-hidden px-4 py-24 font-sans md:h-screen">
+	<section class="relative -top-[2px] mx-auto flex h-full w-full px-4 sm:px-0 sm:w-4/5 flex-col justify-center overflow-hidden py-24 font-sans md:h-screen">
 		<div v-if="pending" class="text-brand text-center font-bold">Loading reviews...</div>
 
 		<div v-else-if="error" class="text-center font-bold text-red-800">Could not load reviews.</div>
@@ -55,7 +55,7 @@ const { data, pending, error } = useLazyFetch<AirbnbApiResponse>(
 				</div>
 			</div>
 			<div class="flex w-full snap-x snap-mandatory [scrollbar-width:none] items-center justify-start gap-4 overflow-x-auto scroll-smooth px-2 pt-2 pb-6 [-ms-overflow-style:none] lg:snap-none lg:gap-4 lg:overflow-scroll [&::-webkit-scrollbar]:hidden">
-				<div v-for="review in data.reviews" :key="review.id" class="flex h-72 min-w-[240px] snap-start flex-col rounded-2xl bg-white p-6 shadow-sm sm:w-[calc(50%-0.5rem)] lg:w-[240px]">
+				<div v-for="review in data.reviews" :key="review.id" class="flex h-72 min-w-[320px] snap-start flex-col rounded-2xl bg-white p-6 shadow-sm sm:w-[calc(50%-0.5rem)] lg:w-[240px]">
 					<div class="mb-3 flex items-center gap-x-3">
 						<img loading="lazy" fetchpriority="low" :src="review.reviewer?.pictureUrl" :alt="review.reviewer?.firstName" class="h-12 w-12 rounded-full object-cover" />
 						<div>
