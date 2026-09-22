@@ -39,7 +39,7 @@ const { data, pending, error } = useFetch<AirbnbApiResponse>(
 
 		<div v-else-if="error" class="text-center font-bold text-red-800">Could not load reviews.</div>
 
-		<div v-else-if="data?.success" class="mx-auto flex w-full flex-col items-center gap-8 lg:flex-row lg:items-stretch">
+		<div v-else-if="data && data?.reviews" class="mx-auto flex w-full flex-col items-center gap-8 lg:flex-row lg:items-stretch">
 			<div class="mx-auto flex w-[250px] shrink-0 flex-col items-center justify-center">
 				<h2 class="font-display mb-2 text-4xl tracking-tight">Excellent</h2>
 				<div class="mb-2 flex">
