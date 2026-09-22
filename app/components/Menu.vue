@@ -13,7 +13,7 @@ const {
 	status,
 	error
 } = await getPages({
-	include: ["meetings-and-events", "apartments", "simple-meetings", "information-for-guests"],
+	include: ["meetings-and-events", "rooftop-terrace", "apartments", "simple-meetings", "information-for-guests"],
 	exclude: []
 })
 // Transform page titles if needed

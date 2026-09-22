@@ -25,12 +25,11 @@ interface AirbnbApiResponse {
 	reviews: Review[]
 }
 
-const { data, pending, error } = await useLazyFetch<AirbnbApiResponse>(
+const { data, pending, error } = useLazyFetch<AirbnbApiResponse>(
 	"https://floatinggoat.dk/wp-json/custom/v1/airbnb-rating",
 	{
 		key: "airbnb-reviews-carousel",
-		server: false,
-		lazy: true
+		server: false
 	}
 )
 </script>
