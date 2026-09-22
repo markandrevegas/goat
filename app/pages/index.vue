@@ -19,12 +19,13 @@ const { data: page, status, error } = await useAsyncData("wp-index", () => getLa
 
 const landing = computed(() => page.value?.acf || {})
 const showReviews = computed(() => {
-	return landing.value.acf?.show_reviews
+	const value = landing.value?.show_reviews
+	return value === 'true' || value === true
 })
-
-/*if (import.meta.dev) {
+if (import.meta.dev) {
 	console.log(landing.value)
-}*/
+	console.log(showReviews.value)
+}
 
 const layoutStyle = computed(() => landing.value?.layoutstyle)
 
@@ -107,7 +108,7 @@ useSeoMeta({
 
 		<Marquee folder="clients" :speed="60" />
 
-		<TrustindexWidget v-if="showReviews == 'true'" />
+		<TrustindexWidget v-if="showReviews === true" />
 
 		<FerryVideo :header="ferryVideoHeader" :header-sm="ferryVideoHeaderSm" :text="ferryVideoText" :url="ferryVideoUrl" :button="ferryVideoButton" />
 	</NuxtLayout>
