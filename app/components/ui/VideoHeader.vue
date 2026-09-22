@@ -11,27 +11,62 @@ interface Props {
 	primaryButtonUrl?: string
 	secondaryButtonText?: string
 	secondaryButtonUrl?: string
+	tertiaryButtonText?: string
+	tertiaryButtonUrl?: string
 }
 defineProps<Props>()
 </script>
 
 <template>
-	<div class="relative flex min-h-screen flex-col">
-		<video v-if="videoUrl" :poster="posterUrl" autoplay muted playsinline loop class="absolute inset-0 z-0 h-full w-full object-cover">
-			<source :src="videoUrl" type="video/mp4" />
-			Your browser does not support the video tag.
-		</video>
+	<div class="relative h-screen">
+		<div class="relative flex h-[calc(100vh-60px)] flex-col">
+			<video v-if="videoUrl" :poster="posterUrl" autoplay muted playsinline loop class="absolute inset-0 z-0 h-full w-full object-cover">
+				<source :src="videoUrl" type="video/mp4" />
+				Your browser does not support the video tag.
+			</video>
 
-		<div class="absolute inset-0 z-10 bg-black/40"></div>
+			<div class="absolute inset-0 z-10 bg-black/40"></div>
 
-		<div class="relative z-30 mx-auto flex h-full max-w-6xl flex-col justify-center gap-2 px-8 text-center">
-			<h1 v-if="title" class="text-xl font-bold tracking-tight md:text-4xl" v-html="title"></h1>
-			<p v-if="excerpt" class="mx-auto my-4 max-w-2xl" v-html="excerpt"></p>
+			<div class="relative z-30 mx-auto flex h-full max-w-6xl flex-col justify-center gap-2 px-8 text-center">
+				<h1 v-if="title" class="text-4xl tracking-tight" v-html="title"></h1>
+				<p v-if="excerpt" class="mx-auto my-4 max-w-[320px] text-base/7 sm:max-w-lg sm:px-4" v-html="excerpt"></p>
 
-			<div class="flex hidden flex-row justify-center gap-4">
-				<PrimaryButton :url="primaryButtonUrl" :event-name="''" :text="primaryButtonText" class="bg-brand text-palladian" />
-				<!--<SecondaryButton :url="secondaryButtonUrl" :event-name="''" :text="secondaryButtonText" />-->
+				<div class="flex hidden flex-row justify-center gap-4">
+					<PrimaryButton :url="primaryButtonUrl" :event-name="''" :text="primaryButtonText" class="bg-brand text-palladian" />
+					<!--<SecondaryButton :url="secondaryButtonUrl" :event-name="''" :text="secondaryButtonText" />-->
+				</div>
+			</div>
+		</div>
+		<div class="absolute bottom-0 z-50 h-[60px] w-full">
+			<div class="button-group bg-palladian text-brand absolute top-0 left-1/2 z-50 flex -translate-x-1/2 -translate-y-1/2 flex-row">
+				<span class="button-group__item">
+					<PrimaryButton :url="primaryButtonUrl" :event-name="''" :text="primaryButtonText" class="rounded-r-none border-0 px-6 text-xl uppercase" />
+				</span>
+				<span class="button-group__item">
+					<PrimaryButton :url="secondaryButtonUrl" :event-name="''" :text="secondaryButtonText" class="rounded-none border-0 px-6 text-xl uppercase" />
+				</span>
+				<span class="button-group__item">
+					<PrimaryButton :url="tertiaryButtonUrl" :event-name="''" :text="'Reserve Rooms'" class="rounded-l-none border-0 px-6 text-xl uppercase" />
+				</span>
 			</div>
 		</div>
 	</div>
 </template>
+<style scoped>
+.button-group__item {
+	position: relative;
+	display: flex;
+}
+
+.button-group__item:not(:last-child)::after {
+	content: "|";
+	position: absolute;
+	top: 37%;
+	right: 0;
+	height: 16px;
+	transform: translate(50%, -50%);
+	color: var(--palladian);
+	pointer-events: none;
+	z-index: 1;
+}
+</style>

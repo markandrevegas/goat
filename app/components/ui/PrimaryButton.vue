@@ -35,7 +35,7 @@ const handleButtonClick = async (event: MouseEvent) => {
 </script>
 
 <template>
-	<button @click="handleButtonClick" class="w-max rounded px-3 py-2 font-medium transition-colors duration-400">
+	<button @click="handleButtonClick" class="font-sofia w-max rounded px-2 py-1 font-medium transition-colors duration-400">
 		{{ text }}
 	</button>
 </template>

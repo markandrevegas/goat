@@ -2,11 +2,13 @@
 import { computed } from "vue"
 import Marquee from "~/components/ui/Marquee.vue"
 import TrustindexWidget from "~/components/ui/TrustindexWidget.vue"
-import posterImg from "~/images/ferry-poster.webp"
+import posterImg from "~/assets/images/ferry-poster.webp"
 import ThreeColumns from "~/components/ui/ThreeColumns.vue"
 import CardScroller from "~/components/ui/CardScroller.vue"
 import Goat from "~/components/icons/Goat.vue"
 import VideoHeader from "~/components/ui/VideoHeader.vue"
+import ImageScrollWindow from "~/components/ImageScrollWindow.vue"
+import FirstRow from "~/components/FirstRow.vue"
 
 definePageMeta({
 	layout: false
@@ -33,10 +35,10 @@ const videoHeaderTitle = computed(() => landing.value?.video_header_title || "")
 const videoHeaderExcerpt = computed(() => landing.value?.video_header_excerpt || "")
 const videoHeaderPrimaryButton = computed(() => landing.value?.video_header_primary_button || "")
 const videoHeaderPrimaryButtonUrl = computed(() => landing.value?.video_header_primary_button_url || "")
-console.log(videoHeaderPrimaryButtonUrl.value)
 const videoHeaderSecondaryButton = computed(() => landing.value?.video_header_secondary_button || "")
 const videoHeaderSecondaryButtonUrl = computed(() => landing.value?.video_header_secondary_button_url || "")
-console.log(videoHeaderPrimaryButtonUrl.value)
+const videoHeaderTertiaryButton = computed(() => landing.value?.video_header_secondary_button || "")
+const videoHeaderTertiaryButtonUrl = computed(() => landing.value?.video_header_secondary_button_url || "")
 
 // 1. First set: 'firstcolumnheader', 'secondcolumnheader', etc.
 const standardCards = computed(() => extractColumns(landing.value, ["first", "second", "third", "fourth"]))
@@ -98,16 +100,20 @@ useSeoMeta({
 <template>
 	<NuxtLayout name="default">
 		<template v-if="layoutStyle === 'video'" #bg-video>
-			<VideoHeader v-if="layoutStyle === 'video'" :title="videoHeaderTitle" :excerpt="videoHeaderExcerpt" :videoUrl="videoHeaderVideoUrl" :posterUrl="videoHeaderPoster" :primaryButtonText="videoHeaderPrimaryButton" :primaryButtonUrl="videoHeaderPrimaryButtonUrl" :secondaryButtonText="videoHeaderSecondaryButton" :secondaryButtonUrl="videoHeaderSecondaryButtonUrl" />
+			<VideoHeader v-if="layoutStyle === 'video'" :title="videoHeaderTitle" :excerpt="videoHeaderExcerpt" :videoUrl="videoHeaderVideoUrl" :posterUrl="videoHeaderPoster" :primaryButtonText="videoHeaderPrimaryButton" :primaryButtonUrl="videoHeaderPrimaryButtonUrl" :secondaryButtonText="videoHeaderSecondaryButton" :secondaryButtonUrl="videoHeaderSecondaryButtonUrl" :tertiaryButtonText="videoHeaderTertiaryButton" :tertiaryButtonUrl="videoHeaderTertiaryButtonUrl" />
 		</template>
-		<!--<ThreeColumns :items="threeColumnItems" />-->
-		<FirstRow />
-		<ClientOnly>
+		<!--<FirstRow />-->
+		<MainFeatureSection :feature-header-sm="featureHeaderSm" :feature-header-lg="featureHeaderLg" :feature-image="featureImage" :feature-text="featureText" :feature-button="featureButton" :feature-url="featureUrl" />
+
+		<!--<CardScroller :items="standardCards" />-->
+		<!--<ImageScrollWindow :scroll-header="scrollHeader" :scroll-image="scrollImage" :items="standardCards" />-->
+
+		<!--<ClientOnly>
 			<CardScroller :items="standardCards" />
-		</ClientOnly>
+		</ClientOnly>-->
 		<Marquee folder="clients" :speed="60" />
 		<TrustindexWidget v-if="showReviews = 'true'" />
-		<!--<ImageScrollWindow :feature-header-sm="featureHeaderSm" :feature-header-lg="featureHeaderLg" :feature-image="featureImage" :feature-text="featureText" :feature-button="featureButton" :scroll-header="scrollHeader" :feature-url="featureUrl" :scroll-image="scrollImage" />-->
+
 		<FerryVideo :header="ferryVideoHeader" :header-sm="ferryVideoHeaderSm" :text="ferryVideoText" :url="ferryVideoUrl" :button="ferryVideoButton" />
 	</NuxtLayout>
 </template>

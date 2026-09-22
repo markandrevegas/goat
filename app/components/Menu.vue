@@ -35,7 +35,7 @@ const { data: postItems } = await getPosts({
 </script>
 
 <template>
-	<nav aria-label="Main navigation" class="fixed top-0 right-0 left-0 z-50 w-full transition-colors duration-300" :class="y > 0 ? 'bg-palladian text-brand' : 'bg-brand text-palladian'">
+	<nav aria-label="Main navigation" class="fixed top-0 right-0 left-0 z-50 w-full transition-colors duration-300" :class="y > 0 ? 'bg-palladian text-brand' : 'text-palladian'">
 		<div class="flex w-full items-start justify-between px-4 py-2">
 			<div class="max-content flex items-center">
 				<!--<NuxtLink to="/">

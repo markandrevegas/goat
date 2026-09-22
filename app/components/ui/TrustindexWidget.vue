@@ -29,7 +29,7 @@ const { data, pending, error } = await useFetch<AirbnbApiResponse>("https://floa
 </script>
 
 <template>
-	<section class="bg-palladian text-brand relative -top-[2px] flex h-full w-full flex-col justify-center overflow-hidden px-4 font-sans md:h-screen md:px-8">
+	<section class="relative -top-[2px] mx-auto flex h-full w-4/5 flex-col justify-center overflow-hidden px-4 font-sans md:h-screen">
 		<div v-if="pending" class="text-brand text-center font-bold">Loading reviews...</div>
 
 		<div v-else-if="error" class="text-center font-bold text-red-800">Could not load reviews.</div>
@@ -49,12 +49,12 @@ const { data, pending, error } = await useFetch<AirbnbApiResponse>("https://floa
 				</div>
 			</div>
 			<div class="flex w-full snap-x snap-mandatory [scrollbar-width:none] items-center justify-start gap-4 overflow-x-auto scroll-smooth px-2 pt-2 pb-6 [-ms-overflow-style:none] lg:snap-none lg:gap-4 lg:overflow-scroll [&::-webkit-scrollbar]:hidden">
-				<div v-for="review in data.reviews" :key="review.id" class="flex h-72 min-w-[320px] snap-start flex-col rounded-2xl bg-white p-6 shadow-sm sm:w-[calc(50%-0.5rem)] lg:w-[320px]">
+				<div v-for="review in data.reviews" :key="review.id" class="flex h-72 min-w-[240px] snap-start flex-col rounded-2xl bg-white p-6 shadow-sm sm:w-[calc(50%-0.5rem)] lg:w-[240px]">
 					<div class="mb-3 flex items-center gap-x-3">
 						<img :src="review.reviewer?.pictureUrl" :alt="review.reviewer?.firstName" class="h-12 w-12 rounded-full object-cover" />
 						<div>
 							<div class="flex items-start justify-start">
-								<h3 class="text-base/5 font-bold">
+								<h3 class="text-brand text-base/5 font-bold">
 									{{ review.reviewer?.firstName }}
 								</h3>
 								<BadgeChecked class="ml-1 text-blue-500" />
@@ -66,13 +66,13 @@ const { data, pending, error } = await useFetch<AirbnbApiResponse>("https://floa
 						</div>
 					</div>
 					<div class="-gap-[.1rem] mb-4 flex items-center">
-						<StarFilled v-for="i in review.rating" :key="i" class="size-4" />
+						<StarFilled v-for="i in review.rating" :key="i" class="text-brand size-4" />
 					</div>
 					<p class="text-brand mb-4 line-clamp-4 flex-grow text-sm/5">
 						{{ review.localizedText || review.text }}
 					</p>
 					<div class="mt-auto flex justify-end">
-						<QuoteMark class="size-8" />
+						<QuoteMark class="text-brand size-8" />
 					</div>
 				</div>
 			</div>
