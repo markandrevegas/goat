@@ -28,6 +28,7 @@ interface AirbnbApiResponse {
 const { data, pending, error } = useFetch<AirbnbApiResponse>("https://floatinggoat.dk/wp-json/custom/v1/airbnb-rating", {
 	key: "airbnb-reviews-carousel"
 })
+console.log(data.value)
 </script>
 
 <template>
@@ -53,7 +54,7 @@ const { data, pending, error } = useFetch<AirbnbApiResponse>("https://floatinggo
 			<div class="flex w-full snap-x snap-mandatory [scrollbar-width:none] items-center justify-start gap-4 overflow-x-auto scroll-smooth px-2 pt-2 pb-6 [-ms-overflow-style:none] lg:snap-none lg:gap-4 lg:overflow-scroll [&::-webkit-scrollbar]:hidden">
 				<div v-for="review in data.reviews" :key="review.id" class="flex h-72 min-w-[320px] snap-start flex-col rounded-2xl bg-white p-6 shadow-sm sm:w-[calc(50%-0.5rem)] lg:w-[240px]">
 					<div class="mb-3 flex items-center gap-x-3">
-						<img loading="lazy" fetchpriority="low" :src="review.reviewer?.pictureUrl" :alt="review.reviewer?.firstName" class="h-12 w-12 rounded-full object-cover" />
+						<img width="84" height="84" loading="lazy" fetchpriority="low" :src="review.reviewer?.pictureUrl" :alt="review.reviewer?.firstName" class="h-12 w-12 rounded-full object-cover" />
 						<div>
 							<div class="flex items-start justify-start">
 								<h3 class="text-brand text-base/5 font-bold">
