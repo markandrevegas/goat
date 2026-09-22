@@ -28,7 +28,7 @@ const loopItems = computed(() => {
 </script>
 
 <template>
-	<div class="text-brand flex py-16 items-center bg-white">
+	<div class="text-brand flex items-center bg-white py-16">
 		<div class="flex flex-col overflow-hidden px-4 sm:mx-auto sm:grid sm:max-w-5xl sm:grid-cols-2 sm:gap-8">
 			<div class="flex items-center justify-start sm:col-span-1">
 				<div>

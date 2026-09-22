@@ -25,16 +25,13 @@ interface AirbnbApiResponse {
 	reviews: Review[]
 }
 
-const { data, pending, error } = useFetch<AirbnbApiResponse>(
-	"https://floatinggoat.dk/wp-json/custom/v1/airbnb-rating",
-	{
-		key: "airbnb-reviews-carousel"
-	}
-)
+const { data, pending, error } = useFetch<AirbnbApiResponse>("https://floatinggoat.dk/wp-json/custom/v1/airbnb-rating", {
+	key: "airbnb-reviews-carousel"
+})
 </script>
 
 <template>
-	<section class="relative -top-[2px] mx-auto flex h-full w-full px-4 sm:px-0 sm:w-4/5 flex-col justify-center overflow-hidden py-24 font-sans md:h-screen">
+	<section class="relative -top-[2px] mx-auto flex h-full w-full flex-col justify-center overflow-hidden px-4 py-24 font-sans sm:w-4/5 sm:px-0 md:h-screen">
 		<div v-if="pending" class="text-brand text-center font-bold">Loading reviews...</div>
 
 		<div v-else-if="error" class="text-center font-bold text-red-800">Could not load reviews.</div>
