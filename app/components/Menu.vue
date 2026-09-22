@@ -13,8 +13,8 @@ const {
 	status,
 	error
 } = await getPages({
-	include: ["meetings-and-events", "rooftop-terrace", "apartments", "simple-meetings", "information-for-guests"],
-	exclude: ["privacy-policy", "terms-of-service"]
+	include: ["meetings-and-events", "apartments", "simple-meetings", "information-for-guests"],
+	exclude: []
 })
 // Transform page titles if needed
 const pageItems = computed(() => {
