@@ -19,7 +19,7 @@ const loopItems = computed(() => {
 	if (!galleryData.value) return []
 
 	const items = galleryData.value.map((img) => ({
-		id: img.id ?? img.url, // Uses numeric WP Media ID if found, falls back to URL
+		id: img.id ?? img.url,
 		label: img.name.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " ")
 	}))
 

@@ -36,9 +36,9 @@ const pageItems = computed(() => {
 			</div>
 			<div class="flex flex-col">
 				<p class="font-display mb-2 text-xl font-semibold">Information</p>
-				<ul class="list-reset flex flex-col w-full">
-					<li v-for="item in pageItems" :key="item.slug">
-						<NuxtLink :to="item.slug" class="w-max font-semibold transition-opacity duration-400 hover:border-b-2" v-html="item.title.rendered" />
+				<ul class="list-reset flex flex-col w-full h-full">
+					<li v-for="(item, index) in pageItems" :key="index">
+						<NuxtLink :to="item.slug" class="w-max font-semibold transition-opacity duration-400 hover:border-b-2" v-html="item.title.rendered"></NuxtLink>
 					</li>
 				</ul>
 			</div>
