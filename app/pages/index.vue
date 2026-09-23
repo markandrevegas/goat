@@ -20,7 +20,7 @@ const { data: page, status, error } = await useAsyncData("wp-index", () => getLa
 const landing = computed(() => page.value?.acf || {})
 const showReviews = computed(() => {
 	const value = landing.value?.show_reviews
-	return value === 'true' || value === true
+	return value === "true" || value === true
 })
 if (import.meta.dev) {
 	console.log(landing.value)
