@@ -54,7 +54,8 @@ console.log(data.value)
 			<div class="flex w-full snap-x snap-mandatory [scrollbar-width:none] items-center justify-start gap-4 overflow-x-auto scroll-smooth px-2 pt-2 pb-6 [-ms-overflow-style:none] lg:snap-none lg:gap-4 lg:overflow-scroll [&::-webkit-scrollbar]:hidden">
 				<div v-for="review in data.reviews" :key="review.id" class="flex h-72 min-w-[320px] snap-start flex-col rounded-2xl bg-white p-6 shadow-sm sm:w-[calc(50%-0.5rem)] lg:w-[240px]">
 					<div class="mb-3 flex items-center gap-x-3">
-						<img :src="review.reviewer?.pictureUrl || '/images/default-avatar.png'" :srcset="review.reviewer?.pictureUrl ? `${review.reviewer.pictureUrl} 1x, ${review.reviewer.pictureUrl.replace('im_w=240', 'im_w=480')} 2x` : undefined" :alt="review.reviewer?.firstName || 'Reviewer'" width="48" height="48" loading="lazy" decoding="async" class="h-12 w-12 shrink-0 rounded-full object-cover" />
+						<!--<img :src="review.reviewer?.pictureUrl || '/images/default-avatar.png'" :srcset="review.reviewer?.pictureUrl ? `${review.reviewer.pictureUrl} 1x, ${review.reviewer.pictureUrl.replace('im_w=240', 'im_w=480')} 2x` : undefined" :alt="review.reviewer?.firstName || 'Reviewer'" width="48" height="48" loading="lazy" decoding="async" class="h-12 w-12 shrink-0 rounded-full object-cover" />-->
+						<NuxtImg :src="review.reviewer?.pictureUrl || '/images/default-avatar.png'" :alt="review.reviewer?.firstName || 'Reviewer'" width="96" height="96" sizes="48px" format="webp" loading="lazy" decoding="async" class="h-12 w-12 shrink-0 rounded-full object-cover" />
 						<div>
 							<div class="flex items-start justify-start">
 								<h3 class="text-brand text-base/5 font-bold">

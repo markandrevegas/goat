@@ -145,6 +145,6 @@ export default defineNuxtConfig({
 		]
 	},
 	image: {
-		provider: "none"
+		domains: ["a0.muscache.com", "muscache.com"]
 	}
 })

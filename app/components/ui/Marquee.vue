@@ -62,27 +62,15 @@ const loopItems = computed(() => {
 					<p class="py-4">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere placeat officiis deserunt nobis atqu.</p>
 				</div>
 			</div>
-			
+
 			<div class="relative mx-auto flex h-48 w-full max-w-3xl items-center overflow-hidden sm:col-span-1">
 				<div class="pointer-events-none absolute inset-y-0 left-0 z-10 w-32 bg-gradient-to-r from-white to-transparent" />
 				<div class="pointer-events-none absolute inset-y-0 right-0 z-10 w-32 bg-gradient-to-l from-white to-transparent" />
-				
-				<div 
-					class="marquee-track animate-marquee flex w-max items-center justify-center gap-12" 
-					:class="{ 'pause-on-hover': pauseOnHover }" 
-					:style="{ animationDuration: `${speed}s` }"
-				>
-					<div 
-						v-for="(item, index) in loopItems" 
-						:key="`${item.id}-${index}`" 
-						class="flex shrink-0 flex-col items-center gap-2"
-					>
-						<WpImage 
-							:image-id="item.id" 
-							:alt="item.label" 
-							class="h-8 max-h-8 w-auto max-w-[120px] shrink-0 object-contain" 
-						/>
-						<span class="text-brand whitespace-nowrap text-xs font-semibold text-gray-700">{{ item.label }}</span>
+
+				<div class="marquee-track animate-marquee flex w-max items-center justify-center gap-12" :class="{ 'pause-on-hover': pauseOnHover }" :style="{ animationDuration: `${speed}s` }">
+					<div v-for="(item, index) in loopItems" :key="`${item.id}-${index}`" class="flex shrink-0 flex-col items-center gap-2">
+						<WpImage :image-id="item.id" :alt="item.label" class="h-8 max-h-8 w-auto max-w-[120px] shrink-0 object-contain" />
+						<span class="text-brand text-xs font-semibold whitespace-nowrap text-gray-700">{{ item.label }}</span>
 					</div>
 				</div>
 			</div>
