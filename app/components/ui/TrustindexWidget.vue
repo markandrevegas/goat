@@ -29,6 +29,15 @@ const { data, pending, error } = useFetch<AirbnbApiResponse>("https://floatinggo
 	key: "airbnb-reviews-carousel"
 })
 console.log(data.value)
+
+const optimizeAvatarUrl = (url?: string, width = 240) => {
+	if (!url) return "/images/default-avatar.png"
+	if (!url.includes("muscache.com")) return url
+
+	// Remove existing query string and attach target size
+	const cleanUrl = url.split("?")[0]
+	return `${cleanUrl}?im_w=${width}&im_q=high`
+}
 </script>
 
 <template>
@@ -55,7 +64,8 @@ console.log(data.value)
 				<div v-for="review in data.reviews" :key="review.id" class="flex h-72 min-w-[320px] snap-start flex-col rounded-2xl bg-white p-6 shadow-sm sm:w-[calc(50%-0.5rem)] lg:w-[240px]">
 					<div class="mb-3 flex items-center gap-x-3">
 						<img
-							:src="review.reviewer?.pictureUrl || review.reviewer?.pictureUrl || '/images/default-avatar.png'"
+							:src="optimizeAvatarUrl(review.reviewer?.pictureUrl)"
+							:srcset="`${optimizeAvatarUrl(review.reviewer?.pictureUrl, 100)} 1x, ${optimizeAvatarUrl(review.reviewer?.pictureUrl, 240)} 2x`"
 							:alt="review.reviewer?.firstName || 'Reviewer'"
 							width="48"
 							height="48"

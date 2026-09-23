@@ -34,6 +34,7 @@ export default defineNuxtConfig({
 	ssr: true,
 	app: {
 		baseURL: "/",
+		buildAssetsDir: "/_nuxt/",
 		head: {
 			htmlAttrs: {
 				lang: "da-DK"
@@ -145,6 +146,6 @@ export default defineNuxtConfig({
 		]
 	},
 	image: {
-		domains: ['www.floatinggoat.dk',"floatinggoat.dk", "a0.muscache.com", "muscache.com"]
+		domains: ["www.floatinggoat.dk", "floatinggoat.dk", "a0.muscache.com", "muscache.com"]
 	}
 })

@@ -33,11 +33,7 @@ const loopItems = computed(() => {
 			return {
 				// Pass the clean, unencoded raw URL
 				url: rawUrl ? String(rawUrl) : "",
-				label: img.name
-					? img.name
-							.replace(/\.[^/.]+$/, "")
-							.replace(/[-_]/g, " ")
-					: ""
+				label: img.name ? img.name.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " ") : ""
 			}
 		})
 		.filter((item) => item.url.trim() !== "")
