@@ -106,7 +106,7 @@ useSeoMeta({
 
 		<MainFeatureSection :feature-header-sm="featureHeaderSm" :feature-header-lg="featureHeaderLg" :feature-image="featureImage" :feature-text="featureText" :feature-button="featureButton" :feature-url="featureUrl" />
 
-		<Marquee folder="clients" :speed="60" />
+		<Marquee folder="clients" :speed="40" />
 
 		<TrustindexWidget v-if="showReviews === true" />
 

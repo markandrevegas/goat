@@ -26,26 +26,35 @@ const loopItems = computed(() => {
 	if (!galleryData.value) return []
 
 	const items = (galleryData.value as GalleryItem[])
-		// Filter out any manually created responsive variant files if they exist
-		.filter((img) => {
-			const identifier = String(img.name || img.url || img.id || "")
-			return !/-\d+w\.(webp|png|jpe?g)$/i.test(identifier)
-		})
 		.map((img) => {
 			const rawImg = img as Record<string, any>
-			return {
-				// Get the full direct URL string of the base original image
-				url: String(img.url || rawImg.source_url || rawImg.src || ""),
-				label: img.name
-					? img.name
-							.replace(/\.[^/.]+$/, "") // Remove extension
-							.replace(/[-_]/g, " ") // Replace dashes/underscores with spaces
-					: ""
-			}
-		})
+			const rawUrl = img.url || img.source_url || img.src || rawImg.full_url || ""
 
-	// Duplicate items for continuous marquee loop
-	return [...items, ...items]
+			// 1. Strip resolution suffixes (-120w, -240w, -300w, -600w) to get the clean base URL
+			const baseUrl = rawUrl.replace(/-\d+w(?=\.[^/.]+$)/i, "")
+			// 2. Encode spaces for IPX/browser compatibility
+			const cleanUrl = baseUrl ? encodeURI(baseUrl) : ""
+			// 3. Clean up display label
+			const label = img.name
+				? img.name
+						.replace(/-\d+w\.[^/.]+$/, "") // Remove -120w suffix
+						.replace(/\.[^/.]+$/, "")     // Remove extension
+						.replace(/[-_]/g, " ")        // Replace dashes/underscores with spaces
+				: ""
+
+			return { url: cleanUrl, label }
+		})
+		.filter((item) => item.url.trim() !== "")
+
+	const uniqueItemsMap = new Map<string, { url: string; label: string }>()
+	for (const item of items) {
+		if (!uniqueItemsMap.has(item.url)) {
+			uniqueItemsMap.set(item.url, item)
+		}
+	}
+
+	const uniqueItems = Array.from(uniqueItemsMap.values())
+	return [...uniqueItems, ...uniqueItems]
 })
 </script>
 
@@ -66,7 +75,7 @@ const loopItems = computed(() => {
 
 				<div class="marquee-track animate-marquee flex w-max items-center justify-center gap-12" :class="{ 'pause-on-hover': pauseOnHover }" :style="{ animationDuration: `${speed}s` }">
 					<div v-for="(item, index) in loopItems" :key="`${item.url}-${index}`" class="flex shrink-0 flex-col items-center gap-2">
-						<NuxtImg :src="item.url" :alt="item.label" width="120" height="32" sizes="120px" format="webp" loading="lazy" decoding="async" class="h-8 max-h-8 w-auto max-w-[120px] shrink-0 object-contain" />
+						<NuxtImg v-if="item.url" :src="item.url" :alt="item.label" height="64" format="webp" loading="lazy" decoding="async" class="h-8 max-h-8 w-auto max-w-[120px] shrink-0 object-cover" />
 						<span class="text-brand text-xs font-semibold whitespace-nowrap text-gray-700">{{ item.label }}</span>
 					</div>
 				</div>
