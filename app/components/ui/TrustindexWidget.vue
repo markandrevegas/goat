@@ -28,7 +28,7 @@ interface AirbnbApiResponse {
 const { data, pending, error } = useFetch<AirbnbApiResponse>("https://floatinggoat.dk/wp-json/custom/v1/airbnb-rating", {
 	key: "airbnb-reviews-carousel"
 })
-console.log(data.value)
+// console.log(data.value)
 
 const optimizeAvatarUrl = (url?: string, width = 240) => {
 	if (!url) return "/images/default-avatar.png"

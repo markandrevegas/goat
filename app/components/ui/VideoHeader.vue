@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from "vue"
 import PrimaryButton from "./PrimaryButton.vue"
 import SecondaryButton from "./SecondaryButton.vue"
 
@@ -15,16 +16,17 @@ interface Props {
 	tertiaryButtonUrl?: string
 }
 defineProps<Props>()
+const isVideoPlaying = ref(false)
 </script>
 
 <template>
 	<div class="relative h-screen">
 		<div class="relative flex h-[calc(100vh-60px)] flex-col">
-			<video v-if="videoUrl" :poster="posterUrl" autoplay muted playsinline loop class="absolute inset-0 z-0 h-full w-full object-cover">
+			<video v-if="videoUrl" autoplay muted playsinline loop class="absolute inset-0 z-0 h-full w-full object-cover" @playing="isVideoPlaying = true">
 				<source :src="videoUrl" type="video/mp4" />
 				Your browser does not support the video tag.
 			</video>
-
+			<NuxtImg v-if="posterUrl && !isVideoPlaying" :src="posterUrl" alt="Hero background" sizes="sm:100vw md:100vw lg:100vw" format="webp" quality="80" loading="eager" preload class="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover" />
 			<div class="absolute inset-0 z-10 bg-black/40"></div>
 
 			<div class="relative z-20 mx-auto flex h-full max-w-6xl flex-col justify-center gap-2 px-8 text-center">

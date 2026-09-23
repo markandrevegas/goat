@@ -23,8 +23,8 @@ const showReviews = computed(() => {
 	return value === "true" || value === true
 })
 if (import.meta.dev) {
-	console.log(landing.value)
-	console.log(showReviews.value)
+	/*console.log(landing.value)
+	console.log(showReviews.value)*/
 }
 
 const layoutStyle = computed(() => landing.value?.layoutstyle)

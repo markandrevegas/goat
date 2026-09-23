@@ -1,0 +1,1 @@
+cwebp -quiet -q 70 -resize 800 0 ./app/assets/images/ferry-poster.webp -o ./squeezed/ferry-poster.webp

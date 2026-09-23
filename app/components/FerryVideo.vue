@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import poster from "~/assets/images/ferry-poster.webp"
+import { ref } from "vue"
+
 import heroMobile from "~/assets/videos/ferry-video.mp4"
 import heroDesktop from "~/assets/videos/ferry-video.mp4"
 import OutlinedButton from "./ui/OutlinedButton.vue"
@@ -13,14 +14,20 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+const isVideoPlaying = ref(false)
 </script>
+
 <template>
 	<div class="text-palladian relative z-10 -mt-2 h-[60vh]">
-		<video :poster="poster" autoplay muted playsinline class="absolute inset-0 z-0 h-full w-full object-cover hue-rotate-15">
+		<!-- Video tag without the native :poster attribute -->
+		<video autoplay muted playsinline class="absolute inset-0 z-0 h-full w-full object-cover hue-rotate-15" @playing="isVideoPlaying = true">
 			<source :src="heroMobile" type="video/mp4" media="(max-width: 639px)" />
 			<source :src="heroDesktop" type="video/mp4" media="(min-width: 640px)" />
 			Your browser does not support the video tag.
 		</video>
+
+		<!-- NuxtImg Overlay using the direct asset import -->
+		<NuxtImg v-if="!isVideoPlaying" src="/images/ferry-poster.webp" alt="Hero video poster" sizes="sm:100vw md:100vw lg:100vw" format="webp" quality="80" loading="eager" preload class="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover hue-rotate-15" />
 
 		<div class="bg-brand/60 absolute inset-0 z-10"></div>
 
