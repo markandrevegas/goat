@@ -25,8 +25,6 @@ const isVideoPlaying = ref(false)
 			<source :src="heroDesktop" type="video/mp4" media="(min-width: 640px)" />
 			Your browser does not support the video tag.
 		</video>
-
-		<!-- NuxtImg Overlay using the direct asset import -->
 		<NuxtImg src="/images/ferry-poster.webp" alt="Hero video poster" sizes="sm:100vw md:100vw lg:100vw" format="webp" quality="65" loading="lazy" fetchpriority="low" preload class="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover hue-rotate-15" />
 
 		<div class="bg-brand/60 absolute inset-0 z-10"></div>
