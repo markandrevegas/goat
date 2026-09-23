@@ -51,11 +51,29 @@ watch(shouldFetch, (newValue) => {
 })
 
 const src = computed(() => {
-	if (isUrl.value) return props.imageId as string
+	if (isUrl.value) {
+		const url = props.imageId as string
+		// Default src points to the 300w version if it's an external webp image
+		if (url.endsWith(".webp") && !url.includes("-300w") && !url.includes("-600w")) {
+			return url.replace(/\.webp$/, "-300w.webp")
+		}
+		return url
+	}
 	return media.value?.source_url || ""
 })
 
 const srcset = computed(() => {
+	// 1. Handle external/direct image URLs
+	if (isUrl.value) {
+		const url = props.imageId as string
+		if (url.endsWith(".webp")) {
+			const baseUrl = url.replace(/(-300w|-600w)?\.webp$/, "")
+			return `${baseUrl}-300w.webp 1x, ${baseUrl}-600w.webp 2x`
+		}
+		return ""
+	}
+
+	// 2. Handle WordPress API media sizes
 	const sizes = media.value?.media_details?.sizes
 	if (!sizes) return ""
 
@@ -66,9 +84,16 @@ const srcset = computed(() => {
 		.join(", ")
 })
 
+const computedSizes = computed(() => {
+	if (props.sizes) return props.sizes
+	if (isUrl.value) return "120px"
+
+	return "(max-width: 640px) 100vw, 33.33vw"
+})
+
 const altText = computed(() => props.alt || media.value?.alt_text || "")
 </script>
 
 <template>
-	<img v-if="src" :src="src" :srcset="srcset || undefined" :sizes="props.sizes || '(max-width: 640px) 100vw, 33.33vw'" :alt="altText" :class="props.class" :loading="props.loading" :fetchpriority="props.fetchpriority" />
+	<img v-if="src" :src="src" :srcset="srcset || undefined" :sizes="computedSizes" :alt="altText" :class="props.class" width="120" height="32" decoding="async" :loading="props.loading" :fetchpriority="props.fetchpriority" />
 </template>
