@@ -120,7 +120,17 @@ export default defineNuxtConfig({
 			"/sitemap_index.xml": { proxy: "https://www.floatinggoat.dk/sitemap_index.xml" },
 			"/sitemap.xml": { proxy: "https://www.floatinggoat.dk/sitemap_index.xml" },
 			"/*.xml": { proxy: "https://www.floatinggoat.dk/*.xml" },
-			"/*.xsl": { proxy: "https://www.floatinggoat.dk/*.xsl" }
+			"/*.xsl": { proxy: "https://www.floatinggoat.dk/*.xsl" },
+			"/_ipx/**": {
+				headers: {
+					"cache-control": "public, max-age=31536000, immutable"
+				}
+			},
+			"/images/**": {
+				headers: {
+					"cache-control": "public, max-age=31536000, immutable"
+				}
+			}
 		}
 	},
 	svgo: {
