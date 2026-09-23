@@ -27,7 +27,7 @@ const isVideoPlaying = ref(false)
 		</video>
 
 		<!-- NuxtImg Overlay using the direct asset import -->
-		<NuxtImg v-if="!isVideoPlaying" src="/images/ferry-poster.webp" alt="Hero video poster" sizes="sm:100vw md:100vw lg:100vw" format="webp" quality="80" loading="eager" preload class="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover hue-rotate-15" />
+		<NuxtImg v-if="!isVideoPlaying" src="/images/ferry-poster.webp" alt="Hero video poster" sizes="sm:100vw md:100vw lg:100vw" format="webp" quality="65" loading="lazy" preload class="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover hue-rotate-15" />
 
 		<div class="bg-brand/60 absolute inset-0 z-10"></div>
 

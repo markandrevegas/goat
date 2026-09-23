@@ -26,7 +26,7 @@ const isVideoPlaying = ref(false)
 				<source :src="videoUrl" type="video/mp4" />
 				Your browser does not support the video tag.
 			</video>
-			<NuxtImg v-if="posterUrl && !isVideoPlaying" :src="posterUrl" alt="Hero background" sizes="sm:100vw md:100vw lg:100vw" format="webp" quality="80" loading="eager" preload class="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover" />
+			<NuxtImg v-if="posterUrl && !isVideoPlaying" :src="posterUrl" alt="Hero background" sizes="sm:100vw md:100vw lg:100vw" format="webp" quality="65" loading="eager" preload class="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover" />
 			<div class="absolute inset-0 z-10 bg-black/40"></div>
 
 			<div class="relative z-20 mx-auto flex h-full max-w-6xl flex-col justify-center gap-2 px-8 text-center">
