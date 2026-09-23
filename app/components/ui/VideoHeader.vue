@@ -17,23 +17,24 @@ interface Props {
 }
 defineProps<Props>()
 const isVideoPlaying = ref(false)
+const showVideo = ref(false)
+onMounted(() => {
+	showVideo.value = true
+})
 </script>
 
 <template>
 	<div class="relative h-screen">
 		<div class="relative flex h-[calc(100vh-60px)] flex-col">
-			<video v-if="videoUrl" autoplay muted playsinline loop class="absolute inset-0 z-0 h-full w-full object-cover" @playing="isVideoPlaying = true">
+			<video v-if="showVideo && videoUrl" autoplay muted playsinline loop class="absolute inset-0 z-0 h-full w-full object-cover" @playing="isVideoPlaying = true">
 				<source :src="videoUrl" type="video/mp4" />
 				Your browser does not support the video tag.
 			</video>
-			<NuxtImg src="/images/ferry-poster.webp" alt="Hero video poster" sizes="sm:100vw md:100vw lg:100vw" format="webp" quality="65" loading="eager" fetchpriority="high" preload :class="[
-				'absolute inset-0 z-0 h-full w-full object-cover hue-rotate-15 pointer-events-none transition-opacity duration-500',
-				isVideoPlaying ? 'opacity-0' : 'opacity-100'
-			]" />
+			<NuxtImg src="/images/ferry-poster.webp" alt="Hero video poster" sizes="sm:100vw md:100vw lg:100vw" format="webp" quality="65" loading="eager" fetchpriority="high" preload class="absolute inset-0 z-0 h-full w-full object-cover hue-rotate-15"/>
 			<div class="absolute inset-0 z-10 bg-black/40"></div>
 
 			<div class="relative z-20 mx-auto flex h-full max-w-6xl flex-col justify-center gap-2 px-8 text-center">
-				<h1 v-if="title" class="text-4xl tracking-tight" v-html="title"></h1>
+				<h1 v-if="title" class="text-4xl tracking-tight"> {{ title }}</h1>
 				<p v-if="excerpt" class="mx-auto my-4 max-w-[320px] text-base/7 sm:max-w-lg sm:px-4" v-html="excerpt"></p>
 
 				<div class="flex hidden flex-row justify-center gap-4">
