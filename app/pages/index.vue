@@ -101,7 +101,7 @@ useSeoMeta({
 <template>
 	<NuxtLayout name="default">
 		<template v-if="layoutStyle === 'video'" #bg-video>
-			<VideoHeader v-if="layoutStyle === 'video'" :title="videoHeaderTitle" :excerpt="videoHeaderExcerpt" :videoUrl="videoHeaderVideoUrl" :posterUrl="videoHeaderPoster" :primaryButtonText="videoHeaderPrimaryButton" :primaryButtonUrl="videoHeaderPrimaryButtonUrl" :secondaryButtonText="videoHeaderSecondaryButton" :secondaryButtonUrl="videoHeaderSecondaryButtonUrl" :tertiaryButtonText="videoHeaderTertiaryButton" :tertiaryButtonUrl="videoHeaderTertiaryButtonUrl" />
+			<VideoHeader :title="videoHeaderTitle" :excerpt="videoHeaderExcerpt" :videoUrl="videoHeaderVideoUrl" :posterUrl="videoHeaderPoster" :primaryButtonText="videoHeaderPrimaryButton" :primaryButtonUrl="videoHeaderPrimaryButtonUrl" :secondaryButtonText="videoHeaderSecondaryButton" :secondaryButtonUrl="videoHeaderSecondaryButtonUrl" :tertiaryButtonText="videoHeaderTertiaryButton" :tertiaryButtonUrl="videoHeaderTertiaryButtonUrl" />
 		</template>
 
 		<MainFeatureSection :feature-header-sm="featureHeaderSm" :feature-header-lg="featureHeaderLg" :feature-image="featureImage" :feature-text="featureText" :feature-button="featureButton" :feature-url="featureUrl" />
