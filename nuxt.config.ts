@@ -145,6 +145,6 @@ export default defineNuxtConfig({
 		]
 	},
 	image: {
-		domains: ["floatinggoat.dk", "a0.muscache.com", "muscache.com"]
+		domains: ['www.floatinggoat.dk',"floatinggoat.dk", "a0.muscache.com", "muscache.com"]
 	}
 })

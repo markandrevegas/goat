@@ -30,31 +30,19 @@ const loopItems = computed(() => {
 			const rawImg = img as Record<string, any>
 			const rawUrl = img.url || img.source_url || img.src || rawImg.full_url || ""
 
-			// 1. Strip resolution suffixes (-120w, -240w, -300w, -600w) to get the clean base URL
-			const baseUrl = rawUrl.replace(/-\d+w(?=\.[^/.]+$)/i, "")
-			// 2. Encode spaces for IPX/browser compatibility
-			const cleanUrl = baseUrl ? encodeURI(baseUrl) : ""
-			// 3. Clean up display label
-			const label = img.name
-				? img.name
-						.replace(/-\d+w\.[^/.]+$/, "") // Remove -120w suffix
-						.replace(/\.[^/.]+$/, "")     // Remove extension
-						.replace(/[-_]/g, " ")        // Replace dashes/underscores with spaces
-				: ""
-
-			return { url: cleanUrl, label }
+			return {
+				// Pass the clean, unencoded raw URL
+				url: rawUrl ? String(rawUrl) : "",
+				label: img.name
+					? img.name
+							.replace(/\.[^/.]+$/, "")
+							.replace(/[-_]/g, " ")
+					: ""
+			}
 		})
 		.filter((item) => item.url.trim() !== "")
 
-	const uniqueItemsMap = new Map<string, { url: string; label: string }>()
-	for (const item of items) {
-		if (!uniqueItemsMap.has(item.url)) {
-			uniqueItemsMap.set(item.url, item)
-		}
-	}
-
-	const uniqueItems = Array.from(uniqueItemsMap.values())
-	return [...uniqueItems, ...uniqueItems]
+	return [...items, ...items]
 })
 </script>
 
