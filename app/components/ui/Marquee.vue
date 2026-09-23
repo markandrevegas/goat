@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import WpImage from "./WpImage.vue"
-
 interface Props {
 	folder?: string
 	speed?: number
@@ -28,21 +26,20 @@ const loopItems = computed(() => {
 	if (!galleryData.value) return []
 
 	const items = (galleryData.value as GalleryItem[])
-		// 1. Filter out responsive variant files (-120w, -240w, -300w, -600w, etc.)
+		// Filter out any manually created responsive variant files if they exist
 		.filter((img) => {
 			const identifier = String(img.name || img.url || img.id || "")
 			return !/-\d+w\.(webp|png|jpe?g)$/i.test(identifier)
 		})
-		// 2. Map original base files
 		.map((img) => {
 			const rawImg = img as Record<string, any>
 			return {
-				id: img.id || img.url || rawImg.source_url || rawImg.src || "",
+				// Get the full direct URL string of the base original image
+				url: String(img.url || rawImg.source_url || rawImg.src || ""),
 				label: img.name
 					? img.name
-							.replace(/-\d+w\.[^/.]+$/, "")
-							.replace(/\.[^/.]+$/, "")
-							.replace(/[-_]/g, " ")
+							.replace(/\.[^/.]+$/, "") // Remove extension
+							.replace(/[-_]/g, " ") // Replace dashes/underscores with spaces
 					: ""
 			}
 		})
@@ -68,8 +65,8 @@ const loopItems = computed(() => {
 				<div class="pointer-events-none absolute inset-y-0 right-0 z-10 w-32 bg-gradient-to-l from-white to-transparent" />
 
 				<div class="marquee-track animate-marquee flex w-max items-center justify-center gap-12" :class="{ 'pause-on-hover': pauseOnHover }" :style="{ animationDuration: `${speed}s` }">
-					<div v-for="(item, index) in loopItems" :key="`${item.id}-${index}`" class="flex shrink-0 flex-col items-center gap-2">
-						<WpImage :image-id="item.id" :alt="item.label" class="h-8 max-h-8 w-auto max-w-[120px] shrink-0 object-contain" />
+					<div v-for="(item, index) in loopItems" :key="`${item.url}-${index}`" class="flex shrink-0 flex-col items-center gap-2">
+						<NuxtImg :src="item.url" :alt="item.label" width="120" height="32" sizes="120px" format="webp" loading="lazy" decoding="async" class="h-8 max-h-8 w-auto max-w-[120px] shrink-0 object-contain" />
 						<span class="text-brand text-xs font-semibold whitespace-nowrap text-gray-700">{{ item.label }}</span>
 					</div>
 				</div>
