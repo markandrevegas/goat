@@ -18,8 +18,14 @@ interface Props {
 defineProps<Props>()
 const isVideoPlaying = ref(false)
 const showVideo = ref(false)
+
 onMounted(() => {
-	showVideo.value = true
+	const start = () => (showVideo.value = true)
+	if ("requestIdleCallback" in window) {
+		requestIdleCallback(start, { timeout: 3000 })
+	} else {
+		setTimeout(start, 1500)
+	}
 })
 </script>
 
