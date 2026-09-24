@@ -31,8 +31,8 @@ const props = defineProps<{
 
 <template>
 	<header v-if="layoutStyle === 'hero'" class="text-palladian relative -top-[2rem] right-1/2 left-1/2 -mx-[50vw] mb-12 flex h-[60vh] w-screen flex-col justify-center overflow-hidden">
-		<div class="w-full grid grid-cols-4 gap-4">
-			<div class="relative z-20 col-span-3 col-start-1 pl-8 sm:pl-0">
+		<div class="w-full sm:max-w-6xl sm:px-8 sm:mx-auto grid grid-cols-4 gap-4">
+			<div class="relative z-20 col-span-3 col-start-2 pl-8 sm:pl-0">
 				<h1 class="text-4xl tracking-tighter" v-html="title"></h1>
 				<p v-if="privateHeroExcerpt" v-html="privateHeroExcerpt" class="mt-6 max-w-lg text-base/7"></p>
 				<div class="flex w-full justify-start">
