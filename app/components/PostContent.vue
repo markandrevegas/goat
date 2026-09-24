@@ -21,6 +21,7 @@ const props = defineProps<{
 	featuredImageAlt: string
 	featuredImageWidth: number
 	featuredImageHeight: number
+	layoutStyle?: string
 }>()
 const { data: postItems } = await getPosts({
 	exclude: [props.slug, "betingelser", "privatslivspolitik"]
@@ -32,8 +33,8 @@ const layoutStyle = computed(() => {
 </script>
 
 <template>
-	<article class="w-full pb-16" :class="{ 'pt-[100vh]': layoutStyle === 'hero' }">
-		<EntryHeader :layout-style="layoutStyle || ''" :title="title" :author-name="authorName" :formatted-date="formattedDate" :date-published="datePublished" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" />
+	<article class="relative w-full">
+		<EntryHeader :layout-style="layoutStyle" :title="title" :author-name="authorName" :formatted-date="formattedDate" :date-published="datePublished" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" />
 
 		<!-- Main 3-Column Content Grid -->
 		<main v-if="body && slug !== 'information-for-guests'" class="flex flex-col gap-4 md:grid md:grid-cols-4">

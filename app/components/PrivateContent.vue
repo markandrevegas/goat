@@ -33,7 +33,7 @@ const props = defineProps<{
 	<article class="w-full" :class="{ 'pt-[100vh]': acf?.layoutstyle === 'hero' }">
 		<EntryHeader :layout-style="acf?.layoutstyle || ''" :title="acf?.private_hero_header" :author-name="authorName" :privateHeroExcerpt="acf?.private_hero_excerpt" :privateFeatureImageId="privateFeatureImageId" :privateHeroImageId="privateHeroImageId" />
 
-		<main v-if="body" class="mb-16 flex flex-col gap-4 md:grid md:grid-cols-4">
+		<main v-if="body" class="mb-16 pt-[60vh]">
 			<div class="col-span-1 hidden sm:block">
 				<p class="mb-2 text-sm tracking-tight uppercase md:block">Share Content</p>
 				<Social class="mr-auto w-max" />

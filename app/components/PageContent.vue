@@ -16,6 +16,7 @@ const props = defineProps<{
 	body: string
 	slug: string
 	acf?: Record<string, any>
+	layoutStyle?: string
 	authorName?: string
 	datePublished?: string | null
 	formattedDate?: string
@@ -28,10 +29,10 @@ const props = defineProps<{
 </script>
 
 <template>
-	<article class="w-full" :class="{ 'pt-[100vh]': acf?.layoutstyle === 'hero' }">
-		<EntryHeader :layout-style="acf?.layoutstyle || ''" :title="title" :author-name="authorName" :formatted-date="formattedDate" :date-published="datePublished" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" />
+	<article class="relative w-full">
+		<EntryHeader :layout-style="layoutStyle" :title="title" :author-name="authorName" :formatted-date="formattedDate" :date-published="datePublished" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" />
 
-		<main v-if="body" class="flex flex-col gap-4 md:grid md:grid-cols-4">
+		<main v-if="body" class="flex flex-col gap-4 pt-[60vh] md:grid md:grid-cols-4">
 			<div class="col-span-1 hidden sm:block">
 				<p class="font-display mb-4 font-bold md:block">Share content</p>
 				<Social class="mr-auto w-max" />

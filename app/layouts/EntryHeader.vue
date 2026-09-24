@@ -30,17 +30,17 @@ const props = defineProps<{
 </script>
 
 <template>
-	<header v-if="props.layoutStyle === 'hero'" class="text-palladian absolute inset-0 z-0 flex h-screen w-full flex-col justify-center overflow-hidden">
+	<header v-if="layoutStyle === 'hero'" class="text-palladian relative -top-[2rem] right-1/2 left-1/2 -mx-[50vw] mb-12 flex h-[60vh] w-screen flex-col justify-center overflow-hidden">
 		<div class="mx-auto grid grid-cols-4 gap-4">
-			<div class="relative z-20 col-span-2 sm:col-start-1">
+			<div class="relative z-20 col-span-3 col-start-1 pl-8 sm:pl-0">
 				<h1 class="text-4xl tracking-tighter" v-html="title"></h1>
 				<p v-if="privateHeroExcerpt" v-html="privateHeroExcerpt" class="mt-6 max-w-lg text-base/7"></p>
 				<div class="flex w-full justify-start">
 					<PrimaryButton v-if="buttonText" :text="buttonText || 'Book nu'" :event-name="'book_meeting'" :event-params="{ button_name: 'secondary_cta' }" />
 				</div>
-				<div v-if="authorName || formattedDate" class="mt-4 flex items-center space-x-2 text-sm">
+				<div v-if="authorName || formattedDate" class="mt-4 flex flex-col space-x-2 text-sm">
 					<span v-if="authorName" class="font-medium">Published by {{ authorName }}</span>
-					<span v-if="authorName && formattedDate">|</span>
+					<span v-if="authorName && formattedDate"></span>
 					<time v-if="formattedDate" :datetime="datePublished ?? undefined">{{ formattedDate }}</time>
 				</div>
 

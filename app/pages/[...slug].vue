@@ -59,7 +59,7 @@ const isPost = computed(() => rawContentData.value?._type === "posts")
 const isPrivatePage = computed(() => rawContentData.value?._type === "private")
 const hasContent = computed(() => !!rawContentData.value)
 
-const useBlogLayout = computed(() => isPost.value || rawContentData.value?.slug === "information-for-guests")
+const useBlogLayout = computed(() => isPage.value || rawContentData.value?.slug === "information-for-guests")
 const layoutName = computed(() => (useBlogLayout.value ? "blog" : "page"))
 
 const contentId = computed(() => rawContentData.value?.id || null)
@@ -114,6 +114,8 @@ const featuredImageAlt = computed(() => featuredMedia.value?.alt_text || content
 const featuredImageWidth = computed(() => featuredMedia.value?.media_details?.width || 1200)
 const featuredImageHeight = computed(() => featuredMedia.value?.media_details?.height || 630)
 
+console.log(featuredImageUrl.value)
+
 const seoTitle = computed(() => contentTitle.value || "Page")
 const seoDescription = computed(() => {
 	const excerpt = rawContentData.value?.excerpt?.rendered
@@ -131,6 +133,8 @@ const cleanSeoDescription = computed(() => decodeEntities(seoDescription.value))
 // New: separate source for private pages, since the image lives in ACF, not featured_media
 const privateHeroImageId = computed(() => contentAcf.value?.private_hero_image ?? null)
 // console.log(privateHeroImageId.value)
+const currentLayoutStyle = computed(() => contentAcf.value?.layoutstyle)
+console.log(currentLayoutStyle.value)
 useSeoMeta({
 	title: cleanSeoTitle.value,
 	titleTemplate: null,
@@ -160,9 +164,9 @@ useSeoMeta({
 				<p class="text-sm text-red-600">Could not resolve route or the target slug is missing/unpublished.</p>
 			</div>
 
-			<PostContent v-else-if="hasContent && useBlogLayout" :title="contentTitle" :body="contentBody" :slug="contentSlug" :acf="contentAcf" :author-name="authorName" :formatted-date="formattedDate" :date-published="datePublished" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" />
+			<PostContent v-else-if="hasContent && useBlogLayout" :title="contentTitle" :body="contentBody" :slug="contentSlug" :acf="contentAcf" :author-name="authorName" :formatted-date="formattedDate" :date-published="datePublished" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" :layout-style="currentLayoutStyle" />
 
-			<PageContent v-else-if="hasContent && isPage" :acf="contentAcf" :title="contentTitle" :body="contentBody" :slug="contentSlug" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" :related-pages="relatedPages" />
+			<PageContent v-else-if="hasContent && isPage" :acf="contentAcf" :title="contentTitle" :body="contentBody" :slug="contentSlug" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" :related-pages="relatedPages" :layout-style="currentLayoutStyle" />
 
 			<PrivateContent v-else-if="hasContent && isPrivatePage" :acf="contentAcf" :privateHeroExcerpt="contentAcf?.private_hero_excerpt" :buttonText="contentAcf?.private_hero_button" :title="contentTitle" :privateHeroImageId="privateHeroImageId" :privateFeatureImageId="privateFeatureImageId" :body="contentBody" :slug="contentSlug" />
 		</div>
