@@ -18,6 +18,16 @@ export const useWordPress = () => {
 			throw new Error("[wpFetch] NUXT_PUBLIC_GOAT_WORDPRESS_URL is not set.")
 		}
 
+		const start = Date.now()
+		return $fetch<T>(`${base}/${endpoint}`, {
+			query,
+			retry: 4,
+			retryDelay: 3_000,
+			timeout: 10_000
+		}).finally(() => {
+			console.log(`[wpFetch] ${endpoint} ${Date.now() - start}ms`)
+		})
+
 		return $fetch<T>(`${base}/${endpoint}`, {
 			query,
 			retry: 4,
