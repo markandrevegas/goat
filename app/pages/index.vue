@@ -4,6 +4,7 @@ import { computed, onMounted } from "vue"
 import TrustindexWidget from "~/components/ui/TrustindexWidget.vue"
 import posterImg from "~/assets/images/ferry-poster.webp"
 import VideoHeader from "~/components/ui/VideoHeader.vue"
+import Marquee from "~/components/ui/Marquee.vue"
 
 const trustindexRef = ref<HTMLElement | null>(null)
 const shouldLoadReviews = ref(false)
@@ -116,7 +117,7 @@ onMounted(() => {
 
 		<LazyMainFeatureSection :feature-header-sm="featureHeaderSm" :feature-header-lg="featureHeaderLg" :feature-image="featureImage" :feature-text="featureText" :feature-button="featureButton" :feature-url="featureUrl" />
 
-		<LazyMarquee folder="clients" :speed="40" />
+		<Marquee folder="clients" :speed="40" />
 
 		<div ref="trustindexRef">
 			<TrustindexWidget v-if="showReviews === true && shouldLoadReviews" />

@@ -25,7 +25,7 @@ export const useWordPress = () => {
 			retryDelay: 3_000,
 			timeout: 10_000
 		}).finally(() => {
-			console.log(`[wpFetch] ${endpoint} ${Date.now() - start}ms`)
+			// console.log(`[wpFetch] ${endpoint} ${Date.now() - start}ms`)
 		})
 
 		return $fetch<T>(`${base}/${endpoint}`, {
