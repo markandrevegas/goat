@@ -32,7 +32,7 @@ onMounted(() => {
 <template>
 	<div class="relative h-screen">
 		<div class="relative flex h-[calc(100vh-60px)] flex-col">
-			<video v-if="showVideo && videoUrl" autoplay muted playsinline loop class="absolute inset-0 z-0 h-full w-full object-cover" @playing="isVideoPlaying = true">
+			<video v-if="showVideo && videoUrl" autoplay muted playsinline loop preload="none" class="absolute inset-0 z-0 h-full w-full object-cover" @playing="isVideoPlaying = true">
 				<source :src="videoUrl" type="video/mp4" />
 				Your browser does not support the video tag.
 			</video>
