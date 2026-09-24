@@ -6,6 +6,17 @@ import SecondaryButton from "./SecondaryButton.vue"
 const img = useImage()
 const posterUrl = computed(() => img("/images/ferry-poster.webp", { width: 1920, quality: 45, format: "webp" }))
 
+useHead({
+	link: [
+		{
+			rel: "preload",
+			as: "image",
+			href: posterUrl,
+			fetchpriority: "high"
+		}
+	]
+})
+
 interface Props {
 	title?: string
 	excerpt?: string
@@ -22,14 +33,6 @@ defineProps<Props>()
 const isVideoPlaying = ref(false)
 const showVideo = ref(false)
 
-onMounted(() => {
-	const start = () => (showVideo.value = true)
-	if ("requestIdleCallback" in window) {
-		requestIdleCallback(start, { timeout: 3000 })
-	} else {
-		setTimeout(start, 1500)
-	}
-})
 </script>
 
 <template>
@@ -39,7 +42,7 @@ onMounted(() => {
 				<source :src="videoUrl" type="video/mp4" />
 				Your browser does not support the video tag.
 			</video>
-			<NuxtImg v-else src="/images/ferry-poster.webp" alt="Hero background poster" sizes="sm:100vw md:100vw lg:100vw" densities="1x" format="webp" quality="45" loading="eager" fetchpriority="high" preload class="absolute inset-0 z-0 h-full w-full object-cover hue-rotate-15" />
+			<NuxtImg v-else src="/images/ferry-poster.webp" alt="Hero background poster" sizes="sm:100vw md:100vw lg:100vw" densities="1x" format="webp" quality="45" loading="eager" fetchpriority="high" class="absolute inset-0 z-0 h-full w-full object-cover hue-rotate-15" />
 			<div class="absolute inset-0 z-10 bg-black/40"></div>
 
 			<div class="relative z-20 mx-auto flex h-full max-w-6xl flex-col justify-center gap-2 px-8 text-center">
