@@ -113,7 +113,7 @@ onMounted(() => {
 		},
 		{ rootMargin: "200px" }
 	)
-	if (trustindexRef.value) observer.observe(trustindexRef.value)
+	if (trustindexRef.valueOf) observer.observe(trustindexRef.valueOf)
 })
 </script>
 <template>
