@@ -1,14 +1,9 @@
 <script setup lang="ts">
 import { computed, onMounted } from "vue"
-import Marquee from "~/components/ui/Marquee.vue"
+import LazyMarquee from "~/components/ui/Marquee.vue"
 import TrustindexWidget from "~/components/ui/TrustindexWidget.vue"
 import posterImg from "~/assets/images/ferry-poster.webp"
-import ThreeColumns from "~/components/ui/ThreeColumns.vue"
-import CardScroller from "~/components/ui/CardScroller.vue"
-import Goat from "~/components/icons/Goat.vue"
 import VideoHeader from "~/components/ui/VideoHeader.vue"
-import ImageScrollWindow from "~/components/ImageScrollWindow.vue"
-import FirstRow from "~/components/FirstRow.vue"
 
 const trustindexRef = ref<HTMLElement | null>(null)
 const shouldLoadReviews = ref(false)
@@ -121,10 +116,10 @@ onMounted(() => {
 
 		<LazyMainFeatureSection :feature-header-sm="featureHeaderSm" :feature-header-lg="featureHeaderLg" :feature-image="featureImage" :feature-text="featureText" :feature-button="featureButton" :feature-url="featureUrl" />
 
-		<Marquee folder="clients" :speed="40" />
+		<LazyMarquee folder="clients" :speed="40" />
 
 		<div ref="trustindexRef">
-			<LazyTrustindexWidget v-if="showReviews === true && shouldLoadReviews" />
+			<TrustindexWidget v-if="showReviews === true && shouldLoadReviews" />
 		</div>
 
 		<LazyFerryVideo :header="ferryVideoHeader" :header-sm="ferryVideoHeaderSm" :text="ferryVideoText" :url="ferryVideoUrl" :button="ferryVideoButton" />
