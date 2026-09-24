@@ -30,13 +30,12 @@ interface Props {
 }
 defineProps<Props>()
 const isVideoPlaying = ref(false)
-const showVideo = ref(false)
 </script>
 
 <template>
 	<div class="relative h-screen">
 		<div class="relative flex h-[calc(100vh-60px)] flex-col">
-			<video v-if="showVideo && videoUrl" :poster="posterUrl" autoplay muted playsinline loop preload="none" class="absolute inset-0 z-0 h-full w-full object-cover" @playing="isVideoPlaying = true">
+			<video v-if="videoUrl" :poster="posterUrl" autoplay muted playsinline loop preload="none" class="absolute inset-0 z-0 h-full w-full object-cover" @playing="isVideoPlaying = true">
 				<source :src="videoUrl" type="video/mp4" />
 				Your browser does not support the video tag.
 			</video>
