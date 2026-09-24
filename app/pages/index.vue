@@ -119,7 +119,7 @@ onMounted(() => {
 		<LazyMarquee folder="clients" :speed="40" />
 
 		<div ref="trustindexRef">
-			<LazyTrustindexWidget v-if="showReviews === true && shouldLoadReviews" />
+			<TrustindexWidget v-if="showReviews === true && shouldLoadReviews" />
 		</div>
 
 		<LazyFerryVideo :header="ferryVideoHeader" :header-sm="ferryVideoHeaderSm" :text="ferryVideoText" :url="ferryVideoUrl" :button="ferryVideoButton" />
