@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted } from "vue"
-import LazyMarquee from "~/components/ui/Marquee.vue"
+
 import TrustindexWidget from "~/components/ui/TrustindexWidget.vue"
 import posterImg from "~/assets/images/ferry-poster.webp"
 import VideoHeader from "~/components/ui/VideoHeader.vue"
@@ -119,7 +119,7 @@ onMounted(() => {
 		<LazyMarquee folder="clients" :speed="40" />
 
 		<div ref="trustindexRef">
-			<TrustindexWidget v-if="showReviews === true && shouldLoadReviews" />
+			<LazyTrustindexWidget v-if="showReviews === true && shouldLoadReviews" />
 		</div>
 
 		<LazyFerryVideo :header="ferryVideoHeader" :header-sm="ferryVideoHeaderSm" :text="ferryVideoText" :url="ferryVideoUrl" :button="ferryVideoButton" />
