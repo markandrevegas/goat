@@ -4,6 +4,10 @@ import PrimaryButton from "./PrimaryButton.vue"
 
 const img = useImage()
 const posterUrl = computed(() => img("/images/ferry-poster.webp", { width: 1920, quality: 45, format: "webp" }))
+const isVideoPlaying = ref(false)
+
+const videoRef = ref<HTMLVideoElement | null>(null)
+const showVideo = ref(false)
 
 useHead({
 	link: [
@@ -29,17 +33,31 @@ interface Props {
 	tertiaryButtonUrl?: string
 }
 defineProps<Props>()
-const isVideoPlaying = ref(false)
+
+onMounted(() => {
+	const start = () => {
+		showVideo.value = true
+		nextTick(() => {
+			videoRef.value?.load()
+		})
+	}
+	if ("requestIdleCallback" in window) {
+		requestIdleCallback(start, { timeout: 3000 })
+	} else {
+		setTimeout(start, 1500)
+	}
+})
 </script>
 
 <template>
 	<div class="relative h-screen">
 		<div class="relative flex h-[calc(100vh-60px)] flex-col">
-			<video v-if="videoUrl" :poster="posterUrl" autoplay muted playsinline loop preload="none" class="absolute inset-0 z-0 h-full w-full object-cover" @playing="isVideoPlaying = true">
-				<source :src="videoUrl" type="video/mp4" />
+			<video v-if="videoUrl" ref="videoRef" :poster="posterUrl" autoplay muted playsinline loop preload="none" class="absolute inset-0 z-0 h-full w-full object-cover" @playing="isVideoPlaying = true">
+				<source v-if="showVideo" :src="videoUrl" type="video/mp4" />
 				Your browser does not support the video tag.
 			</video>
 			<NuxtImg v-else src="/images/ferry-poster.webp" alt="Hero background poster" sizes="sm:100vw md:100vw lg:100vw" densities="1x" format="webp" quality="45" loading="eager" fetchpriority="high" class="absolute inset-0 z-0 h-full w-full object-cover hue-rotate-15" />
+			<!--<NuxtImg v-else src="/images/ferry-poster.webp" alt="Hero background poster" sizes="sm:100vw md:100vw lg:100vw" densities="1x" format="webp" quality="45" loading="eager" fetchpriority="high" class="absolute inset-0 z-0 h-full w-full object-cover hue-rotate-15" />-->
 			<div class="absolute inset-0 z-10 bg-black/40"></div>
 
 			<div class="relative z-20 mx-auto flex h-full max-w-6xl flex-col justify-center gap-2 px-8 text-center">
