@@ -101,8 +101,6 @@ useSeoMeta({
 	twitterImage: posterImg
 })
 
-
-
 onMounted(() => {
 	const observer = new IntersectionObserver(
 		([entry]) => {

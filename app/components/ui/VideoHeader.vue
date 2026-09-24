@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue"
 import PrimaryButton from "./PrimaryButton.vue"
-import SecondaryButton from "./SecondaryButton.vue"
 
 const img = useImage()
 const posterUrl = computed(() => img("/images/ferry-poster.webp", { width: 1920, quality: 45, format: "webp" }))
@@ -32,7 +31,6 @@ interface Props {
 defineProps<Props>()
 const isVideoPlaying = ref(false)
 const showVideo = ref(false)
-
 </script>
 
 <template>
