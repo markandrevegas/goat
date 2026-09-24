@@ -3,6 +3,9 @@ import { ref } from "vue"
 import PrimaryButton from "./PrimaryButton.vue"
 import SecondaryButton from "./SecondaryButton.vue"
 
+const img = useImage()
+const posterUrl = computed(() => img("/images/ferry-poster.webp", { width: 1920, quality: 45, format: "webp" }))
+
 interface Props {
 	title?: string
 	excerpt?: string
@@ -32,7 +35,7 @@ onMounted(() => {
 <template>
 	<div class="relative h-screen">
 		<div class="relative flex h-[calc(100vh-60px)] flex-col">
-			<video v-if="showVideo && videoUrl" :poster="'/images/ferry-poster.webp'" autoplay muted playsinline loop preload="none" class="absolute inset-0 z-0 h-full w-full object-cover" @playing="isVideoPlaying = true">
+			<video v-if="showVideo && videoUrl" :poster="posterUrl" autoplay muted playsinline loop preload="none" class="absolute inset-0 z-0 h-full w-full object-cover" @playing="isVideoPlaying = true">
 				<source :src="videoUrl" type="video/mp4" />
 				Your browser does not support the video tag.
 			</video>
@@ -42,11 +45,6 @@ onMounted(() => {
 			<div class="relative z-20 mx-auto flex h-full max-w-6xl flex-col justify-center gap-2 px-8 text-center">
 				<h1 v-if="title" class="text-4xl tracking-tight">{{ title }}</h1>
 				<p v-if="excerpt" class="mx-auto my-4 max-w-[320px] text-base/7 sm:max-w-lg sm:px-4" v-html="excerpt"></p>
-
-				<div class="flex hidden flex-row justify-center gap-4">
-					<PrimaryButton :url="primaryButtonUrl" :event-name="''" :text="primaryButtonText" class="bg-brand text-palladian" />
-					<!--<SecondaryButton :url="secondaryButtonUrl" :event-name="''" :text="secondaryButtonText" />-->
-				</div>
 			</div>
 		</div>
 		<div class="absolute bottom-0 z-20 h-[60px] w-full">
