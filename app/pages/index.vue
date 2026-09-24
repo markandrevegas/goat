@@ -121,10 +121,10 @@ onMounted(() => {
 
 		<LazyMainFeatureSection :feature-header-sm="featureHeaderSm" :feature-header-lg="featureHeaderLg" :feature-image="featureImage" :feature-text="featureText" :feature-button="featureButton" :feature-url="featureUrl" />
 
-		<LazyMarquee folder="clients" :speed="40" />
+		<Marquee folder="clients" :speed="40" />
 
 		<div ref="trustindexRef">
-			<TrustindexWidget v-if="showReviews === true && shouldLoadReviews" />
+			<LazyTrustindexWidget v-if="showReviews === true && shouldLoadReviews" />
 		</div>
 
 		<LazyFerryVideo :header="ferryVideoHeader" :header-sm="ferryVideoHeaderSm" :text="ferryVideoText" :url="ferryVideoUrl" :button="ferryVideoButton" />
