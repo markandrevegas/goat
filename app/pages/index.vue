@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { computed, onMounted } from "vue"
 import Marquee from "~/components/ui/Marquee.vue"
 import TrustindexWidget from "~/components/ui/TrustindexWidget.vue"
@@ -89,7 +89,6 @@ const seoDescription = computed(() => {
 useSeoMeta({
 	title: seoTitle,
 	titleTemplate: null,
-	metaTitle: seoTitle,
 	description: seoDescription,
 	ogTitle: seoTitle,
 	ogDescription: seoDescription,
@@ -104,14 +103,14 @@ useSeoMeta({
 onMounted(() => {
 	const observer = new IntersectionObserver(
 		([entry]) => {
-			if (entry.isIntersecting) {
+			if (entry?.isIntersecting) {
 				shouldLoadReviews.value = true
 				observer.disconnect()
 			}
 		},
 		{ rootMargin: "200px" }
 	)
-	if (trustindexRef.valueOf) observer.observe(trustindexRef.valueOf)
+	if (trustindexRef.value) observer.observe(trustindexRef.value)
 })
 </script>
 <template>
