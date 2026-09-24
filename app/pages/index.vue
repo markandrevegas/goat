@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from "vue"
+import { computed, onMounted } from "vue"
 import Marquee from "~/components/ui/Marquee.vue"
 import TrustindexWidget from "~/components/ui/TrustindexWidget.vue"
 import posterImg from "~/assets/images/ferry-poster.webp"
@@ -9,6 +9,9 @@ import Goat from "~/components/icons/Goat.vue"
 import VideoHeader from "~/components/ui/VideoHeader.vue"
 import ImageScrollWindow from "~/components/ImageScrollWindow.vue"
 import FirstRow from "~/components/FirstRow.vue"
+
+const trustindexRef = ref<HTMLElement | null>(null)
+const shouldLoadReviews = ref(false)
 
 definePageMeta({
 	layout: false
@@ -97,6 +100,21 @@ useSeoMeta({
 	twitterDescription: seoDescription,
 	twitterImage: posterImg
 })
+
+
+
+onMounted(() => {
+	const observer = new IntersectionObserver(
+		([entry]) => {
+			if (entry.isIntersecting) {
+				shouldLoadReviews.value = true
+				observer.disconnect()
+			}
+		},
+		{ rootMargin: "200px" }
+	)
+	if (trustindexRef.value) observer.observe(trustindexRef.value)
+})
 </script>
 <template>
 	<NuxtLayout name="default">
@@ -108,7 +126,9 @@ useSeoMeta({
 
 		<Marquee folder="clients" :speed="40" />
 
-		<TrustindexWidget v-if="showReviews === true" />
+		<div ref="trustindexRef">
+			<TrustindexWidget v-if="showReviews === true && shouldLoadReviews" />
+		</div>
 
 		<FerryVideo :header="ferryVideoHeader" :header-sm="ferryVideoHeaderSm" :text="ferryVideoText" :url="ferryVideoUrl" :button="ferryVideoButton" />
 	</NuxtLayout>
