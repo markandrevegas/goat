@@ -84,13 +84,18 @@ export default defineNuxtConfig({
 		registry: {
 			googleTagManager: {
 				id: process.env.NUXT_PUBLIC_GTM_ID,
-				trigger: "onNuxtReady",
+				trigger: {
+					idleTimeout: 3000
+				},
 				defaultConsent: {
 					ad_storage: "denied",
 					analytics_storage: "denied",
 					ad_user_data: "denied",
 					ad_personalization: "denied"
 				}
+			},
+			defaultScriptOptions: {
+				trigger: "onNuxtReady"
 			}
 		},
 		defaultScriptOptions: {

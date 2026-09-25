@@ -1,13 +1,20 @@
 <script setup lang="ts">
-interface Props {
-	header?: string
-	headerSm?: string
-	text?: string
-	url?: string
-	button?: string
-}
-
-const props = defineProps<Props>()
+const props = withDefaults(
+	defineProps<{
+		header?: string
+		headerSm?: string
+		text?: string
+		url?: string
+		button?: string
+	}>(),
+	{
+		header: "Header Text",
+		headerSm: "Small Header Text",
+		text: "lorem",
+		url: "/",
+		button: "Click Here"
+	}
+)
 const { getGalleryImages } = useWordPress()
 const { data: images, error } = await getGalleryImages("images")
 if (error.value) {
@@ -21,8 +28,8 @@ const prev = () => (current.value = (current.value - 1 + (images.value?.length ?
 
 <template>
 	<div v-if="images?.length" class="w-full">
-		<p class="font-display text-center text-lg" v-html="header"></p>
-		<p v-html="text" class="mt-2 mb-6 text-center text-sm"></p>
+		<p class="font-display text-lg" v-html="header"></p>
+		<p v-html="text" class="mt-2 mb-6"></p>
 		<div class="relative w-full overflow-hidden rounded-xl">
 			<div class="flex transition-transform duration-500 ease-in-out" :style="{ transform: `translateX(-${current * 100}%)` }">
 				<img v-for="img in images" :key="img.name" :src="img.url" :alt="img.name" class="aspect-video w-full shrink-0 object-cover" />

@@ -16,8 +16,6 @@ const { data: menuPages } = await getPages({
 			<main class="flex-grow">
 				<slot></slot>
 			</main>
-
-			
 		</div>
 		<MainFooter />
 	</div>

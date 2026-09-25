@@ -35,7 +35,7 @@ const { data: postItems } = await getPosts({
 </script>
 
 <template>
-	<nav aria-label="Main navigation" class="fixed top-0 right-0 left-0 z-50 w-full transition-colors duration-300" :class="y > 0 ? 'bg-palladian text-brand' : 'text-palladian'">
+	<nav aria-label="Main navigation" class="fixed top-0 right-0 left-0 z-50 w-full transition-colors duration-300" :class="y > 0 ? 'bg-palladian text-brand' : 'text-brand'">
 		<div class="flex w-full items-start justify-between px-4 py-2">
 			<div class="max-content flex items-center">
 				<!--<NuxtLink to="/">
@@ -71,7 +71,7 @@ const { data: postItems } = await getPosts({
 
 				<div v-else class="text-brand flex flex-col gap-4 pt-8">
 					<h3 class="text-sm font-semibold uppercase">Main menu</h3>
-					<ul class="space-y-1">
+					<ul class="space-y-2">
 						<li v-for="page in pageItems" :key="page.id">
 							<NuxtLink :to="`/${page.slug}`" @click="isMobileMenuOpen = false" class="text-brand w-max text-sm font-semibold transition-colors duration-400 hover:border-b-2" active-class="border-b-2" v-html="page.title.rendered" />
 						</li>
