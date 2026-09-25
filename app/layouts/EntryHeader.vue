@@ -31,8 +31,8 @@ const props = defineProps<{
 
 <template>
 	<header v-if="layoutStyle === 'hero'" class="text-palladian relative -top-[2rem] right-1/2 left-1/2 -mx-[50vw] mb-12 flex h-[60vh] w-screen flex-col justify-center overflow-hidden">
-		<div class="w-full sm:max-w-6xl sm:px-8 sm:mx-auto grid grid-cols-4 gap-4">
-			<div class="relative z-20 col-span-3 col-start-2 pl-8 sm:pl-0">
+		<div class="grid w-full grid-cols-4 gap-4 sm:mx-auto sm:max-w-6xl sm:px-8">
+			<div class="relative z-20 col-span-3 pl-8 md:col-span-2 md:pl-0 md:col-start-2">
 				<h1 class="text-4xl tracking-tighter" v-html="title"></h1>
 				<p v-if="privateHeroExcerpt" v-html="privateHeroExcerpt" class="mt-6 max-w-lg text-base/7"></p>
 				<div class="flex w-full justify-start">
@@ -52,19 +52,16 @@ const props = defineProps<{
 			</div>
 		</div>
 
-		<div class="absolute inset-0 z-10 h-full w-full">
-			<NuxtImg v-if="layoutStyle !== 'hero' && featuredImageUrl" :src="featuredImageUrl" :alt="featuredImageAlt" loading="eager" fetchpriority="high" sizes="(max-width: 640px) 100vw, 50vw" format="webp" />
-			<WpImage v-if="featuredImageUrl" :image-id="featuredImageUrl" class="block h-full w-full object-cover" />
-			<WpImage v-if="privateHeroImageId" :image-id="privateHeroImageId" class="block h-full w-full object-cover" />
-			<WpImage v-if="privateFeatureImageId" :image-id="privateFeatureImageId" class="block h-full w-full object-cover" />
+		<div v-if="layoutStyle == 'hero' && featuredImageUrl" class="absolute inset-0 z-10 w-full">
+			<NuxtImg :src="featuredImageUrl" :alt="featuredImageAlt" :width="featuredImageWidth" :height="featuredImageHeight" loading="eager" fetchpriority="high" sizes="sm:100vw md:50vw" format="webp" class="h-full w-full object-cover" />
 			<div class="pointer-events-none absolute inset-0 bg-black/60"></div>
 		</div>
 	</header>
 
-	<header v-else class="mb-8 flex min-h-[18rem] w-full flex-col justify-center py-8">
+	<header v-else class="mb-8 flex h-[60vh] w-full flex-col justify-center py-8">
 		<div class="grid grid-cols-4">
 			<div class="relative z-20 col-span-2 sm:col-start-2">
-				<h1 class="text-4xl tracking-tight md:text-5xl" v-html="title"></h1>
+				<h1 class="text-4xl tracking-tight" v-html="title"></h1>
 				<div v-if="authorName || formattedDate" class="mt-4 flex items-center space-x-2 text-sm">
 					<span v-if="authorName" class="font-medium">By {{ authorName }}</span>
 					<span v-if="authorName && formattedDate">|</span>

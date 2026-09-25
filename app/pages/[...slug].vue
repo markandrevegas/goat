@@ -4,12 +4,7 @@ import { computed } from "vue"
 definePageMeta({ layout: false, key: (route) => route.fullPath })
 
 const route = useRoute()
-const { getContentBySlug, getPages, getPrivatePage } = useWordPress()
-
-const { getPrivatePages } = useWordPress()
-// const { data: privatePages } = await getPrivatePages()
-
-// console.log("privates = ", privatePages.value)
+const { getContentBySlug, getPages, getPosts } = useWordPress()
 
 const slugParam = computed(() => {
 	const params = route.params.slug
@@ -32,7 +27,7 @@ const {
 		// console.log("[slug.vue] resolving slug:", slug)
 		if (!slug) return null
 
-		return (await getContentBySlug("pages", slug)) ?? (await getContentBySlug("posts", slug)) ?? (await getPrivatePage(slug)) ?? null
+		return (await getContentBySlug("pages", slug)) ?? (await getContentBySlug("posts", slug)) ?? null
 	},
 	{ watch: [targetSlug] }
 )
@@ -56,11 +51,11 @@ if (!rawContentData.value) {
 
 const isPage = computed(() => rawContentData.value?._type === "pages")
 const isPost = computed(() => rawContentData.value?._type === "posts")
-const isPrivatePage = computed(() => rawContentData.value?._type === "private")
+console.log(isPost.value)
 const hasContent = computed(() => !!rawContentData.value)
 
-const useBlogLayout = computed(() => isPage.value || rawContentData.value?.slug === "information-for-guests")
-const layoutName = computed(() => (useBlogLayout.value ? "blog" : "page"))
+/*const useBlogLayout = computed(() => isPage.value || rawContentData.value?.slug === "information-for-guests")
+const layoutName = computed(() => (useBlogLayout.value ? "blog" : "page"))*/
 
 const contentId = computed(() => rawContentData.value?.id || null)
 const contentTitle = computed(() => rawContentData.value?.title?.rendered || "")
@@ -73,7 +68,7 @@ const datePublished = computed(() => rawContentData.value?.date || null)
 const { data: allPages } = await getPages()
 
 const relatedPages = computed(() => {
-	if (useBlogLayout.value || !allPages.value) return []
+	if (!allPages.value) return []
 	return allPages.value.filter((page) => ![contentId.value, 61, 69, 64, 71, 56, 59].includes(page.id))
 })
 
@@ -146,13 +141,12 @@ useSeoMeta({
 	twitterCard: "summary_large_image",
 	twitterTitle: cleanSeoTitle.value,
 	twitterDescription: cleanSeoDescription.value,
-	twitterImage: ogImage,
-	...(isPrivatePage.value && { robots: "noindex, nofollow" })
+	twitterImage: ogImage
 })
 </script>
 
 <template>
-	<NuxtLayout :name="layoutName">
+	<NuxtLayout name="page">
 		<div class="container mx-auto max-w-6xl p-8">
 			<div v-if="pending" class="flex flex-col items-center justify-center space-y-4 py-24">
 				<div class="h-12 w-12 animate-spin rounded-full border-b-4 border-indigo-600"></div>
@@ -164,11 +158,9 @@ useSeoMeta({
 				<p class="text-sm text-red-600">Could not resolve route or the target slug is missing/unpublished.</p>
 			</div>
 
-			<PostContent v-else-if="hasContent && useBlogLayout" :title="contentTitle" :body="contentBody" :slug="contentSlug" :acf="contentAcf" :author-name="authorName" :formatted-date="formattedDate" :date-published="datePublished" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" :layout-style="currentLayoutStyle" />
+			<PostContent v-else-if="hasContent && isPost" :title="contentTitle" :body="contentBody" :slug="contentSlug" :acf="contentAcf" :author-name="authorName" :formatted-date="formattedDate" :date-published="datePublished" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" :layout-style="currentLayoutStyle" />
 
 			<PageContent v-else-if="hasContent && isPage" :acf="contentAcf" :title="contentTitle" :body="contentBody" :slug="contentSlug" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" :related-pages="relatedPages" :layout-style="currentLayoutStyle" />
-
-			<PrivateContent v-else-if="hasContent && isPrivatePage" :acf="contentAcf" :privateHeroExcerpt="contentAcf?.private_hero_excerpt" :buttonText="contentAcf?.private_hero_button" :title="contentTitle" :privateHeroImageId="privateHeroImageId" :privateFeatureImageId="privateFeatureImageId" :body="contentBody" :slug="contentSlug" />
 		</div>
 	</NuxtLayout>
 </template>

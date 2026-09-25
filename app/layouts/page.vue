@@ -7,17 +7,18 @@ const { data: menuPages } = await getPages({
 </script>
 
 <template>
-	<div class="relative min-h-screen overflow-hidden">
+	<div class="bg-palladian text-brand relative min-h-screen overflow-hidden">
 		<div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
 			<Menu :items="menuPages || []" />
 		</div>
 
-		<div class="bg-palladian text-brand relative z-10 flex h-full flex-col">
+		<div class="relative z-10 flex h-full flex-col">
 			<main class="flex-grow">
 				<slot></slot>
 			</main>
 
-			<MainFooter />
+			
 		</div>
+		<MainFooter />
 	</div>
 </template>

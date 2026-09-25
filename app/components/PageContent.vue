@@ -32,10 +32,10 @@ const props = defineProps<{
 	<article class="relative w-full">
 		<EntryHeader :layout-style="layoutStyle" :title="title" :author-name="authorName" :formatted-date="formattedDate" :date-published="datePublished" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" />
 
-		<main v-if="body" class="flex flex-col gap-4 pt-[60vh] md:grid md:grid-cols-4">
-			<div class="col-span-1 hidden sm:block">
-				<p class="font-display mb-4 font-bold md:block">Share content</p>
-				<Social class="mr-auto w-max" />
+		<main v-if="body" class="flex flex-col gap-4 md:grid md:grid-cols-4">
+			<div class="col-span-1">
+				<p class="uppercase text-sm mb-4 font-bold md:block">Share content</p>
+				<Social class="w-max" />
 			</div>
 			<div class="col-span-2 flex flex-col gap-2 md:pr-8">
 				<WpImage loading="eager" fetchpriority="high" v-if="acf?.layoutstyle !== 'hero' && featuredImageUrl" :image-id="featuredImageUrl" :alt="featuredImageAlt" />
