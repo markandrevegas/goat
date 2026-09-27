@@ -47,11 +47,11 @@ export function useCookieConsent() {
 	}
 
 	// Ensure loadConsent runs on client mount
-	if (import.meta.client) {
+	/*if (import.meta.client) {
 		onMounted(() => {
 			loadConsent()
 		})
-	}
+	}*/
 
 	function saveConsent(choices: { analytics: boolean; marketing: boolean }) {
 		localStorage.setItem("cookie-consent", JSON.stringify(choices))
