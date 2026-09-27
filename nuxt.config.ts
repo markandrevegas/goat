@@ -1,5 +1,8 @@
 import tailwindcss from "@tailwindcss/vite"
 
+if (process.env.NODE_ENV === "production" && !process.env.NUXT_PUBLIC_GTM_ID) {
+	throw new Error("NUXT_PUBLIC_GTM_ID is not set in production — refusing to start with the test container ID")
+}
 declare module "nuxt/schema" {
 	interface NuxtConfig {
 		schemaOrg?: {
