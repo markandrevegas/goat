@@ -65,7 +65,7 @@ export default defineNuxtConfig({
 	runtimeConfig: {
 		public: {
 			goatWordpressUrl: process.env.NUXT_PUBLIC_GOAT_WORDPRESS_URL,
-			gtmId: process.env.NUXT_PUBLIC_GTM_ID || "GTM-PN69ZCQJ"
+			gtmId: process.env.NUXT_PUBLIC_GTM_ID || ""
 		}
 	},
 	site: {
@@ -83,6 +83,7 @@ export default defineNuxtConfig({
 	scripts: {
 		registry: {
 			googleTagManager: {
+				id: 'GTM-PN69ZCQJ',
 				trigger: "onNuxtReady",
 				defaultConsent: {
 					ad_storage: "denied",

@@ -4,7 +4,6 @@ export function useCookieConsent() {
 	const analyticsGranted = useState("consent-analytics", () => false)
 	const marketingGranted = useState("consent-marketing", () => false)
 
-	// Synchronously resolve local storage on client load
 	function resolveStoredConsent() {
 		if (import.meta.server) return null
 		const stored = localStorage.getItem("cookie-consent")
@@ -16,35 +15,25 @@ export function useCookieConsent() {
 		}
 	}
 
-	// Read existing choice before GTM initializes
 	const stored = resolveStoredConsent()
 
-	/*const { consent } = useScriptGoogleTagManager({
-		scriptOptions: { bundle: false },
-		defaultConsent: {
-			analytics_storage: stored?.analytics ? "granted" : "denied",
-			ad_storage: stored?.marketing ? "granted" : "denied",
-			ad_user_data: stored?.marketing ? "granted" : "denied",
-			ad_personalization: stored?.marketing ? "granted" : "denied",
-			personalization_storage: stored?.analytics ? "granted" : "denied",
-			functionality_storage: "granted",
-			security_storage: "granted"
-		}
-	})*/
-	const config = useRuntimeConfig()  
-	const { consent } = useScriptGoogleTagManager({
-		id: config.public.gtmId,
-		scriptOptions: { bundle: false },
-		defaultConsent: {
-			analytics_storage: stored?.analytics ? "granted" : "denied",
-			ad_storage: stored?.marketing ? "granted" : "denied",
-			ad_user_data: stored?.marketing ? "granted" : "denied",
-			ad_personalization: stored?.marketing ? "granted" : "denied",
-			personalization_storage: stored?.analytics ? "granted" : "denied",
-			functionality_storage: "granted",
-			security_storage: "granted"
-		}
-	})
+	const config = useRuntimeConfig()
+	const gtmId = config.public.gtmId
+	const { consent } = gtmId
+		? useScriptGoogleTagManager({
+				id: gtmId,
+				scriptOptions: { bundle: false },
+				defaultConsent: {
+					analytics_storage: stored?.analytics ? "granted" : "denied",
+					ad_storage: stored?.marketing ? "granted" : "denied",
+					ad_user_data: stored?.marketing ? "granted" : "denied",
+					ad_personalization: stored?.marketing ? "granted" : "denied",
+					personalization_storage: stored?.analytics ? "granted" : "denied",
+					functionality_storage: "granted",
+					security_storage: "granted"
+				}
+			})
+		: { consent: null }
 
 	function loadConsent() {
 		const choices = resolveStoredConsent()
@@ -57,6 +46,13 @@ export function useCookieConsent() {
 		}
 	}
 
+	// Ensure loadConsent runs on client mount
+	if (import.meta.client) {
+		onMounted(() => {
+			loadConsent()
+		})
+	}
+
 	function saveConsent(choices: { analytics: boolean; marketing: boolean }) {
 		localStorage.setItem("cookie-consent", JSON.stringify(choices))
 		localStorage.setItem("cookie-consent-timestamp", Date.now().toString())
@@ -65,7 +61,6 @@ export function useCookieConsent() {
 		marketingGranted.value = choices.marketing
 		showBanner.value = false
 
-		// Push consent updates to GTM
 		consent?.update({
 			analytics_storage: choices.analytics ? "granted" : "denied",
 			ad_storage: choices.marketing ? "granted" : "denied",
