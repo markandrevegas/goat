@@ -65,7 +65,7 @@ export default defineNuxtConfig({
 	runtimeConfig: {
 		public: {
 			goatWordpressUrl: process.env.NUXT_PUBLIC_GOAT_WORDPRESS_URL,
-			gtmId: process.env.NUXT_PUBLIC_GTM_ID
+			gtmId: process.env.NUXT_PUBLIC_GTM_ID || "GTM-PN69ZCQJ"
 		}
 	},
 	site: {
@@ -83,7 +83,6 @@ export default defineNuxtConfig({
 	scripts: {
 		registry: {
 			googleTagManager: {
-				id: process.env.NUXT_PUBLIC_GTM_ID,
 				trigger: {
 					idleTimeout: 3000
 				},

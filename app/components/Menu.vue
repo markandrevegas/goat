@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue"
 import { useWindowScroll } from "@vueuse/core"
-import Logo from "~/assets/svg/anchor.svg?component"
 import MenuIcon from "./icons/MenuIcon.vue"
 import Social from "./ui/Social.vue"
 
