@@ -1,5 +1,5 @@
 // composables/useCookieConsent.ts
-// const config = useRuntimeConfig()
+const config = useRuntimeConfig()
 export function useCookieConsent() {
 	const showBanner = useState("cookie-banner-visible", () => false)
 	const analyticsGranted = useState("consent-analytics", () => false)
@@ -33,7 +33,7 @@ export function useCookieConsent() {
 		}
 	})*/
 	const { consent } = useScriptGoogleTagManager({
-		id: 'GTM-PN69ZCQJ',
+		id: config.public.gtmId,
 		scriptOptions: { bundle: false },
 		defaultConsent: {
 			analytics_storage: stored?.analytics ? "granted" : "denied",
