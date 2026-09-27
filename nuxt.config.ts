@@ -83,9 +83,7 @@ export default defineNuxtConfig({
 	scripts: {
 		registry: {
 			googleTagManager: {
-				trigger: {
-					idleTimeout: 3000
-				},
+				trigger: "onNuxtReady",
 				defaultConsent: {
 					ad_storage: "denied",
 					analytics_storage: "denied",
