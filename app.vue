@@ -1,7 +1,4 @@
-<script setup lang="ts">
-import { onMounted } from "vue"
-import { useCookieConsent } from "~/app/plugins/cookie-consent.client"
-</script>
+<script setup lang="ts"></script>
 
 <template>
 	<NuxtLayout>
