@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import Social from "./ui/Social.vue"
+import { useCookieConsent } from '~/composables/useCookieConsent'
 
 const { getPages } = useWordPress()
+const { openBanner } = useCookieConsent()
 
 const {
 	data: footerPages,
@@ -52,6 +54,7 @@ const pageItems = computed(() => {
 						<li v-for="item in pageItems" :key="item.id" class="w-max">
 							<NuxtLink :to="`/${item.slug}`" class="w-max font-semibold transition-opacity duration-400 hover:border-b-2" v-html="item.title.rendered"></NuxtLink>
 						</li>
+						<li><a @click="openBanner" class="w-max font-semibold transition-opacity duration-400 hover:border-b-2">Open cookie settings</a></li>
 					</ul>
 				</div>
 				<div class="flex flex-col">
