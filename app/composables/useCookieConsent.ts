@@ -4,6 +4,13 @@ const showBanner = ref(false)
 const analyticsGranted = ref(false)
 const marketingGranted = ref(false)
 
+// GTM only recognises the Arguments object, not an array
+function gtag(..._args: unknown[]) {
+	window.dataLayer = window.dataLayer || []
+	// eslint-disable-next-line prefer-rest-params
+	;(window.dataLayer as unknown[]).push(arguments)
+}
+
 export function useCookieConsent() {
 	function resolveStoredConsent() {
 		if (typeof window === "undefined") return null
@@ -42,11 +49,9 @@ export function useCookieConsent() {
 		marketingGranted.value = choices.marketing
 		showBanner.value = false
 
-		// Update Google Consent Mode v2 via Nuxt Scripts
-		const config = useRuntimeConfig()
-		if (config.public.gtmId) {
-			const { consent } = useScriptGoogleTagManager({ id: config.public.gtmId })
-			consent?.update({
+		// Google Consent Mode v2 update
+		if (import.meta.client) {
+			gtag("consent", "update", {
 				analytics_storage: choices.analytics ? "granted" : "denied",
 				ad_storage: choices.marketing ? "granted" : "denied",
 				ad_user_data: choices.marketing ? "granted" : "denied",
@@ -54,15 +59,6 @@ export function useCookieConsent() {
 				personalization_storage: choices.analytics ? "granted" : "denied",
 				functionality_storage: "granted",
 				security_storage: "granted"
-			})
-		}
-
-		if (import.meta.client) {
-			window.dataLayer = window.dataLayer || []
-			window.dataLayer.push({
-				event: "consent_update",
-				analytics_consent: choices.analytics ? "granted" : "denied",
-				marketing_consent: choices.marketing ? "granted" : "denied"
 			})
 		}
 	}

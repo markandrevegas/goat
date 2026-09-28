@@ -22,6 +22,9 @@ export default defineNuxtPlugin(() => {
 			personalization_storage: stored?.analytics ? "granted" : "denied",
 			functionality_storage: "granted",
 			security_storage: "granted"
+		},
+		scriptOptions: {
+			trigger: useScriptTriggerInteraction({ events: ["scroll", "pointerdown", "keydown"] })
 		}
 	})
 })
