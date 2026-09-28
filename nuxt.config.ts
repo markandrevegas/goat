@@ -61,7 +61,7 @@ export default defineNuxtConfig({
 	compatibilityDate: "2025-07-15",
 	css: ["~/assets/css/main.css"],
 	devtools: { enabled: process.env.NODE_ENV !== "production" },
-	modules: ["@tailwindcss/typography", "@nuxt/scripts", "nuxt-svgo", "@nuxt/fonts", "@vueuse/nuxt", "@vueuse/motion/nuxt", "@nuxt/image", "@nuxtjs/sitemap"],
+	modules: ["@tailwindcss/typography", "@nuxt/scripts", "nuxt-svgo", "@nuxt/fonts", "@nuxt/image", "@nuxtjs/sitemap"],
 	runtimeConfig: {
 		public: {
 			goatWordpressUrl: process.env.NUXT_PUBLIC_GOAT_WORDPRESS_URL,
@@ -81,21 +81,7 @@ export default defineNuxtConfig({
 		}
 	},
 	scripts: {
-		registry: {
-			googleTagManager: {
-				id: "GTM-PN69ZCQJ",
-				trigger: "onNuxtReady",
-				defaultConsent: {
-					ad_storage: "denied",
-					analytics_storage: "denied",
-					ad_user_data: "denied",
-					ad_personalization: "denied"
-				}
-			},
-			defaultScriptOptions: {
-				trigger: "onNuxtReady"
-			}
-		},
+		registry: {},
 		defaultScriptOptions: {
 			trigger: "onNuxtReady"
 		}

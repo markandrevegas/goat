@@ -1,10 +1,24 @@
 <script setup lang="ts">
-import { ref } from "vue"
-import { useWindowScroll } from "@vueuse/core"
+import { ref, computed, onMounted, onUnmounted } from "vue"
 import MenuIcon from "./icons/MenuIcon.vue"
 import Social from "./ui/Social.vue"
 
-const { y } = useWindowScroll()
+// Native scroll listener replacing useWindowScroll
+const isScrolled = ref(false)
+
+function handleScroll() {
+	isScrolled.value = window.scrollY > 0
+}
+
+onMounted(() => {
+	handleScroll()
+	window.addEventListener("scroll", handleScroll, { passive: true })
+})
+
+onUnmounted(() => {
+	window.removeEventListener("scroll", handleScroll)
+})
+
 const isMobileMenuOpen = ref(false)
 const { getPages, getPosts } = useWordPress()
 const {
@@ -15,6 +29,7 @@ const {
 	include: ["meetings-and-events", "rooftop-terrace", "apartments", "simple-meetings", "information-for-guests"],
 	exclude: []
 })
+
 // Transform page titles if needed
 const pageItems = computed(() => {
 	if (!menuPages.value) return []
@@ -28,19 +43,16 @@ const pageItems = computed(() => {
 		return item
 	})
 })
+
 const { data: postItems } = await getPosts({
 	exclude: ["uncategorized-sample-post", "hello-world"]
 })
 </script>
 
 <template>
-	<nav aria-label="Main navigation" class="fixed top-0 right-0 left-0 z-50 w-full transition-colors duration-300" :class="y > 0 ? 'bg-palladian text-brand' : 'text-brand'">
+	<nav aria-label="Main navigation" class="fixed top-0 right-0 left-0 z-50 w-full transition-colors duration-300" :class="isScrolled ? 'bg-palladian text-brand' : 'text-brand'">
 		<div class="flex w-full items-start justify-between px-4 py-2">
 			<div class="max-content flex items-center">
-				<!--<NuxtLink to="/">
-					<Logo class="fill-palladian hidden h-16 w-auto" />
-					<span class="bg-palladian mr-4 hidden h-8 w-8 rounded-full"></span>
-				</NuxtLink>-->
 				<div class="flex hidden flex-col">
 					<NuxtLink to="/"><span class="font-display font-light font-semibold transition-opacity duration-400 hover:opacity-70">Floating G.O.A.T.</span></NuxtLink>
 					<span class="text-[11px] uppercase">Events, Meetings, Apartments</span>

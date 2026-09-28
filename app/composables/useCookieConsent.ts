@@ -1,12 +1,12 @@
-import { onMounted } from "vue"
+import { ref, onMounted } from "vue"
+
+const showBanner = ref(true)
+const analyticsGranted = ref(false)
+const marketingGranted = ref(false)
 
 export function useCookieConsent() {
-	const showBanner = useState("cookie-banner-visible", () => false)
-	const analyticsGranted = useState("consent-analytics", () => false)
-	const marketingGranted = useState("consent-marketing", () => false)
-
 	function resolveStoredConsent() {
-		if (import.meta.server) return null
+		if (typeof window === "undefined") return null
 		const stored = localStorage.getItem("cookie-consent")
 		if (!stored) return null
 		try {
@@ -17,7 +17,7 @@ export function useCookieConsent() {
 	}
 
 	function loadConsent() {
-		if (import.meta.server) return
+		if (typeof window === "undefined") return
 		const choices = resolveStoredConsent()
 		if (choices) {
 			analyticsGranted.value = choices.analytics
@@ -42,6 +42,7 @@ export function useCookieConsent() {
 		marketingGranted.value = choices.marketing
 		showBanner.value = false
 
+		// Update Google Consent Mode v2 via Nuxt Scripts
 		const config = useRuntimeConfig()
 		if (config.public.gtmId) {
 			const { consent } = useScriptGoogleTagManager({ id: config.public.gtmId })
@@ -73,6 +74,17 @@ export function useCookieConsent() {
 		loadConsent,
 		saveConsent,
 		acceptAll: () => saveConsent({ analytics: true, marketing: true }),
-		rejectAll: () => saveConsent({ analytics: false, marketing: false })
+		rejectAll: () => saveConsent({ analytics: false, marketing: false }),
+		openBanner: () => {
+			showBanner.value = true
+		},
+		resetConsent: () => {
+			if (typeof window === "undefined") return
+			localStorage.removeItem("cookie-consent")
+			localStorage.removeItem("cookie-consent-timestamp")
+			analyticsGranted.value = false
+			marketingGranted.value = false
+			showBanner.value = true
+		}
 	}
 }
