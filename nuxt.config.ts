@@ -61,7 +61,7 @@ export default defineNuxtConfig({
 	compatibilityDate: "2025-07-15",
 	css: ["~/assets/css/main.css"],
 	devtools: { enabled: process.env.NODE_ENV !== "production" },
-	modules: ["@tailwindcss/typography", "@nuxt/scripts", "nuxt-svgo", "@nuxt/fonts", "@vueuse/nuxt", "@vueuse/motion/nuxt", "@nuxt/image", "@dargmuesli/nuxt-cookie-control", "@nuxtjs/sitemap"],
+	modules: ["@tailwindcss/typography", "@nuxt/scripts", "nuxt-svgo", "@nuxt/fonts", "@vueuse/nuxt", "@vueuse/motion/nuxt", "@nuxt/image", "@nuxtjs/sitemap"],
 	runtimeConfig: {
 		public: {
 			goatWordpressUrl: process.env.NUXT_PUBLIC_GOAT_WORDPRESS_URL,

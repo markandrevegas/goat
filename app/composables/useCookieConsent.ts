@@ -1,4 +1,5 @@
-// composables/useCookieConsent.ts
+import { onMounted } from "vue"
+
 export function useCookieConsent() {
 	const showBanner = useState("cookie-banner-visible", () => false)
 	const analyticsGranted = useState("consent-analytics", () => false)
@@ -15,27 +16,8 @@ export function useCookieConsent() {
 		}
 	}
 
-	const stored = resolveStoredConsent()
-
-	const config = useRuntimeConfig()
-	const gtmId = config.public.gtmId
-	const { consent } = gtmId
-		? useScriptGoogleTagManager({
-				id: gtmId,
-				scriptOptions: { bundle: false },
-				defaultConsent: {
-					analytics_storage: stored?.analytics ? "granted" : "denied",
-					ad_storage: stored?.marketing ? "granted" : "denied",
-					ad_user_data: stored?.marketing ? "granted" : "denied",
-					ad_personalization: stored?.marketing ? "granted" : "denied",
-					personalization_storage: stored?.analytics ? "granted" : "denied",
-					functionality_storage: "granted",
-					security_storage: "granted"
-				}
-			})
-		: { consent: null }
-
 	function loadConsent() {
+		if (import.meta.server) return
 		const choices = resolveStoredConsent()
 		if (choices) {
 			analyticsGranted.value = choices.analytics
@@ -46,12 +28,11 @@ export function useCookieConsent() {
 		}
 	}
 
-	// Ensure loadConsent runs on client mount
-	/*if (import.meta.client) {
+	if (import.meta.client) {
 		onMounted(() => {
 			loadConsent()
 		})
-	}*/
+	}
 
 	function saveConsent(choices: { analytics: boolean; marketing: boolean }) {
 		localStorage.setItem("cookie-consent", JSON.stringify(choices))
@@ -61,19 +42,27 @@ export function useCookieConsent() {
 		marketingGranted.value = choices.marketing
 		showBanner.value = false
 
-		consent?.update({
-			analytics_storage: choices.analytics ? "granted" : "denied",
-			ad_storage: choices.marketing ? "granted" : "denied",
-			ad_user_data: choices.marketing ? "granted" : "denied",
-			ad_personalization: choices.marketing ? "granted" : "denied",
-			personalization_storage: choices.analytics ? "granted" : "denied",
-			functionality_storage: "granted",
-			security_storage: "granted"
-		})
+		const config = useRuntimeConfig()
+		if (config.public.gtmId) {
+			const { consent } = useScriptGoogleTagManager({ id: config.public.gtmId })
+			consent?.update({
+				analytics_storage: choices.analytics ? "granted" : "denied",
+				ad_storage: choices.marketing ? "granted" : "denied",
+				ad_user_data: choices.marketing ? "granted" : "denied",
+				ad_personalization: choices.marketing ? "granted" : "denied",
+				personalization_storage: choices.analytics ? "granted" : "denied",
+				functionality_storage: "granted",
+				security_storage: "granted"
+			})
+		}
 
 		if (import.meta.client) {
 			window.dataLayer = window.dataLayer || []
-			window.dataLayer.push({ event: "consent_update" })
+			window.dataLayer.push({
+				event: "consent_update",
+				analytics_consent: choices.analytics ? "granted" : "denied",
+				marketing_consent: choices.marketing ? "granted" : "denied"
+			})
 		}
 	}
 

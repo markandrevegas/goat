@@ -119,9 +119,9 @@ onMounted(() => {
 
 		<Marquee folder="clients" :speed="40" />
 
-		<div ref="trustindexRef">
+		<!--<div ref="trustindexRef">
 			<TrustindexWidget v-if="showReviews === true && shouldLoadReviews" />
-		</div>
+		</div>-->
 
 		<LazyFerryVideo :header="ferryVideoHeader" :header-sm="ferryVideoHeaderSm" :text="ferryVideoText" :url="ferryVideoUrl" :button="ferryVideoButton" />
 	</NuxtLayout>

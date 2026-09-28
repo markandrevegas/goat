@@ -71,6 +71,7 @@ const optimizeAvatarUrl = (url?: string, width = 240) => {
 							height="48"
 							loading="lazy"
 							decoding="async"
+							crossorigin="anonymous"
 							class="h-12 w-12 shrink-0 rounded-full object-cover"
 							@error="
 								(e) => {
