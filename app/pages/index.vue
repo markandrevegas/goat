@@ -37,8 +37,8 @@ const videoHeaderPrimaryButton = computed(() => landing.value?.video_header_prim
 const videoHeaderPrimaryButtonUrl = computed(() => landing.value?.video_header_primary_button_url || "")
 const videoHeaderSecondaryButton = computed(() => landing.value?.video_header_secondary_button || "")
 const videoHeaderSecondaryButtonUrl = computed(() => landing.value?.video_header_secondary_button_url || "")
-const videoHeaderTertiaryButton = computed(() => landing.value?.video_header_secondary_button || "")
-const videoHeaderTertiaryButtonUrl = computed(() => landing.value?.video_header_secondary_button_url || "")
+const videoHeaderTertiaryButton = computed(() => landing.value?.video_header_tertiary_button || "")
+const videoHeaderTertiaryButtonUrl = computed(() => landing.value?.video_header_tertiary_button_url || "")
 
 // 1. First set: 'firstcolumnheader', 'secondcolumnheader', etc.
 const standardCards = computed(() => extractColumns(landing.value, ["first", "second", "third", "fourth"]))

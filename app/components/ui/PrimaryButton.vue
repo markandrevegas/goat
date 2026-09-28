@@ -20,7 +20,9 @@ const handleButtonClick = async (event: MouseEvent) => {
 	if (props.url) {
 		const isExternal = props.url.startsWith("http://") || props.url.startsWith("https://")
 		if (isExternal) {
-			window.open(props.url, "_blank")
+			await navigateTo(props.url, {
+				external: props.url.startsWith("http")
+			})
 		} else {
 			await navigateTo(props.url)
 		}

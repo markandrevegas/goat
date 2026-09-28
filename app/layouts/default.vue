@@ -29,11 +29,11 @@ useHead({
 <template>
 	<div class="relative min-h-screen">
 		<Menu />
-		<div v-if="$slots['bg-video']" class="relative min-h-screen w-full overflow-hidden">
+		<div v-if="$slots['bg-video']" class="relative w-full overflow-hidden">
 			<slot name="bg-video"></slot>
 		</div>
 
-		<div class="relative flex min-h-screen flex-col">
+		<div class="relative flex flex-col">
 			<main class="flex-grow">
 				<slot></slot>
 			</main>
