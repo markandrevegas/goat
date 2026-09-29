@@ -1,3 +1,5 @@
 # public/robots.txt
 User-agent: *
-Disallow:
+Allow: /
+
+Sitemap: https://www.floatinggoat.dk/sitemap.xml
