@@ -37,7 +37,7 @@ const handleButtonClick = async (event: MouseEvent) => {
 </script>
 
 <template>
-	<button @click="handleButtonClick" type="button" class="text-brand p-0">
+	<button @click="handleButtonClick" type="button" class="text-brand p-0 leading-4">
 		{{ text }}
 	</button>
 </template>
