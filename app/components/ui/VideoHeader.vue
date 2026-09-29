@@ -50,21 +50,8 @@ onMounted(() => {
 </script>
 
 <template>
-	<div class="relative h-screen">
-		<div class="relative flex h-[calc(100dvh-var(--video-bar-h))] flex-col">
-			<video v-if="videoUrl" ref="videoRef" :poster="posterUrl" autoplay muted playsinline loop preload="none" class="absolute inset-0 z-0 h-full w-full object-cover" @playing="isVideoPlaying = true">
-				<source v-if="showVideo" :src="videoUrl" type="video/mp4" />
-				Your browser does not support the video tag.
-			</video>
-			<NuxtImg v-else src="/images/ferry-poster.webp" alt="Hero background poster" sizes="sm:100vw md:100vw lg:100vw" densities="1x" format="webp" quality="45" loading="eager" fetchpriority="high" class="absolute inset-0 z-0 h-full w-full object-cover hue-rotate-15" />
-			<div class="absolute inset-0 z-10 bg-black/40"></div>
-
-			<div class="relative z-20 mx-auto flex h-full max-w-6xl flex-col justify-center gap-2 px-8 text-center">
-				<h1 v-if="title" class="text-4xl tracking-tight">{{ title }}</h1>
-				<p v-if="excerpt" class="mx-auto my-4 max-w-[320px] text-base/7 sm:max-w-lg sm:px-4" v-html="excerpt"></p>
-			</div>
-		</div>
-		<div class="absolute bottom-0 z-20 h-(--video-bar-h) w-full">
+	<div class="relative h-[70vh] overflow-visible z-20">
+		<div class="absolute bottom-0 w-full">
 			<div class="button-group bg-palladian text-brand absolute top-0 left-1/2 z-50 flex -translate-x-1/2 -translate-y-1/2 flex-row">
 				<span class="button-group__item">
 					<PrimaryButton :url="primaryButtonUrl" :event-name="''" :text="primaryButtonText" class="rounded-r-none border-0 px-6 py-3 text-2xl uppercase hover:cursor-pointer" />
@@ -77,6 +64,20 @@ onMounted(() => {
 				</span>
 			</div>
 		</div>
+		<div class="relative flex flex-col h-full">
+			<video v-if="videoUrl" ref="videoRef" :poster="posterUrl" autoplay muted playsinline loop preload="none" class="absolute inset-0 z-0 h-full w-full object-cover" @playing="isVideoPlaying = true">
+				<source v-if="showVideo" :src="videoUrl" type="video/mp4" />
+				Your browser does not support the video tag.
+			</video>
+			<NuxtImg v-else src="/images/ferry-poster.webp" alt="Hero background poster" sizes="sm:100vw md:100vw lg:100vw" densities="1x" format="webp" quality="45" loading="eager" fetchpriority="high" class="absolute inset-0 z-0 h-full w-full object-cover hue-rotate-15" />
+			<div class="absolute inset-0 z-10 bg-black/40"></div>
+
+			<div class="relative z-20 mx-auto flex h-full max-w-6xl flex-col justify-center gap-2 px-8 text-center">
+				<h1 v-if="title" class="text-4xl tracking-tight">{{ title }}</h1>
+				<p v-if="excerpt" class="mx-auto my-4 max-w-[320px] text-base/7 sm:max-w-lg sm:px-4" v-html="excerpt"></p>
+			</div>
+		</div>
+		
 	</div>
 </template>
 <style scoped>
