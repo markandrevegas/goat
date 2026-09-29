@@ -75,7 +75,10 @@ const optimizeAvatarUrl = (url?: string, width = 240) => {
 							class="h-12 w-12 shrink-0 rounded-full object-cover"
 							@error="
 								(e) => {
-									;(e.target as HTMLImageElement).src = '/images/default-avatar.png'
+									const img = e.target as HTMLImageElement
+									img.onerror = null
+									img.removeAttribute('srcset')
+									img.src = 'https://a0.muscache.com/defaults/user_pic-225x225.png'
 								}
 							"
 						/>
