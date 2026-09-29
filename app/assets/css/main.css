@@ -163,3 +163,13 @@
 		animation-play-state: paused;
 	}
 }
+
+.page-enter-active,
+.page-leave-active {
+	transition: opacity 600ms ease;
+}
+
+.page-enter-from,
+.page-leave-to {
+	opacity: 0;
+}

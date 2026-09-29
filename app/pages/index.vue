@@ -30,9 +30,8 @@ const showReviews = computed(() => {
 	const value = landing.value?.show_reviews
 	return value === "true" || value === true
 })
-if (import.meta.dev) {
-	console.log(landing.value)
-	console.log(showReviews.value)
+if (import.meta.client) {
+	// console.log(landing.value)
 }
 
 const videoHeaderVideoUrl = computed(() => landing.value?.video_header_video_url || "")
