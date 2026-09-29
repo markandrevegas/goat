@@ -17,16 +17,23 @@ const { getLandingPage } = useWordPress()
 const { data: page, status, error } = await useAsyncData("wp-index", () => getLandingPage("index-page"))
 
 const landing = computed(() => page.value?.acf || {})
+const layoutStyle = computed(() => landing.value?.layoutstyle)
+const stateLayoutStyle = useLayoutStyle()
+watch(
+	layoutStyle,
+	(val) => {
+		stateLayoutStyle.value = val || null
+	},
+	{ immediate: true }
+)
 const showReviews = computed(() => {
 	const value = landing.value?.show_reviews
 	return value === "true" || value === true
 })
 if (import.meta.dev) {
-	/*console.log(landing.value)
-	console.log(showReviews.value)*/
+	console.log(landing.value)
+	console.log(showReviews.value)
 }
-
-const layoutStyle = computed(() => landing.value?.layoutstyle)
 
 const videoHeaderVideoUrl = computed(() => landing.value?.video_header_video_url || "")
 const videoHeaderPoster = computed(() => landing.value?.video_header_video_poster || "")
@@ -58,9 +65,6 @@ const ferryVideoHeaderSm = computed(() => landing.value?.ferry_video_header_sm |
 const ferryVideoText = computed(() => landing.value?.ferry_video_text || "")
 const ferryVideoButton = computed(() => landing.value?.ferry_video_button || "")
 const ferryVideoUrl = computed(() => landing.value?.ferry_video_url || "")
-
-const scrollHeader = computed(() => landing.value?.scroll_header || "")
-const scrollImage = computed(() => landing.value?.scroll_image || "")
 
 const seoTitle = computed(() => {
 	return page.value?.title?.rendered?.replace("&#8211;", "").trim()

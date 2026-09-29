@@ -23,12 +23,18 @@ const props = defineProps<{
 	featuredImageHeight: number
 	layoutStyle?: string
 }>()
+
+const sharedLayout = useLayoutStyle()
+watch(
+	() => props.acf?.layoutstyle,
+	(value) => {
+		sharedLayout.value = value ?? null
+	},
+	{ immediate: true }
+)
+
 const { data: postItems } = await getPosts({
 	exclude: [props.slug, "betingelser", "privatslivspolitik"]
-})
-
-const layoutStyle = computed(() => {
-	return props.acf?.layoutstyle
 })
 </script>
 

@@ -26,6 +26,15 @@ const props = defineProps<{
 	featuredImageHeight?: number
 	relatedPages?: RelatedPage[]
 }>()
+
+const sharedLayout = useLayoutStyle()
+watch(
+	() => props.layoutStyle ?? props.acf?.layoutstyle,
+	(value) => {
+		sharedLayout.value = value ?? null
+	},
+	{ immediate: true }
+)
 </script>
 
 <template>

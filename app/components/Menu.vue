@@ -3,6 +3,11 @@ import { ref, computed, onMounted, onUnmounted } from "vue"
 import MenuIcon from "./icons/MenuIcon.vue"
 import Social from "./ui/Social.vue"
 
+const layoutStyle = useLayoutStyle()
+const isHeroOrVideo = computed(() => {
+	return layoutStyle.value === "hero" || layoutStyle.value === "video"
+})
+
 // Native scroll listener replacing useWindowScroll
 const isScrolled = ref(false)
 
@@ -60,7 +65,7 @@ const { data: postItems } = await getPosts({
 			</div>
 
 			<button @click="isMobileMenuOpen = !isMobileMenuOpen" type="button" aria-label="Open main menu" aria-controls="mobile-menu" :aria-expanded="isMobileMenuOpen">
-				<MenuIcon :is-open="isMobileMenuOpen" />
+				<MenuIcon :is-open="isMobileMenuOpen" :class="[!isScrolled && isHeroOrVideo ? 'text-palladian' : 'text-brand']" />
 			</button>
 		</div>
 
