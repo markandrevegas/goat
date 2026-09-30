@@ -37,7 +37,7 @@ watch(
 	{ immediate: true }
 )
 
-/*if (import.meta.client && import.meta.dev) {
+/*if ( && import.meta.dev) {
 	console.log(props.acf)
 }*/
 </script>

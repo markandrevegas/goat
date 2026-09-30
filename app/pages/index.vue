@@ -30,9 +30,6 @@ const showReviews = computed(() => {
 	const value = landing.value?.show_reviews
 	return value === "true" || value === true
 })
-if (import.meta.client && import.meta.dev) {
-	// console.log(landing.value)
-}
 
 const videoHeaderVideoUrl = computed(() => landing.value?.video_header_video_url || "")
 const videoHeaderPoster = computed(() => landing.value?.video_header_video_poster || "")
@@ -66,7 +63,7 @@ const ferryVideoButton = computed(() => landing.value?.ferry_video_button || "")
 const ferryVideoUrl = computed(() => landing.value?.ferry_video_url || "")
 
 const seoTitle = computed(() => {
-	return page.value?.title?.rendered?.replace("&#8211;", "").trim()
+	return page.value?.yoast_head_json?.title
 })
 
 /*const excerpt = computed(() => {
@@ -74,11 +71,7 @@ const seoTitle = computed(() => {
 })*/
 
 const seoDescription = computed(() => {
-	if (landing.value?.excerpt?.rendered) {
-		return landing.value.excerpt.rendered.replace(/<[^>]*>?/gm, "").trim()
-	}
-
-	return "Discover our latest articles, insights, and updates."
+	return page.value?.yoast_head_json?.description
 })
 
 /*const ogImage = computed(() => {
@@ -111,6 +104,10 @@ onMounted(() => {
 	)
 	if (trustindexRef.value) observer.observe(trustindexRef.value)
 })
+
+if (import.meta.dev && import.meta.client) {
+	console.log(page.value?.yoast_head_json?.title,)
+}
 </script>
 <template>
 	<NuxtLayout name="default">

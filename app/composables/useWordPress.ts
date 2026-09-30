@@ -64,7 +64,7 @@ export const useWordPress = () => {
 	const getLandingPage = async (slug: string) => {
 		const results = await wpFetch<WordPressLandingPage[]>("landingpage", {
 			slug,
-			_fields: "id,title,slug,acf"
+			_fields: "id,title,slug,acf,yoast_head_json"
 		})
 		return results[0] ?? null
 	}

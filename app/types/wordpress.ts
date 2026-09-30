@@ -26,6 +26,12 @@ export interface WordPressMenuItem extends WordPressBase {}
 
 export interface WordPressLandingPage extends WordPressBase {
 	acf: Record<string, any>
+	yoast_head_json?: {
+		title?: string
+		description?: string
+		og_title?: string
+		og_description?: string
+	}
 }
 
 export interface WordPressPrivatePage extends WordPressPostOrPage {
