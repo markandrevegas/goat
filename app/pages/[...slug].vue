@@ -116,7 +116,6 @@ if (import.meta.client && import.meta.dev) {
 	console.log(featuredImageUrl.value)
 }
 
-
 const seoTitle = computed(() => contentTitle.value || "Page")
 const seoDescription = computed(() => {
 	const excerpt = rawContentData.value?.excerpt?.rendered
@@ -170,6 +169,11 @@ useSeoMeta({
 			<PostContent v-else-if="hasContent && isPost" :title="contentTitle" :body="contentBody" :slug="contentSlug" :acf="contentAcf" :author-name="authorName" :formatted-date="formattedDate" :date-published="datePublished" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" :layout-style="currentLayoutStyle" />
 
 			<PageContent v-else-if="hasContent && isPage" :acf="contentAcf" :title="contentTitle" :body="contentBody" :slug="contentSlug" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" :related-pages="relatedPages" :layout-style="currentLayoutStyle" />
+		</div>
+		<div v-if="contentSlug === 'rooftop-terrace'">
+			<div class="mx-auto w-4/5">
+				<ImageGridWide :header="contentAcf?.gallery_header" :text="contentAcf?.gallery_text" :button="contentAcf?.gallery_button" :url="contentAcf?.gallery_url" />
+			</div>
 		</div>
 	</NuxtLayout>
 </template>

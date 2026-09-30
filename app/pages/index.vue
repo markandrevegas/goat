@@ -106,7 +106,7 @@ onMounted(() => {
 })
 
 if (import.meta.dev && import.meta.client) {
-	console.log(page.value?.yoast_head_json?.title,)
+	console.log(page.value?.yoast_head_json?.title)
 }
 </script>
 <template>

@@ -80,7 +80,7 @@ watch(
 			</div>
 		</main>
 		<div v-if="slug === 'information-for-guests'">
-			<div v-if="body" class="prose text-palladian text-lg/8 mb-16 max-w-3xl mx-auto text-center" v-html="body"></div>
+			<div v-if="body" class="prose text-palladian mx-auto mb-16 max-w-3xl text-center text-lg/8" v-html="body"></div>
 			<ThreeCardLayout :acf="acf" />
 			<MapEmbed :query="acf?.ferryaddress" :address="acf?.ferryaddress" :email="acf?.email" :tel="acf?.tel" />
 		</div>
