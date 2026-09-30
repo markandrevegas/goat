@@ -12,6 +12,7 @@ const linkedinUrl = "https://linkedin.com/company/mar-k-waterside"
 const props = defineProps<{
 	layoutStyle?: string
 	title: string
+	excerpt?: string
 	buttonText?: string
 	authorName?: string
 	formattedDate?: string
@@ -23,10 +24,9 @@ const props = defineProps<{
 	instagramUrl?: string
 	facebookUrl?: string
 	linkedinUrl?: string
-	privateHeroExcerpt?: string
-	privateHeroImageId?: number
-	privateFeatureImageId?: number
 }>()
+
+console.log(props.excerpt)
 </script>
 
 <template>
@@ -34,7 +34,7 @@ const props = defineProps<{
 		<div class="grid w-full grid-cols-4 gap-4 sm:mx-auto sm:max-w-6xl sm:px-8">
 			<div class="relative z-20 col-span-3 pl-8 md:col-span-2 md:col-start-2 md:pl-0">
 				<h1 class="text-4xl tracking-tighter" v-html="title"></h1>
-				<p v-if="privateHeroExcerpt" v-html="privateHeroExcerpt" class="mt-6 max-w-lg text-base/7"></p>
+				<p v-if="excerpt" v-html="excerpt" class="mt-6 max-w-lg text-base/7"></p>
 				<div class="flex w-full justify-start">
 					<PrimaryButton v-if="buttonText" :text="buttonText || 'Book nu'" :event-name="'book_meeting'" :event-params="{ button_name: 'secondary_cta' }" />
 				</div>
@@ -62,6 +62,7 @@ const props = defineProps<{
 		<div class="grid grid-cols-4">
 			<div class="relative z-20 col-span-2 sm:col-start-2">
 				<h1 class="text-4xl tracking-tight" v-html="title"></h1>
+				<p v-html="excerpt" class="mt-6 max-w-lg text-base/7"></p>
 				<div v-if="authorName || formattedDate" class="mt-4 flex items-center space-x-2 text-sm">
 					<span v-if="authorName" class="font-medium">By {{ authorName }}</span>
 					<span v-if="authorName && formattedDate">|</span>

@@ -97,11 +97,8 @@ const authorName = computed(() => authorDetails.value?.name || "")
 const featuredMedia = computed(() => rawContentData.value?._embedded?.["wp:featuredmedia"]?.[0] || null)
 const featuredImageUrl = computed(() => featuredMedia.value?.source_url || null)
 
-const privateHeroExcerpt = computed(() => {
-	return rawContentData.value?.acf?.private_hero_excerpt ?? ""
-})
-const privateHeroButtonText = computed(() => {
-	return rawContentData.value?.acf?.private_hero_button ?? ""
+const headerExcerpt = computed(() => {
+	return rawContentData.value?.acf?.header_excerpt ?? ""
 })
 
 const privateFeatureImageId = computed(() => {
