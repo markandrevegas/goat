@@ -30,7 +30,7 @@ const showReviews = computed(() => {
 	const value = landing.value?.show_reviews
 	return value === "true" || value === true
 })
-if (import.meta.client) {
+if (import.meta.client && import.meta.dev) {
 	// console.log(landing.value)
 }
 

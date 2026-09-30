@@ -51,7 +51,7 @@ if (!rawContentData.value) {
 
 const isPage = computed(() => rawContentData.value?._type === "pages")
 const isPost = computed(() => rawContentData.value?._type === "posts")
-if (import.meta.client) {
+if (import.meta.client && import.meta.dev) {
 	console.log(isPage.value)
 }
 
@@ -112,7 +112,10 @@ const featuredImageAlt = computed(() => featuredMedia.value?.alt_text || content
 const featuredImageWidth = computed(() => featuredMedia.value?.media_details?.width || 1200)
 const featuredImageHeight = computed(() => featuredMedia.value?.media_details?.height || 630)
 
-console.log(featuredImageUrl.value)
+if (import.meta.client && import.meta.dev) {
+	console.log(featuredImageUrl.value)
+}
+
 
 const seoTitle = computed(() => contentTitle.value || "Page")
 const seoDescription = computed(() => {
@@ -132,7 +135,10 @@ const cleanSeoDescription = computed(() => decodeEntities(seoDescription.value))
 const privateHeroImageId = computed(() => contentAcf.value?.private_hero_image ?? null)
 // console.log(privateHeroImageId.value)
 const currentLayoutStyle = computed(() => contentAcf.value?.layoutstyle)
-console.log(currentLayoutStyle.value)
+if (import.meta.dev && import.meta.client) {
+	console.log(currentLayoutStyle.value)
+}
+
 useSeoMeta({
 	title: cleanSeoTitle.value,
 	titleTemplate: null,

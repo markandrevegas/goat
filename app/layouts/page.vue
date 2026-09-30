@@ -7,9 +7,7 @@ const { data: menuPages } = await getPages({
 	exclude: ["privatlivspolitik", "cookiepolitik"]
 })
 const isGuestInfo = computed(() => route.path === "/information-for-guests")
-if (import.meta.client) {
-	console.log(isGuestInfo.value)
-}
+
 </script>
 
 <template>
