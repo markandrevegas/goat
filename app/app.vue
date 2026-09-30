@@ -2,6 +2,18 @@
 import CookieBanner from "~/components/CookieBanner.vue"
 
 const { resetConsent } = useCookieConsent()
+
+const route = useRoute()
+const config = useRuntimeConfig()
+
+const canonicalUrl = computed(() => {
+	const path = route.path.replace(/\/+$/, "")
+	return `${config.public.siteUrl}${path}`
+})
+
+useHead({
+	link: [{ rel: "canonical", href: canonicalUrl }]
+})
 </script>
 
 <template>
