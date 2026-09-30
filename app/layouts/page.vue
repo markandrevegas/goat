@@ -1,13 +1,19 @@
 <script setup lang="ts">
+const route = useRoute()
+
 const { getPages } = useWordPress()
 const { data: menuPages } = await getPages({
 	include: ["apartments", "simple-meetings", "private-selskaber", "information-for-guests"],
 	exclude: ["privatlivspolitik", "cookiepolitik"]
 })
+const isGuestInfo = computed(() => route.path === "/information-for-guests")
+if (import.meta.client) {
+	console.log(isGuestInfo.value)
+}
 </script>
 
 <template>
-	<div class="bg-palladian text-brand relative min-h-screen overflow-hidden">
+	<div :class="isGuestInfo ? 'bg-brand text-palladian' : 'bg-palladian text-brand'"  class="relative min-h-screen overflow-hidden transition-colors duration-300">
 		<div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
 			<Menu :items="menuPages || []" />
 		</div>

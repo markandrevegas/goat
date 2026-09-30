@@ -11,8 +11,6 @@
 	--font-display: "Fraunces", serif;
 	--font-sans: "Inter", sans-serif;
 	--font-sofia: "Sofia Sans Extra Condensed", sans-serif;
-	--video-bar-h: 200px;
-	--video-buttons-height: 40px;
 }
 
 @layer base {

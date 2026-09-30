@@ -63,7 +63,7 @@ const { data: postItems } = await getPosts({
 				<p class="mb-2 text-sm tracking-tight uppercase">Recent Posts</p>
 				<ul class="space-y-2">
 					<li v-for="post in postItems" :key="post.id">
-						<NuxtLink :to="`/${post.slug}`" class="text-palladian w-max text-sm transition-colors" active-class="border-b-2 font-semibold" v-html="post.title.rendered" />
+						<NuxtLink :to="`/${post.slug}`" class="w-max font-semibold transition-opacity duration-400 hover:border-b-2" v-html="post.title.rendered" />
 					</li>
 				</ul>
 			</div>

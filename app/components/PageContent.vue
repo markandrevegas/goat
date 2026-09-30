@@ -4,7 +4,8 @@ import EntryHeader from "~/layouts/EntryHeader.vue"
 import Social from "./ui/Social.vue"
 import SecondaryButton from "./ui/SecondaryButton.vue"
 import ImageGallery from "./ImageGallery.vue"
-
+import MapEmbed from "./ui/MapEmbed.vue"
+import ThreeCardLayout from "./ui/ThreeCardLayout.vue"
 interface RelatedPage {
 	id: number
 	title: { rendered: string }
@@ -35,13 +36,17 @@ watch(
 	},
 	{ immediate: true }
 )
+
+if (import.meta.client) {
+	console.log(props.acf)
+}
 </script>
 
 <template>
 	<article class="relative w-full">
 		<EntryHeader :layout-style="layoutStyle" :title="title" :author-name="authorName" :formatted-date="formattedDate" :date-published="datePublished" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" />
 
-		<main v-if="body" class="flex flex-col gap-4 md:grid md:grid-cols-4">
+		<main v-if="body && slug !== 'information-for-guests'" class="flex flex-col gap-4 md:grid md:grid-cols-4">
 			<div class="col-span-1 hidden md:block">
 				<p class="mb-4 text-sm font-bold uppercase md:block">Share content</p>
 				<Social class="w-max" />
@@ -69,10 +74,15 @@ watch(
 				<p class="mb-4 text-sm font-bold uppercase md:block">Related</p>
 				<ul class="list-reset space-y-2">
 					<li v-for="item in relatedPages" :key="item.id">
-						<NuxtLink :to="item.slug"><span v-html="item.title?.rendered" class="text-brand w-max text-sm transition-colors duration-400 hover:border-b-2"></span></NuxtLink>
+						<NuxtLink :to="item.slug"><span v-html="item.title?.rendered" class="w-max font-semibold transition-opacity duration-400 hover:border-b-2"></span></NuxtLink>
 					</li>
 				</ul>
 			</div>
 		</main>
+		<div v-if="slug === 'information-for-guests'">
+			<div v-if="body" class="prose text-palladian text-lg/8 mb-16 max-w-3xl mx-auto text-center" v-html="body"></div>
+			<ThreeCardLayout :acf="acf" />
+			<MapEmbed :query="acf?.ferryaddress" :address="acf?.ferryaddress" :email="acf?.email" :tel="acf?.tel" />
+		</div>
 	</article>
 </template>

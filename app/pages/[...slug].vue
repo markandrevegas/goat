@@ -51,7 +51,10 @@ if (!rawContentData.value) {
 
 const isPage = computed(() => rawContentData.value?._type === "pages")
 const isPost = computed(() => rawContentData.value?._type === "posts")
-console.log(isPost.value)
+if (import.meta.client) {
+	console.log(isPage.value)
+}
+
 const hasContent = computed(() => !!rawContentData.value)
 
 /*const useBlogLayout = computed(() => isPage.value || rawContentData.value?.slug === "information-for-guests")
