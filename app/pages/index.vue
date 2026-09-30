@@ -66,6 +66,10 @@ const seoTitle = computed(() => {
 	return page.value?.yoast_head_json?.title
 })
 
+const ogImage = computed(() => {
+	return page.value?.yoast_head_json?.og_image?.[0]?.url || "/default-og.jpg"
+})
+
 /*const excerpt = computed(() => {
 	return homePage.value?.excerpt?.rendered
 })*/
@@ -74,22 +78,21 @@ const seoDescription = computed(() => {
 	return page.value?.yoast_head_json?.description
 })
 
-/*const ogImage = computed(() => {
-	return homePage.value?.yoast_head_json?.og_image?.[0]?.url || "/default-og.jpg"
-})*/
-
+useHead({
+	link: [{ rel: "canonical", href: "https://floatinggoat.dk/" }]
+})
 useSeoMeta({
 	title: seoTitle,
 	titleTemplate: null,
 	description: seoDescription,
 	ogTitle: seoTitle,
 	ogDescription: seoDescription,
-	ogImage: posterImg,
+	ogImage: ogImage,
 	ogType: "website",
 	twitterCard: "summary_large_image",
 	twitterTitle: seoTitle,
 	twitterDescription: seoDescription,
-	twitterImage: posterImg
+	twitterImage: ogImage
 })
 
 onMounted(() => {

@@ -31,6 +31,7 @@ export interface WordPressLandingPage extends WordPressBase {
 		description?: string
 		og_title?: string
 		og_description?: string
+		og_image?: Record<string, any>
 	}
 }
 
