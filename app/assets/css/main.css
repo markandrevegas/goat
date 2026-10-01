@@ -67,7 +67,7 @@
 	}
 
 	:where(h2.wp-block-heading) {
-		@apply text-3xl sm:text-4xl;
+		@apply text-3xl !font-medium sm:text-4xl;
 	}
 
 	:where(h3.wp-block-heading) {

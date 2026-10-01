@@ -47,13 +47,9 @@ if (!rawContentData.value) {
 		fatal: true
 	})
 }
-// console.log(rawContentData.value)
 
 const isPage = computed(() => rawContentData.value?._type === "pages")
 const isPost = computed(() => rawContentData.value?._type === "posts")
-if (import.meta.client && import.meta.dev) {
-	console.log(isPage.value)
-}
 
 const hasContent = computed(() => !!rawContentData.value)
 
@@ -65,7 +61,6 @@ const contentTitle = computed(() => rawContentData.value?.title?.rendered || "")
 const contentSlug = computed(() => rawContentData.value?.slug || "")
 const contentBody = computed(() => rawContentData.value?.content?.rendered || "")
 const contentAcf = computed(() => rawContentData.value?.acf || {})
-// console.log(contentAcf.value)
 const datePublished = computed(() => rawContentData.value?.date || null)
 
 const { data: allPages } = await getPages()
@@ -101,17 +96,9 @@ const headerExcerpt = computed(() => {
 	return rawContentData.value?.acf?.header_excerpt ?? ""
 })
 
-const privateFeatureImageId = computed(() => {
-	return rawContentData.value?.acf?.private_feature_image || 0
-})
-
 const featuredImageAlt = computed(() => featuredMedia.value?.alt_text || contentTitle.value)
 const featuredImageWidth = computed(() => featuredMedia.value?.media_details?.width || 1200)
 const featuredImageHeight = computed(() => featuredMedia.value?.media_details?.height || 630)
-
-if (import.meta.client && import.meta.dev) {
-	console.log(featuredImageUrl.value)
-}
 
 const seoTitle = computed(() => contentTitle.value || "Page")
 const seoDescription = computed(() => {
@@ -127,12 +114,10 @@ function decodeEntities(str: string): string {
 }
 const cleanSeoTitle = computed(() => decodeEntities(seoTitle.value))
 const cleanSeoDescription = computed(() => decodeEntities(seoDescription.value))
-// New: separate source for private pages, since the image lives in ACF, not featured_media
-const privateHeroImageId = computed(() => contentAcf.value?.private_hero_image ?? null)
-// console.log(privateHeroImageId.value)
+
 const currentLayoutStyle = computed(() => contentAcf.value?.layoutstyle)
 if (import.meta.dev && import.meta.client) {
-	console.log(currentLayoutStyle.value)
+	// console.log(currentLayoutStyle.value)
 }
 
 useSeoMeta({

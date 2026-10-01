@@ -55,18 +55,18 @@ useHead({
 				<Social class="w-max" />
 			</div>
 			<div class="col-span-2 flex flex-col gap-2 md:pr-8">
-				<WpImage loading="eager" fetchpriority="high" v-if="acf?.layoutstyle !== 'hero' && featuredImageUrl" :image-id="featuredImageUrl" :alt="featuredImageAlt" />
+				<NuxtImg v-if="acf?.layoutstyle !== 'hero' && featuredImageUrl" :src="featuredImageUrl" :alt="featuredImageAlt" loading="eager" fetchpriority="high" sizes="100vw sm:100vw md:100vw lg:100vw" :densities?="[1, 2, 3]" class="mb-4 h-auto w-full object-cover" />
 				<div v-if="body" class="prose prose-lg/5 prose-headings:font-semibold prose-headings:tracking-tight prose-a:text-brand prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl prose-img:shadow-md mb-4 max-w-none" v-html="body"></div>
 				<p v-else class="font-display italic">This page has no content body text.</p>
-				<PrimaryButton :text="acf?.call_to_action" :event-name="'book_meetings_and_events'" class="bg-brand text-palladian text-xl uppercase mb-8 hover:cursor-pointer hover:bg-brand/80" />
-				<details v-if="acf?.extended_info_content" class="group w-full border border-neutral-200 bg-white [interpolate-size:allow-keywords] details-content:h-0 details-content:overflow-hidden details-content:opacity-0 details-content:transition-[height,opacity,content-visibility] details-content:transition-discrete details-content:duration-300 details-content:ease-out open:shadow-sm open:details-content:h-auto open:details-content:opacity-100">
-					<summary class="text-brand flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 font-display text-lg font-semibold select-none [&::-webkit-details-marker]:hidden">
+				<PrimaryButton :text="acf?.call_to_action" :event-name="'book_meetings_and_events'" class="bg-brand text-palladian hover:bg-brand/80 mb-8 hidden text-xl uppercase hover:cursor-pointer" />
+				<details v-if="acf?.extended_info_content" class="group w-full [interpolate-size:allow-keywords] details-content:h-0 details-content:overflow-hidden details-content:opacity-0 details-content:transition-[height,opacity,content-visibility] details-content:transition-discrete details-content:duration-300 details-content:ease-out open:details-content:h-auto open:details-content:opacity-100">
+					<summary class="text-brand flex cursor-pointer list-none items-center justify-between gap-4 py-4 font-semibold select-none [&::-webkit-details-marker]:hidden">
 						Practical information
 						<svg class="size-5 shrink-0 transition-transform duration-300 group-open:rotate-180" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 							<path d="M5 8l5 5 5-5" />
 						</svg>
 					</summary>
-					<div class="px-5 pb-5 text-sm leading-relaxed text-neutral-700 [&_a]:underline [&_li]:pl-1 [&_ol]:list-decimal [&_ol]:space-y-1 [&_ol]:pl-5 [&_ul]:list-disc [&_ul]:space-y-1 [&_ul]:pl-5 [&_ul_ul]:mt-1 [&>*+*]:mt-3 [&_b]:font-display" v-html="acf?.extended_info_content"></div>
+					<div class="[&_b]:font-display pb-5 text-sm leading-relaxed text-neutral-700 [&_a]:underline [&_li]:pl-1 [&_ol]:list-decimal [&_ol]:space-y-1 [&_ol]:pl-5 [&_ul]:list-disc [&_ul]:space-y-1 [&_ul]:pl-5 [&_ul_ul]:mt-1 [&>*+*]:mt-3" v-html="acf?.extended_info_content"></div>
 				</details>
 			</div>
 			<div class="col-span-1 mt-16 sm:mt-0">
