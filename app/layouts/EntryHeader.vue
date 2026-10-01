@@ -71,7 +71,7 @@ if (import.meta.dev) {
 					<span v-if="authorName && formattedDate">|</span>
 					<time v-if="formattedDate" :datetime="datePublished ?? undefined">{{ formattedDate }}</time>
 				</div>
-				<PrimaryButton :text="callToAction" :event-name="'book_meetings_and_events'" class="bg-brand text-palladian hover:bg-brand/80 mt-4 mb-8 text-xl uppercase hover:cursor-pointer" />
+				<PrimaryButton v-if="callToAction" :text="callToAction" :event-name="'book_meetings_and_events'" class="bg-brand text-palladian hover:bg-brand/80 mt-4 mb-8 text-xl uppercase hover:cursor-pointer" />
 			</div>
 		</div>
 	</header>
