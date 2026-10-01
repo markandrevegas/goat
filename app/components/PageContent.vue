@@ -2,7 +2,7 @@
 import WpImage from "./ui/WpImage.vue"
 import EntryHeader from "~/layouts/EntryHeader.vue"
 import Social from "./ui/Social.vue"
-import SecondaryButton from "./ui/SecondaryButton.vue"
+import PrimaryButton from "./ui/PrimaryButton.vue"
 import MapEmbed from "./ui/MapEmbed.vue"
 import ThreeCardLayout from "./ui/ThreeCardLayout.vue"
 interface RelatedPage {
@@ -47,7 +47,7 @@ useHead({
 
 <template>
 	<article class="relative w-full">
-		<EntryHeader :layout-style="layoutStyle" :excerpt="acf?.header_excerpt" :title="title" :author-name="authorName" :formatted-date="formattedDate" :date-published="datePublished" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" />
+		<EntryHeader :layout-style="layoutStyle" :excerpt="acf?.header_excerpt" :title="title" :call-to-action="acf?.call_to_action" :author-name="authorName" :formatted-date="formattedDate" :date-published="datePublished" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" />
 
 		<main v-if="body && slug !== 'information-for-guests'" class="flex flex-col gap-4 md:grid md:grid-cols-4">
 			<div class="col-span-1 hidden md:block">
@@ -56,10 +56,11 @@ useHead({
 			</div>
 			<div class="col-span-2 flex flex-col gap-2 md:pr-8">
 				<WpImage loading="eager" fetchpriority="high" v-if="acf?.layoutstyle !== 'hero' && featuredImageUrl" :image-id="featuredImageUrl" :alt="featuredImageAlt" />
-				<div v-if="body" class="prose prose-lg/5 prose-headings:font-semibold prose-headings:tracking-tight prose-a:text-brand prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl prose-img:shadow-md mb-8 max-w-none" v-html="body"></div>
+				<div v-if="body" class="prose prose-lg/5 prose-headings:font-semibold prose-headings:tracking-tight prose-a:text-brand prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl prose-img:shadow-md mb-4 max-w-none" v-html="body"></div>
 				<p v-else class="font-display italic">This page has no content body text.</p>
+				<PrimaryButton :text="acf?.call_to_action" :event-name="'book_meetings_and_events'" class="bg-brand text-palladian text-xl uppercase mb-8 hover:cursor-pointer hover:bg-brand/80" />
 				<details v-if="acf?.extended_info_content" class="group w-full border border-neutral-200 bg-white [interpolate-size:allow-keywords] details-content:h-0 details-content:overflow-hidden details-content:opacity-0 details-content:transition-[height,opacity,content-visibility] details-content:transition-discrete details-content:duration-300 details-content:ease-out open:shadow-sm open:details-content:h-auto open:details-content:opacity-100">
-					<summary class="text-brown flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 font-display text-lg font-semibold select-none [&::-webkit-details-marker]:hidden">
+					<summary class="text-brand flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 font-display text-lg font-semibold select-none [&::-webkit-details-marker]:hidden">
 						Practical information
 						<svg class="size-5 shrink-0 transition-transform duration-300 group-open:rotate-180" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 							<path d="M5 8l5 5 5-5" />

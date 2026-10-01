@@ -24,6 +24,7 @@ const props = defineProps<{
 	instagramUrl?: string
 	facebookUrl?: string
 	linkedinUrl?: string
+	callToAction?: string
 }>()
 
 console.log(props.excerpt)
@@ -36,7 +37,7 @@ console.log(props.excerpt)
 				<h1 class="text-4xl tracking-tighter" v-html="title"></h1>
 				<p v-if="excerpt" v-html="excerpt" class="mt-6 max-w-lg text-base/7"></p>
 				<div class="flex w-full justify-start">
-					<PrimaryButton v-if="buttonText" :text="buttonText || 'Book nu'" :event-name="'book_meeting'" :event-params="{ button_name: 'secondary_cta' }" />
+					<PrimaryButton :text="callToAction" :event-name="'book_meetings_and_events'" class="bg-palladian text-brand text-xl uppercase mt-4 mb-8 hover:cursor-pointer hover:bg-brand/80 hover:text-palladian" />
 				</div>
 				<div v-if="authorName || formattedDate" class="mt-4 flex flex-col space-x-2 text-sm">
 					<span v-if="authorName" class="font-medium">Published by {{ authorName }}</span>
@@ -68,6 +69,7 @@ console.log(props.excerpt)
 					<span v-if="authorName && formattedDate">|</span>
 					<time v-if="formattedDate" :datetime="datePublished ?? undefined">{{ formattedDate }}</time>
 				</div>
+				<PrimaryButton :text="callToAction" :event-name="'book_meetings_and_events'" class="bg-brand text-palladian text-xl uppercase mt-4 mb-8 hover:cursor-pointer hover:bg-brand/80" />
 			</div>
 		</div>
 	</header>
