@@ -152,9 +152,9 @@ useSeoMeta({
 
 			<PageContent v-else-if="hasContent && isPage" :acf="contentAcf" :title="contentTitle" :body="contentBody" :slug="contentSlug" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" :related-pages="relatedPages" :layout-style="currentLayoutStyle" />
 		</div>
-		<div v-if="contentSlug === 'rooftop-terrace'">
-			<div class="mx-auto w-4/5">
-				<ImageGridWide :header="contentAcf?.gallery_header" :text="contentAcf?.gallery_text" :button="contentAcf?.gallery_button" :url="contentAcf?.gallery_url" />
+		<div v-if="contentSlug === 'rooftop-terrace' || 'studio-apartment'">
+			<div class="w-full sm:mx-auto sm:w-4/5">
+				<ImageGridWide :header="contentAcf?.gallery_header" :text="contentAcf?.gallery_text" :button="contentAcf?.gallery_button" :url="targetSlug" />
 			</div>
 		</div>
 	</NuxtLayout>

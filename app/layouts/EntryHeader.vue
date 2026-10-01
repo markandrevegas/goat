@@ -24,11 +24,12 @@ const props = defineProps<{
 	facebookUrl?: string
 	linkedinUrl?: string
 	callToAction?: string
+	callToActionUrl?: string
 	slug?: string
 }>()
 
 if (import.meta.dev) {
-	// console.log(props.excerpt)
+	console.log(props.callToActionUrl)
 }
 </script>
 
@@ -37,9 +38,9 @@ if (import.meta.dev) {
 		<div class="grid w-full grid-cols-4 gap-4 sm:mx-auto sm:max-w-6xl sm:px-8">
 			<div class="relative z-20 col-span-3 pl-8 md:col-span-2 md:col-start-2 md:pl-0">
 				<h1 class="text-4xl tracking-tighter" v-html="title"></h1>
-				<p v-if="excerpt" v-html="excerpt" class="mt-6 w-full text-base/7 sm:max-w-2xl"></p>
+				<p v-if="excerpt" v-html="excerpt" class="mt-3 mb-2 w-full text-sm/5 sm:max-w-2xl"></p>
 				<div v-if="callToAction" class="flex w-full justify-start">
-					<PrimaryButton :text="callToAction" :event-name="'book_' + slug" class="bg-palladian text-brand hover:bg-brand/80 hover:text-palladian mt-4 mb-8 text-xl uppercase hover:cursor-pointer" />
+					<PrimaryButton :url="callToActionUrl" target="_self" :text="callToAction" :event-name="'book_' + slug" class="bg-palladian text-brand hover:bg-brand/80 hover:text-palladian mt-4 mb-8 text-xl uppercase hover:cursor-pointer" />
 				</div>
 				<div v-if="authorName || formattedDate" class="mt-4 flex flex-col space-x-2 text-sm">
 					<span v-if="authorName" class="font-medium">Published by {{ authorName }}</span>
@@ -65,13 +66,13 @@ if (import.meta.dev) {
 		<div class="flex flex-col items-center justify-center sm:grid sm:grid-cols-4">
 			<div class="relative z-20 col-span-2 sm:col-start-2">
 				<h1 class="text-4xl tracking-tight" v-html="title"></h1>
-				<p v-if="excerpt" v-html="excerpt" class="mt-6 w-full text-base/7 sm:max-w-2xl"></p>
+				<p v-if="excerpt" v-html="excerpt" class="mt-3 mb-2 w-full text-sm/5 sm:max-w-2xl"></p>
 				<div v-if="authorName || formattedDate" class="mt-4 flex items-center space-x-2 text-sm">
 					<span v-if="authorName" class="font-medium">By {{ authorName }}</span>
 					<span v-if="authorName && formattedDate">|</span>
 					<time v-if="formattedDate" :datetime="datePublished ?? undefined">{{ formattedDate }}</time>
 				</div>
-				<PrimaryButton v-if="callToAction" :text="callToAction" :event-name="'book_meetings_and_events'" class="bg-brand text-palladian hover:bg-brand/80 mt-4 mb-8 text-xl uppercase hover:cursor-pointer" />
+				<PrimaryButton v-if="callToAction" :url="callToActionUrl" :text="callToAction" :event-name="'book_' + slug" class="bg-brand text-palladian hover:bg-brand/80 mt-4 mb-8 text-xl uppercase hover:cursor-pointer" />
 			</div>
 		</div>
 	</header>
