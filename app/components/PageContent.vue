@@ -47,7 +47,7 @@ useHead({
 
 <template>
 	<article class="relative w-full">
-		<EntryHeader :layout-style="layoutStyle" :excerpt="acf?.header_excerpt" :title="title" :call-to-action="acf?.call_to_action" :author-name="authorName" :formatted-date="formattedDate" :date-published="datePublished" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" />
+		<EntryHeader :slug="slug" :layout-style="layoutStyle" :excerpt="acf?.header_excerpt" :title="title" :call-to-action="acf?.call_to_action" :author-name="authorName" :formatted-date="formattedDate" :date-published="datePublished" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" />
 
 		<main v-if="body && slug !== 'information-for-guests'" class="flex flex-col gap-4 md:grid md:grid-cols-4">
 			<div class="col-span-1 hidden md:block">

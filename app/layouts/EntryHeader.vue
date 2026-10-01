@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import WpImage from "~/components/ui/WpImage.vue"
 import Instagram from "~/components/icons/Instagram.vue"
 import Facebook from "~/components/icons/Facebook.vue"
 import Linkedin from "~/components/icons/Linkedin.vue"
@@ -25,6 +24,7 @@ const props = defineProps<{
 	facebookUrl?: string
 	linkedinUrl?: string
 	callToAction?: string
+	slug?: string
 }>()
 
 if (import.meta.dev) {
@@ -39,7 +39,7 @@ if (import.meta.dev) {
 				<h1 class="text-4xl tracking-tighter" v-html="title"></h1>
 				<p v-if="excerpt" v-html="excerpt" class="mt-6 w-full text-base/7 sm:max-w-2xl"></p>
 				<div v-if="callToAction" class="flex w-full justify-start">
-					<PrimaryButton :text="callToAction" :event-name="'book_meetings_and_events'" class="bg-palladian text-brand hover:bg-brand/80 hover:text-palladian mt-4 mb-8 text-xl uppercase hover:cursor-pointer" />
+					<PrimaryButton :text="callToAction" :event-name="'book_' + slug" class="bg-palladian text-brand hover:bg-brand/80 hover:text-palladian mt-4 mb-8 text-xl uppercase hover:cursor-pointer" />
 				</div>
 				<div v-if="authorName || formattedDate" class="mt-4 flex flex-col space-x-2 text-sm">
 					<span v-if="authorName" class="font-medium">Published by {{ authorName }}</span>
