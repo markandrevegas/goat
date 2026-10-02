@@ -10,7 +10,7 @@ const isGuestInfo = computed(() => route.path === "/information-for-guests")
 </script>
 
 <template>
-	<div :class="isGuestInfo ? 'bg-brand text-palladian' : 'bg-palladian text-brand'" class="relative min-h-screen overflow-hidden transition-colors duration-300">
+	<div class="relative min-h-screen overflow-hidden transition-colors duration-300">
 		<div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
 			<Menu :items="menuPages || []" />
 		</div>

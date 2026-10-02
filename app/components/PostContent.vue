@@ -49,7 +49,7 @@ useHead({
 		<!-- Main 3-Column Content Grid -->
 		<main v-if="body && slug !== 'information-for-guests'" class="flex flex-col gap-4 md:grid md:grid-cols-4">
 			<!-- Column 1: Share icons -->
-			<div class="col-span-1">
+			<div class="col-span-1 mb-8 sm:mb-0">
 				<p class="mb-2 text-sm tracking-tight uppercase md:block">Share Content</p>
 				<Social />
 			</div>
@@ -64,8 +64,8 @@ useHead({
 
 			<!-- Column 3: Sidebar -->
 			<div class="col-span-1">
-				<p class="mb-2 text-sm tracking-tight uppercase">Recent Posts</p>
-				<ul class="space-y-2">
+				<p v-if="postItems" class="mt-8 sm:mt-0 mb-2 text-sm tracking-tight uppercase">Recent Posts</p>
+				<ul v-if="postItems" class="space-y-2">
 					<li v-for="post in postItems" :key="post.id">
 						<NuxtLink :to="`/${post.slug}`" class="w-max font-semibold transition-opacity duration-400 hover:border-b-2" v-html="post.title.rendered" />
 					</li>
