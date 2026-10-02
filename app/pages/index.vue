@@ -50,10 +50,6 @@ const standardCards = computed(() => extractColumns(landing.value, ["first", "se
 // 2. Second set: 'header_one', 'header_two', 'header_three'
 const threeColumnItems = computed(() => extractColumns(landing.value, ["one", "two", "three"]))
 
-if (import.meta.dev && import.meta.client) {
-	console.log(threeColumnItems.value)
-}
-
 const featureHeaderSm = computed(() => landing.value?.feature_header_sm || "")
 const featureHeaderLg = computed(() => landing.value?.feature_header_lg || "")
 const featureImage = computed(() => landing.value?.feature_image || "")
@@ -114,7 +110,7 @@ onMounted(() => {
 })
 
 if (import.meta.dev && import.meta.client) {
-	console.log(page.value?.yoast_head_json?.title)
+	// console.log(page.value?.yoast_head_json?.title)
 }
 </script>
 <template>
