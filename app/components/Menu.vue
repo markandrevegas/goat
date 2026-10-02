@@ -55,7 +55,7 @@ const { data: postItems } = await getPosts({
 </script>
 
 <template>
-	<nav aria-label="Main navigation" class="fixed top-0 right-0 left-0 z-50 w-full transition-colors duration-300" :class="isScrolled ? 'bg-palladian text-brand' : 'text-brand'">
+	<nav aria-label="Main navigation" class="fixed top-0 right-0 left-0 z-50 w-full transition-colors duration-300" :class="isScrolled ? 'bg-brand text-palladian' : 'text-brand'">
 		<div class="flex w-full items-start justify-between px-4 py-2">
 			<div class="max-content flex items-center">
 				<div class="flex hidden flex-col">
@@ -65,7 +65,7 @@ const { data: postItems } = await getPosts({
 			</div>
 
 			<button @click="isMobileMenuOpen = !isMobileMenuOpen" type="button" aria-label="Open main menu" aria-controls="mobile-menu" :aria-expanded="isMobileMenuOpen">
-				<MenuIcon :is-open="isMobileMenuOpen" :class="[!isScrolled && isHeroOrVideo ? 'text-palladian' : 'text-brand']" />
+				<MenuIcon :is-open="isMobileMenuOpen" :class="[!isScrolled && isHeroOrVideo ? 'text-palladian' : 'text-palladian']" />
 			</button>
 		</div>
 
