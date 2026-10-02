@@ -5,6 +5,7 @@ import TrustindexWidget from "~/components/ui/TrustindexWidget.vue"
 import posterImg from "~/assets/images/ferry-poster.webp"
 import VideoHeader from "~/components/ui/VideoHeader.vue"
 import Marquee from "~/components/ui/Marquee.vue"
+import ThreeColumns from "~/components/ui/ThreeColumns.vue"
 
 const trustindexRef = ref<HTMLElement | null>(null)
 const shouldLoadReviews = ref(false)
@@ -48,6 +49,10 @@ const standardCards = computed(() => extractColumns(landing.value, ["first", "se
 
 // 2. Second set: 'header_one', 'header_two', 'header_three'
 const threeColumnItems = computed(() => extractColumns(landing.value, ["one", "two", "three"]))
+
+if (import.meta.dev && import.meta.client) {
+	console.log(threeColumnItems.value)
+}
 
 const featureHeaderSm = computed(() => landing.value?.feature_header_sm || "")
 const featureHeaderLg = computed(() => landing.value?.feature_header_lg || "")
@@ -117,6 +122,7 @@ if (import.meta.dev && import.meta.client) {
 		<template v-if="layoutStyle === 'video'" #bg-video>
 			<VideoHeader :title="videoHeaderTitle" :excerpt="videoHeaderExcerpt" :videoUrl="videoHeaderVideoUrl" :posterUrl="videoHeaderPoster" :primaryButtonText="videoHeaderPrimaryButton" :primaryButtonUrl="videoHeaderPrimaryButtonUrl" :secondaryButtonText="videoHeaderSecondaryButton" :secondaryButtonUrl="videoHeaderSecondaryButtonUrl" :tertiaryButtonText="videoHeaderTertiaryButton" :tertiaryButtonUrl="videoHeaderTertiaryButtonUrl" />
 		</template>
+		<ThreeColumns v-if="layoutStyle === 'standard' && threeColumnItems.length" :items="threeColumnItems" />
 
 		<LazyMainFeatureSection :feature-header-sm="featureHeaderSm" :feature-header-lg="featureHeaderLg" :feature-image="featureImage" :feature-text="featureText" :feature-button="featureButton" :feature-url="featureUrl" />
 

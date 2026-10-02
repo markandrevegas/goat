@@ -49,7 +49,7 @@ const handleButtonClick = async (event: MouseEvent) => {
 </script>
 
 <template>
-	<button type="button" @click="handleButtonClick" class="font-sofia w-max rounded px-3 py-1.5 font-medium tracking-wider transition-colors duration-400">
+	<button type="button" @click="handleButtonClick" class="font-sofia w-max rounded px-3 py-1.5 font-medium tracking-wide transition-colors duration-400">
 		<slot>{{ text }}</slot>
 	</button>
 </template>
