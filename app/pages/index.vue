@@ -63,6 +63,12 @@ const ferryVideoText = computed(() => landing.value?.ferry_video_text || "")
 const ferryVideoButton = computed(() => landing.value?.ferry_video_button || "")
 const ferryVideoUrl = computed(() => landing.value?.ferry_video_url || "")
 
+const businessLoungeHeaderSm = computed(() => landing.value?.business_lounge_header_sm)
+const businessLoungeHeader = computed(() => landing.value?.business_lounge_header)
+const businessLoungeText = computed(() => landing.value?.business_lounge_text)
+const businessLoungeButton = computed(() => landing.value?.business_lounge_button)
+const businessLoungeUrl = computed(() => landing.value?.business_lounge_url)
+
 const seoTitle = computed(() => {
 	return page.value?.yoast_head_json?.title
 })
@@ -110,7 +116,7 @@ onMounted(() => {
 })
 
 if (import.meta.dev && import.meta.client) {
-	// console.log(page.value?.yoast_head_json?.title)
+	console.log(landing.value)
 }
 </script>
 <template>
@@ -128,6 +134,6 @@ if (import.meta.dev && import.meta.client) {
 			<TrustindexWidget v-if="showReviews === true && shouldLoadReviews" />
 		</div>
 
-		<LazyFerryVideo :header="ferryVideoHeader" :header-sm="ferryVideoHeaderSm" :text="ferryVideoText" :url="ferryVideoUrl" :button="ferryVideoButton" />
+		<LazyFerryVideo :header="businessLoungeHeader" :header-sm="businessLoungeHeaderSm" :text="businessLoungeText" :url="businessLoungeUrl" :button="businessLoungeButton" />
 	</NuxtLayout>
 </template>
