@@ -31,7 +31,7 @@ const {
 	status,
 	error
 } = await getPages({
-	include: ["meetings-and-events", "rooftop-terrace", "apartments", "simple-meetings", "information-for-guests", "studio-apartment"],
+	include: ["apartments", "bow-apartment", "studio-apartment", "rooftop-terrace", "simple-meetings",  "meetings-and-events", "information-for-guests"],
 	exclude: []
 })
 

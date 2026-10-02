@@ -21,10 +21,11 @@ const { data: images, error } = await getGalleryImages(props.url)
 if (error.value) {
 	console.error("[ImageGallery] fetch failed:", error.value)
 }
-const current = ref(0)
 
-const next = () => (current.value = (current.value + 1) % (images.value?.length ?? 1))
-const prev = () => (current.value = (current.value - 1 + (images.value?.length ?? 1)) % (images.value?.length ?? 1))
+// const current = ref(0)
+
+/*const next = () => (current.value = (current.value + 1) % (images.value?.length ?? 1))
+const prev = () => (current.value = (current.value - 1 + (images.value?.length ?? 1)) % (images.value?.length ?? 1))*/
 </script>
 
 <template>

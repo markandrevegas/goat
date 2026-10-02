@@ -45,7 +45,7 @@ const videoHeaderTertiaryButton = computed(() => landing.value?.video_header_ter
 const videoHeaderTertiaryButtonUrl = computed(() => landing.value?.video_header_tertiary_button_url || "")
 
 // 1. First set: 'firstcolumnheader', 'secondcolumnheader', etc.
-const standardCards = computed(() => extractColumns(landing.value, ["first", "second", "third", "fourth"]))
+/*const standardCards = computed(() => extractColumns(landing.value, ["first", "second", "third", "fourth"]))*/
 
 // 2. Second set: 'header_one', 'header_two', 'header_three'
 const threeColumnItems = computed(() => extractColumns(landing.value, ["one", "two", "three"]))
@@ -56,12 +56,6 @@ const featureImage = computed(() => landing.value?.feature_image || "")
 const featureUrl = computed(() => landing.value?.feature_url || "")
 const featureButton = computed(() => landing.value?.feature_button || "")
 const featureText = computed(() => landing.value?.reservations_text || "")
-
-const ferryVideoHeader = computed(() => landing.value?.ferry_video_header || "")
-const ferryVideoHeaderSm = computed(() => landing.value?.ferry_video_header_sm || "")
-const ferryVideoText = computed(() => landing.value?.ferry_video_text || "")
-const ferryVideoButton = computed(() => landing.value?.ferry_video_button || "")
-const ferryVideoUrl = computed(() => landing.value?.ferry_video_url || "")
 
 const businessLoungeHeaderSm = computed(() => landing.value?.business_lounge_header_sm)
 const businessLoungeHeader = computed(() => landing.value?.business_lounge_header)
@@ -76,10 +70,6 @@ const seoTitle = computed(() => {
 const ogImage = computed(() => {
 	return page.value?.yoast_head_json?.og_image?.[0]?.url || "/default-og.jpg"
 })
-
-/*const excerpt = computed(() => {
-	return homePage.value?.excerpt?.rendered
-})*/
 
 const seoDescription = computed(() => {
 	return page.value?.yoast_head_json?.description
