@@ -34,7 +34,7 @@ if (import.meta.dev) {
 </script>
 
 <template>
-	<header v-if="layoutStyle === 'hero'" class="text-palladian relative -top-[2rem] right-1/2 left-1/2 -mx-[50vw] mb-12 flex h-[60vh] w-screen flex-col justify-center overflow-hidden">
+	<header v-if="layoutStyle === 'hero'" class="text-palladian relative -top-[2rem] right-1/2 left-1/2 -mx-[50vw] mb-12 flex min-h-[60vh] w-screen flex-col justify-center overflow-hidden pt-24">
 		<div class="grid w-full grid-cols-4 gap-4 sm:mx-auto sm:max-w-6xl sm:px-8">
 			<div class="relative z-20 col-span-3 pl-8 md:col-span-2 md:col-start-2 md:pl-0">
 				<h1 class="text-4xl tracking-tighter" v-html="title"></h1>
@@ -62,7 +62,7 @@ if (import.meta.dev) {
 		</div>
 	</header>
 
-	<header v-else class="flex h-[60vh] w-full flex-col justify-center py-8">
+	<header v-else class="flex min-h-[60vh] w-full flex-col justify-center pt-16">
 		<div class="flex flex-col items-center justify-center sm:grid sm:grid-cols-4">
 			<div class="relative z-20 col-span-2 sm:col-start-2">
 				<h1 class="text-4xl tracking-tight" v-html="title"></h1>

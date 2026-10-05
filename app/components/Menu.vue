@@ -70,11 +70,13 @@ const { data: postItems } = await getPosts({
 
 <template>
 	<nav aria-label="Main navigation" class="fixed top-0 right-0 left-0 z-50 w-full transition-colors duration-300" :class="isScrolled ? 'bg-brand text-palladian' : 'text-brand'">
-		<div class="mx-auto grid h-24 w-full max-w-6xl grid-cols-[auto_1fr_1fr_auto] items-center justify-center px-4 py-2">
-			<div class="flex items-center justify-start gap-6">
+		<div class="mx-auto grid h-24 w-full max-w-6xl grid-cols-4 items-center justify-center px-4 py-2">
+			<div class="col-span-1 flex items-center justify-start gap-4">
 				<NuxtLink to="/">
-					<Logo class="scale-250 text-palladian" />
-					<span class="hidden font-display text-palladian text-xl font-semibold transition-opacity duration-400 hover:opacity-70"> Floating G.O.A.T. </span>
+					<Logo class="scale-250 text-palladian inline-block" />
+				</NuxtLink>
+				<NuxtLink to="/">
+					<span class="font-display text-palladian text-lg font-light transition-opacity duration-400 hover:opacity-70"> Floating G.O.A.T. </span>
 				</NuxtLink>
 			</div>
 
@@ -89,7 +91,7 @@ const { data: postItems } = await getPosts({
 				<span v-else class="text-xs text-gray-400">Loading menu...</span>
 			</nav>
 
-			<div class="flex items-center justify-end">
+			<div class="col-span-1 flex items-center justify-end">
 				<button @click="isMobileMenuOpen = !isMobileMenuOpen" type="button" aria-label="Open main menu" aria-controls="mobile-menu" :aria-expanded="isMobileMenuOpen">
 					<MenuIcon :is-open="isMobileMenuOpen" class="text-palladian" />
 				</button>
