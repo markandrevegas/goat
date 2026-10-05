@@ -6,6 +6,7 @@ import posterImg from "~/assets/images/ferry-poster.webp"
 import VideoHeader from "~/components/ui/VideoHeader.vue"
 import Marquee from "~/components/ui/Marquee.vue"
 import ThreeColumns from "~/components/ui/ThreeColumns.vue"
+import CenterAlignedFeature from "~/components/CenterAlignedFeature.vue"
 
 const trustindexRef = ref<HTMLElement | null>(null)
 const shouldLoadReviews = ref(false)
@@ -114,9 +115,12 @@ if (import.meta.dev && import.meta.client) {
 		<template v-if="layoutStyle === 'video'" #bg-video>
 			<VideoHeader :title="videoHeaderTitle" :excerpt="videoHeaderExcerpt" :videoUrl="videoHeaderVideoUrl" :posterUrl="videoHeaderPoster" :primaryButtonText="videoHeaderPrimaryButton" :primaryButtonUrl="videoHeaderPrimaryButtonUrl" :secondaryButtonText="videoHeaderSecondaryButton" :secondaryButtonUrl="videoHeaderSecondaryButtonUrl" :tertiaryButtonText="videoHeaderTertiaryButton" :tertiaryButtonUrl="videoHeaderTertiaryButtonUrl" />
 		</template>
-		<ThreeColumns v-if="layoutStyle === 'standard' && threeColumnItems.length" :items="threeColumnItems" />
+
+		<CenterAlignedFeature :header="'Discover - Meeting on the Water'" :text="'Move your next meeting out onto the water and feel how a new setting inspires new ideas. At Floating G.O.A.T., we combine professional facilities with the most soothing view—the perfect sanctuary for strategic thinking and strengthened collaborations.'" />
 
 		<LazyMainFeatureSection :feature-header-sm="featureHeaderSm" :feature-header-lg="featureHeaderLg" :feature-image="featureImage" :feature-text="featureText" :feature-button="featureButton" :feature-url="featureUrl" />
+
+		<ThreeColumns v-if="threeColumnItems.length" :items="threeColumnItems" />
 
 		<Marquee folder="clients" :speed="40" />
 
