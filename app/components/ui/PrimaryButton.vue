@@ -22,7 +22,7 @@ const handleButtonClick = async (event: MouseEvent) => {
 	if (import.meta.dev && import.meta.client) {
 		console.log("clicked", JSON.stringify(props.url), props.target)
 	}
-	
+
 	emit("click", event)
 
 	// 1. Track event first

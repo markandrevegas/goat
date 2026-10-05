@@ -2,13 +2,13 @@
 import { ref, computed, onMounted, onUnmounted } from "vue"
 import MenuIcon from "./icons/MenuIcon.vue"
 import Social from "./ui/Social.vue"
+import Logo from "~/assets/svg/fg.svg"
 
 const layoutStyle = useLayoutStyle()
 const isHeroOrVideo = computed(() => {
 	return layoutStyle.value === "hero" || layoutStyle.value === "video"
 })
 
-// Native scroll listener replacing useWindowScroll
 const isScrolled = ref(false)
 
 function handleScroll() {
@@ -26,16 +26,16 @@ onUnmounted(() => {
 
 const isMobileMenuOpen = ref(false)
 const { getPages, getPosts } = useWordPress()
+
 const {
 	data: menuPages,
 	status,
 	error
 } = await getPages({
-	include: ["apartments", "bow-apartment", "studio-apartment", "rooftop-terrace", "simple-meetings",  "meetings-and-events", "information-for-guests"],
+	include: ["apartments", "bow-apartment", "studio-apartment", "rooftop-terrace", "simple-meetings", "meetings-and-events", "information-for-guests"],
 	exclude: []
 })
 
-// Transform page titles if needed
 const pageItems = computed(() => {
 	if (!menuPages.value) return []
 	return menuPages.value.map((item) => {
@@ -49,6 +49,20 @@ const pageItems = computed(() => {
 	})
 })
 
+const { data: centerPages } = await getPages({
+	include: ["studio-apartment", "bow-apartment", "rooftop-terrace", "captains-quarters"],
+	exclude: []
+})
+
+const centerMenuItems = computed(() => {
+	if (!centerPages.value) return []
+	return centerPages.value.map((item) => ({
+		id: item.id,
+		title: item.title?.rendered || item.title,
+		path: `/${item.slug}`
+	}))
+})
+
 const { data: postItems } = await getPosts({
 	exclude: ["uncategorized-sample-post", "hello-world"]
 })
@@ -56,17 +70,30 @@ const { data: postItems } = await getPosts({
 
 <template>
 	<nav aria-label="Main navigation" class="fixed top-0 right-0 left-0 z-50 w-full transition-colors duration-300" :class="isScrolled ? 'bg-brand text-palladian' : 'text-brand'">
-		<div class="flex w-full items-start justify-between px-4 py-2">
-			<div class="max-content flex items-center">
-				<div class="flex hidden flex-col">
-					<NuxtLink to="/"><span class="font-display font-light font-semibold transition-opacity duration-400 hover:opacity-70">Floating G.O.A.T.</span></NuxtLink>
-					<span class="text-[11px] uppercase">Events, Meetings, Apartments</span>
-				</div>
+		<div class="mx-auto grid h-24 w-full max-w-6xl grid-cols-[auto_1fr_1fr_auto] items-center justify-center px-4 py-2">
+			<div class="flex items-center justify-start gap-6">
+				<NuxtLink to="/">
+					<Logo class="scale-250 text-palladian" />
+					<span class="hidden font-display text-palladian text-xl font-semibold transition-opacity duration-400 hover:opacity-70"> Floating G.O.A.T. </span>
+				</NuxtLink>
 			</div>
 
-			<button @click="isMobileMenuOpen = !isMobileMenuOpen" type="button" aria-label="Open main menu" aria-controls="mobile-menu" :aria-expanded="isMobileMenuOpen">
-				<MenuIcon :is-open="isMobileMenuOpen" :class="[!isScrolled && isHeroOrVideo ? 'text-palladian' : 'text-palladian']" />
-			</button>
+			<nav class="col-span-2">
+				<ul v-if="centerMenuItems.length" class="flex items-center justify-center space-x-8 text-sm">
+					<li v-for="item in centerMenuItems" :key="item.id || item.path">
+						<NuxtLink :to="item.path" class="text-palladian transition-opacity hover:opacity-70">
+							<span v-html="item.title"></span>
+						</NuxtLink>
+					</li>
+				</ul>
+				<span v-else class="text-xs text-gray-400">Loading menu...</span>
+			</nav>
+
+			<div class="flex items-center justify-end">
+				<button @click="isMobileMenuOpen = !isMobileMenuOpen" type="button" aria-label="Open main menu" aria-controls="mobile-menu" :aria-expanded="isMobileMenuOpen">
+					<MenuIcon :is-open="isMobileMenuOpen" class="text-palladian" />
+				</button>
+			</div>
 		</div>
 
 		<Transition enter-active-class="transition-opacity duration-300 ease-out" enter-from-class="opacity-0" enter-to-class="opacity-100" leave-active-class="transition-opacity duration-200 ease-in" leave-from-class="opacity-100" leave-to-class="opacity-0">

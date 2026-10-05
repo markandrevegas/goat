@@ -64,7 +64,7 @@ useHead({
 
 			<!-- Column 3: Sidebar -->
 			<div class="col-span-1">
-				<p v-if="postItems" class="mt-8 sm:mt-0 mb-2 text-sm tracking-tight uppercase">Recent Posts</p>
+				<p v-if="postItems" class="mt-8 mb-2 text-sm tracking-tight uppercase sm:mt-0">Recent Posts</p>
 				<ul v-if="postItems" class="space-y-2">
 					<li v-for="post in postItems" :key="post.id">
 						<NuxtLink :to="`/${post.slug}`" class="w-max font-semibold transition-opacity duration-400 hover:border-b-2" v-html="post.title.rendered" />

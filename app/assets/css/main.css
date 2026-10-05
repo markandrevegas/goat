@@ -33,14 +33,14 @@
 
 @layer components {
 	.prose {
-		@apply text-sm/5 text-palladian;
+		@apply text-palladian text-sm/5;
 	}
 
 	.prose p {
-		@apply !my-0 !text-palladian;
+		@apply !text-palladian !my-0;
 	}
 	.prose :where(h1, h2, h3, h4, h5, h6) {
-		@apply font-display mt-0 tracking-tight !text-palladian;
+		@apply font-display !text-palladian mt-0 tracking-tight;
 	}
 	.prose h3 > strong,
 	.prose h2 > strong,
