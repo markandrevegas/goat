@@ -50,7 +50,7 @@ onMounted(() => {
 </script>
 
 <template>
-	<div class="relative z-20 h-[70vh] overflow-visible">
+	<div class="relative z-20 h-[70vh] sm:h-[90vh] overflow-visible">
 		<div class="absolute bottom-0 w-full">
 			<div class="button-group bg-palladian text-brand absolute top-0 left-1/2 z-50 flex -translate-x-1/2 -translate-y-1/2 flex-row">
 				<span class="button-group__item">
