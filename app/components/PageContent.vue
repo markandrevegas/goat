@@ -63,7 +63,7 @@ useHead({
 					<div class="grid grid-cols-2 gap-4">
 						<NuxtLink to="/captains-quarters">
 							<div class="col-span-1 flex justify-start items-center gap-4">
-								<NuxtImg src="/images/ferry-poster.webp" class="w-24 rounded-md"/>
+								<NuxtImg src="/images/ferry-poster.webp" alt="Captain's Quarters" class="w-24 rounded-md"/>
 								<div>
 									<p class="leading-5">Captain's Quarters</p>
 								</div>
@@ -71,7 +71,7 @@ useHead({
 						</NuxtLink>
 						<NuxtLink to="/studio-apartment">
 							<div class="col-span-1 flex justify-start items-center gap-4">
-								<NuxtImg src="/images/ferry-poster.webp" class="w-24 rounded-md"/>
+								<NuxtImg src="/images/ferry-poster.webp" alt="Studio Apartment" class="w-24 rounded-md"/>
 								<div>
 									<p class="leading-5">Studio Apartment</p>
 								</div>
@@ -79,7 +79,7 @@ useHead({
 						</NuxtLink>
 						<NuxtLink to="/bow-apartment">
 							<div class="col-span-1 flex justify-start items-center gap-4">
-								<NuxtImg src="/images/ferry-poster.webp" class="w-24 rounded-md"/>
+								<NuxtImg src="/images/ferry-poster.webp" alt="Bow Apartment" class="w-24 rounded-md"/>
 								<div>
 									<p class="leading-5">Bow Apartment</p>
 								</div>
