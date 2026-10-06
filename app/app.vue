@@ -7,13 +7,22 @@ const route = useRoute()
 const config = useRuntimeConfig()
 
 const canonicalUrl = computed(() => {
-	const path = route.path.replace(/\/+$/, "")
-	return `${config.public.siteUrl}${path}`
+	const rawSiteUrl = (config.public.siteUrl as string) || ""
+	
+  const siteUrl = rawSiteUrl.replace(/\/+$/, "")
+  const path = route.path === "/" ? "" : route.path.replace(/\/+$/, "")
+  
+  return `${siteUrl}${path}`
 })
 
-useHead({
-	link: [{ rel: "canonical", href: canonicalUrl }]
-})
+useHead(() => ({
+  link: [
+    {
+      rel: "canonical",
+      href: canonicalUrl.value
+    }
+  ]
+}))
 </script>
 
 <template>
