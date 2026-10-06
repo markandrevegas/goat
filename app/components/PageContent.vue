@@ -55,7 +55,7 @@ if (import.meta.dev && import.meta.client) {
 				<p v-else class="font-display italic">This page has no content body text.</p>
 				<PrimaryButton :text="acf?.call_to_action" :event-name="'book_meetings_and_events'" class="bg-brand text-palladian hover:bg-brand/80 mb-8 hidden text-xl uppercase hover:cursor-pointer" />
 				<div v-if="slug === 'apartments'" class="w-full pt-4 border-t border-palladian">
-					<h3 class="font-semibold font-sans mb-6">Available apartments</h3>
+					<h2 class="font-semibold font-sans mb-6">Available apartments</h2>
 					<div class="grid grid-cols-2 gap-4">
 						<NuxtLink to="/captains-quarters">
 							<div class="col-span-1 flex justify-start items-center gap-4">
