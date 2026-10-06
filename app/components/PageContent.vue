@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import WpImage from "./ui/WpImage.vue"
 import EntryHeader from "~/layouts/EntryHeader.vue"
 import Social from "./ui/Social.vue"
 import PrimaryButton from "./ui/PrimaryButton.vue"
@@ -59,7 +58,37 @@ useHead({
 				<div v-if="body" class="prose prose-lg/5 prose-headings:font-semibold prose-headings:tracking-tight prose-a:text-brand prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl prose-img:shadow-md mb-4 max-w-none" v-html="body"></div>
 				<p v-else class="font-display italic">This page has no content body text.</p>
 				<PrimaryButton :text="acf?.call_to_action" :event-name="'book_meetings_and_events'" class="bg-brand text-palladian hover:bg-brand/80 mb-8 hidden text-xl uppercase hover:cursor-pointer" />
-				<details v-if="acf?.extended_info_content" class="group w-full [interpolate-size:allow-keywords] details-content:h-0 details-content:overflow-hidden details-content:opacity-0 details-content:transition-[height,opacity,content-visibility] details-content:transition-discrete details-content:duration-300 details-content:ease-out open:details-content:h-auto open:details-content:opacity-100">
+				<div v-if="slug === 'apartments'" class="w-full pt-4 border-t border-palladian">
+					<h3 class="font-semibold font-sans mb-6">Available apartments</h3>
+					<div class="grid grid-cols-2 gap-4">
+						<NuxtLink to="/captains-quarters">
+							<div class="col-span-1 flex justify-start items-center gap-4">
+								<NuxtImg src="/images/ferry-poster.webp" class="w-24 rounded-md"/>
+								<div>
+									<p class="leading-5">Captain's Quarters</p>
+								</div>
+							</div>
+						</NuxtLink>
+						<NuxtLink to="/studio-apartment">
+							<div class="col-span-1 flex justify-start items-center gap-4">
+								<NuxtImg src="/images/ferry-poster.webp" class="w-24 rounded-md"/>
+								<div>
+									<p class="leading-5">Studio Apartment</p>
+								</div>
+							</div>
+						</NuxtLink>
+						<NuxtLink to="/bow-apartment">
+							<div class="col-span-1 flex justify-start items-center gap-4">
+								<NuxtImg src="/images/ferry-poster.webp" class="w-24 rounded-md"/>
+								<div>
+									<p class="leading-5">Bow Apartment</p>
+								</div>
+							</div>
+						</NuxtLink>
+						
+					</div>
+				</div>
+				<details v-if="acf?.extended_info_content" class="group w-full [interpolate-size:allow-keywords] details-content:h-0 details-content:overflow-hidden details-content:opacity-0 details-content:transition-[height,opacity,content-visibility] details-content:transition-discrete details-content:duration-300 details-content:ease-out open:details-content:h-auto open:details-content:opacity-100 border-t border-palladian mt-8">
 					<summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-4 font-semibold select-none [&::-webkit-details-marker]:hidden">
 						Practical information
 						<svg class="size-5 shrink-0 transition-transform duration-300 group-open:rotate-180" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">

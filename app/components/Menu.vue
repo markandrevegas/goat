@@ -70,17 +70,17 @@ const { data: postItems } = await getPosts({
 
 <template>
 	<nav aria-label="Main navigation" class="fixed top-0 right-0 left-0 z-50 w-full transition-colors duration-300" :class="isScrolled ? 'bg-brand text-palladian' : 'text-brand'">
-		<div class="mx-auto grid h-24 w-full max-w-6xl grid-cols-4 items-center justify-center px-4 py-2">
+		<div class="mx-auto grid h-24 w-full max-w-6xl grid-cols-4 items-center justify-center px-8 py-2">
 			<div class="col-span-1 flex items-center justify-start gap-4">
 				<NuxtLink to="/">
 					<Logo class="scale-250 text-palladian inline-block" />
 				</NuxtLink>
-				<NuxtLink to="/">
+				<NuxtLink to="/" class="hidden sm:inline-block">
 					<span class="font-display text-palladian text-lg font-light transition-opacity duration-400 hover:opacity-70"> Floating G.O.A.T. </span>
 				</NuxtLink>
 			</div>
 
-			<nav class="col-span-2">
+			<nav class="invisible sm:block col-span-2">
 				<ul v-if="centerMenuItems.length" class="flex items-center justify-center space-x-8 text-sm">
 					<li v-for="item in centerMenuItems" :key="item.id || item.path">
 						<NuxtLink :to="item.path" class="text-palladian transition-opacity hover:opacity-70">
