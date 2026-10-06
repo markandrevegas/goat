@@ -38,10 +38,6 @@ watch(
 if (import.meta.dev && import.meta.client) {
 	console.log(props.acf)
 }
-
-useHead({
-	link: [{ rel: "canonical", href: "'https://floatinggoat.dk/" + props.slug }]
-})
 </script>
 
 <template>

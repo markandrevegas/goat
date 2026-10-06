@@ -56,7 +56,7 @@ const featureHeaderLg = computed(() => landing.value?.feature_header_lg || "")
 const featureImage = computed(() => landing.value?.feature_image || "")
 const featureUrl = computed(() => landing.value?.feature_url || "")
 const featureButton = computed(() => landing.value?.feature_button || "")
-const featureText = computed(() => landing.value?.reservations_text || "")
+const featureText = computed(() => landing.value?.feature_text || "")
 
 const businessLoungeHeaderSm = computed(() => landing.value?.business_lounge_header_sm)
 const businessLoungeHeader = computed(() => landing.value?.business_lounge_header)
