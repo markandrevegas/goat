@@ -99,6 +99,7 @@ export default defineNuxtConfig({
 	modules: ["@tailwindcss/typography", "@nuxt/scripts", "nuxt-svgo", "@nuxt/fonts", "@nuxt/image", "@nuxtjs/sitemap"],
 	runtimeConfig: {
 		public: {
+			siteUrl: 'https://floatinggoat.dk',
 			goatWordpressUrl: process.env.NUXT_PUBLIC_GOAT_WORDPRESS_URL,
 			gtmId: process.env.NUXT_PUBLIC_GTM_ID || process.env.GTM_ID || ""
 		}

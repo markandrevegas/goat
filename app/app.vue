@@ -8,10 +8,10 @@ const config = useRuntimeConfig()
 
 const canonicalUrl = computed(() => {
 	const rawSiteUrl = (config.public.siteUrl as string) || ""
-	
+
   const siteUrl = rawSiteUrl.replace(/\/+$/, "")
   const path = route.path === "/" ? "" : route.path.replace(/\/+$/, "")
-  
+  console.log(siteUrl)
   return `${siteUrl}${path}`
 })
 
