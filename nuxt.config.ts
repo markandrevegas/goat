@@ -41,40 +41,40 @@ export default defineNuxtConfig({
 			},
 			meta: [{ name: "viewport", content: "width=device-width, initial-scale=1" }],
 			link: [
-        ...(wpOrigin
-          ? [
-              {
-                rel: "preconnect",
-                href: wpOrigin,
-                crossorigin: "" as const
-              }
-            ]
-          : []),
-        {
-          rel: "icon",
-          type: "image/png",
-          href: "/favicon/favicon-96x96.png",
-          sizes: "96x96"
-        },
-        {
-          rel: "icon",
-          type: "image/svg+xml",
-          href: "/favicon/favicon.svg"
-        },
-        {
-          rel: "shortcut icon",
-          href: "/favicon/favicon.ico"
-        },
-        {
-          rel: "apple-touch-icon",
-          sizes: "180x180",
-          href: "/favicon/apple-touch-icon.png"
-        },
-        {
-          rel: "manifest",
-          href: "/favicon/site.webmanifest"
-        }
-      ]
+				...(wpOrigin
+					? [
+							{
+								rel: "preconnect",
+								href: wpOrigin,
+								crossorigin: "" as const
+							}
+						]
+					: []),
+				{
+					rel: "icon",
+					type: "image/png",
+					href: "/favicon/favicon-96x96.png",
+					sizes: "96x96"
+				},
+				{
+					rel: "icon",
+					type: "image/svg+xml",
+					href: "/favicon/favicon.svg"
+				},
+				{
+					rel: "shortcut icon",
+					href: "/favicon/favicon.ico"
+				},
+				{
+					rel: "apple-touch-icon",
+					sizes: "180x180",
+					href: "/favicon/apple-touch-icon.png"
+				},
+				{
+					rel: "manifest",
+					href: "/favicon/site.webmanifest"
+				}
+			]
 			/*link: wpOrigin
 				? [
 						{
@@ -99,7 +99,7 @@ export default defineNuxtConfig({
 	modules: ["@tailwindcss/typography", "@nuxt/scripts", "nuxt-svgo", "@nuxt/fonts", "@nuxt/image", "@nuxtjs/sitemap"],
 	runtimeConfig: {
 		public: {
-			siteUrl: 'https://floatinggoat.dk',
+			siteUrl: "https://floatinggoat.dk",
 			goatWordpressUrl: process.env.NUXT_PUBLIC_GOAT_WORDPRESS_URL,
 			gtmId: process.env.NUXT_PUBLIC_GTM_ID || process.env.GTM_ID || ""
 		}

@@ -3,6 +3,7 @@ import Instagram from "~/components/icons/Instagram.vue"
 import Facebook from "~/components/icons/Facebook.vue"
 import Linkedin from "~/components/icons/Linkedin.vue"
 import PrimaryButton from "~/components/ui/PrimaryButton.vue"
+import PageVideoHeader from "~/components/PageVideoHeader.vue"
 
 const facebookUrl = "https://facebook.com/FloatingGOATCopenhagen"
 const instagramUrl = "https://instagram.com/floating_goat_cph/"
@@ -25,6 +26,8 @@ const props = defineProps<{
 	linkedinUrl?: string
 	callToAction?: string
 	callToActionUrl?: string
+	videoUrl?: string
+	posterUrl?: string
 	slug?: string
 }>()
 
@@ -34,7 +37,8 @@ if (import.meta.dev) {
 </script>
 
 <template>
-	<header v-if="layoutStyle === 'hero'" class="text-palladian relative -top-[2rem] right-1/2 left-1/2 -mx-[50vw] mb-12 flex min-h-[60vh] w-screen flex-col justify-center overflow-hidden pt-24">
+	<PageVideoHeader v-if="layoutStyle === 'video' && videoUrl" :title="title" :excerpt="excerpt" :call-to-action="callToAction" :call-to-action-url="callToActionUrl" :author-name="authorName" :formatted-date="formattedDate" :date-published="datePublished" :video-url="videoUrl" :poster-url="posterUrl" :slug="slug" />
+	<header v-else-if="layoutStyle === 'hero'" class="text-palladian relative -top-[2rem] right-1/2 left-1/2 -mx-[50vw] mb-12 flex min-h-[60vh] w-screen flex-col justify-center overflow-hidden pt-24">
 		<div class="grid w-full grid-cols-4 gap-4 sm:mx-auto sm:max-w-6xl sm:px-8">
 			<div class="relative z-20 col-span-3 pl-8 md:col-span-2 md:col-start-2 md:pl-0">
 				<h1 class="text-4xl tracking-tighter" v-html="title"></h1>

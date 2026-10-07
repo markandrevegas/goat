@@ -19,7 +19,6 @@ const isVideoPlaying = ref(false)
 
 <template>
 	<div class="text-palladian relative z-10 -mt-2 h-[60vh]">
-		<!-- Video tag without the native :poster attribute -->
 		<video v-if="props" autoplay muted playsinline class="absolute inset-0 z-0 h-full w-full object-cover hue-rotate-15" @playing="isVideoPlaying = true">
 			<source :src="heroMobile" type="video/mp4" media="(max-width: 639px)" />
 			<source :src="heroDesktop" type="video/mp4" media="(min-width: 640px)" />

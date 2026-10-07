@@ -73,7 +73,7 @@ const { data: postItems } = await getPosts({
 		<div class="mx-auto grid h-24 w-full max-w-6xl grid-cols-4 items-center justify-center px-8 py-2">
 			<div class="col-span-1 flex items-center justify-start gap-4">
 				<NuxtLink to="/">
-					<Logo class="scale-250 text-palladian inline-block" />
+					<Logo class="text-palladian inline-block scale-250" />
 					<span class="sr-only">Floating G.O.A.T.</span>
 				</NuxtLink>
 				<NuxtLink to="/" class="hidden sm:inline-block">
@@ -81,7 +81,7 @@ const { data: postItems } = await getPosts({
 				</NuxtLink>
 			</div>
 
-			<nav class="invisible sm:block col-span-2">
+			<nav class="invisible col-span-2 sm:block">
 				<ul v-if="centerMenuItems.length" class="flex items-center justify-center space-x-8 text-sm">
 					<li v-for="item in centerMenuItems" :key="item.id || item.path">
 						<NuxtLink :to="item.path" class="text-palladian transition-opacity hover:opacity-70">

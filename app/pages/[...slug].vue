@@ -24,7 +24,6 @@ const {
 	`wp-content-${targetSlug.value}`,
 	async () => {
 		const slug = targetSlug.value
-		// console.log("[slug.vue] resolving slug:", slug)
 		if (!slug) return null
 
 		return (await getContentBySlug("pages", slug)) ?? (await getContentBySlug("posts", slug)) ?? null
@@ -52,9 +51,6 @@ const isPage = computed(() => rawContentData.value?._type === "pages")
 const isPost = computed(() => rawContentData.value?._type === "posts")
 
 const hasContent = computed(() => !!rawContentData.value)
-
-/*const useBlogLayout = computed(() => isPage.value || rawContentData.value?.slug === "information-for-guests")
-const layoutName = computed(() => (useBlogLayout.value ? "blog" : "page"))*/
 
 const contentId = computed(() => rawContentData.value?.id || null)
 const contentTitle = computed(() => rawContentData.value?.title?.rendered || "")
@@ -102,6 +98,17 @@ const headerExcerpt = computed(() => {
 	return rawContentData.value?.acf?.header_excerpt ?? ""
 })
 
+const pageVideoHeaderUrl = computed(() => {
+	return rawContentData.value?.acf?.page_header_video_url
+})
+const pageVideoHeaderPoster = computed(() => {
+	return rawContentData.value?.acf?.page_header_video_poster
+})
+
+/*const headerVideoUrl = computed(() => {
+	return rawContentData.value?.acf?.page_header_video_url ?? ""
+})*/
+
 const featuredImageAlt = computed(() => featuredMedia.value?.alt_text || contentTitle.value)
 const featuredImageWidth = computed(() => featuredMedia.value?.media_details?.width || 1200)
 const featuredImageHeight = computed(() => featuredMedia.value?.media_details?.height || 630)
@@ -123,7 +130,7 @@ const cleanSeoDescription = computed(() => decodeEntities(seoDescription.value))
 
 const currentLayoutStyle = computed(() => contentAcf.value?.layoutstyle)
 if (import.meta.dev && import.meta.client) {
-	// console.log(currentLayoutStyle.value)
+	console.log(currentLayoutStyle.value)
 }
 
 useSeoMeta({
@@ -156,7 +163,35 @@ useSeoMeta({
 
 			<PostContent v-else-if="hasContent && isPost" :title="contentTitle" :body="contentBody" :slug="contentSlug" :acf="contentAcf" :author-name="authorName" :formatted-date="formattedDate" :date-published="datePublished" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" :layout-style="currentLayoutStyle" />
 
-			<PageContent v-else-if="hasContent && isPage" :acf="contentAcf" :title="contentTitle" :body="contentBody" :slug="contentSlug" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" :related-pages="relatedPages" :layout-style="currentLayoutStyle" />
+			<PageContent v-else-if="hasContent && isPage" :acf="contentAcf" :title="contentTitle" :body="contentBody" :slug="contentSlug" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" :related-pages="relatedPages" :layout-style="currentLayoutStyle" :page-video-header-url="pageVideoHeaderUrl" :page-video-header-poster="pageVideoHeaderPoster" />
+		</div>
+		<div v-if="contentSlug === 'apartments'">
+			<div class="mx-auto max-w-6xl px-8">
+				<h2 class="mb-6 text-lg font-semibold">Available apartments</h2>
+				<div class="grid grid-cols-3 gap-4">
+					<NuxtLink to="/captains-quarters" class="group relative block h-40 overflow-hidden rounded-md">
+						<NuxtImg src="/images/ferry-poster.webp" alt="Captain's Quarters" class="absolute inset-0 size-full object-cover hue-rotate-15" />
+						<div class="absolute inset-0 bg-black/40"></div>
+						<div class="relative z-10 flex size-full items-end p-4 pb-8">
+							<p class="text-palladian font-display text-xl leading-5 transition-all duration-400 hover:scale-105">Captain's Quarters</p>
+						</div>
+					</NuxtLink>
+					<NuxtLink to="/studio-apartment" class="group relative block h-40 overflow-hidden rounded-md">
+						<NuxtImg src="/images/ferry-poster.webp" alt="Studio Apartment" class="absolute inset-0 size-full object-cover hue-rotate-15" />
+						<div class="absolute inset-0 bg-black/40"></div>
+						<div class="relative z-10 flex size-full items-end p-4 pb-8">
+							<p class="text-palladian font-display text-xl leading-5 transition-all duration-400 hover:scale-105">Studio Apartment</p>
+						</div>
+					</NuxtLink>
+					<NuxtLink to="/bow-apartment" class="group relative block h-40 overflow-hidden rounded-md">
+						<NuxtImg src="/images/ferry-poster.webp" alt="Bow Apartment" class="absolute inset-0 size-full object-cover hue-rotate-15" />
+						<div class="bg-brand/50 absolute inset-0 z-10 mix-blend-multiply"></div>
+						<div class="relative z-10 flex size-full items-end p-4 pb-8">
+							<p class="text-palladian font-display text-xl leading-5 transition-all duration-400 hover:scale-105">Bow Apartment</p>
+						</div>
+					</NuxtLink>
+				</div>
+			</div>
 		</div>
 		<div v-if="contentSlug === 'rooftop-terrace' || 'studio-apartment' || 'bow-apartment'">
 			<div class="w-full sm:mx-auto sm:w-4/5">
