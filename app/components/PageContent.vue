@@ -67,7 +67,7 @@ if (import.meta.dev && import.meta.client) {
 						</PrimaryButton>
 					</div>
 				</div>
-				<p v-else class="font-display italic">This page has no content body text.</p>
+				<p v-if="!body" class="font-display italic">This page has no content body text.</p>
 				<PrimaryButton :text="acf?.call_to_action" :event-name="'book_meetings_and_events'" class="bg-brand text-palladian hover:bg-brand/80 hidden text-xl uppercase hover:cursor-pointer" />
 				<details v-if="acf?.extended_info_content" class="group border-palladian mt-8 w-full border-t [interpolate-size:allow-keywords] details-content:h-0 details-content:overflow-hidden details-content:opacity-0 details-content:transition-[height,opacity,content-visibility] details-content:transition-discrete details-content:duration-300 details-content:ease-out open:details-content:h-auto open:details-content:opacity-100">
 					<summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-4 font-semibold select-none [&::-webkit-details-marker]:hidden">

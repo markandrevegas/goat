@@ -71,11 +71,6 @@ if (import.meta.dev) {
 			<div class="relative z-20 col-span-2 sm:col-start-2">
 				<h1 class="text-4xl tracking-tight" v-html="title"></h1>
 				<p v-if="excerpt" v-html="excerpt" class="mt-3 mb-2 w-full text-sm/5 sm:max-w-2xl"></p>
-				<div v-if="authorName || formattedDate" class="mt-4 flex items-center space-x-2 text-sm">
-					<span v-if="authorName" class="font-medium">By {{ authorName }}</span>
-					<span v-if="authorName && formattedDate">|</span>
-					<time v-if="formattedDate" :datetime="datePublished ?? undefined">{{ formattedDate }}</time>
-				</div>
 				<PrimaryButton v-if="callToAction" :url="callToActionUrl" :text="callToAction" :event-name="'book_' + slug" class="bg-palladian text-brand hover:bg-palladian/80 mt-4 mb-8 text-xl uppercase hover:cursor-pointer" />
 			</div>
 		</div>
