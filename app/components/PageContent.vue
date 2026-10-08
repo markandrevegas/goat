@@ -55,8 +55,16 @@ if (import.meta.dev && import.meta.client) {
 			<div class="col-span-2 flex flex-col gap-2 md:pr-8">
 				<NuxtImg v-if="acf?.layoutstyle !== 'hero' && featuredImageUrl" :src="featuredImageUrl" :alt="featuredImageAlt" loading="eager" fetchpriority="high" sizes="100vw sm:100vw md:100vw lg:100vw" :densities?="[1, 2, 3]" class="mb-4 h-auto w-full object-cover" />
 				<div v-if="body" class="prose prose-lg/5 prose-headings:font-semibold prose-headings:tracking-tight prose-a:text-brand prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl prose-img:shadow-md mb-4 max-w-none" v-html="body"></div>
+				<div v-if="slug === 'ferry-access'">
+					<h2 class="mb-4">Studio Apartment</h2>
+					<div class="flex flex-wrap gap-4">
+						<PrimaryButton :target="'_blank'" :text="'Check-in'" :event-name="'download_pdf'" :url="'https://floatinggoat.dk/wp-content/uploads/pdfs/check-in-studio-apartment.pdf'" class="bg-palladian text-brand hover:bg-brand hover:text-palladian text-xl uppercase hover:cursor-pointer" />
+						<PrimaryButton :target="'_blank'" :text="'General info'" :event-name="'download_studio_info_pdf'" :url="'https://floatinggoat.dk/wp-content/uploads/pdfs/general-info-studio-apartment.pdf'" class="bg-palladian text-brand hover:bg-brand hover:text-palladian text-xl uppercase hover:cursor-pointer" />
+						<PrimaryButton :target="'_blank'" :text="'Directions'" :event-name="'download_directions_to_ferry_pdf'" :url="'https://floatinggoat.dk/wp-content/uploads/pdfs/directions-to-ferry.pdf'" class="bg-palladian text-brand hover:bg-brand hover:text-palladian text-xl uppercase hover:cursor-pointer" />
+					</div>
+				</div>
 				<p v-else class="font-display italic">This page has no content body text.</p>
-				<PrimaryButton :text="acf?.call_to_action" :event-name="'book_meetings_and_events'" class="bg-brand text-palladian hover:bg-brand/80 mb-8 hidden text-xl uppercase hover:cursor-pointer" />
+				<PrimaryButton :text="acf?.call_to_action" :event-name="'book_meetings_and_events'" class="bg-brand text-palladian hover:bg-brand/80 hidden text-xl uppercase hover:cursor-pointer" />
 				<details v-if="acf?.extended_info_content" class="group border-palladian mt-8 w-full border-t [interpolate-size:allow-keywords] details-content:h-0 details-content:overflow-hidden details-content:opacity-0 details-content:transition-[height,opacity,content-visibility] details-content:transition-discrete details-content:duration-300 details-content:ease-out open:details-content:h-auto open:details-content:opacity-100">
 					<summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-4 font-semibold select-none [&::-webkit-details-marker]:hidden">
 						Practical information
