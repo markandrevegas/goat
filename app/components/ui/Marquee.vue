@@ -59,8 +59,8 @@ const loopItems = computed(() => {
 
 				<div class="marquee-track animate-marquee flex w-max items-center justify-center gap-12" :class="{ 'pause-on-hover': pauseOnHover }" :style="{ animationDuration: `${speed}s` }">
 					<div v-for="(item, index) in loopItems" :key="`${item.url}-${index}`" class="flex shrink-0 flex-col items-center gap-2">
-						<NuxtImg v-if="item.url" :src="item.url" :alt="item.label" height="64" format="webp" loading="lazy" decoding="async" class="h-8 max-h-8 w-auto max-w-[120px] shrink-0 object-cover" />
-						<span class="text-brand text-xs font-semibold whitespace-nowrap text-gray-700">{{ item.label }}</span>
+						<NuxtImg v-if="item.url" :src="item.url" :alt="item.label" height="72" format="webp" loading="lazy" decoding="async" class="h-16 max-h-16 w-auto shrink-0 object-cover" />
+						<span class="text-brand text-xs font-semibold whitespace-nowrap text-brand/50">{{ item.label }}</span>
 					</div>
 				</div>
 			</div>
