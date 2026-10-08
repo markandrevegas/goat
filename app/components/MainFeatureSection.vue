@@ -13,7 +13,7 @@ const props = defineProps<Props>()
 </script>
 <template>
 	<section class="relative flex justify-center md:pt-24 md:pb-16">
-		<div class="flex sm:max-w-5xl sm:mx-auto flex-col md:grid md:grid-cols-3">
+		<div class="flex flex-col sm:mx-auto sm:max-w-5xl md:grid md:grid-cols-3">
 			<WpImage loading="lazy" v-if="props.featureImage" :image-id="props.featureImage" :alt="props.featureHeaderLg ?? 'Vandets ro og byens puls'" class="block w-full object-cover" />
 			<div class="px-4 py-16 sm:col-span-2 sm:px-8 sm:py-8">
 				<span class="text-center text-sm uppercase">{{ featureHeaderSm }}</span>

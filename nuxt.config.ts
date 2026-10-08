@@ -101,7 +101,9 @@ export default defineNuxtConfig({
 		public: {
 			siteUrl: "https://floatinggoat.dk",
 			goatWordpressUrl: process.env.NUXT_PUBLIC_GOAT_WORDPRESS_URL,
-			gtmId: process.env.NUXT_PUBLIC_GTM_ID || process.env.GTM_ID || ""
+			gtmId: process.env.NUXT_PUBLIC_GTM_ID || process.env.GTM_ID || "",
+			sharefoxApiUrl: "https://api.mysharefox.com/api-v2",
+			sharefoxShopDomain: "mar-k-waterside.admin.mysharefox.com"
 		}
 	},
 	site: {

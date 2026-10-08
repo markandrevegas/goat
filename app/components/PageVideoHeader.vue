@@ -36,7 +36,7 @@ onMounted(() => {
 </script>
 
 <template>
-	<header class="text-palladian relative -top-[2rem] right-1/2 left-1/2 -mx-[50vw] mb-12 flex min-h-[60vh] md:min-h-[75vh] w-screen flex-col justify-center overflow-hidden pt-24">
+	<header class="text-palladian relative -top-[2rem] right-1/2 left-1/2 -mx-[50vw] mb-12 flex min-h-[60vh] w-screen flex-col justify-center overflow-hidden pt-24 md:min-h-[75vh]">
 		<div class="grid w-full grid-cols-4 gap-4 sm:mx-auto sm:max-w-6xl sm:px-8">
 			<div class="relative z-20 col-span-3 pl-8 md:col-span-2 md:col-start-2 md:pl-0">
 				<h1 class="text-4xl tracking-tighter" v-html="title"></h1>

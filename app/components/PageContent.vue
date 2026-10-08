@@ -42,6 +42,42 @@ watch(
 if (import.meta.dev && import.meta.client) {
 	console.log(props.acf)
 }
+
+const { getProducts } = useSharefox()
+const { data: product, error } = await getProducts()
+if (error.value || !product.value) throw createError({ statusCode: 404, statusMessage: "Product not found" })
+
+if (import.meta.client && import.meta.dev) {
+	console.log(product.value)
+}
+
+/*const siteUrl = "https://floatinggoat.dk"
+const schema = computed(() => {
+	const p = product.value!
+	const img = p.productGroup.images?.link
+	return {
+		"@context": "https://schema.org",
+		"@type": "Product",
+		name: p.productGroup.name,
+		description: p.seoDescription || p.productGroup.summary,
+		image: img ? [img] : undefined,
+		sku: String(p.id),
+		url: `${siteUrl}${props.slug}`,
+		category: p.productGroup.productCategories?.[0]?.name,
+		offers: {
+			"@type": "Offer",
+			price: p.productGroup.price,
+			priceCurrency: "DKK",
+			availability: "https://schema.org/InStock",
+			url: `${siteUrl}${props.slug}`
+		}
+	}
+})
+
+useHead({
+	title: () => product.value?.seoTitle || product.value?.productGroup.titleTag,
+	script: [{ type: "application/ld+json", innerHTML: () => JSON.stringify(schema.value) }]
+})*/
 </script>
 
 <template>
