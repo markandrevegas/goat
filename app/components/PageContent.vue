@@ -56,7 +56,7 @@ if (import.meta.dev && import.meta.client) {
 			<div class="col-span-2 flex flex-col gap-2 md:pr-8">
 				<NuxtImg v-if="acf?.layoutstyle !== 'hero' && featuredImageUrl" :src="featuredImageUrl" :alt="featuredImageAlt" loading="eager" fetchpriority="high" sizes="100vw sm:100vw md:100vw lg:100vw" :densities?="[1, 2, 3]" class="mb-4 h-auto w-full object-cover" />
 				<div v-if="body" class="prose prose-lg/5 prose-headings:font-semibold prose-headings:tracking-tight prose-a:text-brand prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl prose-img:shadow-md mb-4 max-w-none" v-html="body"></div>
-				<div v-if="slug === 'ferry-access'">
+				<div v-if="body && slug === 'ferry-access'">
 					<h2 class="mb-4">Studio Apartment</h2>
 					<div class="flex flex-wrap gap-4">
 						<PrimaryButton :target="'_blank'" :text="''" :event-name="'download_check_in_studio_apartment_pdf'" :url="'https://floatinggoat.dk/wp-content/uploads/pdfs/check-in-studio-apartment.pdf'" class="bg-palladian text-brand hover:bg-brand hover:text-palladian flex items-center justify-start gap-1 text-xl uppercase hover:cursor-pointer">
