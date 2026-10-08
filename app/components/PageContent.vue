@@ -4,6 +4,7 @@ import Social from "./ui/Social.vue"
 import PrimaryButton from "./ui/PrimaryButton.vue"
 import MapEmbed from "./ui/MapEmbed.vue"
 import ThreeCardLayout from "./ui/ThreeCardLayout.vue"
+import Pdf from "./icons/Pdf.vue"
 interface RelatedPage {
 	id: number
 	title: { rendered: string }
@@ -58,9 +59,10 @@ if (import.meta.dev && import.meta.client) {
 				<div v-if="slug === 'ferry-access'">
 					<h2 class="mb-4">Studio Apartment</h2>
 					<div class="flex flex-wrap gap-4">
-						<PrimaryButton :target="'_blank'" :text="'Check-in'" :event-name="'download_pdf'" :url="'https://floatinggoat.dk/wp-content/uploads/pdfs/check-in-studio-apartment.pdf'" class="bg-palladian text-brand hover:bg-brand hover:text-palladian text-xl uppercase hover:cursor-pointer" />
-						<PrimaryButton :target="'_blank'" :text="'General info'" :event-name="'download_studio_info_pdf'" :url="'https://floatinggoat.dk/wp-content/uploads/pdfs/general-info-studio-apartment.pdf'" class="bg-palladian text-brand hover:bg-brand hover:text-palladian text-xl uppercase hover:cursor-pointer" />
-						<PrimaryButton :target="'_blank'" :text="'Directions'" :event-name="'download_directions_to_ferry_pdf'" :url="'https://floatinggoat.dk/wp-content/uploads/pdfs/directions-to-ferry.pdf'" class="bg-palladian text-brand hover:bg-brand hover:text-palladian text-xl uppercase hover:cursor-pointer" />
+						<PrimaryButton :target="'_blank'" :text="''" :event-name="'download_pdf'" :url="'https://floatinggoat.dk/wp-content/uploads/pdfs/check-in-studio-apartment.pdf'" class="bg-palladian text-brand hover:bg-brand hover:text-palladian text-xl uppercase hover:cursor-pointer flex justify-start items-center gap-1">
+							<slot><Pdf />Check-in / Check-out Info</slot>
+						</PrimaryButton>
+						
 					</div>
 				</div>
 				<p v-else class="font-display italic">This page has no content body text.</p>
