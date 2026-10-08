@@ -64,6 +64,9 @@ const businessLoungeText = computed(() => landing.value?.business_lounge_text)
 const businessLoungeButton = computed(() => landing.value?.business_lounge_button)
 const businessLoungeUrl = computed(() => landing.value?.business_lounge_url)
 
+const centeredFeatureHeader = computed(() => landing.value?.centered_feature_header)
+const centeredFeatureText = computed(() => landing.value?.centered_feature_text)
+
 const seoTitle = computed(() => {
 	return page.value?.yoast_head_json?.title
 })
@@ -116,7 +119,7 @@ if (import.meta.dev && import.meta.client) {
 			<VideoHeader :title="videoHeaderTitle" :excerpt="videoHeaderExcerpt" :videoUrl="videoHeaderVideoUrl" :posterUrl="videoHeaderPoster" :primaryButtonText="videoHeaderPrimaryButton" :primaryButtonUrl="videoHeaderPrimaryButtonUrl" :secondaryButtonText="videoHeaderSecondaryButton" :secondaryButtonUrl="videoHeaderSecondaryButtonUrl" :tertiaryButtonText="videoHeaderTertiaryButton" :tertiaryButtonUrl="videoHeaderTertiaryButtonUrl" />
 		</template>
 
-		<CenterAlignedFeature :header="'Discover - Meeting on the Water'" :text="'Move your next meeting out onto the water and feel how a new setting inspires new ideas. At Floating G.O.A.T., we combine professional facilities with the most soothing view—the perfect sanctuary for strategic thinking and strengthened collaborations.'" />
+		<LazyCenterAlignedFeature :header="centeredFeatureHeader" :text="centeredFeatureText" />
 
 		<LazyMainFeatureSection :feature-header-sm="featureHeaderSm" :feature-header-lg="featureHeaderLg" :feature-image="featureImage" :feature-text="featureText" :feature-button="featureButton" :feature-url="featureUrl" />
 

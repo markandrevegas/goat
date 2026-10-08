@@ -5,7 +5,7 @@ const props = defineProps<{
 }>()
 </script>
 <template>
-	<section class="flex flex-col items-center justify-center sm:flex-row">
+	<section class="flex flex-col items-center justify-center sm:flex-row px-8 py-24">
 		<div class="flex max-w-5xl flex-col sm:flex-row sm:items-center">
 			<div class="px-0 pt-16 text-center sm:col-span-2 sm:px-8">
 				<h2 class="mt-8 text-3xl font-semibold">{{ header }}</h2>
