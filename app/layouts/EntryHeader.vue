@@ -38,7 +38,7 @@ if (import.meta.dev) {
 
 <template>
 	<PageVideoHeader v-if="layoutStyle === 'video' && videoUrl" :title="title" :excerpt="excerpt" :call-to-action="callToAction" :call-to-action-url="callToActionUrl" :author-name="authorName" :formatted-date="formattedDate" :date-published="datePublished" :video-url="videoUrl" :poster-url="posterUrl" :slug="slug" />
-	<header v-else-if="layoutStyle === 'hero'" class="text-palladian relative -top-[2rem] right-1/2 left-1/2 -mx-[50vw] mb-12 flex min-h-[60vh] w-screen flex-col justify-center overflow-hidden pt-24">
+	<header v-else-if="layoutStyle === 'hero'" class="text-palladian relative -top-[2rem] right-1/2 left-1/2 -mx-[50vw] mb-12 flex min-h-[60vh] md:min-h-[75vh] w-screen flex-col justify-center overflow-hidden pt-24">
 		<div class="grid w-full grid-cols-4 gap-4 sm:mx-auto sm:max-w-6xl sm:px-8">
 			<div class="relative z-20 col-span-3 pl-8 md:col-span-2 md:col-start-2 md:pl-0">
 				<h1 class="text-4xl tracking-tighter" v-html="title"></h1>
@@ -66,7 +66,7 @@ if (import.meta.dev) {
 		</div>
 	</header>
 
-	<header v-else class="flex min-h-[60vh] w-full flex-col justify-center pt-16">
+	<header v-else class="flex min-h-[60vh] md:min-h-[75vh] w-full flex-col justify-center pt-16">
 		<div class="flex flex-col items-center justify-center sm:grid sm:grid-cols-4">
 			<div class="relative z-20 col-span-2 sm:col-start-2">
 				<h1 class="text-4xl tracking-tight" v-html="title"></h1>
