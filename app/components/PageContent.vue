@@ -59,10 +59,10 @@ if (import.meta.dev && import.meta.client) {
 				<div v-if="slug === 'ferry-access'">
 					<h2 class="mb-4">Studio Apartment</h2>
 					<div class="flex flex-wrap gap-4">
-						<PrimaryButton :target="'_blank'" :text="''" :event-name="'download_check_in_studio_apartment_pdf'" :url="'https://floatinggoat.dk/wp-content/uploads/pdfs/check-in-studio-apartment.pdf'" class="bg-palladian text-brand hover:bg-brand hover:text-palladian text-xl uppercase hover:cursor-pointer flex justify-start items-center gap-1">
+						<PrimaryButton :target="'_blank'" :text="''" :event-name="'download_check_in_studio_apartment_pdf'" :url="'https://floatinggoat.dk/wp-content/uploads/pdfs/check-in-studio-apartment.pdf'" class="bg-palladian text-brand hover:bg-brand hover:text-palladian flex items-center justify-start gap-1 text-xl uppercase hover:cursor-pointer">
 							<slot><Pdf />Check-in / Check-out Info</slot>
 						</PrimaryButton>
-						<PrimaryButton :target="'_blank'" :text="''" :event-name="'download_general_info_studio_apartment_pdf'" :url="'https://floatinggoat.dk/wp-content/uploads/pdfs/general-info-studio-apartment.pdf'" class="bg-palladian text-brand hover:bg-brand hover:text-palladian text-xl uppercase hover:cursor-pointer flex justify-start items-center gap-1">
+						<PrimaryButton :target="'_blank'" :text="''" :event-name="'download_general_info_studio_apartment_pdf'" :url="'https://floatinggoat.dk/wp-content/uploads/pdfs/general-info-studio-apartment.pdf'" class="bg-palladian text-brand hover:bg-brand hover:text-palladian flex items-center justify-start gap-1 text-xl uppercase hover:cursor-pointer">
 							<slot><Pdf />General info</slot>
 						</PrimaryButton>
 					</div>
