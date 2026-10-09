@@ -45,72 +45,34 @@ if (error.value || !products.value) {
 	console.log(error.value)
 }
 
-const product = computed(() => products.value?.find((p) => p.slug === props.slug))
+const product = computed(() => products.value?.find((p) => p.slug === props.slug) ?? null)
+
 const pick = (l?: { dk?: string; en?: string }) => l?.dk || l?.en || ""
 
-const siteUrl = "https://floatinggoat.dk"
+// const siteUrl = "https://floatinggoat.dk"
+const imageBase = "https://fg.floatinggoat.dk"
 const schema = computed(() => {
-	const p = product.value!
+	const p = product.value
+	if (!p) return null
 	return {
 		"@context": "https://schema.org",
 		"@type": "Product",
 		name: pick(p.name),
 		sku: String(p.id),
-		url: `${siteUrl}${props.slug}`,
-		// image: p.images.map((i) => `${imageBase}${i.link}`),
-		offers: {
-			"@type": "Offer",
-			url: `${siteUrl}${props.slug}`,
-			priceCurrency: "DKK",
-			price: p.price,
-			priceSpecification: {
-				"@type": "UnitPriceSpecification",
-				price: p.price,
-				priceCurrency: "DKK",
-				valueAddedTaxIncluded: true,
-				...(p.perDay && { unitCode: "DAY" })
-			}
-		}
+		image: (p.images ?? []).map((i) => (i.link.startsWith("http") ? i.link : `${imageBase}${i.link}`)),
+		offers: { "@type": "Offer", priceCurrency: "DKK", price: p.price }
 	}
 })
 
-/*useHead({
-	title: () => pick(product.value?.name),
-	script: [{ type: "application/ld+json", innerHTML: () => JSON.stringify(schema.value) }]
-})*/
+useHead({
+	script: computed(() => (schema.value ? [{ type: "application/ld+json", innerHTML: JSON.stringify(schema.value) }] : []))
+})
 
 if (import.meta.client && import.meta.dev) {
 	// console.log(props.acf)
 	console.log(product.value)
 }
 
-/*const siteUrl = "https://floatinggoat.dk"
-const schema = computed(() => {
-	const p = product.value!
-	const img = p.productGroup.images?.link
-	return {
-		"@context": "https://schema.org",
-		"@type": "Product",
-		name: p.productGroup.name,
-		description: p.seoDescription || p.productGroup.summary,
-		image: img ? [img] : undefined,
-		sku: String(p.id),
-		url: `${siteUrl}${props.slug}`,
-		category: p.productGroup.productCategories?.[0]?.name,
-		offers: {
-			"@type": "Offer",
-			price: p.productGroup.price,
-			priceCurrency: "DKK",
-			availability: "https://schema.org/InStock",
-			url: `${siteUrl}${props.slug}`
-		}
-	}
-})
-
-useHead({
-	title: () => product.value?.seoTitle || product.value?.productGroup.titleTag,
-	script: [{ type: "application/ld+json", innerHTML: () => JSON.stringify(schema.value) }]
-})*/
 </script>
 
 <template>

@@ -1,6 +1,7 @@
+type Localized = { dk: string; en: string }
 export interface SharefoxProductListItem {
 	id: number
-	name: { en: string; dk: string }
+	name: Localized
 	slug: string
 	price: number
 	priceExclVat: number
@@ -24,14 +25,13 @@ export interface SharefoxProduct {
 		summary?: string
 		descriptionWeb?: string
 		titleTag?: string
-		images?: { link: string; heading?: string } // spec says object; verify against a live response
+		images?: { link: string; heading?: string }
 		productCategories: { id: number; name: string; slug?: string }[]
 	}
 	photosVideos?: any[]
 }
 
 export function useSharefox() {
-	// Call synchronously at the top, per the async-context gotcha
 	const config = useRuntimeConfig()
 	const sfFetch = <T>(path: string, query?: Record<string, any>) =>
 		$fetch<T>(path, {

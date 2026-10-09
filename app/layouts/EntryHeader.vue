@@ -32,7 +32,7 @@ const props = defineProps<{
 }>()
 
 if (import.meta.dev) {
-	console.log(props.callToActionUrl)
+	// console.log(props.callToActionUrl)
 }
 </script>
 

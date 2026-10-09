@@ -40,17 +40,14 @@ const isExternal = computed(() => {
 </script>
 
 <template>
-	<!-- 1. External URL -> Plain <a> tag -->
 	<a v-if="url && isExternal" :href="url" :target="target" :rel="target === '_blank' ? 'noopener noreferrer' : undefined" @click="handleTrack" class="font-sofia inline-block w-max rounded px-3 py-1.5 font-medium tracking-wide transition-colors duration-400">
 		<slot>{{ text }}</slot>
 	</a>
 
-	<!-- 2. Internal Route -> <NuxtLink> (renders as <a href="..."> in SSR HTML) -->
 	<NuxtLink v-else-if="url" :to="url" :target="target" @click="handleTrack" class="font-sofia inline-block w-max rounded px-3 py-1.5 font-medium tracking-wide transition-colors duration-400">
 		<slot>{{ text }}</slot>
 	</NuxtLink>
 
-	<!-- 3. No URL -> Native <button> -->
 	<button v-else type="button" @click="handleTrack" class="font-sofia w-max rounded px-3 py-1.5 font-medium tracking-wide transition-colors duration-400">
 		<slot>{{ text }}</slot>
 	</button>
