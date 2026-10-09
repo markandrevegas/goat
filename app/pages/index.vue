@@ -79,9 +79,6 @@ const seoDescription = computed(() => {
 	return page.value?.yoast_head_json?.description
 })
 
-useHead({
-	link: [{ rel: "canonical", href: "https://floatinggoat.dk/" }]
-})
 useSeoMeta({
 	title: seoTitle,
 	titleTemplate: null,
@@ -123,7 +120,7 @@ if (import.meta.dev && import.meta.client) {
 
 		<LazyMainFeatureSection :feature-header-sm="featureHeaderSm" :feature-header-lg="featureHeaderLg" :feature-image="featureImage" :feature-text="featureText" :feature-button="featureButton" :feature-url="featureUrl" />
 
-		<ThreeColumns v-if="threeColumnItems.length" :items="threeColumnItems" />
+		<LazyThreeColumns v-if="threeColumnItems.length" :items="threeColumnItems" />
 
 		<Marquee folder="clients" :speed="40" />
 

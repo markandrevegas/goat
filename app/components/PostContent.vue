@@ -36,10 +36,6 @@ watch(
 const { data: postItems } = await getPosts({
 	exclude: [props.slug, "betingelser", "privatslivspolitik"]
 })
-
-useHead({
-	link: [{ rel: "canonical", href: "'https://floatinggoat.dk/" + props.slug }]
-})
 </script>
 
 <template>

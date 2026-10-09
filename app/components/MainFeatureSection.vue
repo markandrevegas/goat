@@ -19,7 +19,7 @@ const props = defineProps<Props>()
 				<span class="text-center text-sm uppercase">{{ featureHeaderSm }}</span>
 				<h2 class="text-3xl font-semibold">{{ featureHeaderLg }}</h2>
 				<p class="mt-6 mb-6 sm:max-w-lg">{{ featureText }}</p>
-				<PrimaryButton :url="featureUrl" :text="featureButton" :event-name="'go_to_simple_meeting'" :event-params="{ button_name: 'index_feature_button' }" class="bg-palladian text-brand hover:bg-brand/80 mb-8 text-2xl uppercase hover:cursor-pointer" />
+				<PrimaryButton :url="featureUrl" :text="featureButton" :event-name="'go_to_simple_meeting'" :event-params="{ button_name: 'index_feature_button' }" class="bg-palladian text-brand hover:bg-brand hover:text-palladian mb-8 text-2xl uppercase hover:cursor-pointer" />
 			</div>
 		</div>
 	</section>
