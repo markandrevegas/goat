@@ -12,7 +12,7 @@ const trustindexRef = ref<HTMLElement | null>(null)
 const shouldLoadReviews = ref(false)
 
 definePageMeta({
-	layout: false
+	layout: 'default'
 })
 
 const { getLandingPage } = useWordPress()
@@ -114,7 +114,7 @@ if (import.meta.dev && import.meta.client) {
 }
 </script>
 <template>
-	<NuxtLayout name="default">
+	<NuxtLayout>
 		<template v-if="layoutStyle === 'video'" #bg-video>
 			<VideoHeader :title="videoHeaderTitle" :excerpt="videoHeaderExcerpt" :videoUrl="videoHeaderVideoUrl" :posterUrl="videoHeaderPoster" :primaryButtonText="videoHeaderPrimaryButton" :primaryButtonUrl="videoHeaderPrimaryButtonUrl" :secondaryButtonText="videoHeaderSecondaryButton" :secondaryButtonUrl="videoHeaderSecondaryButtonUrl" :tertiaryButtonText="videoHeaderTertiaryButton" :tertiaryButtonUrl="videoHeaderTertiaryButtonUrl" />
 		</template>

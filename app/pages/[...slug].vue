@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue"
 
-definePageMeta({ layout: false, key: (route) => route.fullPath })
+definePageMeta({ layout: "page", key: (route) => route.fullPath })
 
 const route = useRoute()
 const { getContentBySlug, getPages, getPosts } = useWordPress()
@@ -149,53 +149,55 @@ useSeoMeta({
 </script>
 
 <template>
-	<NuxtLayout name="page">
-		<div class="container mx-auto max-w-6xl p-8">
-			<div v-if="pending" class="flex flex-col items-center justify-center space-y-4 py-24">
-				<div class="h-12 w-12 animate-spin rounded-full border-b-4 border-indigo-600"></div>
-				<p class="animate-pulse text-sm font-medium text-slate-500">Loading content...</p>
+	<NuxtLayout>
+		<div>
+			<div class="container mx-auto max-w-6xl p-8">
+				<div v-if="pending" class="flex flex-col items-center justify-center space-y-4 py-24">
+					<div class="h-12 w-12 animate-spin rounded-full border-b-4 border-indigo-600"></div>
+					<p class="animate-pulse text-sm font-medium text-slate-500">Loading content...</p>
+				</div>
+
+				<div v-else-if="error" class="rounded-2xl border border-red-100 bg-red-50 px-6 py-24 text-center">
+					<h2 class="mb-2 text-xl font-bold text-red-800">Failed to load content</h2>
+					<p class="text-sm text-red-600">Could not resolve route or the target slug is missing/unpublished.</p>
+				</div>
+
+				<PostContent v-else-if="hasContent && isPost" :title="contentTitle" :body="contentBody" :slug="contentSlug" :acf="contentAcf" :author-name="authorName" :formatted-date="formattedDate" :date-published="datePublished" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" :layout-style="currentLayoutStyle" />
+
+				<PageContent v-else-if="hasContent && isPage" :acf="contentAcf" :title="contentTitle" :body="contentBody" :slug="contentSlug" :excerpt="headerExcerpt" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" :related-pages="relatedPages" :layout-style="currentLayoutStyle" :page-video-header-url="pageVideoHeaderUrl" :page-video-header-poster="pageVideoHeaderPoster" />
 			</div>
-
-			<div v-else-if="error" class="rounded-2xl border border-red-100 bg-red-50 px-6 py-24 text-center">
-				<h2 class="mb-2 text-xl font-bold text-red-800">Failed to load content</h2>
-				<p class="text-sm text-red-600">Could not resolve route or the target slug is missing/unpublished.</p>
-			</div>
-
-			<PostContent v-else-if="hasContent && isPost" :title="contentTitle" :body="contentBody" :slug="contentSlug" :acf="contentAcf" :author-name="authorName" :formatted-date="formattedDate" :date-published="datePublished" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" :layout-style="currentLayoutStyle" />
-
-			<PageContent v-else-if="hasContent && isPage" :acf="contentAcf" :title="contentTitle" :body="contentBody" :slug="contentSlug" :excerpt="headerExcerpt" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" :related-pages="relatedPages" :layout-style="currentLayoutStyle" :page-video-header-url="pageVideoHeaderUrl" :page-video-header-poster="pageVideoHeaderPoster" />
-		</div>
-		<div v-if="contentSlug === 'apartments'">
-			<div class="mx-auto max-w-6xl px-8">
-				<h2 class="mb-6 text-lg font-semibold">Available apartments</h2>
-				<div class="grid grid-cols-3 gap-4">
-					<NuxtLink to="/captains-quarters" class="group relative block h-40 overflow-hidden rounded-md">
-						<NuxtImg src="/images/ferry-poster.webp" alt="Captain's Quarters" class="absolute inset-0 size-full object-cover hue-rotate-15" />
-						<div class="absolute inset-0 bg-black/40"></div>
-						<div class="relative z-10 flex size-full items-end p-4 pb-8">
-							<p class="text-palladian font-display text-xl leading-5 transition-all duration-400 hover:scale-105">Captain's Quarters</p>
-						</div>
-					</NuxtLink>
-					<NuxtLink to="/studio-apartment" class="group relative block h-40 overflow-hidden rounded-md">
-						<NuxtImg src="/images/ferry-poster.webp" alt="Studio Apartment" class="absolute inset-0 size-full object-cover hue-rotate-15" />
-						<div class="absolute inset-0 bg-black/40"></div>
-						<div class="relative z-10 flex size-full items-end p-4 pb-8">
-							<p class="text-palladian font-display text-xl leading-5 transition-all duration-400 hover:scale-105">Studio Apartment</p>
-						</div>
-					</NuxtLink>
-					<NuxtLink to="/bow-apartment" class="group relative block h-40 overflow-hidden rounded-md">
-						<NuxtImg src="/images/ferry-poster.webp" alt="Bow Apartment" class="absolute inset-0 size-full object-cover hue-rotate-15" />
-						<div class="bg-brand/50 absolute inset-0 z-10 mix-blend-multiply"></div>
-						<div class="relative z-10 flex size-full items-end p-4 pb-8">
-							<p class="text-palladian font-display text-xl leading-5 transition-all duration-400 hover:scale-105">Bow Apartment</p>
-						</div>
-					</NuxtLink>
+			<div v-if="contentSlug === 'apartments'">
+				<div class="mx-auto max-w-6xl px-8">
+					<h2 class="mb-6 text-lg font-semibold">Available apartments</h2>
+					<div class="grid grid-cols-3 gap-4">
+						<NuxtLink to="/captains-quarters" class="group relative block h-40 overflow-hidden rounded-md">
+							<NuxtImg src="/images/ferry-poster.webp" alt="Captain's Quarters" class="absolute inset-0 size-full object-cover hue-rotate-15" />
+							<div class="absolute inset-0 bg-black/40"></div>
+							<div class="relative z-10 flex size-full items-end p-4 pb-8">
+								<p class="text-palladian font-display text-xl leading-5 transition-all duration-400 hover:scale-105">Captain's Quarters</p>
+							</div>
+						</NuxtLink>
+						<NuxtLink to="/studio-apartment" class="group relative block h-40 overflow-hidden rounded-md">
+							<NuxtImg src="/images/ferry-poster.webp" alt="Studio Apartment" class="absolute inset-0 size-full object-cover hue-rotate-15" />
+							<div class="absolute inset-0 bg-black/40"></div>
+							<div class="relative z-10 flex size-full items-end p-4 pb-8">
+								<p class="text-palladian font-display text-xl leading-5 transition-all duration-400 hover:scale-105">Studio Apartment</p>
+							</div>
+						</NuxtLink>
+						<NuxtLink to="/bow-apartment" class="group relative block h-40 overflow-hidden rounded-md">
+							<NuxtImg src="/images/ferry-poster.webp" alt="Bow Apartment" class="absolute inset-0 size-full object-cover hue-rotate-15" />
+							<div class="bg-brand/50 absolute inset-0 z-10 mix-blend-multiply"></div>
+							<div class="relative z-10 flex size-full items-end p-4 pb-8">
+								<p class="text-palladian font-display text-xl leading-5 transition-all duration-400 hover:scale-105">Bow Apartment</p>
+							</div>
+						</NuxtLink>
+					</div>
 				</div>
 			</div>
-		</div>
-		<div v-if="contentSlug === 'rooftop-terrace' || 'studio-apartment' || 'bow-apartment'">
-			<div class="w-full sm:mx-auto sm:w-4/5">
-				<ImageGridWide :header="contentAcf?.gallery_header" :text="contentAcf?.gallery_text" :button="contentAcf?.gallery_button" :url="targetSlug" />
+			<div v-if="['rooftop-terrace', 'studio-apartment', 'bow-apartment'].includes(contentSlug)">
+				<div class="w-full sm:mx-auto sm:w-4/5">
+					<ImageGridWide :header="contentAcf?.gallery_header" :text="contentAcf?.gallery_text" :button="contentAcf?.gallery_button" :url="targetSlug" />
+				</div>
 			</div>
 		</div>
 	</NuxtLayout>

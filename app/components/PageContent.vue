@@ -39,15 +39,48 @@ watch(
 	{ immediate: true }
 )
 
-if (import.meta.dev && import.meta.client) {
-	console.log(props.acf)
+const { getProducts } = useSharefox()
+const { data: products, error } = await getProducts()
+if (error.value || !products.value) {
+	console.log(error.value)
 }
 
-const { getProducts } = useSharefox()
-const { data: product, error } = await getProducts()
-if (error.value || !product.value) throw createError({ statusCode: 404, statusMessage: "Product not found" })
+const product = computed(() => products.value?.find((p) => p.slug === props.slug))
+const pick = (l?: { dk?: string; en?: string }) => l?.dk || l?.en || ""
+
+const siteUrl = "https://floatinggoat.dk"
+const schema = computed(() => {
+	const p = product.value!
+	return {
+		"@context": "https://schema.org",
+		"@type": "Product",
+		name: pick(p.name),
+		sku: String(p.id),
+		url: `${siteUrl}${props.slug}`,
+		// image: p.images.map((i) => `${imageBase}${i.link}`),
+		offers: {
+			"@type": "Offer",
+			url: `${siteUrl}${props.slug}`,
+			priceCurrency: "DKK",
+			price: p.price,
+			priceSpecification: {
+				"@type": "UnitPriceSpecification",
+				price: p.price,
+				priceCurrency: "DKK",
+				valueAddedTaxIncluded: true,
+				...(p.perDay && { unitCode: "DAY" })
+			}
+		}
+	}
+})
+
+/*useHead({
+	title: () => pick(product.value?.name),
+	script: [{ type: "application/ld+json", innerHTML: () => JSON.stringify(schema.value) }]
+})*/
 
 if (import.meta.client && import.meta.dev) {
+	// console.log(props.acf)
 	console.log(product.value)
 }
 

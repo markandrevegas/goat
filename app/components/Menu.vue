@@ -74,13 +74,14 @@ const { data: postItems } = await getPosts({
 			<div class="col-span-1 flex items-center justify-start gap-4">
 				<NuxtLink to="/">
 					<Logo class="text-palladian inline-block scale-250" />
+					<span class="sr-only">Logo</span>
 				</NuxtLink>
 				<NuxtLink to="/" class="hidden sm:inline-block">
 					<span class="font-display text-palladian font-light transition-opacity duration-400 hover:opacity-70">Floating G.O.A.T. </span>
 				</NuxtLink>
 			</div>
 
-			<nav class="invisible col-span-2 md:visible">
+			<div class="invisible col-span-2 md:visible">
 				<ul v-if="centerMenuItems.length" class="flex items-center justify-center space-x-8 text-[13px]">
 					<li v-for="item in centerMenuItems" :key="item.id || item.path">
 						<NuxtLink :to="item.path" class="text-palladian transition-opacity hover:opacity-70">
@@ -89,7 +90,7 @@ const { data: postItems } = await getPosts({
 					</li>
 				</ul>
 				<span v-else class="text-xs text-gray-400">Loading menu...</span>
-			</nav>
+			</div>
 
 			<div class="col-span-1 flex items-center justify-end">
 				<button @click="isMobileMenuOpen = !isMobileMenuOpen" type="button" aria-label="Open main menu" aria-controls="mobile-menu" :aria-expanded="isMobileMenuOpen">

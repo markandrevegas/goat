@@ -1,6 +1,6 @@
 export interface SharefoxProductListItem {
 	id: number
-	name: string
+	name: { en: string; dk: string }
 	slug: string
 	price: number
 	priceExclVat: number
