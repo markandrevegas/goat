@@ -18,38 +18,40 @@ const emit = defineEmits<{
 
 const { trackEvent } = useTrackEvent()
 
-const handleButtonClick = async (event: MouseEvent) => {
+const handleTrack = (event: MouseEvent) => {
 	if (import.meta.dev && import.meta.client) {
 		console.log("clicked", JSON.stringify(props.url), props.target)
 	}
 
 	emit("click", event)
 
-	// 1. Track event first
 	try {
 		trackEvent(props.eventName, props.eventParams ?? {})
 	} catch (e) {
 		console.error("trackEvent failed:", e)
 	}
-
-	// 2. Open link in target window
-	if (props.url) {
-		const url = props.url.trim()
-		const isExternal = /^https?:\/\//i.test(url)
-
-		if (props.target === "_blank") {
-			window.open(url, "_blank", "noopener")
-		} else if (isExternal) {
-			window.location.assign(url)
-		} else {
-			await navigateTo(url)
-		}
-	}
 }
+
+// Helper to check if url is external
+const isExternal = computed(() => {
+	if (!props.url) return false
+	return /^https?:\/\//i.test(props.url.trim())
+})
 </script>
 
 <template>
-	<button type="button" @click="handleButtonClick" class="font-sofia w-max rounded px-3 py-1.5 font-medium tracking-wide transition-colors duration-400">
+	<!-- 1. External URL -> Plain <a> tag -->
+	<a v-if="url && isExternal" :href="url" :target="target" :rel="target === '_blank' ? 'noopener noreferrer' : undefined" @click="handleTrack" class="font-sofia inline-block w-max rounded px-3 py-1.5 font-medium tracking-wide transition-colors duration-400">
+		<slot>{{ text }}</slot>
+	</a>
+
+	<!-- 2. Internal Route -> <NuxtLink> (renders as <a href="..."> in SSR HTML) -->
+	<NuxtLink v-else-if="url" :to="url" :target="target" @click="handleTrack" class="font-sofia inline-block w-max rounded px-3 py-1.5 font-medium tracking-wide transition-colors duration-400">
+		<slot>{{ text }}</slot>
+	</NuxtLink>
+
+	<!-- 3. No URL -> Native <button> -->
+	<button v-else type="button" @click="handleTrack" class="font-sofia w-max rounded px-3 py-1.5 font-medium tracking-wide transition-colors duration-400">
 		<slot>{{ text }}</slot>
 	</button>
 </template>

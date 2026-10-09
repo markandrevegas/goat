@@ -7,21 +7,21 @@ const route = useRoute()
 const config = useRuntimeConfig()
 
 const canonicalUrl = computed(() => {
-  const rawSiteUrl = (config.public.siteUrl as string) || "https://floatinggoat.dk"
-  const siteUrl = rawSiteUrl.replace(/\/+\$/, "")
-  const path = route.path === "/" ? "" : route.path.replace(/\/+\$/, "")
-  
-  return `${siteUrl}${path}`
+	const rawSiteUrl = (config.public.siteUrl as string) || "https://floatinggoat.dk"
+	const siteUrl = rawSiteUrl.replace(/\/+\$/, "")
+	const path = route.path === "/" ? "" : route.path.replace(/\/+\$/, "")
+
+	return `${siteUrl}${path}`
 })
 
 useHead({
-  link: [
-    {
-      rel: "canonical",
-      href: canonicalUrl,
-      key: "canonical"
-    }
-  ]
+	link: [
+		{
+			rel: "canonical",
+			href: canonicalUrl,
+			key: "canonical"
+		}
+	]
 })
 </script>
 

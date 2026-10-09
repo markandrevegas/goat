@@ -12,7 +12,7 @@ const trustindexRef = ref<HTMLElement | null>(null)
 const shouldLoadReviews = ref(false)
 
 definePageMeta({
-	layout: 'default'
+	layout: "default"
 })
 
 const { getLandingPage } = useWordPress()
