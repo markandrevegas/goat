@@ -113,6 +113,17 @@ const featuredImageAlt = computed(() => featuredMedia.value?.alt_text || content
 const featuredImageWidth = computed(() => featuredMedia.value?.media_details?.width || 1200)
 const featuredImageHeight = computed(() => featuredMedia.value?.media_details?.height || 630)
 
+function decodeHtml(html: string) {
+	return html
+		.replace(/&amp;/g, "&")
+		.replace(/&lt;/g, "<")
+		.replace(/&gt;/g, ">")
+		.replace(/&quot;/g, '"')
+		.replace(/&#039;/g, "'")
+}
+
+const rawTitle = rawContentData.value?.title?.rendered
+
 const seoTitle = computed(() => contentTitle.value || "Page")
 const seoDescription = computed(() => {
 	const excerpt = rawContentData.value?.excerpt?.rendered
@@ -134,7 +145,7 @@ if (import.meta.dev && import.meta.client) {
 }
 
 useSeoMeta({
-	title: cleanSeoTitle.value,
+	title: decodeHtml(rawTitle || ""),
 	titleTemplate: null,
 	description: cleanSeoDescription.value,
 	ogTitle: cleanSeoTitle.value,

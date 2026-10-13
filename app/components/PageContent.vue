@@ -49,7 +49,6 @@ const product = computed(() => products.value?.find((p) => p.slug === props.slug
 
 const pick = (l?: { dk?: string; en?: string }) => l?.dk || l?.en || ""
 
-// const siteUrl = "https://floatinggoat.dk"
 const imageBase = "https://fg.floatinggoat.dk"
 const schema = computed(() => {
 	const p = product.value
