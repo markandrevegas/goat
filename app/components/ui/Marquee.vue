@@ -48,8 +48,8 @@ const loopItems = computed(() => {
 			<div class="flex items-center justify-start sm:col-span-1">
 				<div>
 					<p class="mt-2 font-sans text-xs uppercase">Our guests</p>
-					<h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Some of our former visitors</h2>
-					<p class="py-4">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere placeat officiis deserunt nobis atqu.</p>
+					<h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Companies we’ve welcomed on board</h2>
+					<p class="py-4">Some of the companies we’ve had the pleasure of hosting at Floating G.O.A.T.</p>
 				</div>
 			</div>
 
