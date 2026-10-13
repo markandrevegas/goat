@@ -61,7 +61,7 @@ const datePublished = computed(() => rawContentData.value?.date || null)
 
 const { data: allPages } = await getPages()
 
-const includedSlugs = ["apartments", "simple-meetings", "rooftop-terrace", "business-lounge"]
+const includedSlugs = ["meetings-and-events", "simple-meetings", "rooftop-terrace", "business-lounge"]
 
 const relatedPages = computed(() => {
 	if (!allPages.value) return []
