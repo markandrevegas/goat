@@ -15,8 +15,6 @@ const { data: postItems } = await getPosts({
 			<main class="flex-grow">
 				<slot></slot>
 			</main>
-
-			<MainFooter />
 		</div>
 	</div>
 </template>

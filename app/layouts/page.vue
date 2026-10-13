@@ -20,6 +20,5 @@ const isGuestInfo = computed(() => route.path === "/information-for-guests")
 				<slot></slot>
 			</main>
 		</div>
-		<MainFooter />
 	</div>
 </template>

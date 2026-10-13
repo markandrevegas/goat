@@ -32,7 +32,7 @@ const pageItems = computed(() => {
 </script>
 
 <template>
-	<ClientOnly>
+	<LazyClientOnly>
 		<footer class="text-sm/7">
 			<div class="grid flex-shrink-0 grid-cols-1 gap-8 p-8 py-24 sm:mx-auto sm:max-w-6xl sm:grid-cols-2 md:grid-cols-4">
 				<div class="flex flex-col gap-1">
@@ -40,10 +40,10 @@ const pageItems = computed(() => {
 					<p>Langebrogade 1C<br />1411 København K<br />CVR: 44307987</p>
 				</div>
 				<div class="flex flex-col">
-					<p class="font-display mb-2 text-lg font-semibold">Kontakt</p>
+					<p class="font-display mb-2 text-lg font-semibold">Contact</p>
 					<p>
 						info@floatinggoat.dk<br />
-						Telefontid: Hverdage 9-18<br />
+						Phone hours: Weekdays 9-18<br />
 						+45 30104262
 					</p>
 				</div>
@@ -58,15 +58,15 @@ const pageItems = computed(() => {
 						<li class="w-max">
 							<TextButton @click="openBanner" :event-name="'open_cookie_settings'" :text="'Open cookie settings'" aria-haspopup="dialog" aria-expanded="false" aria-controls="cookie-settings-modal" class="w-max pb-0 font-semibold transition-opacity duration-400 hover:border-b-2" />
 						</li>
-						<!--<li><a @click="openBanner" class="w-max font-semibold transition-opacity duration-400 hover:border-b-2">Open cookie settings</a></li>-->
+						<!--<li class="w-max"><a @click="openBanner" class="w-max font-semibold transition-opacity duration-400 hover:border-b-2">Open cookie settings</a></li>-->
 					</ul>
 				</div>
 				<div class="flex flex-col">
-					<p class="font-display mb-2 text-lg font-semibold">Find os</p>
+					<p class="font-display mb-2 text-lg font-semibold">Find us</p>
 					<Social class="max-content mr-auto" />
 				</div>
 			</div>
-			<div class="py-8 text-center">&copy; {{ new Date().getFullYear() }}</div>
+			<div class="py-8 text-center">&copy; {{ new Date().getFullYear() }} Floating G.O.A.T.</div>
 		</footer>
-	</ClientOnly>
+	</LazyClientOnly>
 </template>
