@@ -57,14 +57,14 @@ const optimizeAvatarUrl = (url?: string, width = 240) => {
 				</div>
 				<p class="mt-2 mb-6 text-sm font-medium">
 					Based on
-					<NuxtLink :to="'https://www.airbnb.com/rooms/1097007987468938423'" target="_blank" class="font-bold underline decoration-2 underline-offset-2 hover:opacity-70">{{ data.reviews_count }} reviews</NuxtLink>
+					<NuxtLink :to="'https://www.airbnb.com/rooms/1097007987468938423'" target="_blank" class="font-bold underline decoration-2 underline-offset-2 hover:opacity-70" v-html="data?.reviews_count + 'reviews'"></NuxtLink>
 				</p>
 				<div class="mt-4">
 					<Airbnb class="scale-250" />
 				</div>
 			</div>
 			<div class="flex w-full snap-x snap-mandatory [scrollbar-width:none] items-center justify-start gap-4 overflow-x-auto scroll-smooth px-2 pt-2 pb-6 [-ms-overflow-style:none] lg:snap-none lg:gap-4 lg:overflow-scroll [&::-webkit-scrollbar]:hidden">
-				<div v-for="review in data.reviews" :key="review.id" class="flex h-72 min-w-[320px] snap-start flex-col rounded-2xl bg-white p-6 shadow-sm sm:w-[calc(50%-0.5rem)] lg:w-[240px]">
+				<div v-for="review in data?.reviews" :key="review.id" class="flex h-72 min-w-[320px] snap-start flex-col rounded-2xl bg-white p-6 shadow-sm sm:w-[calc(50%-0.5rem)] lg:w-[240px]">
 					<div class="mb-3 flex items-center gap-x-3">
 						<img
 							:src="optimizeAvatarUrl(review.reviewer?.pictureUrl)"
@@ -85,18 +85,13 @@ const optimizeAvatarUrl = (url?: string, width = 240) => {
 								}
 							"
 						/>
-						<!--<NuxtImg :src="review.reviewer?.pictureUrl || '/images/default-avatar.png'" :alt="review.reviewer?.firstName || 'Reviewer'" width="96" height="96" sizes="48px" format="webp" loading="lazy" decoding="async" class="h-12 w-12 shrink-0 rounded-full object-cover" />-->
 						<div>
 							<div class="flex items-start justify-start">
-								<h3 class="text-brand text-base/5 font-bold">
-									{{ review.reviewer?.firstName }}
-								</h3>
+								<h3 class="text-brand text-base/5 font-bold" v-html="review.reviewer?.firstName"></h3>
 								<BadgeChecked class="ml-1 text-blue-500" />
 							</div>
 
-							<p class="text-brand/60 text-xs/5 font-medium">
-								{{ review.localizedDate }}
-							</p>
+							<p class="text-brand/60 text-xs/5 font-medium" v-html="review.localizedDate"></p>
 						</div>
 					</div>
 
@@ -104,9 +99,7 @@ const optimizeAvatarUrl = (url?: string, width = 240) => {
 						<StarFilled v-for="i in review.rating" :key="i" class="text-brand size-4" />
 					</div>
 
-					<p class="text-brand mb-4 line-clamp-4 flex-grow text-sm/5">
-						{{ review.localizedText || review.text }}
-					</p>
+					<p class="text-brand mb-4 line-clamp-4 flex-grow text-sm/5" v-html="review.localizedText || review.text"></p>
 
 					<div class="mt-auto flex justify-end">
 						<QuoteMark class="text-brand size-8" />
