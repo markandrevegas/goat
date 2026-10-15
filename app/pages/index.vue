@@ -2,11 +2,10 @@
 import { computed, onMounted } from "vue"
 
 import TrustindexWidget from "~/components/ui/TrustindexWidget.vue"
-import posterImg from "~/assets/images/ferry-poster.webp"
 import VideoHeader from "~/components/ui/VideoHeader.vue"
 import Marquee from "~/components/ui/Marquee.vue"
-import ThreeColumns from "~/components/ui/ThreeColumns.vue"
-import CenterAlignedFeature from "~/components/CenterAlignedFeature.vue"
+import LazyThreeColumns from "~/components/ui/ThreeColumns.vue"
+import LazyCenterAlignedFeature from "~/components/CenterAlignedFeature.vue"
 
 const trustindexRef = ref<HTMLElement | null>(null)
 const shouldLoadReviews = ref(false)
@@ -16,7 +15,7 @@ definePageMeta({
 })
 
 const { getLandingPage } = useWordPress()
-const { data: page, status, error } = await useAsyncData("wp-index", () => getLandingPage("index-page"))
+const { data: page } = await useAsyncData("wp-index", () => getLandingPage("index-page"))
 
 const landing = computed(() => page.value?.acf || {})
 const layoutStyle = computed(() => landing.value?.layoutstyle)
@@ -45,10 +44,10 @@ const videoHeaderSecondaryButtonUrl = computed(() => landing.value?.video_header
 const videoHeaderTertiaryButton = computed(() => landing.value?.video_header_tertiary_button || "")
 const videoHeaderTertiaryButtonUrl = computed(() => landing.value?.video_header_tertiary_button_url || "")
 
-// 1. First set: 'firstcolumnheader', 'secondcolumnheader', etc.
+// 'firstcolumnheader', 'secondcolumnheader', etc.
 /*const standardCards = computed(() => extractColumns(landing.value, ["first", "second", "third", "fourth"]))*/
 
-// 2. Second set: 'header_one', 'header_two', 'header_three'
+// 'header_one', 'header_two', 'header_three'
 const threeColumnItems = computed(() => extractColumns(landing.value, ["one", "two", "three"]))
 
 const featureHeaderSm = computed(() => landing.value?.feature_header_sm || "")

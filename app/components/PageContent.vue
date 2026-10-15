@@ -69,7 +69,9 @@ useHead({
 
 if (import.meta.client && import.meta.dev) {
 	// console.log(props.acf)
-	console.log(product.value)
+	if (product.value) {
+		console.log(product.value)
+	}
 }
 </script>
 
