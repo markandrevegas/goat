@@ -79,10 +79,16 @@ if (import.meta.client && import.meta.dev) {
 	<article class="relative w-full">
 		<EntryHeader :layout-style="layoutStyle" :title="title" :excerpt="excerpt" :call-to-action="acf?.call_to_action" :call-to-action-url="acf?.call_to_action_url" :video-url="pageVideoHeaderUrl" :poster-url="pageVideoHeaderPoster" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" :slug="slug" />
 
-		<main v-if="body && slug !== 'information-for-guests'" class="flex flex-col gap-4 md:grid md:grid-cols-4">
-			<div class="col-span-1 hidden md:block">
+		<main v-if="body && slug !== 'information-for-guests'" class="flex flex-col gap-4 md:grid md:grid-cols-3">
+			<div class="flex-col- col-span-1 flex hidden gap-8 md:block">
 				<p class="mb-4 text-sm font-bold uppercase md:block">Share content</p>
 				<Social class="w-max" />
+				<p class="mb-4 text-sm font-bold uppercase md:block">Related</p>
+				<ul class="list-reset space-y-2 sm:space-y-1">
+					<li v-for="item in relatedPages" :key="item.id">
+						<NuxtLink :to="item.slug"><span v-html="item.title?.rendered" class="w-max font-semibold transition-opacity duration-400 hover:border-b-2"></span></NuxtLink>
+					</li>
+				</ul>
 			</div>
 			<div class="col-span-2 flex flex-col gap-2 md:pr-8">
 				<NuxtImg v-if="acf?.layoutstyle !== 'hero' && featuredImageUrl" :src="featuredImageUrl" :alt="featuredImageAlt" loading="eager" fetchpriority="high" sizes="100vw sm:100vw md:100vw lg:100vw" :densities?="[1, 2, 3]" class="mb-4 h-auto w-full object-cover" />
@@ -113,14 +119,35 @@ if (import.meta.client && import.meta.dev) {
 					</summary>
 					<div class="text-palladian pb-5 text-sm leading-relaxed [&_a]:underline [&_li]:pl-1 [&_ol]:list-decimal [&_ol]:space-y-1 [&_ol]:pl-5 [&_ul]:list-disc [&_ul]:space-y-1 [&_ul]:pl-5 [&_ul_ul]:mt-1 [&>*+*]:mt-3" v-html="acf?.extended_info_content"></div>
 				</details>
-			</div>
-			<div class="col-span-1 mt-16 sm:mt-0">
-				<p class="mb-4 text-sm font-bold uppercase md:block">Related</p>
-				<ul class="list-reset space-y-2 sm:space-y-1">
-					<li v-for="item in relatedPages" :key="item.id">
-						<NuxtLink :to="item.slug"><span v-html="item.title?.rendered" class="w-max font-semibold transition-opacity duration-400 hover:border-b-2"></span></NuxtLink>
-					</li>
-				</ul>
+				<div class="border-palladian mt-8 border-t p-2">
+					<h2 class="mb-6 text-lg font-semibold">Available apartments</h2>
+					<div class="flex flex-col gap-4">
+						<NuxtLink to="/studio-apartment" class="group relative block h-24 overflow-hidden rounded-md">
+							<NuxtImg src="/images/ferry-poster.webp" alt="Studio Apartment" class="absolute inset-0 size-full object-cover hue-rotate-15" />
+							<div class="absolute inset-0 bg-black/40"></div>
+							<div class="relative z-10 flex size-full items-end p-4 pb-8">
+								<p class="text-palladian font-display text-xl leading-5 transition-all duration-400 hover:scale-105">Studio Apartment</p>
+							</div>
+						</NuxtLink>
+						<NuxtLink to="/bow-apartment" class="group relative block h-24 overflow-hidden rounded-md">
+							<NuxtImg src="/images/ferry-poster.webp" alt="Bow Apartment" class="absolute inset-0 size-full object-cover hue-rotate-15" />
+							<div class="bg-brand/50 absolute inset-0 z-10 mix-blend-multiply"></div>
+							<div class="relative z-10 flex size-full items-end p-4 pb-8">
+								<p class="text-palladian font-display text-xl leading-5 transition-all duration-400 hover:scale-105">Bow Apartment</p>
+							</div>
+						</NuxtLink>
+					</div>
+				</div>
+				<div class="w-full flex">
+					<p class="mb-4 text-sm font-bold uppercase md:block">Share content</p>
+					<Social class="w-max" />
+					<p class="mb-4 text-sm font-bold uppercase md:block">Related</p>
+					<ul class="list-reset space-y-2 sm:space-y-1">
+						<li v-for="item in relatedPages" :key="item.id">
+							<NuxtLink :to="item.slug"><span v-html="item.title?.rendered" class="w-max font-semibold transition-opacity duration-400 hover:border-b-2"></span></NuxtLink>
+						</li>
+					</ul>
+				</div>
 			</div>
 		</main>
 		<div v-if="slug === 'information-for-guests'">

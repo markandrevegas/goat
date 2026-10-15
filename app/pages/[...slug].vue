@@ -173,30 +173,6 @@ useSeoMeta({
 			</div>
 			<div v-if="contentSlug === 'apartments'">
 				<div class="mx-auto max-w-6xl px-8">
-					<h2 class="mb-6 text-lg font-semibold">Available apartments</h2>
-					<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-						<NuxtLink to="/captains-quarters" class="hidden group relative block h-24 sm:h-40 overflow-hidden rounded-md">
-							<NuxtImg src="/images/ferry-poster.webp" alt="Captain's Quarters" class="absolute inset-0 size-full object-cover hue-rotate-15" />
-							<div class="absolute inset-0 bg-black/40"></div>
-							<div class="relative z-10 flex size-full items-end p-4 pb-8">
-								<p class="text-palladian font-display text-xl leading-5 transition-all duration-400 hover:scale-105">Captain's Quarters</p>
-							</div>
-						</NuxtLink>
-						<NuxtLink to="/studio-apartment" class="group relative block h-24 sm:h-40 overflow-hidden rounded-md">
-							<NuxtImg src="/images/ferry-poster.webp" alt="Studio Apartment" class="absolute inset-0 size-full object-cover hue-rotate-15" />
-							<div class="absolute inset-0 bg-black/40"></div>
-							<div class="relative z-10 flex size-full items-end p-4 pb-8">
-								<p class="text-palladian font-display text-xl leading-5 transition-all duration-400 hover:scale-105">Studio Apartment</p>
-							</div>
-						</NuxtLink>
-						<NuxtLink to="/bow-apartment" class="group relative block h-24 sm:h-40 overflow-hidden rounded-md">
-							<NuxtImg src="/images/ferry-poster.webp" alt="Bow Apartment" class="absolute inset-0 size-full object-cover hue-rotate-15" />
-							<div class="bg-brand/50 absolute inset-0 z-10 mix-blend-multiply"></div>
-							<div class="relative z-10 flex size-full items-end p-4 pb-8">
-								<p class="text-palladian font-display text-xl leading-5 transition-all duration-400 hover:scale-105">Bow Apartment</p>
-							</div>
-						</NuxtLink>
-					</div>
 					<div>
 						<SlimTrustWidget />
 					</div>
