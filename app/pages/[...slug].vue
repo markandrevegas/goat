@@ -62,7 +62,7 @@ const datePublished = computed(() => rawContentData.value?.date || null)
 
 const { data: allPages } = await getPages()
 
-const includedSlugs = ["meetings-and-events", "simple-meetings", "rooftop-terrace", "business-lounge"]
+const includedSlugs = ["apartments", "meetings-and-events", "simple-meetings", "rooftop-terrace", "business-lounge"]
 
 const relatedPages = computed(() => {
 	if (!allPages.value) return []
@@ -172,8 +172,8 @@ useSeoMeta({
 				<PageContent v-else-if="hasContent && isPage" :acf="contentAcf" :title="contentTitle" :body="contentBody" :slug="contentSlug" :excerpt="headerExcerpt" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" :related-pages="relatedPages" :layout-style="currentLayoutStyle" :page-video-header-url="pageVideoHeaderUrl" :page-video-header-poster="pageVideoHeaderPoster" />
 			</div>
 			<div v-if="contentSlug === 'apartments'">
-				<div class="mx-auto max-w-6xl px-8">
-					<div>
+				<div class="hidden mx-auto max-w-6xl px-8 grid grid-cols-4 sm:flex sm:flex-col">
+					<div class="col-start-2 col-span-2">
 						<SlimTrustWidget />
 					</div>
 				</div>

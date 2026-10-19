@@ -79,16 +79,10 @@ if (import.meta.client && import.meta.dev) {
 	<article class="relative w-full">
 		<EntryHeader :layout-style="layoutStyle" :title="title" :excerpt="excerpt" :call-to-action="acf?.call_to_action" :call-to-action-url="acf?.call_to_action_url" :video-url="pageVideoHeaderUrl" :poster-url="pageVideoHeaderPoster" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" :slug="slug" />
 
-		<main v-if="body && slug !== 'information-for-guests'" class="flex flex-col gap-4 md:grid md:grid-cols-3">
-			<div class="flex-col- col-span-1 flex hidden gap-8 md:block">
+		<main v-if="body && slug !== 'information-for-guests'" class="flex flex-col gap-4 md:grid md:grid-cols-4">
+			<div class="flex-col col-span-1 flex hidden gap-8 md:block">
 				<p class="mb-4 text-sm font-bold uppercase md:block">Share content</p>
 				<Social class="w-max" />
-				<p class="mb-4 text-sm font-bold uppercase md:block">Related</p>
-				<ul class="list-reset space-y-2 sm:space-y-1">
-					<li v-for="item in relatedPages" :key="item.id">
-						<NuxtLink :to="item.slug"><span v-html="item.title?.rendered" class="w-max font-semibold transition-opacity duration-400 hover:border-b-2"></span></NuxtLink>
-					</li>
-				</ul>
 			</div>
 			<div class="col-span-2 flex flex-col gap-2 md:pr-8">
 				<NuxtImg v-if="acf?.layoutstyle !== 'hero' && featuredImageUrl" :src="featuredImageUrl" :alt="featuredImageAlt" loading="eager" fetchpriority="high" sizes="100vw sm:100vw md:100vw lg:100vw" :densities?="[1, 2, 3]" class="mb-4 h-auto w-full object-cover" />
@@ -138,16 +132,28 @@ if (import.meta.client && import.meta.dev) {
 						</NuxtLink>
 					</div>
 				</div>
-				<div class="w-full flex">
-					<p class="mb-4 text-sm font-bold uppercase md:block">Share content</p>
-					<Social class="w-max" />
-					<p class="mb-4 text-sm font-bold uppercase md:block">Related</p>
-					<ul class="list-reset space-y-2 sm:space-y-1">
-						<li v-for="item in relatedPages" :key="item.id">
-							<NuxtLink :to="item.slug"><span v-html="item.title?.rendered" class="w-max font-semibold transition-opacity duration-400 hover:border-b-2"></span></NuxtLink>
-						</li>
-					</ul>
+				<div class="flex flex-col gap-8 w-full mt-8 md:hidden">
+					<div>
+						<p class="mb-4 text-sm font-bold uppercase md:block">Share content</p>
+						<Social class="w-max" />
+					</div>
+					<div>
+						<p class="mb-4 text-sm font-bold uppercase md:block">Related</p>
+						<ul class="list-reset space-y-2 sm:space-y-1">
+							<li v-for="item in relatedPages" :key="item.id">
+								<NuxtLink :to="item.slug"><span v-html="item.title?.rendered" class="w-max font-semibold transition-opacity duration-400 hover:border-b-2"></span></NuxtLink>
+							</li>
+						</ul>
+					</div>
 				</div>
+			</div>
+			<div class="col-span-1n flex flex-col">
+				<p class="mb-4 text-sm font-bold uppercase md:block">Related</p>
+				<ul class="list-reset space-y-2 sm:space-y-1">
+					<li v-for="item in relatedPages" :key="item.id">
+						<NuxtLink :to="item.slug"><span v-html="item.title?.rendered" class="w-max font-semibold transition-opacity duration-400 hover:border-b-2"></span></NuxtLink>
+					</li>
+				</ul>
 			</div>
 		</main>
 		<div v-if="slug === 'information-for-guests'">

@@ -114,19 +114,13 @@ if (import.meta.dev && import.meta.client) {
 		<template v-if="layoutStyle === 'video'" #bg-video>
 			<VideoHeader :title="videoHeaderTitle" :excerpt="videoHeaderExcerpt" :videoUrl="videoHeaderVideoUrl" :posterUrl="videoHeaderPoster" :primaryButtonText="videoHeaderPrimaryButton" :primaryButtonUrl="videoHeaderPrimaryButtonUrl" :secondaryButtonText="videoHeaderSecondaryButton" :secondaryButtonUrl="videoHeaderSecondaryButtonUrl" :tertiaryButtonText="videoHeaderTertiaryButton" :tertiaryButtonUrl="videoHeaderTertiaryButtonUrl" />
 		</template>
-
-		<LazyCenterAlignedFeature :header="centeredFeatureHeader" :text="centeredFeatureText" />
-
-		<LazyMainFeatureSection :feature-header-sm="featureHeaderSm" :feature-header-lg="featureHeaderLg" :feature-image="featureImage" :feature-text="featureText" :feature-button="featureButton" :feature-url="featureUrl" />
-
 		<LazyThreeColumns v-if="threeColumnItems.length" :items="threeColumnItems" />
-
+		<LazyCenterAlignedFeature :header="centeredFeatureHeader" :text="centeredFeatureText" />
+		<LazyMainFeatureSection :feature-header-sm="featureHeaderSm" :feature-header-lg="featureHeaderLg" :feature-image="featureImage" :feature-text="featureText" :feature-button="featureButton" :feature-url="featureUrl" />
 		<Marquee folder="clients" :speed="40" />
-
-		<div ref="trustindexRef">
+		<div ref="trustindexRef" class="hidden">
 			<TrustindexWidget v-if="showReviews === true && shouldLoadReviews" />
 		</div>
-
 		<LazyFerryVideo :header="businessLoungeHeader" :header-sm="businessLoungeHeaderSm" :text="businessLoungeText" :url="businessLoungeUrl" :button="businessLoungeButton" />
 	</NuxtLayout>
 </template>

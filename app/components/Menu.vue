@@ -4,11 +4,6 @@ import MenuIcon from "./icons/MenuIcon.vue"
 import Social from "./ui/Social.vue"
 import Logo from "~/assets/svg/fg.svg"
 
-const layoutStyle = useLayoutStyle()
-const isHeroOrVideo = computed(() => {
-	return layoutStyle.value === "hero" || layoutStyle.value === "video"
-})
-
 const isScrolled = ref(false)
 
 function handleScroll() {
@@ -32,7 +27,7 @@ const {
 	status,
 	error
 } = await getPages({
-	include: ["apartments", "rooftop-terrace", "simple-meetings", "meetings-and-events", "information-for-guests"],
+	include: ["apartments", "rooftop-terrace", "simple-meetings", "meetings-and-events", "captains-quarters", "information-for-guests"],
 	exclude: []
 })
 
@@ -45,20 +40,27 @@ const pageItems = computed(() => {
 				title: { ...item.title, rendered: "Information for guests" }
 			}
 		}
+		if (item.slug === "meetings-and-events") {
+			return {
+				...item,
+				title: { ...item.title, rendered: "Meetings and Events" }
+			}
+		}
 		return item
 	})
 })
 
 const { data: centerPages } = await getPages({
-	include: ["studio-apartment", "bow-apartment", "rooftop-terrace", "captains-quarters"],
+	include: ["apartments", "meetings-and-events"],
 	exclude: []
 })
-
 const centerMenuItems = computed(() => {
 	if (!centerPages.value) return []
 	return centerPages.value.map((item) => ({
 		id: item.id,
-		title: item.title?.rendered || item.title,
+		title: item.slug === "meetings-and-events"
+			? "Meetings and Events"
+			: item.title?.rendered || item.title,
 		path: `/${item.slug}`
 	}))
 })
@@ -82,7 +84,7 @@ const { data: postItems } = await getPosts({
 			</div>
 
 			<div class="invisible col-span-2 lg:visible">
-				<ul v-if="centerMenuItems.length" class="flex items-center justify-center space-x-8 text-[13px]">
+				<ul v-if="centerMenuItems.length" class="flex items-center justify-start space-x-8 text-[13px]">
 					<li v-for="item in centerMenuItems" :key="item.id || item.path">
 						<NuxtLink :to="item.path" class="text-palladian transition-opacity hover:opacity-70">
 							<span v-html="item.title"></span>

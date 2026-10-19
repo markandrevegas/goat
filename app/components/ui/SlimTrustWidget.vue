@@ -59,8 +59,8 @@ function scrollByItem(direction: 1 | -1) {
 
 		<div v-else-if="error" class="text-center font-bold text-red-800">Could not load reviews.</div>
 
-		<div v-else-if="data && data?.reviews" class="bg-palladian text-brand flex flex-col rounded-lg sm:grid sm:grid-cols-3">
-			<div class="grid grid-cols-2 p-4 sm:flex sm:flex-col sm:justify-center">
+		<div v-else-if="data && data?.reviews" class="w-full sm:w-3/5 sm:mx-auto bg-palladian text-brand flex flex-col sm:grid sm:grid-cols-3">
+			<div class="w-full grid grid-cols-2 p-4 sm:flex sm:flex-col sm:justify-center">
 				<div class="flex flex-col">
 					<h2 class="font-display text-2xl tracking-tight">Excellent</h2>
 					<div class="flex">
@@ -115,7 +115,7 @@ function scrollByItem(direction: 1 | -1) {
 					</div>
 				</div>
 
-				<div class="flex flex-col justify-start gap-2 pt-6">
+				<div class="flex flex-col justify-start gap-2 pt-8">
 					<button type="button" aria-label="Previous review" class="text-brand flex items-center justify-center rounded-full transition-colors hover:text-gray-100" @click="scrollByItem(-1)">
 						<ArrowUp class="text-brand size-6" />
 						<!--<svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6" /></svg>-->
