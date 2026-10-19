@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { computed } from "vue"
+import SlimTrustWidget from "~/components/ui/SlimTrustWidget.vue"
 
 definePageMeta({ layout: "page", key: (route) => route.fullPath })
 
 const route = useRoute()
-const { getContentBySlug, getPages, getPosts } = useWordPress()
+const { getContentBySlug, getPages } = useWordPress()
 
 const slugParam = computed(() => {
 	const params = route.params.slug
@@ -61,7 +62,7 @@ const datePublished = computed(() => rawContentData.value?.date || null)
 
 const { data: allPages } = await getPages()
 
-const includedSlugs = ["meetings-and-events", "simple-meetings", "rooftop-terrace", "business-lounge"]
+const includedSlugs = ["apartments", "meetings-and-events", "simple-meetings", "rooftop-terrace", "business-lounge"]
 
 const relatedPages = computed(() => {
 	if (!allPages.value) return []
@@ -101,10 +102,6 @@ const pageVideoHeaderPoster = computed(() => {
 	return rawContentData.value?.acf?.page_header_video_poster
 })
 
-/*const headerVideoUrl = computed(() => {
-	return rawContentData.value?.acf?.page_header_video_url ?? ""
-})*/
-
 const featuredImageAlt = computed(() => featuredMedia.value?.alt_text || contentTitle.value)
 const featuredImageWidth = computed(() => featuredMedia.value?.media_details?.width || 1200)
 const featuredImageHeight = computed(() => featuredMedia.value?.media_details?.height || 630)
@@ -138,6 +135,7 @@ const cleanSeoDescription = computed(() => decodeEntities(seoDescription.value))
 const currentLayoutStyle = computed(() => contentAcf.value?.layoutstyle)
 if (import.meta.dev && import.meta.client) {
 	console.log(currentLayoutStyle.value)
+	console.log(rawContentData.value)
 }
 
 useSeoMeta({
@@ -174,30 +172,9 @@ useSeoMeta({
 				<PageContent v-else-if="hasContent && isPage" :acf="contentAcf" :title="contentTitle" :body="contentBody" :slug="contentSlug" :excerpt="headerExcerpt" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" :related-pages="relatedPages" :layout-style="currentLayoutStyle" :page-video-header-url="pageVideoHeaderUrl" :page-video-header-poster="pageVideoHeaderPoster" />
 			</div>
 			<div v-if="contentSlug === 'apartments'">
-				<div class="mx-auto max-w-6xl px-8">
-					<h2 class="mb-6 text-lg font-semibold">Available apartments</h2>
-					<div class="grid grid-cols-3 gap-4">
-						<NuxtLink to="/captains-quarters" class="group relative block h-40 overflow-hidden rounded-md">
-							<NuxtImg src="/images/ferry-poster.webp" alt="Captain's Quarters" class="absolute inset-0 size-full object-cover hue-rotate-15" />
-							<div class="absolute inset-0 bg-black/40"></div>
-							<div class="relative z-10 flex size-full items-end p-4 pb-8">
-								<p class="text-palladian font-display text-xl leading-5 transition-all duration-400 hover:scale-105">Captain's Quarters</p>
-							</div>
-						</NuxtLink>
-						<NuxtLink to="/studio-apartment" class="group relative block h-40 overflow-hidden rounded-md">
-							<NuxtImg src="/images/ferry-poster.webp" alt="Studio Apartment" class="absolute inset-0 size-full object-cover hue-rotate-15" />
-							<div class="absolute inset-0 bg-black/40"></div>
-							<div class="relative z-10 flex size-full items-end p-4 pb-8">
-								<p class="text-palladian font-display text-xl leading-5 transition-all duration-400 hover:scale-105">Studio Apartment</p>
-							</div>
-						</NuxtLink>
-						<NuxtLink to="/bow-apartment" class="group relative block h-40 overflow-hidden rounded-md">
-							<NuxtImg src="/images/ferry-poster.webp" alt="Bow Apartment" class="absolute inset-0 size-full object-cover hue-rotate-15" />
-							<div class="bg-brand/50 absolute inset-0 z-10 mix-blend-multiply"></div>
-							<div class="relative z-10 flex size-full items-end p-4 pb-8">
-								<p class="text-palladian font-display text-xl leading-5 transition-all duration-400 hover:scale-105">Bow Apartment</p>
-							</div>
-						</NuxtLink>
+				<div class="hidden mx-auto max-w-6xl px-8 grid grid-cols-4 sm:flex sm:flex-col">
+					<div class="col-start-2 col-span-2">
+						<SlimTrustWidget />
 					</div>
 				</div>
 			</div>

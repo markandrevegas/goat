@@ -1,0 +1,13 @@
+<script lang="ts">
+export default {
+	name: "SolarRoundArrowDownLineDuotone"
+}
+</script>
+<template>
+	<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+		<g fill="none" stroke="currentColor" stroke-width="1.5">
+			<circle cx="12" cy="12" r="10" opacity=".5" />
+			<path stroke-line-cap="round" stroke-line-join="round" d="M12 8v8m0 0l3-3m-3 3l-3-3" />
+		</g>
+	</svg>
+</template>
