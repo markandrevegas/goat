@@ -80,7 +80,7 @@ if (import.meta.client && import.meta.dev) {
 		<EntryHeader :layout-style="layoutStyle" :title="title" :excerpt="excerpt" :call-to-action="acf?.call_to_action" :call-to-action-url="acf?.call_to_action_url" :video-url="pageVideoHeaderUrl" :poster-url="pageVideoHeaderPoster" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" :slug="slug" />
 
 		<main v-if="body && slug !== 'information-for-guests'" class="flex flex-col gap-4 md:grid md:grid-cols-4">
-			<div class="flex-col col-span-1 flex hidden gap-8 md:block">
+			<div class="col-span-1 flex hidden flex-col gap-8 md:block">
 				<p class="mb-4 text-sm font-bold uppercase md:block">Share content</p>
 				<Social class="w-max" />
 			</div>
@@ -113,26 +113,33 @@ if (import.meta.client && import.meta.dev) {
 					</summary>
 					<div class="text-palladian pb-5 text-sm leading-relaxed [&_a]:underline [&_li]:pl-1 [&_ol]:list-decimal [&_ol]:space-y-1 [&_ol]:pl-5 [&_ul]:list-disc [&_ul]:space-y-1 [&_ul]:pl-5 [&_ul_ul]:mt-1 [&>*+*]:mt-3" v-html="acf?.extended_info_content"></div>
 				</details>
-				<div class="border-palladian mt-8 border-t p-2">
+				<div v-if="slug === 'apartments'" class="border-palladian mt-8 border-t p-2">
 					<h2 class="mb-6 text-lg font-semibold">Available apartments</h2>
 					<div class="flex flex-col gap-4">
 						<NuxtLink to="/studio-apartment" class="group relative block h-24 overflow-hidden rounded-md">
-							<NuxtImg src="/images/ferry-poster.webp" alt="Studio Apartment" class="absolute inset-0 size-full object-cover hue-rotate-15" />
+							<NuxtImg src="https://floatinggoat.dk/wp-content/uploads/header/studio-apartment-header.webp" alt="Studio Apartment" class="absolute inset-0 size-full object-cover hue-rotate-15" />
 							<div class="absolute inset-0 bg-black/40"></div>
 							<div class="relative z-10 flex size-full items-end p-4 pb-8">
 								<p class="text-palladian font-display text-xl leading-5 transition-all duration-400 hover:scale-105">Studio Apartment</p>
 							</div>
 						</NuxtLink>
 						<NuxtLink to="/bow-apartment" class="group relative block h-24 overflow-hidden rounded-md">
-							<NuxtImg src="/images/ferry-poster.webp" alt="Bow Apartment" class="absolute inset-0 size-full object-cover hue-rotate-15" />
+							<NuxtImg src="https://floatinggoat.dk/wp-content/uploads/header/bow-apartment-poster.webp" alt="Bow Apartment" class="absolute inset-0 size-full object-cover hue-rotate-15" />
 							<div class="bg-brand/50 absolute inset-0 z-10 mix-blend-multiply"></div>
 							<div class="relative z-10 flex size-full items-end p-4 pb-8">
 								<p class="text-palladian font-display text-xl leading-5 transition-all duration-400 hover:scale-105">Bow Apartment</p>
 							</div>
 						</NuxtLink>
+						<NuxtLink to="/captains-quarters" class="group relative block h-24 overflow-hidden rounded-md">
+							<NuxtImg src="https://floatinggoat.dk/wp-content/uploads/header/captains-quarters-header.webp" alt="Captain's Quarters" class="absolute inset-0 size-full object-cover hue-rotate-15" />
+							<div class="bg-brand/50 absolute inset-0 z-10 mix-blend-multiply"></div>
+							<div class="relative z-10 flex size-full items-end p-4 pb-8">
+								<p class="text-palladian font-display text-xl leading-5 transition-all duration-400 hover:scale-105">Captain's Quarters</p>
+							</div>
+						</NuxtLink>
 					</div>
 				</div>
-				<div class="flex flex-col gap-8 w-full mt-8 md:hidden">
+				<div class="mt-8 flex w-full flex-col gap-8 md:hidden">
 					<div>
 						<p class="mb-4 text-sm font-bold uppercase md:block">Share content</p>
 						<Social class="w-max" />

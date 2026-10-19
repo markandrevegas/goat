@@ -41,7 +41,7 @@ if (import.meta.dev) {
 	<header v-else-if="layoutStyle === 'hero'" class="text-palladian relative -top-[2rem] right-1/2 left-1/2 -mx-[50vw] mb-12 flex min-h-[60vh] w-screen flex-col justify-center overflow-hidden pt-24 md:min-h-[75vh]">
 		<div class="grid w-full grid-cols-4 gap-4 sm:mx-auto sm:max-w-6xl sm:px-8">
 			<div class="relative z-20 col-span-3 pl-8 md:col-span-2 md:col-start-2 md:pl-0">
-				<h1 class="text-4xl tracking-tighter" v-html="title"></h1>
+				<h1 class="text-4xl tracking-tight" v-html="title"></h1>
 				<p v-if="excerpt" v-html="excerpt" class="mt-3 mb-2 w-full text-sm/5 sm:max-w-2xl"></p>
 				<div v-if="callToAction" class="flex w-full justify-start">
 					<PrimaryButton :url="callToActionUrl" target="_self" :text="callToAction" :event-name="'book_' + slug" class="bg-palladian text-brand hover:bg-brand/80 hover:text-palladian mt-4 mb-8 text-xl uppercase hover:cursor-pointer" />

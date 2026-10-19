@@ -27,7 +27,7 @@ const {
 	status,
 	error
 } = await getPages({
-	include: ["apartments", "rooftop-terrace", "simple-meetings", "meetings-and-events", "captains-quarters", "information-for-guests"],
+	include: ["studio-apartment", "bow-apartment", "captains-quarters", "rooftop-terrace", "simple-meetings", "meetings-and-events", "information-for-guests"],
 	exclude: []
 })
 
@@ -58,9 +58,7 @@ const centerMenuItems = computed(() => {
 	if (!centerPages.value) return []
 	return centerPages.value.map((item) => ({
 		id: item.id,
-		title: item.slug === "meetings-and-events"
-			? "Meetings and Events"
-			: item.title?.rendered || item.title,
+		title: item.slug === "meetings-and-events" ? "Meetings and Events" : item.title?.rendered || item.title,
 		path: `/${item.slug}`
 	}))
 })

@@ -62,7 +62,7 @@ const datePublished = computed(() => rawContentData.value?.date || null)
 
 const { data: allPages } = await getPages()
 
-const includedSlugs = ["apartments", "meetings-and-events", "simple-meetings", "rooftop-terrace", "business-lounge"]
+const includedSlugs = ["studio-apartment", "bow-apartment", "captains-quarters", "simple-meetings", "rooftop-terrace"]
 
 const relatedPages = computed(() => {
 	if (!allPages.value) return []
@@ -134,8 +134,8 @@ const cleanSeoDescription = computed(() => decodeEntities(seoDescription.value))
 
 const currentLayoutStyle = computed(() => contentAcf.value?.layoutstyle)
 if (import.meta.dev && import.meta.client) {
-	console.log(currentLayoutStyle.value)
-	console.log(rawContentData.value)
+	// console.log(currentLayoutStyle.value)
+	// console.log(rawContentData.value)
 }
 
 useSeoMeta({
@@ -154,35 +154,35 @@ useSeoMeta({
 </script>
 
 <template>
-	<NuxtLayout>
-		<div>
-			<div class="container mx-auto max-w-6xl p-8">
-				<div v-if="pending" class="flex flex-col items-center justify-center space-y-4 py-24">
-					<div class="h-12 w-12 animate-spin rounded-full border-b-4 border-indigo-600"></div>
-					<p class="animate-pulse text-sm font-medium text-slate-500">Loading content...</p>
-				</div>
-
-				<div v-else-if="error" class="rounded-2xl border border-red-100 bg-red-50 px-6 py-24 text-center">
-					<h2 class="mb-2 text-xl font-bold text-red-800">Failed to load content</h2>
-					<p class="text-sm text-red-600">Could not resolve route or the target slug is missing/unpublished.</p>
-				</div>
-
-				<PostContent v-else-if="hasContent && isPost" :title="contentTitle" :body="contentBody" :slug="contentSlug" :acf="contentAcf" :author-name="authorName" :formatted-date="formattedDate" :date-published="datePublished" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" :layout-style="currentLayoutStyle" />
-
-				<PageContent v-else-if="hasContent && isPage" :acf="contentAcf" :title="contentTitle" :body="contentBody" :slug="contentSlug" :excerpt="headerExcerpt" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" :related-pages="relatedPages" :layout-style="currentLayoutStyle" :page-video-header-url="pageVideoHeaderUrl" :page-video-header-poster="pageVideoHeaderPoster" />
+	<div class="w-full">
+		<div class="container mx-auto max-w-6xl p-8">
+			<div v-if="pending" class="flex flex-col items-center justify-center space-y-4 py-24">
+				<div class="h-12 w-12 animate-spin rounded-full border-b-4 border-indigo-600"></div>
+				<p class="animate-pulse text-sm font-medium text-slate-500">Loading content...</p>
 			</div>
-			<div v-if="contentSlug === 'apartments'">
-				<div class="hidden mx-auto max-w-6xl px-8 grid grid-cols-4 sm:flex sm:flex-col">
-					<div class="col-start-2 col-span-2">
-						<SlimTrustWidget />
-					</div>
-				</div>
+
+			<div v-else-if="error" class="rounded-2xl border border-red-100 bg-red-50 px-6 py-24 text-center">
+				<h2 class="mb-2 text-xl font-bold text-red-800">Failed to load content</h2>
+				<p class="text-sm text-red-600">Could not resolve route or the target slug is missing/unpublished.</p>
 			</div>
-			<div v-if="['rooftop-terrace', 'studio-apartment', 'bow-apartment', 'business-lounge'].includes(contentSlug)">
-				<div class="w-full sm:mx-auto sm:w-4/5">
-					<ImageGridWide :header="contentAcf?.gallery_header" :text="contentAcf?.gallery_text" :button="contentAcf?.gallery_button" :url="targetSlug" />
+
+			<PostContent v-else-if="hasContent && isPost" :title="contentTitle" :body="contentBody" :slug="contentSlug" :acf="contentAcf" :author-name="authorName" :formatted-date="formattedDate" :date-published="datePublished" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" :layout-style="currentLayoutStyle" />
+
+			<PageContent v-else-if="hasContent && isPage" :acf="contentAcf" :title="contentTitle" :body="contentBody" :slug="contentSlug" :excerpt="headerExcerpt" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" :related-pages="relatedPages" :layout-style="currentLayoutStyle" :page-video-header-url="pageVideoHeaderUrl" :page-video-header-poster="pageVideoHeaderPoster" />
+		</div>
+
+		<div v-if="contentSlug === 'apartments'">
+			<div class="mx-auto grid hidden max-w-6xl grid-cols-4 px-8 sm:flex sm:flex-col">
+				<div class="col-span-2 col-start-2">
+					<SlimTrustWidget />
 				</div>
 			</div>
 		</div>
-	</NuxtLayout>
+
+		<div v-if="['rooftop-terrace', 'studio-apartment', 'bow-apartment', 'business-lounge'].includes(contentSlug)">
+			<div class="w-full sm:mx-auto sm:w-4/5">
+				<ImageGridWide :header="contentAcf?.gallery_header" :text="contentAcf?.gallery_text" :button="contentAcf?.gallery_button" :url="targetSlug" />
+			</div>
+		</div>
+	</div>
 </template>

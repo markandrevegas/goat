@@ -35,7 +35,9 @@ useHead({
 
 		<div class="relative flex flex-col">
 			<main class="flex-grow">
-				<slot></slot>
+				<div>
+					<slot></slot>
+				</div>
 			</main>
 		</div>
 	</div>

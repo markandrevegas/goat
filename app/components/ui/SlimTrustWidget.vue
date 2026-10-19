@@ -59,8 +59,8 @@ function scrollByItem(direction: 1 | -1) {
 
 		<div v-else-if="error" class="text-center font-bold text-red-800">Could not load reviews.</div>
 
-		<div v-else-if="data && data?.reviews" class="w-full sm:w-3/5 sm:mx-auto bg-palladian text-brand flex flex-col sm:grid sm:grid-cols-3">
-			<div class="w-full grid grid-cols-2 p-4 sm:flex sm:flex-col sm:justify-center">
+		<div v-else-if="data && data?.reviews" class="bg-palladian text-brand flex w-full flex-col sm:mx-auto sm:grid sm:w-3/5 sm:grid-cols-3">
+			<div class="grid w-full grid-cols-2 p-4 sm:flex sm:flex-col sm:justify-center">
 				<div class="flex flex-col">
 					<h2 class="font-display text-2xl tracking-tight">Excellent</h2>
 					<div class="flex">
