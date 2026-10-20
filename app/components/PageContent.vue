@@ -84,7 +84,7 @@ console.log(threeColumnItems.value)
 	<article class="relative w-full">
 		<EntryHeader :layout-style="layoutStyle" :title="title" :excerpt="excerpt" :call-to-action="acf?.call_to_action" :call-to-action-url="acf?.call_to_action_url" :video-url="pageVideoHeaderUrl" :poster-url="pageVideoHeaderPoster" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" :slug="slug" />
 
-		<main v-if="body && slug !== 'information-for-guests'" class="flex flex-col gap-4 md:grid md:grid-cols-4">
+		<div v-if="body && slug !== 'information-for-guests'" class="flex flex-col gap-4 md:grid md:grid-cols-4">
 			<div class="col-span-1 mb-4 flex flex-col gap-4">
 				<p class="text-sm font-bold uppercase md:block">Share content</p>
 				<Social class="w-max" />
@@ -127,7 +127,7 @@ console.log(threeColumnItems.value)
 					</li>
 				</ul>
 			</div>
-		</main>
+		</div>
 		<div v-if="slug === 'information-for-guests'">
 			<div v-if="body" class="prose text-palladian mx-auto mb-16 max-w-3xl text-center text-lg/8" v-html="body"></div>
 			<ThreeCardLayout :acf="acf" />

@@ -43,7 +43,7 @@ const { data: postItems } = await getPosts({
 		<EntryHeader :layout-style="layoutStyle" :title="title" :author-name="authorName" :formatted-date="formattedDate" :date-published="datePublished" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" />
 
 		<!-- Main 3-Column Content Grid -->
-		<main v-if="body && slug !== 'information-for-guests'" class="flex flex-col gap-4 md:grid md:grid-cols-4">
+		<div v-if="body && slug !== 'information-for-guests'" class="flex flex-col gap-4 md:grid md:grid-cols-4">
 			<!-- Column 1: Share icons -->
 			<div class="col-span-1 mb-8 sm:mb-0">
 				<p class="mb-2 text-sm tracking-tight uppercase md:block">Share Content</p>
@@ -67,17 +67,17 @@ const { data: postItems } = await getPosts({
 					</li>
 				</ul>
 			</div>
-		</main>
+		</div>
 
 		<!-- Special Layout for information-for-guests -->
-		<main v-if="body && slug === 'information-for-guests'" class="mt-8 flex flex-col gap-4 md:mt-12 md:mb-16 md:grid md:grid-cols-4">
+		<div v-if="body && slug === 'information-for-guests'" class="mt-8 flex flex-col gap-4 md:mt-12 md:mb-16 md:grid md:grid-cols-4">
 			<div class="col-span-1"></div>
 			<div class="col-span-2 flex flex-col gap-2 md:pr-8">
 				<div v-if="body" class="prose text-palladian max-w-none text-center" v-html="body"></div>
 				<p v-else class="font-display italic">This page has no content body text.</p>
 			</div>
 			<div class="col-span-1"></div>
-		</main>
+		</div>
 
 		<ThreeCardLayout v-if="slug === 'information-for-guests'" :acf="acf" />
 		<MapEmbed v-if="slug === 'information-for-guests'" :query="acf?.ferryaddress" :address="acf?.ferryaddress" :email="acf?.email" :tel="acf?.tel" />
