@@ -4,7 +4,10 @@ import { computed, watch } from "vue"
 import ImageCarousel from "~/components/ImageCarousel.vue"
 import SlimTrustWidget from "~/components/ui/SlimTrustWidget.vue"
 
-definePageMeta({ layout: "page", key: (route) => route.fullPath })
+interface YoastHead {
+	og_description?: string
+	og_image?: { url: string; width?: number; height?: number }[]
+}
 
 const route = useRoute()
 const { getContentBySlug, getPages } = useWordPress()
@@ -146,46 +149,85 @@ const featuredImageAlt = computed(() => featuredMedia.value?.alt_text || content
 const featuredImageWidth = computed(() => featuredMedia.value?.media_details?.width || 1200)
 const featuredImageHeight = computed(() => featuredMedia.value?.media_details?.height || 630)
 
-function decodeHtml(html: string) {
-	return html
-		.replace(/&amp;/g, "&")
-		.replace(/&lt;/g, "<")
-		.replace(/&gt;/g, ">")
-		.replace(/&quot;/g, '"')
-		.replace(/&#039;/g, "'")
+const siteUrl = "https://floatinggoat.dk"
+const namedEntities: Record<string, string> = {
+	amp: "&",
+	lt: "<",
+	gt: ">",
+	quot: '"',
+	apos: "'",
+	nbsp: " ",
+	hellip: "…",
+	ndash: "–",
+	mdash: "—",
+	lsquo: "‘",
+	rsquo: "’",
+	ldquo: "“",
+	rdquo: "”"
 }
 
-const rawTitle = rawContentData.value?.title?.rendered
-
-const seoTitle = computed(() => contentTitle.value || "Page")
-const seoDescription = computed(() => {
-	const excerpt = rawContentData.value?.excerpt?.rendered
-	if (!excerpt) return "Welcome to our site."
-	return excerpt.replace(/<[^>]*>?/gm, "").trim()
-})
-const ogImage = computed(() => rawContentData.value?.yoast_head_json?.og_image?.[0]?.url || featuredImageUrl.value || "/default-og.jpg")
+function decodeHtml(html: string) {
+	return html.replace(/&([a-z]+);/gi, (match, name) => namedEntities[name.toLowerCase()] ?? match)
+}
 
 function decodeEntities(str: string): string {
 	if (!str) return ""
 	return str.replace(/&#(\d+);/g, (_, dec) => String.fromCharCode(dec)).replace(/&#x([0-9a-f]+);/gi, (_, hex) => String.fromCharCode(parseInt(hex, 16)))
 }
-const cleanSeoTitle = computed(() => decodeEntities(seoTitle.value))
-const cleanSeoDescription = computed(() => decodeEntities(seoDescription.value))
+
+const toPlainText = (html: string) =>
+	decodeEntities(decodeHtml(html.replace(/<[^>]*>/g, " ")))
+		.replace(/\[…\]|\[\.\.\.\]/g, "")
+		.replace(/\s+/g, " ")
+		.trim()
+
+const truncate = (text: string, max = 155) => (text.length > max ? text.slice(0, max).replace(/\s+\S*$/, "") + "…" : text)
+
+const yoastHead = computed(() => rawContentData.value?.yoast_head_json as YoastHead | undefined)
+const rawTitle = rawContentData.value?.title?.rendered
+
+const seoTitle = computed(() => toPlainText(contentTitle.value) || "Page")
+
+const seoDescription = computed(() => {
+	const source = yoastHead.value?.og_description || rawContentData.value?.excerpt?.rendered || rawContentData.value?.content?.rendered || ""
+	return truncate(toPlainText(source)) || "Welcome to our site."
+})
+
+// Yoast image first, then featured image, then default. Always absolute.
+const yoastImage = computed(() => yoastHead.value?.og_image?.[0])
+const ogImageRaw = computed(() => yoastImage.value?.url || featuredImageUrl.value || "/default-og.jpg")
+const ogImage = computed(() => (ogImageRaw.value.startsWith("http") ? ogImageRaw.value : `${siteUrl}${ogImageRaw.value}`))
+
+// Dimensions must describe the image that is actually output
+const ogImageWidth = computed(() => (yoastImage.value?.url ? yoastImage.value.width : featuredImageUrl.value ? featuredImageWidth.value : 1200) || 1200)
+const ogImageHeight = computed(() => (yoastImage.value?.url ? yoastImage.value.height : featuredImageUrl.value ? featuredImageHeight.value : 630) || 630)
+
+const canonicalUrl = computed(() => `${siteUrl}${route.path}`.replace(/\/+$/, ""))
+
+const cleanSeoTitle = computed(() => seoTitle.value)
+const cleanSeoDescription = computed(() => seoDescription.value)
 
 const currentLayoutStyle = computed(() => contentAcf.value?.layoutstyle)
 
 useSeoMeta({
-	title: decodeHtml(rawTitle || ""),
+	title: () => decodeEntities(decodeHtml(rawTitle || "")),
 	titleTemplate: null,
-	description: cleanSeoDescription.value,
-	ogTitle: cleanSeoTitle.value,
-	ogDescription: cleanSeoDescription.value,
-	ogImage: ogImage,
-	ogType: "website",
+	description: () => cleanSeoDescription.value,
+	ogTitle: () => cleanSeoTitle.value,
+	ogDescription: () => cleanSeoDescription.value,
+	ogUrl: () => canonicalUrl.value,
+	ogSiteName: "Floating G.O.A.T.",
+	ogLocale: "en_GB",
+	ogImage: () => ogImage.value,
+	ogImageWidth: () => ogImageWidth.value,
+	ogImageHeight: () => ogImageHeight.value,
+	ogImageAlt: () => featuredImageAlt.value,
+	ogType: () => (isPost.value ? "article" : "website"),
+	articlePublishedTime: () => (isPost.value && rawContentData.value?.date ? `${rawContentData.value.date}Z` : undefined),
 	twitterCard: "summary_large_image",
-	twitterTitle: cleanSeoTitle.value,
-	twitterDescription: cleanSeoDescription.value,
-	twitterImage: ogImage
+	twitterTitle: () => cleanSeoTitle.value,
+	twitterDescription: () => cleanSeoDescription.value,
+	twitterImage: () => ogImage.value
 })
 </script>
 

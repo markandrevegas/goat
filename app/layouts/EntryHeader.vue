@@ -61,7 +61,7 @@ if (import.meta.dev) {
 		</div>
 
 		<div v-if="layoutStyle == 'hero' && featuredImageUrl" class="absolute inset-0 z-10 w-full">
-			<NuxtImg :src="featuredImageUrl" :alt="featuredImageAlt" :width="featuredImageWidth" :height="featuredImageHeight" loading="eager" fetchpriority="high" sizes="sm:100vw md:50vw" format="webp" class="h-full w-full object-cover" />
+			<NuxtImg :src="featuredImageUrl" :alt="featuredImageAlt" :width="featuredImageWidth" :height="featuredImageHeight" loading="eager" fetchpriority="high" sizes="sm:100vw md:50vw" format="webp" class="h-full w-full object-cover object-center" />
 			<div class="pointer-events-none absolute inset-0 bg-black/60"></div>
 		</div>
 	</header>

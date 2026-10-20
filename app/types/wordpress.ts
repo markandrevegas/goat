@@ -49,7 +49,8 @@ export interface WordPressPostOrPage extends WordPressBase {
 	}
 	acf?: Record<string, any>
 	yoast_head_json?: {
-		og_image?: { url: string }[]
+		og_description?: string
+		og_image?: { url: string; width?: number; height?: number }[]
 	}
 	_embedded?: {
 		"wp:featuredmedia"?: MediaDetails[]
