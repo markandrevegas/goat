@@ -69,11 +69,24 @@ const datePublished = computed(() => rawContentData.value?.date || null)
 
 const { data: allPages } = await getPages()
 
-const includedSlugs = ["studio-apartment", "bow-apartment", "captains-quarters", "simple-meetings", "rooftop-terrace"]
+const forApartments = ["business-lounge", "rooftop-terrace", "simple-meeting"]
+const forEvents = ["studio-apartment", "bow-apartment", "captains-quarters"]
 
 const relatedPages = computed(() => {
 	if (!allPages.value) return []
-	return allPages.value.filter((page) => page.id !== contentId.value && includedSlugs.includes(page.slug))
+
+	const currentSlug = allPages.value.find((page) => page.id === contentId.value)?.slug ?? ""
+
+	let relatedSlugs: string[] = []
+	if (currentSlug === "apartments") {
+		relatedSlugs = forApartments
+	} else if (currentSlug === "meetings-and-events" || forApartments.includes(currentSlug)) {
+		relatedSlugs = forEvents
+	} else if (forEvents.includes(currentSlug)) {
+		relatedSlugs = forApartments
+	}
+
+	return allPages.value.filter((page) => page.id !== contentId.value && relatedSlugs.includes(page.slug))
 })
 
 const formattedDate = computed(() => {

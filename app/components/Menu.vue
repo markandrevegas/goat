@@ -130,8 +130,8 @@ const { data: postItems } = await getPosts({
 					</ul>
 					<h3 class="mt-4 text-sm font-semibold uppercase">Follow us</h3>
 					<Social class="mr-auto" />
-					<h3 class="mt-4 text-sm font-semibold uppercase">Recent posts</h3>
-					<ul class="space-y-1">
+					<h3 class="mt-4 hidden text-sm font-semibold uppercase">Recent posts</h3>
+					<ul class="hidden space-y-1">
 						<li v-for="post in postItems" :key="post.id">
 							<NuxtLink :to="`/${post.slug}`" @click="isMobileMenuOpen = false" class="text-brand w-max text-sm font-semibold transition-colors duration-400 hover:border-b-2" active-class="border-b-2" v-html="post.title.rendered" />
 						</li>

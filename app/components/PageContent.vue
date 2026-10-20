@@ -85,7 +85,7 @@ console.log(threeColumnItems.value)
 		<EntryHeader :layout-style="layoutStyle" :title="title" :excerpt="excerpt" :call-to-action="acf?.call_to_action" :call-to-action-url="acf?.call_to_action_url" :video-url="pageVideoHeaderUrl" :poster-url="pageVideoHeaderPoster" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" :slug="slug" />
 
 		<main v-if="body && slug !== 'information-for-guests'" class="flex flex-col gap-4 md:grid md:grid-cols-4">
-			<div class="col-span-1 flex flex-col mb-4">
+			<div class="col-span-1 mb-4 flex flex-col gap-4">
 				<p class="text-sm font-bold uppercase md:block">Share content</p>
 				<Social class="w-max" />
 			</div>
@@ -119,7 +119,7 @@ console.log(threeColumnItems.value)
 					<div class="text-palladian pb-5 text-sm leading-relaxed [&_a]:underline [&_li]:pl-1 [&_ol]:list-decimal [&_ol]:space-y-1 [&_ol]:pl-5 [&_ul]:list-disc [&_ul]:space-y-1 [&_ul]:pl-5 [&_ul_ul]:mt-1 [&>*+*]:mt-3" v-html="acf?.extended_info_content"></div>
 				</details>
 			</div>
-			<div class="col-span-1 flex flex-col mt-16 sm:mt-0">
+			<div class="col-span-1 mt-16 flex flex-col sm:mt-0">
 				<p class="mb-4 text-sm font-bold uppercase md:block">Related</p>
 				<ul class="list-reset space-y-2 sm:space-y-1">
 					<li v-for="item in relatedPages" :key="item.id">

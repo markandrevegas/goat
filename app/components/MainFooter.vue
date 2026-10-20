@@ -11,7 +11,7 @@ const {
 	status,
 	error
 } = await getPages({
-	include: ["terms-and-conditions", "privacy-policy"],
+	include: ["terms-and-conditions", "privacy-policy", "about-us"],
 	exclude: []
 })
 
@@ -56,9 +56,9 @@ const pageItems = computed(() => {
 							<NuxtLink :to="`/${item.slug}`" class="w-max font-semibold transition-opacity duration-400 hover:border-b-2" v-html="item.title.rendered"></NuxtLink>
 						</li>
 						<li class="w-max">
-							<TextButton @click="openBanner" :event-name="'open_cookie_settings'" :text="'Open cookie settings'" aria-haspopup="dialog" aria-expanded="false" aria-controls="cookie-settings-modal" class="w-max pb-0 font-semibold transition-opacity duration-400 hover:border-b-2" />
+							<TextButton @click="openBanner" :event-name="'open_cookie_settings'" :text="'Open cookie settings'" aria-haspopup="dialog" aria-expanded="false" aria-controls="cookie-settings-modal" class="text-palladian w-max pb-0 font-semibold transition-opacity duration-400 hover:border-b-2" />
 						</li>
-						<!--<li class="w-max"><a @click="openBanner" class="w-max font-semibold transition-opacity duration-400 hover:border-b-2">Open cookie settings</a></li>-->
+						<li class="w-max"><a href="https://floatinggoat.dk/sitemap_index.xml" target="_blank" class="text-palladian w-max font-semibold transition-opacity duration-400 hover:border-b-2">Sitemap</a></li>
 					</ul>
 				</div>
 				<div class="flex flex-col">
