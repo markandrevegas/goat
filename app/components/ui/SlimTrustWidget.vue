@@ -31,7 +31,7 @@ const { data, pending, error } = useFetch<AirbnbApiResponse>("https://floatinggo
 })
 
 if (import.meta.dev && import.meta.client) {
-	console.log(data.value)
+	// console.log(data.value)
 }
 
 const optimizeAvatarUrl = (url?: string, width = 240) => {

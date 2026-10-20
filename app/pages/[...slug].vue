@@ -1,5 +1,6 @@
+<!-- pages/[...slug].vue -->
 <script setup lang="ts">
-import { computed } from "vue"
+import { computed, watch } from "vue"
 import SlimTrustWidget from "~/components/ui/SlimTrustWidget.vue"
 
 definePageMeta({ layout: "page", key: (route) => route.fullPath })
@@ -16,6 +17,12 @@ const targetSlug = computed(() => {
 	const segments = slugParam.value.filter(Boolean)
 	return segments[segments.length - 1] || "home"
 })
+
+interface CardItem {
+	header?: string
+	text?: string
+	[key: string]: any
+}
 
 const {
 	data: rawContentData,
@@ -91,16 +98,35 @@ const authorName = computed(() => authorDetails.value?.name || "")
 const featuredMedia = computed(() => rawContentData.value?._embedded?.["wp:featuredmedia"]?.[0] || null)
 const featuredImageUrl = computed(() => featuredMedia.value?.source_url || null)
 
-const headerExcerpt = computed(() => {
-	return rawContentData.value?.acf?.header_excerpt ?? ""
+const headerExcerpt = computed(() => contentAcf.value?.header_excerpt ?? "")
+const pageVideoHeaderUrl = computed(() => contentAcf.value?.page_header_video_url)
+const pageVideoHeaderPoster = computed(() => contentAcf.value?.page_header_video_poster)
+
+// --- FIXED THREE COLUMN DATA HANDLING ---
+// 1. Extract from contentAcf.value (rawContentData.value?.acf)
+const threeColumnItems = computed(() => {
+	if (!contentAcf.value) return []
+	return extractColumns(contentAcf.value, ["one", "two", "three"])
 })
 
-const pageVideoHeaderUrl = computed(() => {
-	return rawContentData.value?.acf?.page_header_video_url
+// 2. Initialize cookie with fallback default
+const sharedColumns = useCookie<CardItem[]>("threeColumnsData", {
+	maxAge: 60 * 60 * 24 * 7,
+	sameSite: "lax",
+	default: () => []
 })
-const pageVideoHeaderPoster = computed(() => {
-	return rawContentData.value?.acf?.page_header_video_poster
-})
+
+// 3. Keep shared cookie updated whenever threeColumnItems changes
+watch(
+	threeColumnItems,
+	(newItems) => {
+		if (newItems && newItems.length) {
+			sharedColumns.value = newItems
+		}
+	},
+	{ immediate: true, deep: true }
+)
+// ----------------------------------------
 
 const featuredImageAlt = computed(() => featuredMedia.value?.alt_text || contentTitle.value)
 const featuredImageWidth = computed(() => featuredMedia.value?.media_details?.width || 1200)
@@ -133,10 +159,6 @@ const cleanSeoTitle = computed(() => decodeEntities(seoTitle.value))
 const cleanSeoDescription = computed(() => decodeEntities(seoDescription.value))
 
 const currentLayoutStyle = computed(() => contentAcf.value?.layoutstyle)
-if (import.meta.dev && import.meta.client) {
-	// console.log(currentLayoutStyle.value)
-	// console.log(rawContentData.value)
-}
 
 useSeoMeta({
 	title: decodeHtml(rawTitle || ""),

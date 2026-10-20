@@ -7,6 +7,12 @@ import Marquee from "~/components/ui/Marquee.vue"
 import LazyThreeColumns from "~/components/ui/ThreeColumns.vue"
 import LazyCenterAlignedFeature from "~/components/CenterAlignedFeature.vue"
 
+interface CardItem {
+	header?: string
+	text?: string
+	[key: string]: any
+}
+
 const trustindexRef = ref<HTMLElement | null>(null)
 const shouldLoadReviews = ref(false)
 
@@ -48,8 +54,8 @@ const videoHeaderTertiaryButtonUrl = computed(() => landing.value?.video_header_
 /*const standardCards = computed(() => extractColumns(landing.value, ["first", "second", "third", "fourth"]))*/
 
 // 'header_one', 'header_two', 'header_three'
+// 1. Compute your columns as before
 const threeColumnItems = computed(() => extractColumns(landing.value, ["one", "two", "three"]))
-
 const featureHeaderSm = computed(() => landing.value?.feature_header_sm || "")
 const featureHeaderLg = computed(() => landing.value?.feature_header_lg || "")
 const featureImage = computed(() => landing.value?.feature_image || "")
