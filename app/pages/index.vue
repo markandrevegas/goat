@@ -20,6 +20,15 @@ definePageMeta({
 	layout: "default"
 })
 
+function decodeHtml(html: string) {
+	return html
+		.replace(/&amp;/g, "&")
+		.replace(/&lt;/g, "<")
+		.replace(/&gt;/g, ">")
+		.replace(/&quot;/g, '"')
+		.replace(/&#039;/g, "'")
+}
+
 const { getLandingPage } = useWordPress()
 const { data: page } = await useAsyncData("wp-index", () => getLandingPage("index-page"))
 
@@ -120,8 +129,8 @@ if (import.meta.dev && import.meta.client) {
 		<template v-if="layoutStyle === 'video'" #bg-video>
 			<VideoHeader :title="videoHeaderTitle" :excerpt="videoHeaderExcerpt" :videoUrl="videoHeaderVideoUrl" :posterUrl="videoHeaderPoster" :primaryButtonText="videoHeaderPrimaryButton" :primaryButtonUrl="videoHeaderPrimaryButtonUrl" :secondaryButtonText="videoHeaderSecondaryButton" :secondaryButtonUrl="videoHeaderSecondaryButtonUrl" :tertiaryButtonText="videoHeaderTertiaryButton" :tertiaryButtonUrl="videoHeaderTertiaryButtonUrl" />
 		</template>
-		<LazyThreeColumns v-if="threeColumnItems.length" :items="threeColumnItems" />
 		<LazyCenterAlignedFeature :header="centeredFeatureHeader" :text="centeredFeatureText" />
+		<LazyThreeColumns v-if="threeColumnItems.length" :items="threeColumnItems" />
 		<LazyMainFeatureSection :feature-header-sm="featureHeaderSm" :feature-header-lg="featureHeaderLg" :feature-image="featureImage" :feature-text="featureText" :feature-button="featureButton" :feature-url="featureUrl" />
 		<Marquee folder="clients" :speed="40" />
 		<div ref="trustindexRef" class="hidden">

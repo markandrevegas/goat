@@ -119,7 +119,7 @@ console.log(threeColumnItems.value)
 					<div class="text-palladian pb-5 text-sm leading-relaxed [&_a]:underline [&_li]:pl-1 [&_ol]:list-decimal [&_ol]:space-y-1 [&_ol]:pl-5 [&_ul]:list-disc [&_ul]:space-y-1 [&_ul]:pl-5 [&_ul_ul]:mt-1 [&>*+*]:mt-3" v-html="acf?.extended_info_content"></div>
 				</details>
 			</div>
-			<div class="col-span-1 flex flex-col mt-16">
+			<div class="col-span-1 flex flex-col mt-16 sm:mt-0">
 				<p class="mb-4 text-sm font-bold uppercase md:block">Related</p>
 				<ul class="list-reset space-y-2 sm:space-y-1">
 					<li v-for="item in relatedPages" :key="item.id">
@@ -134,6 +134,9 @@ console.log(threeColumnItems.value)
 			<MapEmbed :query="acf?.ferryaddress" :address="acf?.ferryaddress" :email="acf?.email" :tel="acf?.tel" />
 		</div>
 		<div v-if="slug === 'apartments'" class="mt-16 shadow-xl shadow-black/40">
+			<LazyThreeColumns v-if="threeColumnItems.length" :items="threeColumnItems" />
+		</div>
+		<div v-if="slug === 'meetings-and-events'" class="mt-16 shadow-xl shadow-black/40">
 			<LazyThreeColumns v-if="threeColumnItems.length" :items="threeColumnItems" />
 		</div>
 	</article>
