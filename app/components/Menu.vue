@@ -27,7 +27,7 @@ const {
 	status,
 	error
 } = await getPages({
-	include: ["studio-apartment", "bow-apartment", "captains-quarters", "rooftop-terrace", "simple-meetings", "meetings-and-events", "information-for-guests"],
+	include: ["meetings-and-events", "rooftop-terrace", "apartments", "about-us"],
 	exclude: []
 })
 
@@ -44,6 +44,12 @@ const pageItems = computed(() => {
 			return {
 				...item,
 				title: { ...item.title, rendered: "Meetings and Events" }
+			}
+		}
+		if (item.slug === "about-us") {
+			return {
+				...item,
+				title: { ...item.title, rendered: "About us" }
 			}
 		}
 		return item
