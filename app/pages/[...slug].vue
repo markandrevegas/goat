@@ -217,11 +217,10 @@ useSeoMeta({
 
 		<div v-if="['meetings-and-events', 'simple-meeting', 'rooftop-terrace', 'studio-apartment', 'bow-apartment', 'business-lounge'].includes(contentSlug)">
 			<div class="w-full sm:mx-auto sm:w-4/5">
-				<div class="max-w-2xl mx-auto">
+				<div class="mx-auto max-w-2xl">
 					<ImageCarousel :header="contentAcf?.gallery_header" :text="contentAcf?.gallery_text" :button="contentAcf?.gallery_button" :url="targetSlug" />
 				</div>
-				
-				<ImageGridWide :header="contentAcf?.gallery_header" :text="contentAcf?.gallery_text" :button="contentAcf?.gallery_button" :url="targetSlug" />
+				<!--<ImageGridWide :header="contentAcf?.gallery_header" :text="contentAcf?.gallery_text" :button="contentAcf?.gallery_button" :url="targetSlug" />-->
 			</div>
 		</div>
 	</div>

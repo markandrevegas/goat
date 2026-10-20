@@ -63,88 +63,33 @@ onUnmounted(() => window.removeEventListener("keydown", handleKeyDown))
 		<p v-if="header" class="font-display text-lg" v-html="header"></p>
 		<p v-if="text" v-html="text" class="mt-2 mb-6"></p>
 
-		<!-- Main Carousel -->
 		<div class="relative w-full overflow-hidden rounded-xl">
 			<div class="flex transition-transform duration-500 ease-in-out" :style="{ transform: `translateX(-${current * 100}%)` }">
-				<img
-					v-for="(img, i) in images"
-					:key="img.name"
-					:src="img.url"
-					:alt="img.name"
-					@click="openLightbox(i)"
-					class="aspect-video w-full shrink-0 cursor-pointer object-cover transition-opacity hover:opacity-95"
-				/>
+				<img v-for="(img, i) in images" :key="img.name" :src="img.url" :alt="img.name" @click="openLightbox(i)" class="aspect-video w-full shrink-0 cursor-pointer object-cover transition-opacity hover:opacity-95" />
 			</div>
 
 			<button @click="prev" aria-label="Previous slide" class="absolute top-1/2 left-2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-xl text-white hover:bg-black/75">‹</button>
 			<button @click="next" aria-label="Next slide" class="absolute top-1/2 right-2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-xl text-white hover:bg-black/75">›</button>
 		</div>
 
-		<!-- Dots Indicator -->
 		<div class="mt-4 flex justify-center gap-1">
-			<button
-				v-for="(img, i) in images"
-				:key="img.name"
-				@click="current = i"
-				:aria-label="'Slide ' + (i + 1)"
-				class="size-2 rounded-full transition-colors"
-				:class="i === current ? 'bg-brand' : 'bg-brand/30'"
-			/>
+			<button v-for="(img, i) in images" :key="img.name" @click="current = i" :aria-label="'Slide ' + (i + 1)" class="size-2 rounded-full transition-colors" :class="i === current ? 'bg-brand' : 'bg-brand/30'" />
 		</div>
 
-		<!-- Fullscreen Lightbox Overlay -->
 		<Teleport to="body">
-			<Transition
-				enter-active-class="transition duration-200 ease-out"
-				enter-from-class="opacity-0"
-				enter-to-class="opacity-100"
-				leave-active-class="transition duration-150 ease-in"
-				leave-from-class="opacity-100"
-				leave-to-class="opacity-0"
-			>
-				<div
-					v-if="isOpen"
-					class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 sm:p-8"
-					@click.self="closeLightbox"
-				>
-					<!-- Close Button -->
-					<button
-						@click="closeLightbox"
-						aria-label="Close modal"
-						class="absolute top-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-2xl text-white hover:bg-black/80"
-					>
-						✕
-					</button>
+			<Transition enter-active-class="transition duration-200 ease-out" enter-from-class="opacity-0" enter-to-class="opacity-100" leave-active-class="transition duration-150 ease-in" leave-from-class="opacity-100" leave-to-class="opacity-0">
+				<div v-if="isOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm sm:p-8" @click.self="closeLightbox">
 
-					<!-- Lightbox Image Wrapper -->
+					<button @click="closeLightbox" aria-label="Close modal" class="absolute top-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-2xl text-white hover:bg-black/80">✕</button>
+
 					<div class="relative flex max-h-full max-w-5xl items-center justify-center">
-						<img
-							:src="images?.[current]?.url"
-							:alt="images?.[current]?.name"
-							class="max-h-[85vh] max-w-full rounded-lg object-contain shadow-2xl"
-						/>
+						<img :src="images?.[current]?.url" :alt="images?.[current]?.name" class="max-h-[85vh] max-w-full rounded-lg object-contain shadow-2xl" />
 
-						<!-- Lightbox Controls -->
-						<button
-							@click="prev"
-							aria-label="Previous image"
-							class="absolute left-2 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-2xl text-white hover:bg-black/80 sm:-left-12"
-						>
-							‹
-						</button>
-						<button
-							@click="next"
-							aria-label="Next image"
-							class="absolute right-2 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-2xl text-white hover:bg-black/80 sm:-right-12"
-						>
-							›
-						</button>
+						<button @click="prev" aria-label="Previous image" class="absolute left-2 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-2xl text-white hover:bg-black/80 sm:-left-12">‹</button>
+						<button @click="next" aria-label="Next image" class="absolute right-2 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-2xl text-white hover:bg-black/80 sm:-right-12">›</button>
 					</div>
 
-					<!-- Counter Indicator -->
-					<div class="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-black/60 px-4 py-1 text-sm font-medium text-white">
-						{{ current + 1 }} / {{ images.length }}
-					</div>
+					<div class="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-black/60 px-4 py-1 text-sm font-medium text-white">{{ current + 1 }} / {{ images.length }}</div>
 				</div>
 			</Transition>
 		</Teleport>
