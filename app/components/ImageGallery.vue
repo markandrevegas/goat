@@ -15,11 +15,15 @@ const props = withDefaults(
 		button: "Click Here"
 	}
 )
+
 const { getGalleryImages } = useWordPress()
-const { data: images, error } = await getGalleryImages("images")
+// Use props.url (or fallback) instead of hardcoded "images"
+const { data: images, error } = await getGalleryImages(props.url)
+
 if (error.value) {
 	console.error("[ImageGallery] fetch failed:", error.value)
 }
+
 const current = ref(0)
 
 const next = () => (current.value = (current.value + 1) % (images.value?.length ?? 1))
