@@ -55,14 +55,41 @@ const imageBase = "https://fg.floatinggoat.dk"
 const schema = computed(() => {
 	const p = product.value
 	if (!p) return null
+	const jsonLd = {
+		"@context": "https://schema.org",
+		"@type": "Product",
+		name: p.name,
+		description: p.descriptionWeb,
+		image: (p.images ?? []).map((i) => (i.link.startsWith("http") ? i.link : `${imageBase}${i.link}`)),
+		// image: p.images,
+		sku: p.id ?? p.slug,
+		brand: { "@type": "Brand", name: "Floating G.O.A.T." },
+		offers: {
+			"@type": "Offer",
+			url: `https://floatinggoat.dk/${props.slug}`,
+			price: p.price,
+			priceCurrency: "DKK",
+			availability: "https://schema.org/InStock",
+			itemCondition: "https://schema.org/NewCondition"
+		}
+	}
 	return {
+		script: [
+			{
+				key: "ld-product",
+				type: "application/ld+json",
+				innerHTML: JSON.stringify(jsonLd).replace(/</g, "\\u003c")
+			}
+		]
+	}
+	/*return {
 		"@context": "https://schema.org",
 		"@type": "Product",
 		name: pick(p.name),
 		sku: String(p.id),
 		image: (p.images ?? []).map((i) => (i.link.startsWith("http") ? i.link : `${imageBase}${i.link}`)),
 		offers: { "@type": "Offer", priceCurrency: "DKK", price: p.price }
-	}
+	}*/
 })
 
 useHead({
