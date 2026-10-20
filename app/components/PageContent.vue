@@ -82,18 +82,40 @@ const schema = computed(() => {
 			}
 		]
 	}
-	/*return {
-		"@context": "https://schema.org",
-		"@type": "Product",
-		name: pick(p.name),
-		sku: String(p.id),
-		image: (p.images ?? []).map((i) => (i.link.startsWith("http") ? i.link : `${imageBase}${i.link}`)),
-		offers: { "@type": "Offer", priceCurrency: "DKK", price: p.price }
-	}*/
 })
 
-useHead({
-	script: computed(() => (schema.value ? [{ type: "application/ld+json", innerHTML: JSON.stringify(schema.value) }] : []))
+useHead(() => {
+	const p = product.value
+	if (!p) return {}
+
+	const name = p.name?.dk || p.name?.en
+	if (!name) return {}
+
+	const jsonLd = {
+		"@context": "https://schema.org",
+		"@type": "Product",
+		name,
+		image: p.images,
+		sku: String(p.id),
+		brand: { "@type": "Brand", name: "Floating G.O.A.T." },
+		offers: {
+			"@type": "Offer",
+			url: `https://floatinggoat.dk/${props.slug}`,
+			price: String(p.price),
+			priceCurrency: "DKK",
+			availability: "https://schema.org/InStock"
+		}
+	}
+
+	return {
+		script: [
+			{
+				key: "ld-product",
+				type: "application/ld+json",
+				innerHTML: JSON.stringify(jsonLd).replace(/</g, "\\u003c")
+			}
+		]
+	}
 })
 
 if (import.meta.client && import.meta.dev) {
