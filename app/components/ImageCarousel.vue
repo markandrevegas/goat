@@ -79,7 +79,6 @@ onUnmounted(() => window.removeEventListener("keydown", handleKeyDown))
 		<Teleport to="body">
 			<Transition enter-active-class="transition duration-200 ease-out" enter-from-class="opacity-0" enter-to-class="opacity-100" leave-active-class="transition duration-150 ease-in" leave-from-class="opacity-100" leave-to-class="opacity-0">
 				<div v-if="isOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm sm:p-8" @click.self="closeLightbox">
-
 					<button @click="closeLightbox" aria-label="Close modal" class="absolute top-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-2xl text-white hover:bg-black/80">✕</button>
 
 					<div class="relative flex max-h-full max-w-5xl items-center justify-center">

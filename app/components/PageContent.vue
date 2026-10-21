@@ -5,8 +5,15 @@ import PrimaryButton from "./ui/PrimaryButton.vue"
 import MapEmbed from "./ui/MapEmbed.vue"
 import ThreeCardLayout from "./ui/ThreeCardLayout.vue"
 import LazyThreeColumns from "~/components/ui/ThreeColumns.vue"
-
 import Pdf from "./icons/Pdf.vue"
+import Calendar from "./Calendar.vue"
+
+interface BookedRange {
+	start: string
+	end: string
+	summary: string
+}
+
 interface RelatedPage {
 	id: number
 	title: { rendered: string }
@@ -66,7 +73,7 @@ useHead(() => {
 		name,
 		description: props.excerpt,
 		aggregateRating: null,
-		review: '',
+		review: "",
 		image: (p.images ?? []).map((i: { link: string }) => (i.link.startsWith("http") ? i.link : `${imageBase}${i.link}`)),
 		sku: String(p.id ?? p.slug),
 		brand: { "@type": "Brand", name: "Floating G.O.A.T." },
@@ -76,8 +83,8 @@ useHead(() => {
 			price: String(p.price),
 			priceCurrency: "DKK",
 			availability: "https://schema.org/InStock",
-			hasMerchantReturnPolicy: '',
-			shippingDetails: ''
+			hasMerchantReturnPolicy: "",
+			shippingDetails: ""
 		}
 	}
 
@@ -98,6 +105,7 @@ if (import.meta.client && import.meta.dev) {
 		console.log(product.value)
 	}
 }
+const { data } = await useFetch<{ success: boolean; bookedRanges: BookedRange[] }>("/api/calendar")
 </script>
 
 <template>
@@ -158,6 +166,9 @@ if (import.meta.client && import.meta.dev) {
 		</div>
 		<div v-if="slug === 'meetings-and-events'" class="mt-16 shadow-xl shadow-black/40">
 			<LazyThreeColumns v-if="threeColumnItems.length" :items="threeColumnItems" />
+		</div>
+		<div v-if="['rooftop-terrace'].includes(slug)" class="flex flex-col gap-4 md:grid md:grid-cols-4 md:pr-8">
+			<Calendar :booked-ranges="data?.bookedRanges || []" class="col-span-2 col-start-2" />
 		</div>
 	</article>
 </template>
