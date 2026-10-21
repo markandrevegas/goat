@@ -49,54 +49,25 @@ if (error.value || !products.value) {
 
 const product = computed(() => products.value?.find((p) => p.slug === props.slug) ?? null)
 
-const pick = (l?: { dk?: string; en?: string }) => l?.dk || l?.en || ""
 
 const imageBase = "https://fg.floatinggoat.dk"
-const schema = computed(() => {
-	const p = product.value
-	if (!p) return null
-	const jsonLd = {
-		"@context": "https://schema.org",
-		"@type": "Product",
-		name: p.name,
-		description: p.descriptionWeb,
-		image: (p.images ?? []).map((i) => (i.link.startsWith("http") ? i.link : `${imageBase}${i.link}`)),
-		// image: p.images,
-		sku: p.id ?? p.slug,
-		brand: { "@type": "Brand", name: "Floating G.O.A.T." },
-		offers: {
-			"@type": "Offer",
-			url: `https://floatinggoat.dk/${props.slug}`,
-			price: p.price,
-			priceCurrency: "DKK",
-			availability: "https://schema.org/InStock",
-			itemCondition: "https://schema.org/NewCondition"
-		}
-	}
-	return {
-		script: [
-			{
-				key: "ld-product",
-				type: "application/ld+json",
-				innerHTML: JSON.stringify(jsonLd).replace(/</g, "\\u003c")
-			}
-		]
-	}
-})
+// Localized fields come back as { dk, en }; pick one string
+const pick = (v: any) => (typeof v === "string" ? v : v?.dk || v?.en || undefined)
 
 useHead(() => {
 	const p = product.value
 	if (!p) return {}
 
-	const name = p.name?.dk || p.name?.en
+	const name = pick(p.name)
 	if (!name) return {}
 
 	const jsonLd = {
 		"@context": "https://schema.org",
 		"@type": "Product",
 		name,
-		image: p.images,
-		sku: String(p.id),
+		description: pick(p.descriptionWeb),
+		image: (p.images ?? []).map((i: { link: string }) => (i.link.startsWith("http") ? i.link : `${imageBase}${i.link}`)),
+		sku: String(p.id ?? p.slug),
 		brand: { "@type": "Brand", name: "Floating G.O.A.T." },
 		offers: {
 			"@type": "Offer",
