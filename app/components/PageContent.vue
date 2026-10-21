@@ -63,10 +63,10 @@ useHead(() => {
 	const jsonLd = {
 		"@context": "https://schema.org",
 		"@type": "Product",
-		aggregateRating: null,
-		review: '',
 		name,
 		description: props.excerpt,
+		aggregateRating: null,
+		review: '',
 		image: (p.images ?? []).map((i: { link: string }) => (i.link.startsWith("http") ? i.link : `${imageBase}${i.link}`)),
 		sku: String(p.id ?? p.slug),
 		brand: { "@type": "Brand", name: "Floating G.O.A.T." },
