@@ -74,11 +74,10 @@ const nextMonth = () => {
 		</div>
 
 		<div class="mb-8 flex items-start justify-between p-4">
-			<div class="flex flex-col">
+			<div class="flex flex-col gap-1">
 				<h3 class="text-brand font-sans text-2xl font-semibold tracking-tight">{{ currentMonthName }} {{ currentYear }}</h3>
-				<div class="border-b border-amber-200 bg-amber-50 text-xs text-amber-900">
-					<p class="font-semibold">📅 Availability Calendar (Read-Only)</p>
-					<p>Direct bookings are coming soon. Dates marked in red are currently booked on Airbnb.</p>
+				<div class="rounded-lg border border-amber-200 bg-amber-50 p-2 text-xs text-amber-900">
+					<p>Dates marked in red are currently booked.</p>
 				</div>
 			</div>
 

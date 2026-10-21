@@ -117,7 +117,7 @@ const { data } = await useFetch<{ success: boolean; bookedRanges: BookedRange[] 
 				<p class="text-sm font-bold uppercase md:block">Share content</p>
 				<Social class="w-max" />
 			</div>
-			<div class="col-span-2 flex flex-col gap-2 md:pr-8">
+			<div class="col-span-2 col-start-2 flex flex-col gap-2 md:pr-8">
 				<NuxtImg v-if="acf?.layoutstyle !== 'hero' && featuredImageUrl" :src="featuredImageUrl" :alt="featuredImageAlt" loading="eager" fetchpriority="high" sizes="100vw sm:100vw md:100vw lg:100vw" :densities?="[1, 2, 3]" class="mb-4 h-auto w-full object-cover" />
 				<div v-if="body" class="prose prose-lg/5 prose-headings:font-semibold prose-headings:tracking-tight prose-a:text-brand prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl prose-img:shadow-md mb-4 max-w-none" v-html="body"></div>
 				<div v-if="body && slug === 'ferry-access'">
@@ -167,8 +167,19 @@ const { data } = await useFetch<{ success: boolean; bookedRanges: BookedRange[] 
 		<div v-if="slug === 'meetings-and-events'" class="mt-16 shadow-xl shadow-black/40">
 			<LazyThreeColumns v-if="threeColumnItems.length" :items="threeColumnItems" />
 		</div>
-		<div v-if="['rooftop-terrace'].includes(slug)" class="flex flex-col gap-4 md:grid md:grid-cols-4 md:pr-8">
-			<Calendar :booked-ranges="data?.bookedRanges || []" class="col-span-2 col-start-2" />
+		<div v-if="['rooftop-terrace'].includes(slug)" class="flex flex-col gap-4 md:grid md:grid-cols-4">
+			<div class="col-span-1"></div>
+			<div class="col-span-2 pr-8">
+				<details class="group border-palladian mt-8 w-full border-t [interpolate-size:allow-keywords] details-content:h-0 details-content:overflow-hidden details-content:opacity-0 details-content:transition-[height,opacity,content-visibility] details-content:transition-discrete details-content:duration-300 details-content:ease-out open:details-content:h-auto open:details-content:opacity-100">
+					<summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-4 font-semibold select-none [&::-webkit-details-marker]:hidden">
+						Booking Calendar
+						<svg class="size-5 shrink-0 transition-transform duration-300 group-open:rotate-180" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+							<path d="M5 8l5 5 5-5" />
+						</svg>
+					</summary>
+					<Calendar :booked-ranges="data?.bookedRanges || []" />
+				</details>
+			</div>
 		</div>
 	</article>
 </template>

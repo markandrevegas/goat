@@ -250,7 +250,7 @@ useSeoMeta({
 		</div>
 
 		<div v-if="contentSlug === 'apartments'">
-			<div class="mx-auto grid hidden max-w-6xl grid-cols-4 px-8 sm:flex sm:flex-col">
+			<div class="mx-auto grid max-w-6xl grid-cols-4 px-8 sm:flex sm:flex-col">
 				<div class="col-span-2 col-start-2">
 					<SlimTrustWidget />
 				</div>
@@ -258,7 +258,7 @@ useSeoMeta({
 		</div>
 
 		<div v-if="['meetings-and-events', 'simple-meeting', 'rooftop-terrace', 'studio-apartment', 'bow-apartment', 'business-lounge'].includes(contentSlug)">
-			<div class="w-full sm:mx-auto sm:w-4/5">
+			<div class="max-w-3xl sm:mx-auto">
 				<!--<div class="mx-auto max-w-2xl">
 					<ImageCarousel :header="contentAcf?.gallery_header" :text="contentAcf?.gallery_text" :button="contentAcf?.gallery_button" :url="targetSlug" />
 				</div>-->
