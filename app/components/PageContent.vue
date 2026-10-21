@@ -47,11 +47,10 @@ if (error.value || !products.value) {
 	console.log(error.value)
 }
 
+const threeColumnItems = useCookie<any[]>("threeColumnsData", { default: () => [] })
+
 const product = computed(() => products.value?.find((p) => p.slug === props.slug) ?? null)
-
-
 const imageBase = "https://fg.floatinggoat.dk"
-// Localized fields come back as { dk, en }; pick one string
 const pick = (v: any) => (typeof v === "string" ? v : v?.dk || v?.en || undefined)
 
 useHead(() => {
@@ -60,12 +59,12 @@ useHead(() => {
 
 	const name = pick(p.name)
 	if (!name) return {}
-
+	console.log()
 	const jsonLd = {
 		"@context": "https://schema.org",
 		"@type": "Product",
 		name,
-		description: pick(p.descriptionWeb),
+		description: props.excerpt,
 		image: (p.images ?? []).map((i: { link: string }) => (i.link.startsWith("http") ? i.link : `${imageBase}${i.link}`)),
 		sku: String(p.id ?? p.slug),
 		brand: { "@type": "Brand", name: "Floating G.O.A.T." },
@@ -74,7 +73,9 @@ useHead(() => {
 			url: `https://floatinggoat.dk/${props.slug}`,
 			price: String(p.price),
 			priceCurrency: "DKK",
-			availability: "https://schema.org/InStock"
+			availability: "https://schema.org/InStock",
+			hasMerchantReturnPolicy: '',
+			shippingDetails: ''
 		}
 	}
 
@@ -95,9 +96,6 @@ if (import.meta.client && import.meta.dev) {
 		console.log(product.value)
 	}
 }
-
-const threeColumnItems = useCookie<any[]>("threeColumnsData", { default: () => [] })
-console.log(threeColumnItems.value)
 </script>
 
 <template>
