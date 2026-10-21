@@ -1,7 +1,5 @@
-<!-- pages/[...slug].vue -->
 <script setup lang="ts">
 import { computed, watch } from "vue"
-import ImageCarousel from "~/components/ImageCarousel.vue"
 import SlimTrustWidget from "~/components/ui/SlimTrustWidget.vue"
 
 interface YoastHead {
@@ -119,21 +117,17 @@ const headerExcerpt = computed(() => contentAcf.value?.header_excerpt ?? "")
 const pageVideoHeaderUrl = computed(() => contentAcf.value?.page_header_video_url)
 const pageVideoHeaderPoster = computed(() => contentAcf.value?.page_header_video_poster)
 
-// --- FIXED THREE COLUMN DATA HANDLING ---
-// 1. Extract from contentAcf.value (rawContentData.value?.acf)
 const threeColumnItems = computed(() => {
 	if (!contentAcf.value) return []
 	return extractColumns(contentAcf.value, ["one", "two", "three"])
 })
 
-// 2. Initialize cookie with fallback default
 const sharedColumns = useCookie<CardItem[]>("threeColumnsData", {
 	maxAge: 60 * 60 * 24 * 7,
 	sameSite: "lax",
 	default: () => []
 })
 
-// 3. Keep shared cookie updated whenever threeColumnItems changes
 watch(
 	threeColumnItems,
 	(newItems) => {
@@ -143,7 +137,6 @@ watch(
 	},
 	{ immediate: true, deep: true }
 )
-// ----------------------------------------
 
 const featuredImageAlt = computed(() => featuredMedia.value?.alt_text || contentTitle.value)
 const featuredImageWidth = computed(() => featuredMedia.value?.media_details?.width || 1200)
@@ -193,12 +186,10 @@ const seoDescription = computed(() => {
 	return truncate(toPlainText(source)) || "Welcome to our site."
 })
 
-// Yoast image first, then featured image, then default. Always absolute.
 const yoastImage = computed(() => yoastHead.value?.og_image?.[0])
 const ogImageRaw = computed(() => yoastImage.value?.url || featuredImageUrl.value || "/default-og.jpg")
 const ogImage = computed(() => (ogImageRaw.value.startsWith("http") ? ogImageRaw.value : `${siteUrl}${ogImageRaw.value}`))
 
-// Dimensions must describe the image that is actually output
 const ogImageWidth = computed(() => (yoastImage.value?.url ? yoastImage.value.width : featuredImageUrl.value ? featuredImageWidth.value : 1200) || 1200)
 const ogImageHeight = computed(() => (yoastImage.value?.url ? yoastImage.value.height : featuredImageUrl.value ? featuredImageHeight.value : 630) || 630)
 
