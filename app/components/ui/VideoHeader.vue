@@ -54,13 +54,13 @@ onMounted(() => {
 		<div class="absolute bottom-0 w-full">
 			<div class="button-group bg-palladian text-brand absolute top-0 left-1/2 z-50 flex -translate-x-1/2 -translate-y-1/2 flex-row">
 				<span class="button-group__item">
-					<PrimaryButton :url="primaryButtonUrl" :event-name="''" :text="primaryButtonText" class="rounded-r-none border-0 px-6 py-3 text-2xl uppercase hover:cursor-pointer" />
+					<PrimaryButton :url="primaryButtonUrl" :event-name="'go_to_meetings_and_events'" :event-params="{ button_location: '/' }" :text="primaryButtonText" class="rounded-r-none border-0 px-6 py-3 text-2xl uppercase hover:cursor-pointer" />
 				</span>
 				<span class="button-group__item">
-					<PrimaryButton :url="secondaryButtonUrl" :event-name="''" :text="secondaryButtonText" class="rounded-none border-0 px-6 py-3 text-2xl uppercase hover:cursor-pointer" />
+					<PrimaryButton :url="secondaryButtonUrl" :event-params="{ button_location: '/' }" :event-name="'go_to_rooftop'" :text="secondaryButtonText" class="rounded-none border-0 px-6 py-3 text-2xl uppercase hover:cursor-pointer" />
 				</span>
 				<span class="button-group__item">
-					<PrimaryButton :url="tertiaryButtonUrl" :event-name="''" :text="tertiaryButtonText" class="rounded-l-none border-0 px-6 py-3 text-2xl uppercase hover:cursor-pointer" />
+					<PrimaryButton :url="tertiaryButtonUrl" :event-name="'go_to_apartments'" :event-params="{ button_location: '/' }" :text="tertiaryButtonText" class="rounded-l-none border-0 px-6 py-3 text-2xl uppercase hover:cursor-pointer" />
 				</span>
 			</div>
 		</div>

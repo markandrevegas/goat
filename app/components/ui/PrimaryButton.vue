@@ -9,7 +9,7 @@ const props = withDefaults(
 		url?: string
 		target?: "_blank" | "_self"
 	}>(),
-	{ target: "_self" }
+	{ target: "_blank" }
 )
 
 const emit = defineEmits<{
