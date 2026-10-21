@@ -1,17 +1,13 @@
 <script setup lang="ts">
 import { useTrackEvent } from "~/composables/useTrackEvent"
 
-const props = withDefaults(
-	defineProps<{
-		text?: string
-		eventName: string
-		eventParams?: Record<string, any>
-		url?: string
-		target?: "_blank" | "_self"
-	}>(),
-	{ target: "_blank" }
-)
-
+const props = defineProps<{
+	text?: string
+	eventName?: string
+	eventParams?: Record<string, any>
+	url?: string
+	target?: "_blank" | "_self"
+}>()
 const emit = defineEmits<{
 	click: [event: MouseEvent]
 }>()
@@ -19,14 +15,17 @@ const emit = defineEmits<{
 const { trackEvent } = useTrackEvent()
 
 const handleTrack = (event: MouseEvent) => {
-	if (import.meta.dev && import.meta.client) {
-		console.log("clicked", JSON.stringify(props.url), props.target)
-	}
-
 	emit("click", event)
 
+	const name = props.eventName
+	if (!name) return
+
 	try {
-		trackEvent(props.eventName, props.eventParams ?? {})
+		trackEvent(name, {
+			button_text: props.text ?? "",
+			button_url: props.url ?? "",
+			...props.eventParams
+		})
 	} catch (e) {
 		console.error("trackEvent failed:", e)
 	}
