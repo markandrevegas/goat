@@ -44,7 +44,7 @@ const formatDate = (day: number) => {
 // Check if a specific calendar date is inside a booked range
 const isDayBooked = (day: number) => {
 	const dateStr = formatDate(day)
-	return props.bookedRanges.some((range) => dateStr >= range.start && dateStr < range.end)
+	return props.bookedRanges.some((range) => dateStr >= range.start && dateStr <= range.end)
 }
 
 // Month navigation controls
