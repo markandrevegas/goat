@@ -167,7 +167,7 @@ const { data } = await useFetch<{ success: boolean; bookedRanges: BookedRange[] 
 		<div v-if="slug === 'meetings-and-events'" class="mt-16 shadow-xl shadow-black/40">
 			<LazyThreeColumns v-if="threeColumnItems.length" :items="threeColumnItems" />
 		</div>
-		<div v-if="['studio-apartment'].includes(slug)" class="hidden flex flex-col gap-4 md:grid md:grid-cols-4">
+		<!--<div v-if="['studio-apartment'].includes(slug)" class="hidden flex flex-col gap-4 md:grid md:grid-cols-4">
 			<div class="col-span-1"></div>
 			<div class="col-span-2 pr-8">
 				<details class="group border-palladian mt-8 w-full border-t [interpolate-size:allow-keywords] details-content:h-0 details-content:overflow-hidden details-content:opacity-0 details-content:transition-[height,opacity,content-visibility] details-content:transition-discrete details-content:duration-300 details-content:ease-out open:details-content:h-auto open:details-content:opacity-100">
@@ -180,6 +180,6 @@ const { data } = await useFetch<{ success: boolean; bookedRanges: BookedRange[] 
 					<Calendar :booked-ranges="data?.bookedRanges || []" />
 				</details>
 			</div>
-		</div>
+		</div>-->
 	</article>
 </template>
