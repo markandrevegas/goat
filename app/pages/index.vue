@@ -132,7 +132,7 @@ if (import.meta.dev && import.meta.client) {
 			<VideoHeader :title="videoHeaderTitle" :excerpt="videoHeaderExcerpt" :videoUrl="videoHeaderVideoUrl" :posterUrl="videoHeaderPoster" :primaryButtonText="videoHeaderPrimaryButton" :primaryButtonUrl="videoHeaderPrimaryButtonUrl" :secondaryButtonText="videoHeaderSecondaryButton" :secondaryButtonUrl="videoHeaderSecondaryButtonUrl" :tertiaryButtonText="videoHeaderTertiaryButton" :tertiaryButtonUrl="videoHeaderTertiaryButtonUrl" />
 		</template>
 		<LazyCenterAlignedFeature :header="centeredFeatureHeader" :text="centeredFeatureText" />
-		<LazyThreeColumns v-if="threeColumnItems.length" :items="threeColumnItems" />
+		<LazyThreeColumns v-if="threeColumnItems.length" :items="threeColumnItems" class="max-w-screen" />
 		<LazyMainFeatureSection :feature-header-sm="featureHeaderSm" :feature-header-lg="featureHeaderLg" :feature-image="featureImage" :feature-text="featureText" :feature-button="featureButton" :feature-url="featureUrl" />
 		<Marquee folder="clients" :speed="40" />
 		<div ref="trustindexRef" class="hidden">
