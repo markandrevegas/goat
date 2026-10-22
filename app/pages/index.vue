@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted } from "vue"
+const route = useRoute()
 
 import TrustindexWidget from "~/components/ui/TrustindexWidget.vue"
 import VideoHeader from "~/components/ui/VideoHeader.vue"
@@ -122,6 +123,7 @@ onMounted(() => {
 
 if (import.meta.dev && import.meta.client) {
 	console.log(landing.value)
+	console.log(route.params)
 }
 </script>
 <template>

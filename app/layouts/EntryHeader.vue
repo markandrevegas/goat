@@ -44,7 +44,7 @@ if (import.meta.dev) {
 				<h1 class="text-4xl tracking-tight" v-html="title"></h1>
 				<p v-if="excerpt" v-html="excerpt" class="mt-3 mb-2 w-full text-sm/5 sm:max-w-2xl"></p>
 				<div v-if="callToAction" class="flex w-full justify-start">
-					<PrimaryButton :url="callToActionUrl" target="_self" :text="callToAction" :event-name="'book_' + slug" class="bg-palladian text-brand hover:bg-brand/80 hover:text-palladian mt-4 mb-8 text-xl uppercase hover:cursor-pointer" />
+					<PrimaryButton :url="callToActionUrl" :event-params="{ button_location: slug }" target="_self" :text="callToAction" :event-name="'start_booking_' + slug" class="bg-palladian text-brand hover:bg-brand/80 hover:text-palladian mt-4 mb-8 text-xl uppercase hover:cursor-pointer" />
 				</div>
 				<div v-if="authorName || formattedDate" class="mt-4 flex flex-col space-x-2 text-sm">
 					<span v-if="authorName" class="font-medium">Published by {{ authorName }}</span>
@@ -71,7 +71,7 @@ if (import.meta.dev) {
 			<div class="relative z-20 col-span-2 sm:col-start-2">
 				<h1 class="text-4xl tracking-tight" v-html="title"></h1>
 				<p v-if="excerpt" v-html="excerpt" class="mt-3 mb-2 w-full text-sm/5 sm:max-w-2xl"></p>
-				<PrimaryButton v-if="callToAction" :url="callToActionUrl" :text="callToAction" :event-name="'book_' + slug" class="bg-palladian text-brand hover:bg-palladian/80 mt-4 mb-8 text-xl uppercase hover:cursor-pointer" />
+				<PrimaryButton v-if="callToAction" :event-params="{ button_location: slug }" :url="callToActionUrl" :text="callToAction" :event-name="'start_booking_' + slug" class="bg-palladian text-brand hover:bg-palladian/80 mt-4 mb-8 text-xl uppercase hover:cursor-pointer" />
 			</div>
 		</div>
 	</header>

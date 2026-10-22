@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const route = useRoute()
 import PrimaryButton from "../ui/PrimaryButton.vue"
 import WpImage from "./WpImage.vue"
 
@@ -16,6 +17,13 @@ interface Props {
 }
 
 defineProps<Props>()
+const buttonLocation = computed(() => {
+	const raw = route.params.slug
+	const parts = (Array.isArray(raw) ? raw : [raw ?? ""])
+		.flatMap((p) => String(p).split(/[,/]/))
+		.filter(Boolean)
+	return "/" + parts.join("/")
+})
 </script>
 
 <template>
@@ -24,7 +32,7 @@ defineProps<Props>()
 			<div class="relative z-20 px-4 text-center sm:px-16">
 				<p class="font-display relative mb-0 text-2xl" v-html="item.title"></p>
 				<p v-html="item.description" class="mt-2 mb-6 line-clamp-3 min-h-[24h] text-xs"></p>
-				<PrimaryButton :url="item.url" :text="item.buttonText" :event-params="{ button_name: 'hero_meeting_button' }" :event-name="'go_to_meetings_and_events'" class="bg-palladian text-brand hover:bg-brand hover:text-palladian text-xl uppercase hover:cursor-pointer" />
+				<PrimaryButton :url="item.url" :text="item.buttonText" :event-params="{ button_location: buttonLocation }" :event-name="'feature_to_'" class="bg-palladian text-brand hover:bg-brand hover:text-palladian text-xl uppercase hover:cursor-pointer" />
 			</div>
 			<WpImage :loading="index === 0 ? 'eager' : 'lazy'" :fetchpriority="index === 0 ? 'high' : 'auto'" :image-id="item.img" :alt="item.alt ?? item.title" class="absolute inset-0 size-full object-cover hue-rotate-15" />
 			<div class="absolute inset-0 z-10 bg-black/60"></div>

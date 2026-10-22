@@ -11,6 +11,11 @@ const props = defineProps<{
 const emit = defineEmits<{
 	click: [event: MouseEvent]
 }>()
+const formattedUrl = computed(() => {
+  if (!props.url) return ""
+  if (Array.isArray(props.url)) return props.url.join("")
+  return String(props.url)
+})
 
 const { trackEvent } = useTrackEvent()
 
@@ -23,7 +28,7 @@ const handleTrack = (event: MouseEvent) => {
 	try {
 		trackEvent(name, {
 			button_text: props.text ?? "",
-			button_url: props.url ?? "",
+			button_url: formattedUrl.value,
 			...props.eventParams
 		})
 	} catch (e) {
