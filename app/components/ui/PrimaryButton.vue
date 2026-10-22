@@ -31,7 +31,6 @@ const handleTrack = (event: MouseEvent) => {
 	}
 }
 
-// Helper to check if url is external
 const isExternal = computed(() => {
 	if (!props.url) return false
 	return /^https?:\/\//i.test(props.url.trim())

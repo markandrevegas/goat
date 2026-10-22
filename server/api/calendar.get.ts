@@ -1,7 +1,5 @@
-// server/api/calendar.get.ts
 import ical from "node-ical"
 
-// 1. Define the interface
 export interface BookedRange {
 	start: string
 	end: string
@@ -13,7 +11,6 @@ export interface CalendarResponse {
 	bookedRanges: BookedRange[]
 }
 
-// 2. Annotate the event handler return type
 export default defineEventHandler(async (event): Promise<CalendarResponse> => {
 	const airbnbIcalUrl = process.env.AIRBNB_ICAL_URL || ""
 
