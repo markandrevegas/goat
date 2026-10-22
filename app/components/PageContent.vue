@@ -161,7 +161,7 @@ const { data } = await useFetch<{ success: boolean; bookedRanges: BookedRange[] 
 			<ThreeCardLayout :acf="acf" />
 			<MapEmbed :query="acf?.ferryaddress" :address="acf?.ferryaddress" :email="acf?.email" :tel="acf?.tel" />
 		</div>
-		<div v-if="slug === 'apartments'" class="mt-16 shadow-xl shadow-black/40">
+		<div v-if="slug === 'apartments'" class="mt-16">
 			<LazyThreeColumns v-if="threeColumnItems.length" :items="threeColumnItems" />
 		</div>
 		<div v-if="slug === 'meetings-and-events'" class="mt-16 shadow-xl shadow-black/40">
