@@ -119,7 +119,7 @@ const { data } = await useFetch<{ success: boolean; bookedRanges: BookedRange[] 
 			</div>
 			<div class="col-span-2 col-start-2 flex flex-col gap-2 md:pr-8">
 				<NuxtImg v-if="acf?.layoutstyle !== 'hero' && featuredImageUrl" :src="featuredImageUrl" :alt="featuredImageAlt" loading="eager" fetchpriority="high" sizes="100vw sm:100vw md:100vw lg:100vw" :densities?="[1, 2, 3]" class="mb-4 h-auto w-full object-cover" />
-				<div v-if="body" class="prose prose-lg/5 prose-ul:text-palladian prose-headings:font-semibold prose-headings:tracking-tight prose-a:text-brand prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl prose-img:shadow-md mb-4 max-w-none" v-html="body"></div>
+				<div v-if="body" class="prose mb-4 max-w-none" v-html="body"></div>
 				<div v-if="body && slug === 'ferry-access'">
 					<h2 class="mb-4">Studio Apartment</h2>
 					<div class="flex w-full justify-start gap-4">
@@ -137,8 +137,8 @@ const { data } = await useFetch<{ success: boolean; bookedRanges: BookedRange[] 
 				</div>
 				<p v-if="!body" class="font-display italic">This page has no content body text.</p>
 				<div v-if="slug === 'terms-and-conditions'" class="flex flex-col justify-start gap-2">
-					<NuxtLink to="/terms-private" v-html="'For private rentals'" class="w-max font-semibold transition-opacity duration-400 border-b-2 border-brand hover:border-palladian" />
-					<NuxtLink to="/terms-business" v-html="'For companies'" class="w-max font-semibold transition-opacity duration-400 border-b-2 border-brand hover:border-palladian" />
+					<NuxtLink to="/terms-private" v-html="'For private rentals'" class="border-brand hover:border-palladian w-max border-b-2 font-semibold transition-opacity duration-400" />
+					<NuxtLink to="/terms-business" v-html="'For companies'" class="border-brand hover:border-palladian w-max border-b-2 font-semibold transition-opacity duration-400" />
 				</div>
 				<PrimaryButton :text="acf?.call_to_action" :event-name="'book_meetings_and_events'" class="bg-brand text-palladian hover:bg-brand/80 hidden text-xl uppercase hover:cursor-pointer" />
 				<details v-if="acf?.extended_info_content" class="group border-palladian mt-8 w-full border-t [interpolate-size:allow-keywords] details-content:h-0 details-content:overflow-hidden details-content:opacity-0 details-content:transition-[height,opacity,content-visibility] details-content:transition-discrete details-content:duration-300 details-content:ease-out open:details-content:h-auto open:details-content:opacity-100">
@@ -151,7 +151,7 @@ const { data } = await useFetch<{ success: boolean; bookedRanges: BookedRange[] 
 					<div class="text-palladian pb-5 text-sm leading-relaxed [&_a]:underline [&_li]:pl-1 [&_ol]:list-decimal [&_ol]:space-y-1 [&_ol]:pl-5 [&_ul]:list-disc [&_ul]:space-y-1 [&_ul]:pl-5 [&_ul_ul]:mt-1 [&>*+*]:mt-3" v-html="acf?.extended_info_content"></div>
 				</details>
 			</div>
-			<div v-if="!['terms-and-conditions', 'terms-business', 'terms-private'].includes(slug)" class="col-span-1 mt-16 flex flex-col sm:mt-0">
+			<div v-if="!['privacy-policy', 'terms-and-conditions', 'terms-business', 'terms-private'].includes(slug)" class="col-span-1 mt-16 flex flex-col sm:mt-0">
 				<p class="mb-4 text-sm font-bold uppercase md:block">Related</p>
 				<ul class="list-reset space-y-2 sm:space-y-1">
 					<li v-for="item in relatedPages" :key="item.id">

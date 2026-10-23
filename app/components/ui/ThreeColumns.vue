@@ -19,25 +19,23 @@ interface Props {
 defineProps<Props>()
 const buttonLocation = computed(() => {
 	const raw = route.params.slug
-	const parts = (Array.isArray(raw) ? raw : [raw ?? ""])
-		.flatMap((p) => String(p).split(/[,/]/))
-		.filter(Boolean)
+	const parts = (Array.isArray(raw) ? raw : [raw ?? ""]).flatMap((p) => String(p).split(/[,/]/)).filter(Boolean)
 	return "/" + parts.join("/")
 })
 const formatEventName = (url?: string) => {
 	if (!url) return "feature_to_"
-	
+
 	const cleanedUrl = url
 		.replace(/^\/|\/$/g, "")
 		.replace(/,/g, "")
 		.replace(/\//g, "_")
-		
+
 	return `feature_to_${cleanedUrl}`
 }
 </script>
 
 <template>
-	<div class="flex flex-col sm:flex-row sm:justify-center w-max mx-auto shadow-xl shadow-black/40">
+	<div class="mx-auto flex w-max flex-col shadow-xl shadow-black/40 sm:flex-row sm:justify-center">
 		<div v-for="(item, index) in items" :key="index" class="text-palladian relative flex min-h-[40vh] flex-col items-center justify-center bg-cover bg-center sm:min-h-[50vh]">
 			<div class="relative z-20 px-4 text-center sm:px-16">
 				<p class="font-display relative mb-0 text-2xl" v-html="item.title"></p>

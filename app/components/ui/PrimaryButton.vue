@@ -12,9 +12,9 @@ const emit = defineEmits<{
 	click: [event: MouseEvent]
 }>()
 const formattedUrl = computed(() => {
-  if (!props.url) return ""
-  if (Array.isArray(props.url)) return props.url.join("")
-  return String(props.url)
+	if (!props.url) return ""
+	if (Array.isArray(props.url)) return props.url.join("")
+	return String(props.url)
 })
 
 const { trackEvent } = useTrackEvent()

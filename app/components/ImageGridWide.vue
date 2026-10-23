@@ -30,7 +30,7 @@ const prev = () => (current.value = (current.value - 1 + (images.value?.length ?
 
 <template>
 	<div v-if="images?.length" class="w-full px-6 pt-8 pb-16">
-		<div class="flex flex-col text-center mb-6">
+		<div class="mb-6 flex flex-col text-center">
 			<p class="font-display text-2xl" v-html="header"></p>
 		</div>
 		<div class="columns-2 gap-4 sm:columns-3 lg:columns-4">

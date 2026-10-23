@@ -10,13 +10,6 @@ useHead({
 		},
 		{
 			rel: "preload",
-			href: "/_fonts/pZrE-slef2USYSteHMofh38tG-0x5V8w3-m5O8o55BA-2lkoGCOmO7jeyF1uZ0eej8W_w9soLdR904X6bIAsF0k.woff2",
-			as: "font",
-			type: "font/woff2",
-			crossorigin: "anonymous"
-		},
-		{
-			rel: "preload",
 			href: "/_fonts/pBA_EGUUgytVcAn30G3L7jSPUjTfQBkUF_SVrKXvks4-P8M5mJujzuY5Rvr7oSsGgEy3RgI8I6ZroH9ErPwewNI.woff2",
 			as: "font",
 			type: "font/woff2",
