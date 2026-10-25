@@ -75,6 +75,7 @@ const forApartments = ["business-lounge", "rooftop-terrace", "simple-meeting"]
 const forEvents = ["business-lounge", "rooftop-terrace", "meetings-and-events"]
 const forBusiness = ["rooftop-terrace", "meetings-and-events"]
 const forStudio = ["bow-apartment", "studio-apartment", "rooftop-terrace"]
+const forExtras = ["business-lounge", "rooftop-terrace", "apartments"]
 
 const relatedPages = computed(() => {
 	if (!allPages.value) return []
@@ -92,6 +93,8 @@ const relatedPages = computed(() => {
 		relatedSlugs = forStudio
 	} else if (forEvents.includes(currentSlug) || currentSlug === "bow-apartment") {
 		relatedSlugs = forStudio
+	} else if (forEvents.includes(currentSlug) || currentSlug === "extra-services") {
+		relatedSlugs = forExtras
 	}
 
 
