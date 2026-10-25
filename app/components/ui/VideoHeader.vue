@@ -73,7 +73,7 @@ onMounted(() => {
 			<div class="absolute inset-0 z-10 bg-black/40"></div>
 
 			<div class="relative z-20 mx-auto flex h-full max-w-6xl flex-col justify-center gap-2 px-8 text-center">
-				<h1 v-if="title" class="text-4xl tracking-tight">{{ title }}</h1>
+				<h1 v-if="title" class="text-4xl">{{ title }}</h1>
 				<p v-if="excerpt" class="mx-auto my-4 max-w-[320px] leading-6 font-light sm:max-w-2xl sm:px-4 sm:text-xl sm:leading-8 md:max-w-3xl md:px-0" v-html="excerpt"></p>
 			</div>
 		</div>

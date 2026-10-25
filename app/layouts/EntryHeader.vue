@@ -69,7 +69,7 @@ if (import.meta.dev) {
 	<header v-else class="flex min-h-[60vh] w-full flex-col justify-center pt-16 md:min-h-[75vh]">
 		<div class="flex flex-col items-center justify-center sm:grid sm:grid-cols-4">
 			<div class="relative z-20 col-span-2 sm:col-start-2">
-				<h1 class="text-4xl tracking-tight" v-html="title"></h1>
+				<h1 class="text-4xl" v-html="title"></h1>
 				<p v-if="excerpt" v-html="excerpt" class="mt-3 mb-2 w-full text-sm/5 sm:max-w-2xl"></p>
 				<PrimaryButton v-if="callToAction" :event-params="{ button_location: slug }" :url="callToActionUrl" :text="callToAction" :event-name="'start_booking_' + slug" class="bg-palladian text-brand hover:bg-palladian/80 mt-4 mb-8 text-xl uppercase hover:cursor-pointer" />
 			</div>

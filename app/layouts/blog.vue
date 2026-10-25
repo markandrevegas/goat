@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const { getPosts } = useWordPress()
 const { data: postItems } = await getPosts({
-	exclude: ["hello-world"]
+	include: ["last-fridays-event"]
 })
 </script>
 

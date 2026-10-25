@@ -61,6 +61,7 @@ const { data: postItems } = await getPosts({
 			<!-- Column 3: Sidebar -->
 			<div class="col-span-1">
 				<p v-if="postItems" class="mt-8 mb-2 text-sm tracking-tight uppercase sm:mt-0">Recent Posts</p>
+				<NuxtLink to="/blog" class="text-palladian mt-4 block w-max text-sm font-semibold underline">All posts</NuxtLink>
 				<ul v-if="postItems" class="space-y-2">
 					<li v-for="post in postItems" :key="post.id">
 						<NuxtLink :to="`/${post.slug}`" class="w-max font-semibold transition-opacity duration-400 hover:border-b-2" v-html="post.title.rendered" />
@@ -68,18 +69,5 @@ const { data: postItems } = await getPosts({
 				</ul>
 			</div>
 		</div>
-
-		<!-- Special Layout for information-for-guests -->
-		<div v-if="body && slug === 'information-for-guests'" class="mt-8 flex flex-col gap-4 md:mt-12 md:mb-16 md:grid md:grid-cols-4">
-			<div class="col-span-1"></div>
-			<div class="col-span-2 flex flex-col gap-2 md:pr-8">
-				<div v-if="body" class="prose text-palladian max-w-none text-center" v-html="body"></div>
-				<p v-else class="font-display italic">This page has no content body text.</p>
-			</div>
-			<div class="col-span-1"></div>
-		</div>
-
-		<ThreeCardLayout v-if="slug === 'information-for-guests'" :acf="acf" />
-		<MapEmbed v-if="slug === 'information-for-guests'" :query="acf?.ferryaddress" :address="acf?.ferryaddress" :email="acf?.email" :tel="acf?.tel" />
 	</article>
 </template>
