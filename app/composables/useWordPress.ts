@@ -27,13 +27,6 @@ export const useWordPress = () => {
 		}).finally(() => {
 			// console.log(`[wpFetch] ${endpoint} ${Date.now() - start}ms`)
 		})
-
-		return $fetch<T>(`${base}/${endpoint}`, {
-			query,
-			retry: 4,
-			retryDelay: 3_000,
-			timeout: 10_000
-		})
 	}
 
 	/**
@@ -184,6 +177,34 @@ export const useWordPress = () => {
 		})
 	}
 
+	const getPostCards = (options: { exclude?: string[] } = {}) => {
+		const exclude = options.exclude ?? []
+
+		return useAsyncData(`wp-post-cards-exc-${exclude.join("-")}`, async () => {
+			const results: WordPressPostOrPage[] = []
+			let page = 1
+
+			while (true) {
+				const batch = await wpFetch<WordPressPostOrPage[]>(REST_BASE.posts, {
+					status: "publish",
+					per_page: 100,
+					page,
+					orderby: "date",
+					order: "desc",
+					_embed: 1,
+					_fields: "id,date,title,slug,excerpt,featured_media,_links"
+				})
+				if (!batch.length) break
+
+				results.push(...batch.filter((p) => !exclude.includes(p.slug)))
+				if (batch.length < 100) break
+				page++
+			}
+
+			return results
+		})
+	}
+
 	return {
 		getPage,
 		getPost,
@@ -193,6 +214,7 @@ export const useWordPress = () => {
 		resolveContentBySlug,
 		getPages,
 		getPosts,
+		getPostCards,
 		getPrivatePages,
 		getBySlugs,
 		getAllByType,

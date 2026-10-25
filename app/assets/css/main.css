@@ -45,7 +45,7 @@
 	}
 
 	.prose :where(a) {
-		@apply font-semibold !no-underline border-b-2 border-palladian hover:border-brand transition-all duration-400;
+		@apply border-palladian hover:border-brand border-b-2 font-semibold !no-underline transition-all duration-400;
 	}
 
 	/* Lists */

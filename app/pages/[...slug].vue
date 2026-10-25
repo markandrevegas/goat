@@ -97,7 +97,6 @@ const relatedPages = computed(() => {
 		relatedSlugs = forExtras
 	}
 
-
 	return allPages.value.filter((page) => page.id !== contentId.value && relatedSlugs.includes(page.slug)).sort((a, b) => relatedSlugs.indexOf(a.slug) - relatedSlugs.indexOf(b.slug))
 })
 
