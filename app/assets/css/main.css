@@ -32,38 +32,35 @@
 }
 
 @layer components {
-	/* Core Prose Base */
 	.prose {
 		@apply text-palladian !text-sm/6;
 	}
 
-		/* Paragraphs */
 	.prose p {
 		@apply !text-palladian;
 	}
-		/* Headings (Base Styles) */
+
 	.prose :where(h1, h2, h3, h4, h5, h6) {
 		@apply font-display !text-palladian mt-0 mb-2;
 	}
 
-		/* Links */
-	.prose a {
-		@apply text-brand border-b-2 font-semibold no-underline hover:border-b-2 hover:underline;
+	.prose :where(a) {
+		@apply font-semibold !no-underline border-b-2 border-palladian hover:border-brand transition-all duration-400;
 	}
 
-		/* Lists */
-		.prose ul,
+	/* Lists */
+	.prose ul,
 	.wp-block-list {
-		@apply !text-sm/5 text-palladian !mt-0 list-disc space-y-1;
+		@apply text-palladian !mt-0 list-disc space-y-1 !text-sm/5;
 		padding-inline-start: 1rem !important;
 	}
 
-		/* Strong Text */
-		.prose strong {
-			@apply !text-palladian font-sans;
-		}
-	
-		/* Gutenberg Heading Levels */
+	/* Strong Text */
+	.prose strong {
+		@apply !text-palladian font-sans;
+	}
+
+	/* Gutenberg Heading Levels */
 	:where(h1.wp-block-heading) {
 		@apply mt-10 text-4xl sm:text-5xl;
 	}
@@ -87,24 +84,24 @@
 	:where(h6.wp-block-heading) {
 		@apply text-base font-semibold tracking-wider text-slate-500 uppercase dark:text-slate-400;
 	}
-:where(.wp-block-paragraph) {
-	@apply mt-0;
-}
-:where(.wp-block-paragraph > a) {
-	@apply !text-palladian;
-}
+	:where(.wp-block-paragraph) {
+		@apply mt-0;
+	}
+	:where(.wp-block-paragraph > a) {
+		@apply !text-palladian;
+	}
 	.wp-block-paragraph:has(> strong:only-child) {
 		@apply !mt-4;
 	}
 
-		/* Drop Cap Support */
+	/* Drop Cap Support */
 	:where(.has-drop-cap:not(:focus)::first-letter) {
 		@apply float-left mr-3 text-5xl leading-none font-bold text-slate-900 dark:text-white;
 	}
-		/* Figures & Images */
-		.prose img {
-			@apply rounded-xl shadow-md;
-		}
+	/* Figures & Images */
+	.prose img {
+		@apply rounded-xl shadow-md;
+	}
 	:where(figure.wp-block-image) {
 		@apply my-8 overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800;
 	}
@@ -117,7 +114,7 @@
 		@apply mt-3 text-center text-sm leading-relaxed font-medium text-slate-500 dark:text-slate-400;
 	}
 
-		/* Gutenberg Image Alignment Variants */
+	/* Gutenberg Image Alignment Variants */
 	:where(figure.wp-block-image.aligncenter) {
 		@apply mx-auto text-center;
 	}

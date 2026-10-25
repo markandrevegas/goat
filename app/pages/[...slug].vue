@@ -72,7 +72,9 @@ const datePublished = computed(() => rawContentData.value?.date || null)
 const { data: allPages } = await getPages()
 
 const forApartments = ["business-lounge", "rooftop-terrace", "simple-meeting"]
-const forEvents = ["studio-apartment", "bow-apartment", "captains-quarters"]
+const forEvents = ["business-lounge", "rooftop-terrace", "meetings-and-events"]
+const forBusiness = ["rooftop-terrace", "meetings-and-events"]
+const forStudio = ["bow-apartment", "studio-apartment", "rooftop-terrace"]
 
 const relatedPages = computed(() => {
 	if (!allPages.value) return []
@@ -80,15 +82,20 @@ const relatedPages = computed(() => {
 	const currentSlug = allPages.value.find((page) => page.id === contentId.value)?.slug ?? ""
 
 	let relatedSlugs: string[] = []
-	if (currentSlug === "apartments") {
-		relatedSlugs = forApartments
-	} else if (currentSlug === "meetings-and-events" || forApartments.includes(currentSlug)) {
+	if (currentSlug === "business-lounge") {
+		relatedSlugs = forBusiness
+	} else if (forApartments.includes(currentSlug) || currentSlug === "meetings-and-events") {
 		relatedSlugs = forEvents
-	} else if (forEvents.includes(currentSlug)) {
+	} else if (forEvents.includes(currentSlug) || currentSlug === "apartments") {
 		relatedSlugs = forApartments
+	} else if (forEvents.includes(currentSlug) || currentSlug === "studio-apartment") {
+		relatedSlugs = forStudio
+	} else if (forEvents.includes(currentSlug) || currentSlug === "bow-apartment") {
+		relatedSlugs = forStudio
 	}
 
-	return allPages.value.filter((page) => page.id !== contentId.value && relatedSlugs.includes(page.slug))
+
+	return allPages.value.filter((page) => page.id !== contentId.value && relatedSlugs.includes(page.slug)).sort((a, b) => relatedSlugs.indexOf(a.slug) - relatedSlugs.indexOf(b.slug))
 })
 
 const formattedDate = computed(() => {

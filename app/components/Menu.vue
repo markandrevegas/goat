@@ -27,12 +27,11 @@ const {
 	status,
 	error
 } = await getPages({
-	include: ["apartments", "meetings-and-events", "rooftop-terrace",  "information-for-guests"],
+	include: ["apartments", "meetings-and-events", "rooftop-terrace", "information-for-guests"],
 	exclude: []
 })
 
 const centerOrder = ["studio-apartment", "bow-apartment", "captains-quarters", "rooftop-terrace"]
-
 
 const pageItems = computed(() => {
 	if (!menuPages.value) return []
