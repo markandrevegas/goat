@@ -27,11 +27,11 @@ const {
 	status,
 	error
 } = await getPages({
-	include: ["apartments", "meetings-and-events", "rooftop-terrace", "information-for-guests"],
+	include: ["apartments", "meetings-and-events", "rooftop-terrace", "information-for-guests", "about-us"],
 	exclude: []
 })
 
-const centerOrder = ["studio-apartment", "bow-apartment", "captains-quarters", "rooftop-terrace"]
+const centerOrder = ["meetings-and-events", "rooftop-terrace", "apartments"]
 
 const pageItems = computed(() => {
 	if (!menuPages.value) return []
@@ -45,7 +45,7 @@ const pageItems = computed(() => {
 		if (item.slug === "meetings-and-events") {
 			return {
 				...item,
-				title: { ...item.title, rendered: "Meeting Rooms" }
+				title: { ...item.title, rendered: "Meeting and Events" }
 			}
 		}
 		if (item.slug === "about-us") {
