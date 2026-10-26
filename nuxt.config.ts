@@ -92,6 +92,7 @@ export default defineNuxtConfig({
 		sharefoxEmail: process.env.SHAREFOX_EMAIL || "",
 		sharefoxPassword: process.env.SHAREFOX_PASSWORD || "",
 		sharefoxShopDomain: "mar-k-waterside.admin.mysharefox.com",
+		sharefoxAdminDomain: 'mar-k-waterside.admin.mysharefox.com',
 		sharefoxApiUrl: "https://api.mysharefox.com/api-v2",
 		sharefoxToken: "",
 		public: {
