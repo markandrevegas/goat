@@ -31,6 +31,13 @@ export interface SharefoxProduct {
 	photosVideos?: any[]
 }
 
+export interface ProductUnavailabilityDays {
+	fullDays: string[] // "YYYY-MM-DD"
+	partialDays: string[]
+	closedDays: string[]
+	bookedDays: string[]
+}
+
 export interface ProductUnavailabilityDaysParams {
 	locationId?: number | string
 	channelId?: number | string
@@ -76,10 +83,6 @@ export function useSharefox() {
 		})
 	const getProduct = (id: number | string) => useAsyncData(`sharefox-product-${id}`, () => sfFetch<SharefoxProduct>(`/products/${id}`))
 
-	return { getProducts, getProduct }
-}
-
-export function useSharefoxServer() {
 	const sfServerFetch = <T>(path: string, query?: Record<string, any>) => {
 		const cleanPath = path.replace(/^\//, "")
 		return $fetch<T>(`/api/sharefox/${cleanPath}`, {
@@ -89,15 +92,18 @@ export function useSharefoxServer() {
 		})
 	}
 
-	// --- New method for unavailability days ---
 	const getProductUnavailabilityDays = (productId: number | string, params: ProductUnavailabilityDaysParams) => {
-		// Generate a unique reactive key based on id and params
-		const cacheKey = `sharefox-unavailability-${productId}-${JSON.stringify(params)}`
-
-		return useAsyncData(cacheKey, () => sfServerFetch<ProductUnavailabilityDaysResponse>(`api-v2/product-unavailability/${productId}/days`, params))
+		const query = { locationId: 4, channelId: 1, type: "pickup", breakdown: 1, ...params }
+		return useAsyncData(`sharefox-unavailability-${productId}-${JSON.stringify(query)}`, async () => {
+			const res = await sfServerFetch<ProductUnavailabilityDays>(`product-unavailability/${productId}/days`, query)
+			return {
+				fullDays: [...new Set(res.fullDays)],
+				partialDays: [...new Set(res.partialDays)],
+				closedDays: [...new Set(res.closedDays)],
+				bookedDays: [...new Set(res.bookedDays)]
+			}
+		})
 	}
 
-	return {
-		getProductUnavailabilityDays
-	}
+	return { getProducts, getProduct, getProductUnavailabilityDays }
 }

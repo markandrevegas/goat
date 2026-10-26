@@ -91,16 +91,17 @@ export default defineNuxtConfig({
 	runtimeConfig: {
 		sharefoxEmail: process.env.SHAREFOX_EMAIL || "",
 		sharefoxPassword: process.env.SHAREFOX_PASSWORD || "",
-		sharefoxShopDomain: "mar-k-waterside.admin.mysharefox.com",
-		sharefoxAdminDomain: 'mar-k-waterside.admin.mysharefox.com',
-		sharefoxApiUrl: "https://api.mysharefox.com/api-v2",
-		sharefoxToken: "",
+		sharefoxAuthUrl: process.env.SHAREFOX_AUTH_URL,
+		sharefoxAdminDomain: process.env.SHAREFOX_ADMIN_DOMAIN,
+		sharefoxApiUrl: process.env.SHAREFOX_API_URL,
+		sharefoxStoreUrl: process.env.SHAREFOX_SHOP_DOMAIN,
+		sharefoxShopDomain: process.env.SHAREFOX_SHOP_DOMAIN,
 		public: {
 			siteUrl: "https://floatinggoat.dk",
 			goatWordpressUrl: process.env.NUXT_PUBLIC_GOAT_WORDPRESS_URL,
 			gtmId: process.env.NUXT_PUBLIC_GTM_ID || process.env.GTM_ID || "",
-			sharefoxApiUrl: "https://api.mysharefox.com/api-v2",
-			sharefoxShopDomain: "mar-k-waterside.admin.mysharefox.com"
+			sharefoxApiUrl: "",
+			sharefoxShopDomain: "mar-k-waterside.shop.mysharefox.com"
 		}
 	},
 	site: {

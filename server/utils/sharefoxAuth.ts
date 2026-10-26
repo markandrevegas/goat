@@ -1,88 +1,57 @@
 let cachedToken: string | null = null
-let tokenExpiresAt: number = 0
+let tokenExpiresAt = 0
+let inflight: Promise<string> | null = null
 
-interface SharefoxLoginResponse {
-  token?: string
-  access_token?: string
-  jwt?: string
-  expiresIn?: number
-  [key: string]: any
+const LOGIN_PATH = "/login"
+
+function jwtExpiry(token: string): number | null {
+	try {
+		const part = token.split(".")[1]
+		if (!part) return null
+		const payload = JSON.parse(Buffer.from(part, "base64url").toString())
+		return typeof payload.exp === "number" ? payload.exp * 1000 : null
+	} catch {
+		return null
+	}
+}
+
+export function sharefoxHeaders(extra: Record<string, string> = {}) {
+	const config = useRuntimeConfig()
+	return {
+		"x-sharefox-shop-domain": String(config.public.sharefoxShopDomain),
+		locale: "da",
+		origin: "1",
+		Accept: "application/json"
+	}
 }
 
 export async function getSharefoxToken(): Promise<string> {
-  const config = useRuntimeConfig()
-  const now = Date.now()
+	if (cachedToken && tokenExpiresAt > Date.now() + 5 * 60 * 1000) return cachedToken
+	if (inflight) return inflight
 
-  // 1. Return cached token if valid
-  if (cachedToken && tokenExpiresAt > now + 5 * 60 * 1000) {
-    return cachedToken
-  }
+	inflight = (async () => {
+		const config = useRuntimeConfig()
+		if (!config.sharefoxEmail || !config.sharefoxPassword) {
+			throw createError({ statusCode: 500, statusMessage: "Sharefox credentials missing" })
+		}
 
-  // Auth must point to the central Sharefox API gateway
-  const authBaseURL = 'https://api.mysharefox.com'
-  const shopDomain = String(config.sharefoxShopDomain || 'mar-k-waterside.admin.mysharefox.com')
-	const adminDomain = String(config.sharefoxAdminDomain || 'mar-k-waterside.admin.mysharefox.com')
-  const email = String(config.sharefoxEmail || '')
-  const password = String(config.sharefoxPassword || '')
+		const res = await $fetch<{ token?: string; access_token?: string; jwt?: string; expiresIn?: number }>(LOGIN_PATH, {
+			baseURL: String(config.sharefoxAuthUrl),
+			method: "POST",
+			headers: sharefoxHeaders({ "Content-Type": "application/json" }),
+			body: { email: config.sharefoxEmail, password: config.sharefoxPassword },
+			retry: 0
+		})
 
-  if (!email || !password) {
-    throw createError({
-      statusCode: 500,
-      statusMessage: 'SHAREFOX_EMAIL or SHAREFOX_PASSWORD is missing in runtimeConfig'
-    })
-  }
+		const token = res.token || res.access_token || res.jwt
+		if (!token) throw createError({ statusCode: 502, statusMessage: "No token in Sharefox login response" })
 
-  const body = { email, password }
+		cachedToken = token
+		tokenExpiresAt = jwtExpiry(token) ?? Date.now() + (res.expiresIn ?? 3600) * 1000
+		return token
+	})().finally(() => {
+		inflight = null
+	})
 
-  const headers: Record<string, string> = {
-    'x-sharefox-shop-domain': shopDomain,
-		'x-sharefox-admin-domain': adminDomain,
-    'locale': 'da',
-    'origin': '1',
-    'Content-Type': 'application/json',
-    'Accept': 'application/json'
-  }
-
-  // Endpoints to check on api.mysharefox.com
-  const endpoints = ['/login', '/admin/login', '/api-v2/auth/login']
-  let lastError: any = null
-
-  for (const endpoint of endpoints) {
-    try {
-      console.log(`[SharefoxAuth] Attempting login at ${authBaseURL}${endpoint}...`)
-
-      const res = await $fetch<SharefoxLoginResponse>(endpoint, {
-        baseURL: authBaseURL,
-        method: 'POST',
-        headers,
-        body,
-        retry: 0
-      })
-
-      const token = res.token || res.access_token || res.jwt
-      if (!token) {
-        console.warn(`[SharefoxAuth] No token field in response from ${endpoint}:`, res)
-        continue
-      }
-
-      cachedToken = token
-      const ttl = (res.expiresIn ?? 24 * 60 * 60) * 1000
-      tokenExpiresAt = now + ttl
-
-      console.log(`[SharefoxAuth] Successfully retrieved token via ${endpoint}!`)
-      return cachedToken
-    } catch (err: any) {
-      lastError = err
-      console.error(`[SharefoxAuth] Failed at ${endpoint}:`, {
-        statusCode: err.statusCode || err.response?.status,
-        message: err.data?.message || err.message
-      })
-    }
-  }
-
-  throw createError({
-    statusCode: lastError?.statusCode || 401,
-    statusMessage: lastError?.data?.message || lastError?.statusMessage || 'Sharefox authentication failed',
-    data: lastError?.data || lastError?.response?._data
-  })
+	return inflight
 }
