@@ -75,15 +75,6 @@ export default defineNuxtConfig({
 					href: "/favicon/site.webmanifest"
 				}
 			]
-			/*link: wpOrigin
-				? [
-						{
-							rel: "preconnect",
-							href: wpOrigin,
-							crossorigin: ""
-						}
-					]
-				: []*/
 		}
 	},
 	sourcemap: {
@@ -98,6 +89,11 @@ export default defineNuxtConfig({
 	devtools: { enabled: process.env.NODE_ENV !== "production" },
 	modules: ["@tailwindcss/typography", "@nuxt/scripts", "nuxt-svgo", "@nuxt/fonts", "@nuxt/image", "@nuxtjs/sitemap"],
 	runtimeConfig: {
+		sharefoxEmail: process.env.SHAREFOX_EMAIL || "",
+		sharefoxPassword: process.env.SHAREFOX_PASSWORD || "",
+		sharefoxShopDomain: "mar-k-waterside.admin.mysharefox.com",
+		sharefoxApiUrl: "https://api.mysharefox.com/api-v2",
+		sharefoxToken: "",
 		public: {
 			siteUrl: "https://floatinggoat.dk",
 			goatWordpressUrl: process.env.NUXT_PUBLIC_GOAT_WORDPRESS_URL,

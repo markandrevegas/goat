@@ -2,7 +2,7 @@
 import { computed, ref } from "vue"
 import ArrowRight from "./icons/ArrowRight.vue"
 import ArrowLeft from "./icons/ArrowLeft.vue"
-import Warning from "./icons/Warning.vue";
+import Warning from "./icons/Warning.vue"
 
 interface BookedRange {
 	start: string
@@ -64,12 +64,11 @@ const nextMonth = () => {
 
 <template>
 	<div class="calendar-wrapper my-4 border border-gray-200 bg-white shadow-sm">
-
 		<div class="mb-8 flex items-start justify-between p-4">
 			<div class="flex flex-col gap-1">
 				<h3 class="text-brand font-sans text-xl font-semibold tracking-tight">{{ currentMonthName }} {{ currentYear }}</h3>
-				<div class="w-full text-brand/60 flex justify-start gap-2 text-xs leading-4">
-					<Warning class="text-red-600 size-6" />
+				<div class="text-brand/60 flex w-full justify-start gap-2 text-xs leading-4">
+					<Warning class="size-6 text-red-600" />
 					<p>Dates marked in red are currently booked.</p>
 				</div>
 			</div>
@@ -84,7 +83,7 @@ const nextMonth = () => {
 			</div>
 		</div>
 
-		<div class="mb-2 grid grid-cols-7 gap-1 px-4 text-center text-xl font-sofia font-semibold text-gray-400">
+		<div class="font-sofia mb-2 grid grid-cols-7 gap-1 px-4 text-center text-xl font-semibold text-gray-400">
 			<div>Mon</div>
 			<div>Tue</div>
 			<div>Wed</div>
@@ -96,12 +95,12 @@ const nextMonth = () => {
 
 		<div class="grid grid-cols-7 gap-1.5 px-4">
 			<div v-for="pad in paddingDays" :key="'pad-' + pad" class="h-9"></div>
-			<div v-for="day in daysInMonth" :key="day" class="flex h-9 items-center justify-center rounded-md border text-lg font-sofia font-medium transition-colors select-none" :class="isDayBooked(day) ? 'border-red-200 bg-red-200 text-red-700 line-through' : 'border-gray-200 bg-gray-200 text-gray-700'">
+			<div v-for="day in daysInMonth" :key="day" class="font-sofia flex h-9 items-center justify-center rounded-md border text-lg font-medium transition-colors select-none" :class="isDayBooked(day) ? 'border-red-200 bg-red-200 text-red-700 line-through' : 'border-gray-200 bg-gray-200 text-gray-700'">
 				{{ day }}
 			</div>
 		</div>
 
-		<div class="mt-4 flex items-center justify-start gap-6 p-4 text-xs text-gray-600 bg-gray-50">
+		<div class="mt-4 flex items-center justify-start gap-6 bg-gray-50 p-4 text-xs text-gray-600">
 			<div class="flex items-center gap-2">
 				<span class="inline-block h-4 w-4 rounded border border-gray-300 bg-gray-200"></span>
 				<span class="font-sofia text-lg uppercase">Available</span>
