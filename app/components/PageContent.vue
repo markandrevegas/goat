@@ -106,6 +106,7 @@ if (import.meta.client && import.meta.dev) {
 	}
 }
 const { data } = await useFetch<{ success: boolean; bookedRanges: BookedRange[] }>("/api/calendar")
+const bookedRanges = computed(() => data.value?.bookedRanges ?? [])
 </script>
 
 <template>
@@ -149,6 +150,15 @@ const { data } = await useFetch<{ success: boolean; bookedRanges: BookedRange[] 
 						</svg>
 					</summary>
 					<div class="text-palladian pb-5 text-sm leading-relaxed [&_a]:underline [&_li]:pl-1 [&_ol]:list-decimal [&_ol]:space-y-1 [&_ol]:pl-5 [&_ul]:list-disc [&_ul]:space-y-1 [&_ul]:pl-5 [&_ul_ul]:mt-1 [&>*+*]:mt-3" v-html="acf?.extended_info_content"></div>
+				</details>
+				<details class="group border-palladian mt-8 w-full border-t [interpolate-size:allow-keywords] details-content:h-0 details-content:overflow-hidden details-content:opacity-0 details-content:transition-[height,opacity,content-visibility] details-content:transition-discrete details-content:duration-300 details-content:ease-out open:details-content:h-auto open:details-content:opacity-100">
+					<summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-4 font-semibold select-none [&::-webkit-details-marker]:hidden">
+						Calendar
+						<svg class="size-5 shrink-0 transition-transform duration-300 group-open:rotate-180" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+							<path d="M5 8l5 5 5-5" />
+						</svg>
+					</summary>
+					<Calendar :booked-ranges />
 				</details>
 			</div>
 			<div v-if="!['privacy-policy', 'terms-and-conditions', 'terms-business', 'terms-private'].includes(slug)" class="col-span-1 mt-16 flex flex-col sm:mt-0">
