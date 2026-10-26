@@ -72,6 +72,7 @@ const featureImage = computed(() => landing.value?.feature_image || "")
 const featureUrl = computed(() => landing.value?.feature_url || "")
 const featureButton = computed(() => landing.value?.feature_button || "")
 const featureText = computed(() => landing.value?.feature_text || "")
+const featureContent = computed(() => landing.value?.feature_content || "")
 
 const businessLoungeHeaderSm = computed(() => landing.value?.business_lounge_header_sm)
 const businessLoungeHeader = computed(() => landing.value?.business_lounge_header)
@@ -133,7 +134,7 @@ if (import.meta.dev && import.meta.client) {
 		</template>
 		<LazyCenterAlignedFeature :header="centeredFeatureHeader" :text="centeredFeatureText" />
 		<LazyThreeColumns v-if="threeColumnItems.length" :items="threeColumnItems" class="max-w-screen" />
-		<LazyMainFeatureSection :feature-header-sm="featureHeaderSm" :feature-header-lg="featureHeaderLg" :feature-image="featureImage" :feature-text="featureText" :feature-button="featureButton" :feature-url="featureUrl" />
+		<LazyMainFeatureSection :feature-header-sm="featureHeaderSm" :feature-header-lg="featureHeaderLg" :feature-image="featureImage" :feature-text="featureText" :feature-button="featureButton" :feature-url="featureUrl" :feature-content="featureContent" />
 		<Marquee folder="clients" :speed="40" />
 		<div ref="trustindexRef" class="hidden">
 			<TrustindexWidget v-if="showReviews === true && shouldLoadReviews" />
