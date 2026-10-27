@@ -71,6 +71,8 @@ jobs:
         run: NODE_TLS_REJECT_UNAUTHORIZED=0 bun run build
         env:
           NUXT_PUBLIC_GOAT_WORDPRESS_URL: ${{ secrets.NUXT_PUBLIC_GOAT_WORDPRESS_URL }}
+          NUXT_PUBLIC_SHAREFOX_API_URL: ${{ secrets.NUXT_PUBLIC_SHAREFOX_API_URL }}
+          NUXT_PUBLIC_SHAREFOX_SHOP_DOMAIN: ${{ secrets.NUXT_PUBLIC_SHAREFOX_SHOP_DOMAIN }}
 
       - name: Deploy to subdomain via SSH
         env:
