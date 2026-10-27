@@ -122,7 +122,7 @@ jobs:
           rsync -avz --delete \
             -e "ssh -i ~/.ssh/id_ed25519 -p $SSH_PORT" \
             ./.output/ \
-            "$SSH_USER@$SSH_HOST:/var/www/test.floatinggoat.dk.dk/app/.output/"
+            "$SSH_USER@$SSH_HOST:/var/www/test.floatinggoat.dk/app/.output/"
 
       - name: Restart the subdomain app
         env:
