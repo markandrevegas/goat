@@ -35,7 +35,7 @@ const formatEventName = (url?: string) => {
 </script>
 
 <template>
-	<div class="mx-auto flex w-max flex-col shadow-xl shadow-black/40 sm:flex-row sm:justify-center">
+	<div class="mx-auto flex w-auto flex-col shadow-xl shadow-black/40 sm:flex-row sm:justify-center">
 		<div v-for="(item, index) in items" :key="index" class="text-palladian relative flex min-h-[40vh] flex-col items-center justify-center bg-cover bg-center sm:min-h-[50vh]">
 			<div class="relative z-20 px-4 text-center sm:px-16">
 				<p class="font-display relative mb-0 text-2xl" v-html="item.title"></p>

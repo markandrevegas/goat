@@ -58,9 +58,9 @@ if (error.value || !products.value) {
 const threeColumnItems = useCookie<any[]>("threeColumnsData", { default: () => [] })
 
 const product = computed(() => products.value?.find((p) => p.slug === props.slug) ?? null)
-/*console.log(products.value)
-console.log(props.slug)*/
-const specialSlugs = ["business-lounge", "studio-apartment", "rooftop-terrace"]
+console.log(products.value)
+console.log(props.slug)
+const specialSlugs = ["business-lounge", "studio-apartment", "rooftop-terrace", "simple-meeting"]
 const isSpecialSlug = computed(() => specialSlugs.includes(props.slug))
 const imageBase = "https://fg.floatinggoat.dk"
 const pick = (v: any) => (typeof v === "string" ? v : v?.dk || v?.en || undefined)
@@ -189,10 +189,10 @@ const bookedRanges = computed(() => data.value?.bookedRanges ?? [])
 			<ThreeCardLayout :acf="acf" />
 			<MapEmbed :query="acf?.ferryaddress" :address="acf?.ferryaddress" :email="acf?.email" :tel="acf?.tel" />
 		</div>
-		<div v-if="slug === 'apartments'" class="mt-16">
+		<div v-if="slug === 'apartments'" class="mt-16 w-max">
 			<LazyThreeColumns v-if="threeColumnItems.length" :items="threeColumnItems" />
 		</div>
-		<div v-if="slug === 'meetings-and-events'" class="mt-16 shadow-xl shadow-black/40">
+		<div v-if="slug === 'meetings-and-events'" class="mt-16 w-max mx-auto">
 			<LazyThreeColumns v-if="threeColumnItems.length" :items="threeColumnItems" />
 		</div>
 		<!--<div v-if="['studio-apartment'].includes(slug)" class="hidden flex flex-col gap-4 md:grid md:grid-cols-4">
