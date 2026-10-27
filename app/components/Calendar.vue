@@ -18,6 +18,7 @@ const now = new Date()
 // Month is 1-indexed (1 = January, 12 = December)
 const currentYear = ref(now.getFullYear())
 const currentMonth = ref(now.getMonth() + 1)
+const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
 
 const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
@@ -42,6 +43,8 @@ const isDayBooked = (day: number) => {
 	const dateStr = formatDate(day)
 	return props.bookedRanges.some((range) => dateStr >= range.start && dateStr <= range.end)
 }
+const isPastDate = (day: number) => new Date(currentYear.value, currentMonth.value - 1, day) < today
+const isFutureBooked = (day: number) => !isPastDate(day) && isDayBooked(day)
 
 const prevMonth = () => {
 	if (currentMonth.value === 1) {
@@ -66,9 +69,9 @@ const nextMonth = () => {
 	<div class="calendar-wrapper my-4 border border-gray-200 bg-white shadow-sm">
 		<div class="mb-8 flex items-start justify-between p-4">
 			<div class="flex flex-col gap-1">
-				<h3 class="text-brand font-sans text-xl font-semibold tracking-tight">{{ currentMonthName }} {{ currentYear }}</h3>
-				<div class="text-brand/60 flex w-full justify-start gap-2 text-xs leading-4">
-					<Warning class="size-6 text-red-600" />
+				<h3 class="font-sans text-xl font-semibold tracking-tight text-gray-900">{{ currentMonthName }} {{ currentYear }}</h3>
+				<div class="flex w-full items-center gap-2 text-xs text-gray-500">
+					<Warning class="size-5 text-red-600" />
 					<p>Dates marked in red are currently booked.</p>
 				</div>
 			</div>
@@ -83,7 +86,7 @@ const nextMonth = () => {
 			</div>
 		</div>
 
-		<div class="font-sofia mb-2 grid grid-cols-7 gap-1 px-4 text-center text-xl font-semibold text-gray-400">
+		<div class="mb-2 grid grid-cols-7 gap-1 px-4 text-center text-xs font-semibold text-gray-400">
 			<div>Mon</div>
 			<div>Tue</div>
 			<div>Wed</div>
@@ -95,19 +98,19 @@ const nextMonth = () => {
 
 		<div class="grid grid-cols-7 gap-1.5 px-4">
 			<div v-for="pad in paddingDays" :key="'pad-' + pad" class="h-9"></div>
-			<div v-for="day in daysInMonth" :key="day" class="font-sofia flex h-9 items-center justify-center rounded-md border text-lg font-medium transition-colors select-none" :class="isDayBooked(day) ? 'border-red-200 bg-red-200 text-red-700 line-through' : 'border-gray-200 bg-gray-200 text-gray-700'">
+			<div v-for="day in daysInMonth" :key="day" class="relative flex h-9 items-center justify-center rounded-md border text-xs font-medium transition-colors select-none" :class="[isPastDate(day) ? 'cursor-not-allowed border-gray-100 bg-gray-100 text-gray-300 opacity-50' : isFutureBooked(day) ? 'border-red-200 bg-red-200 text-red-700 line-through' : 'border-gray-200 bg-gray-200 text-gray-700 hover:bg-gray-300']">
 				{{ day }}
 			</div>
 		</div>
 
-		<div class="mt-4 flex items-center justify-start gap-6 bg-gray-50 p-4 text-xs text-gray-600">
+		<div class="mt-4 flex flex-wrap items-center justify-start gap-6 bg-gray-50 p-4 text-xs text-gray-600">
 			<div class="flex items-center gap-2">
 				<span class="inline-block h-4 w-4 rounded border border-gray-300 bg-gray-200"></span>
-				<span class="font-sofia text-lg uppercase">Available</span>
+				<span>Available</span>
 			</div>
 			<div class="flex items-center gap-2">
 				<span class="inline-block h-4 w-4 rounded border border-red-200 bg-red-200"></span>
-				<span class="font-sofia text-lg uppercase">Booked</span>
+				<span>Booked</span>
 			</div>
 		</div>
 	</div>
