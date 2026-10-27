@@ -118,6 +118,7 @@ const forEvents = ["business-lounge", "rooftop-terrace", "meetings-and-events"]
 const forBusiness = ["rooftop-terrace", "meetings-and-events"]
 const forStudio = ["bow-apartment", "studio-apartment", "rooftop-terrace"]
 const forExtras = ["business-lounge", "rooftop-terrace", "apartments"]
+const forCaptainsQuarters = [ "studio-apartment", "bow-apartment"]
 
 const relatedPages = computed(() => {
 	if (!allPages.value) return []
@@ -137,6 +138,8 @@ const relatedPages = computed(() => {
 		relatedSlugs = forStudio
 	} else if (forEvents.includes(currentSlug) || currentSlug === "extra-services") {
 		relatedSlugs = forExtras
+	} else if (forEvents.includes(currentSlug) || currentSlug === "captains-quarters") {
+		relatedSlugs = forCaptainsQuarters
 	}
 
 	return allPages.value.filter((page) => page.id !== contentId.value && relatedSlugs.includes(page.slug)).sort((a, b) => relatedSlugs.indexOf(a.slug) - relatedSlugs.indexOf(b.slug))
@@ -276,11 +279,7 @@ useSeoMeta({
 		</div>
 
 		<div v-if="contentSlug === 'apartments'">
-			<div class="mx-auto grid max-w-6xl grid-cols-4 px-8 sm:flex sm:flex-col">
-				<div class="col-span-2 col-start-2">
-					<SlimTrustWidget />
-				</div>
-			</div>
+			<SlimTrustWidget />
 		</div>
 
 		<div v-if="['meetings-and-events', 'simple-meeting', 'rooftop-terrace', 'studio-apartment', 'bow-apartment', 'business-lounge'].includes(contentSlug)">
