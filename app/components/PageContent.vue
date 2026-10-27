@@ -189,10 +189,10 @@ const bookedRanges = computed(() => data.value?.bookedRanges ?? [])
 			<ThreeCardLayout :acf="acf" />
 			<MapEmbed :query="acf?.ferryaddress" :address="acf?.ferryaddress" :email="acf?.email" :tel="acf?.tel" />
 		</div>
-		<div v-if="slug === 'apartments'" class="mt-16 w-max">
+		<div v-if="slug === 'apartments'" class="mt-16 w-full">
 			<LazyThreeColumns v-if="threeColumnItems.length" :items="threeColumnItems" />
 		</div>
-		<div v-if="slug === 'meetings-and-events'" class="mt-16 w-max mx-auto">
+		<div v-if="slug === 'meetings-and-events'" class="mt-16 w-full">
 			<LazyThreeColumns v-if="threeColumnItems.length" :items="threeColumnItems" />
 		</div>
 		<!--<div v-if="['studio-apartment'].includes(slug)" class="hidden flex flex-col gap-4 md:grid md:grid-cols-4">
