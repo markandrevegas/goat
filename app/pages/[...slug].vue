@@ -2,9 +2,18 @@
 import { computed, watch } from "vue"
 import SlimTrustWidget from "~/components/ui/SlimTrustWidget.vue"
 
+interface YoastSchemaGraphItem {
+	"@type"?: string | string[]
+	datePublished?: string
+	[key: string]: any
+}
+
 interface YoastHead {
 	og_description?: string
 	og_image?: { url: string; width?: number; height?: number }[]
+	schema?: {
+		"@graph"?: YoastSchemaGraphItem[]
+	}
 }
 
 const route = useRoute()
@@ -67,7 +76,40 @@ const contentTitle = computed(() => rawContentData.value?.title?.rendered || "")
 const contentSlug = computed(() => rawContentData.value?.slug || "")
 const contentBody = computed(() => rawContentData.value?.content?.rendered || "")
 const contentAcf = computed(() => rawContentData.value?.acf || {})
-const datePublished = computed(() => rawContentData.value?.date || null)
+const datePublished = computed(() => {
+	if (rawContentData.value?.date) {
+		return rawContentData.value.date
+	}
+
+	const yoastGraph = yoastHead.value?.schema?.["@graph"]
+	if (Array.isArray(yoastGraph)) {
+		const item = yoastGraph.find((entry) => {
+			const types = Array.isArray(entry["@type"]) ? entry["@type"] : [entry["@type"]]
+			return types.includes("WebPage") || types.includes("Article")
+		})
+		if (item?.datePublished) {
+			return item.datePublished
+		}
+	}
+
+	return null
+})
+const formattedDate = computed(() => {
+	if (!datePublished.value || typeof datePublished.value !== "string") return ""
+
+	const raw = datePublished.value
+	const dateString = raw.endsWith("Z") ? raw : `${raw}Z`
+	const parsedDate = new Date(dateString)
+
+	if (Number.isNaN(parsedDate.getTime())) return ""
+
+	return new Intl.DateTimeFormat("da-DK", {
+		year: "numeric",
+		month: "long",
+		day: "numeric",
+		timeZone: "UTC"
+	}).format(parsedDate)
+})
 
 const { data: allPages } = await getPages()
 
@@ -98,22 +140,6 @@ const relatedPages = computed(() => {
 	}
 
 	return allPages.value.filter((page) => page.id !== contentId.value && relatedSlugs.includes(page.slug)).sort((a, b) => relatedSlugs.indexOf(a.slug) - relatedSlugs.indexOf(b.slug))
-})
-
-const formattedDate = computed(() => {
-	if (!datePublished.value || typeof datePublished.value !== "string") return ""
-
-	const dateString = datePublished.value.endsWith("Z") ? datePublished.value : `${datePublished.value}Z`
-	const parsedDate = new Date(dateString)
-
-	if (Number.isNaN(parsedDate.getTime())) return ""
-
-	return new Intl.DateTimeFormat("da-DK", {
-		year: "numeric",
-		month: "long",
-		day: "numeric",
-		timeZone: "UTC"
-	}).format(parsedDate)
 })
 
 const authorDetails = computed(() => rawContentData.value?._embedded?.author?.[0] || null)
@@ -246,7 +272,7 @@ useSeoMeta({
 
 			<PostContent v-else-if="hasContent && isPost" :title="contentTitle" :body="contentBody" :slug="contentSlug" :acf="contentAcf" :author-name="authorName" :formatted-date="formattedDate" :date-published="datePublished" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" :layout-style="currentLayoutStyle" />
 
-			<PageContent v-else-if="hasContent && isPage" :acf="contentAcf" :title="contentTitle" :body="contentBody" :slug="contentSlug" :excerpt="headerExcerpt" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" :related-pages="relatedPages" :layout-style="currentLayoutStyle" :page-video-header-url="pageVideoHeaderUrl" :page-video-header-poster="pageVideoHeaderPoster" />
+			<PageContent v-else-if="hasContent && isPage" :acf="contentAcf" :title="contentTitle" :body="contentBody" :slug="contentSlug" :excerpt="headerExcerpt" :featured-image-url="featuredImageUrl" :featured-image-alt="featuredImageAlt" :featured-image-width="featuredImageWidth" :featured-image-height="featuredImageHeight" :related-pages="relatedPages" :layout-style="currentLayoutStyle" :page-video-header-url="pageVideoHeaderUrl" :page-video-header-poster="pageVideoHeaderPoster" :date-published="datePublished" :formatted-date="formattedDate" />
 		</div>
 
 		<div v-if="contentSlug === 'apartments'">

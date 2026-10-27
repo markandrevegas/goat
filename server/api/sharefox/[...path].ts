@@ -1,27 +1,32 @@
-// Only these upstream paths can be reached through the proxy
-const ALLOWED = [/^product-unavailability\/\d+\/days$/]
+export default defineEventHandler(async (event) => {
+	const config = useRuntimeConfig()
+	const rawPath = event.context.params?.path || ""
+	const query = getQuery(event)
 
-export default defineCachedEventHandler(
-	async (event) => {
-		if (event.method !== "GET") {
-			throw createError({ statusCode: 405, statusMessage: "Method Not Allowed" })
-		}
+	// Clean shop domain (must NOT contain http:// or https://)
+	const rawDomain = config.public?.sharefoxShopDomain || config.sharefoxShopDomain || ""
+	const shopDomain = rawDomain.replace(/^https?:\/\//, "").replace(/\/$/, "")
 
-		const config = useRuntimeConfig(event)
-		const subpath = (getRouterParam(event, "path") || "").replace(/^\/+/, "")
+	// Base Sharefox API URL
+	const rawBaseUrl = config.sharefoxApiUrl || config.public?.sharefoxApiUrl || "https://api.mysharefox.com/api-v2"
+	const baseUrl = rawBaseUrl.replace(/\/$/, "")
 
-		if (!ALLOWED.some((re) => re.test(subpath))) {
-			throw createError({ statusCode: 404, statusMessage: "Not Found" })
-		}
+	const cleanPath = rawPath.replace(/^\/+/, "")
+	const targetUrl = `${baseUrl}/${cleanPath}`
 
-		try {
-			return await $fetch(`/api-v2/${subpath}`, {
-				baseURL: String(config.sharefoxStoreUrl),
-				query: getQuery(event)
-			})
-		} catch (err: any) {
-			throw createError({ statusCode: err.statusCode || 502, statusMessage: "Sharefox proxy error" })
-		}
-	},
-	{ maxAge: 60 * 5, getKey: (event) => event.path }
-)
+	try {
+		return await $fetch(targetUrl, {
+			query,
+			headers: {
+				"x-sharefox-shop-domain": shopDomain,
+				locale: "da"
+			}
+		})
+	} catch (error: any) {
+		throw createError({
+			statusCode: error?.response?.status || 500,
+			statusMessage: error?.response?.statusText || "Failed to fetch from Sharefox API",
+			data: error?.data
+		})
+	}
+})

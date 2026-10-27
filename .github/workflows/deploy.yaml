@@ -2,7 +2,7 @@ name: Deploy to floatinggoat.dk
 
 on:
   push:
-    branches: [main]
+    branches: [main, local]
 
 jobs:
   # Existing static deploy — untouched, still ships to one.com shared hosting.
@@ -87,3 +87,48 @@ jobs:
         run: |
           ssh -i ~/.ssh/id_ed25519 -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" \
             "cd /var/www/floatinggoat.dk/app && /home/administrator/.bun/bin/pm2 restart floatinggoat || /home/administrator/.bun/bin/pm2 start ecosystem.config.cjs"
+
+  deploy-subdomain:
+    if: github.ref == 'refs/heads/local'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build SSR bundle
+        run: NODE_TLS_REJECT_UNAUTHORIZED=0 bun run build
+        env:
+          NUXT_PUBLIC_GOAT_WORDPRESS_URL: ${{ secrets.NUXT_PUBLIC_GOAT_WORDPRESS_URL }}
+
+      - name: Deploy to subdomain via SSH
+        env:
+          SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+          SSH_HOST: ${{ secrets.VPS_SSH_HOST }}
+          SSH_PORT: 22
+          SSH_USER: ${{ secrets.VPS_SSH_USER }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -p "$SSH_PORT" -H "$SSH_HOST" >> ~/.ssh/known_hosts
+
+          rsync -avz --delete \
+            -e "ssh -i ~/.ssh/id_ed25519 -p $SSH_PORT" \
+            ./.output/ \
+            "$SSH_USER@$SSH_HOST:/var/www/test.floatinggoat.dk.dk/app/.output/"
+
+      - name: Restart the subdomain app
+        env:
+          SSH_HOST: ${{ secrets.VPS_SSH_HOST }}
+          SSH_PORT: 22
+          SSH_USER: ${{ secrets.VPS_SSH_USER }}
+        run: |
+          ssh -i ~/.ssh/id_ed25519 -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" \
+            "cd /var/www/test.floatinggoat.dk.dk/app && /home/administrator/.bun/bin/pm2 restart floatinggoat-dev || /home/administrator/.bun/bin/pm2 start ecosystem.config.cjs"

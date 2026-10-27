@@ -1,4 +1,5 @@
 type Localized = { dk: string; en: string }
+
 export interface SharefoxProductListItem {
 	id: number
 	name: Localized
@@ -32,24 +33,14 @@ export interface SharefoxProduct {
 }
 
 export interface ProductUnavailabilityDays {
-	fullDays: string[] // "YYYY-MM-DD"
+	fullDays: string[]
 	partialDays: string[]
 	closedDays: string[]
 	bookedDays: string[]
 }
 
-export interface ProductUnavailabilityDaysParams {
-	locationId?: number | string
-	channelId?: number | string
-	month: number | string // e.g. 10
-	year: number | string // e.g. 2026
-	type?: "pickup" | "delivery" | string
-	breakdown?: number | boolean // 1 or 0
-}
-
-// Typical response structure returned by Sharefox /api-v2/
 export interface DayAvailabilityBreakdown {
-	date: string // "YYYY-MM-DD"
+	date: string
 	available: boolean
 	unavailable: boolean
 	reason?: string
@@ -64,46 +55,51 @@ export interface DayAvailabilityBreakdown {
 export type ProductUnavailabilityDaysResponse = DayAvailabilityBreakdown[] | Record<string, any>
 
 export function useSharefox() {
-	const config = useRuntimeConfig()
-	const sfFetch = <T>(path: string, query?: Record<string, any>) =>
-		$fetch<T>(path, {
-			baseURL: config.public.sharefoxApiUrl,
-			headers: { "x-sharefox-shop-domain": config.public.sharefoxShopDomain, locale: "da" },
+	const sfServerFetch = <T>(path: string, query?: Record<string, any>) => {
+		const cleanPath = path.replace(/^\/+/, "")
+		return $fetch<T>(`/api/sharefox/${cleanPath}`, {
 			query,
-			retry: 2,
-			retryDelay: 3000
+			retry: 1,
+			retryDelay: 1000
 		})
+	}
 
-	const getProducts = (query?: { limit?: number; offset?: number; categories?: string; search?: string }) => useAsyncData(`sharefox-products-${JSON.stringify(query ?? {})}`, () => sfFetch<SharefoxProductListItem[]>("/products/", query))
+	const getProducts = (query?: { limit?: number; offset?: number; categories?: string; search?: string }) => useAsyncData(`sharefox-products-${JSON.stringify(query ?? {})}`, () => sfServerFetch<SharefoxProductListItem[]>("products", query))
 
 	const getAvailableProducts = (startDate: string) =>
 		useAsyncData(`sharefox-available-${startDate}`, async () => {
-			const products = await sfFetch<SharefoxProductListItem[]>("/products/", { startDate })
-			return products.filter((p) => (p.productAvailability ?? 0) > 0)
+			const products = await sfServerFetch<SharefoxProductListItem[]>("products", { startDate })
+			return (products || []).filter((p) => (p.productAvailability ?? 0) > 0)
 		})
-	const getProduct = (id: number | string) => useAsyncData(`sharefox-product-${id}`, () => sfFetch<SharefoxProduct>(`/products/${id}`))
 
-	const sfServerFetch = <T>(path: string, query?: Record<string, any>) => {
-		const cleanPath = path.replace(/^\//, "")
-		return $fetch<T>(`/api/sharefox/${cleanPath}`, {
-			query,
-			retry: 2,
-			retryDelay: 3000
+	const getProduct = (id: number | string) => useAsyncData(`sharefox-product-${id}`, () => sfServerFetch<SharefoxProduct>(`products/${id}`))
+
+	const fetchUnavailabilityDays = async (productId: number | string, params: { month: number; year: number }) => {
+		const res = await sfServerFetch<ProductUnavailabilityDays>(`product-unavailability/${productId}/days`, {
+			locationId: 4,
+			channelId: 1,
+			type: "pickup",
+			breakdown: 1,
+			...params
 		})
+		console.log("RAW unavailability", JSON.stringify(res, null, 2))
+		const full = new Set([...(res?.fullDays || []), ...(res?.closedDays || [])])
+		const partial = new Set([...(res?.partialDays || []), ...(res?.bookedDays || [])])
+
+		// A day that's full or closed is never partial
+		for (const d of full) partial.delete(d)
+		return {
+			fullDays: [...full],
+			partialDays: [...partial],
+			closedDays: [...new Set(res?.closedDays || [])],
+			bookedDays: [...new Set(res?.bookedDays || [])]
+		}
 	}
 
-	const getProductUnavailabilityDays = (productId: number | string, params: ProductUnavailabilityDaysParams) => {
-		const query = { locationId: 4, channelId: 1, type: "pickup", breakdown: 1, ...params }
-		return useAsyncData(`sharefox-unavailability-${productId}-${JSON.stringify(query)}`, async () => {
-			const res = await sfServerFetch<ProductUnavailabilityDays>(`product-unavailability/${productId}/days`, query)
-			return {
-				fullDays: [...new Set(res.fullDays)],
-				partialDays: [...new Set(res.partialDays)],
-				closedDays: [...new Set(res.closedDays)],
-				bookedDays: [...new Set(res.bookedDays)]
-			}
-		})
+	return {
+		getProducts,
+		getAvailableProducts,
+		getProduct,
+		fetchUnavailabilityDays
 	}
-
-	return { getProducts, getProduct, getProductUnavailabilityDays }
 }
