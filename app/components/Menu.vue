@@ -81,9 +81,9 @@ const { data: postItems } = await getPosts({
 <template>
 	<nav aria-label="Main navigation" class="fixed top-0 right-0 left-0 z-50 w-full transition-colors duration-300" :class="isScrolled ? 'bg-brand text-palladian' : 'text-brand'">
 		<div class="mx-auto grid h-24 w-full max-w-6xl grid-cols-4 items-center justify-center px-8 py-2">
-			<div class="col-span-1 flex justify-start items-center gap-2">
+			<div class="col-span-1 flex items-center justify-start gap-2">
 				<NuxtLink to="/">
-					<span class="flex justify-center items-center h-12 w-12 rounded-full bg-brand">
+					<span class="bg-brand flex h-12 w-12 items-center justify-center rounded-full">
 						<Logo class="size-6" />
 					</span>
 					<span class="sr-only">Logo</span>

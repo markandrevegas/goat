@@ -2,6 +2,7 @@
 import { useCookieConsent } from "~/composables/useCookieConsent"
 
 import Social from "./ui/Social.vue"
+import Popup from "./icons/Popup.vue"
 import TextButton from "./ui/TextButton.vue"
 const { getPages } = useWordPress()
 const { openBanner } = useCookieConsent()
@@ -52,13 +53,18 @@ const pageItems = computed(() => {
 					<div v-if="status === 'pending'" class="text-center text-sm">Pending</div>
 					<div v-else-if="error" class="text-center text-sm text-red-600">Error</div>
 					<ul v-else-if="pageItems.length" class="list-reset">
+						<li class="w-max"><a href="https://floatinggoat.dk/sitemap_index.xml" target="_blank" class="text-palladian w-max font-semibold transition-opacity duration-400 hover:border-b-2">Sitemap</a></li>
 						<li v-for="item in pageItems" :key="item.id" class="w-max">
 							<NuxtLink :to="`/${item.slug}`" class="w-max font-semibold transition-opacity duration-400 hover:border-b-2" v-html="item.title.rendered"></NuxtLink>
 						</li>
+						<li class="w-max"><a href="/posts" class="text-palladian w-max font-semibold transition-opacity duration-400 hover:border-b-2">Blog</a></li>
 						<li class="w-max">
-							<TextButton @click="openBanner" :event-name="'open_cookie_settings'" :text="'Open cookie settings'" aria-haspopup="dialog" aria-expanded="false" aria-controls="cookie-settings-modal" class="text-palladian w-max pb-0 font-semibold transition-opacity duration-400 hover:border-b-2" />
+							<TextButton @click="openBanner" iconPos="right" :event-name="'open_cookie_settings'" :text="'Open cookie settings'" aria-haspopup="dialog" aria-expanded="false" aria-controls="cookie-settings-modal" class="text-palladian w-max pb-0 font-semibold transition-opacity duration-400 hover:border-b-2">
+								<template #icon>
+									<Popup />
+								</template>
+							</TextButton>
 						</li>
-						<li class="w-max"><a href="https://floatinggoat.dk/sitemap_index.xml" target="_blank" class="text-palladian w-max font-semibold transition-opacity duration-400 hover:border-b-2">Sitemap</a></li>
 					</ul>
 				</div>
 				<div class="flex flex-col">
