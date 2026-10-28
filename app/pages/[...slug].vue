@@ -140,6 +140,8 @@ const relatedPages = computed(() => {
 		relatedSlugs = forExtras
 	} else if (forEvents.includes(currentSlug) || currentSlug === "captains-quarters") {
 		relatedSlugs = forCaptainsQuarters
+	} else if (forEvents.includes(currentSlug) || currentSlug === "events") {
+		relatedSlugs = forEvents
 	}
 
 	return allPages.value.filter((page) => page.id !== contentId.value && relatedSlugs.includes(page.slug)).sort((a, b) => relatedSlugs.indexOf(a.slug) - relatedSlugs.indexOf(b.slug))
