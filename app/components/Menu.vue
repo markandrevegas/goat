@@ -3,6 +3,7 @@ import { ref, computed, onMounted, onUnmounted } from "vue"
 import MenuIcon from "./icons/MenuIcon.vue"
 import Social from "./ui/Social.vue"
 import Logo from "~/components/icons/Logo.vue"
+import LogoText from "./icons/LogoText.vue"
 
 const isScrolled = ref(false)
 
@@ -80,13 +81,15 @@ const { data: postItems } = await getPosts({
 <template>
 	<nav aria-label="Main navigation" class="fixed top-0 right-0 left-0 z-50 w-full transition-colors duration-300" :class="isScrolled ? 'bg-brand text-palladian' : 'text-brand'">
 		<div class="mx-auto grid h-24 w-full max-w-6xl grid-cols-4 items-center justify-center px-8 py-2">
-			<div class="col-span-1 flex items-center justify-start gap-4">
+			<div class="col-span-1 flex justify-start items-center gap-2">
 				<NuxtLink to="/">
-					<Logo class="size-12" />
+					<span class="flex justify-center items-center h-12 w-12 rounded-full bg-brand">
+						<Logo class="size-6" />
+					</span>
 					<span class="sr-only">Logo</span>
 				</NuxtLink>
-				<NuxtLink to="/" class="hidden sm:inline-block">
-					<span class="font-display text-palladian font-light transition-opacity duration-400 hover:opacity-70">Floating G.O.A.T. </span>
+				<NuxtLink to="/">
+					<LogoText class="w-4/5" />
 				</NuxtLink>
 			</div>
 
