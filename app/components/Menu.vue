@@ -90,6 +90,7 @@ const { data: postItems } = await getPosts({
 				</NuxtLink>
 				<NuxtLink to="/">
 					<LogoText class="w-4/5" />
+					<span class="sr-only">Floating G.O.A.T.</span>
 				</NuxtLink>
 			</div>
 
