@@ -54,7 +54,7 @@ function scrollByItem(direction: 1 | -1) {
 </script>
 
 <template>
-	<section class="overflow-hidden py-16 font-sans px-8">
+	<section class="overflow-hidden px-8 py-16 font-sans">
 		<div v-if="pending" class="text-brand text-center font-bold">Loading reviews...</div>
 
 		<div v-else-if="error" class="text-center font-bold text-red-800">Could not load reviews.</div>

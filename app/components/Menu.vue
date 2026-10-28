@@ -2,7 +2,7 @@
 import { ref, computed, onMounted, onUnmounted } from "vue"
 import MenuIcon from "./icons/MenuIcon.vue"
 import Social from "./ui/Social.vue"
-import Logo from "~/assets/svg/fg.svg"
+import Logo from "~/components/icons/Logo.vue"
 
 const isScrolled = ref(false)
 
@@ -82,7 +82,7 @@ const { data: postItems } = await getPosts({
 		<div class="mx-auto grid h-24 w-full max-w-6xl grid-cols-4 items-center justify-center px-8 py-2">
 			<div class="col-span-1 flex items-center justify-start gap-4">
 				<NuxtLink to="/">
-					<Logo class="text-palladian inline-block scale-250" />
+					<Logo class="size-12" />
 					<span class="sr-only">Logo</span>
 				</NuxtLink>
 				<NuxtLink to="/" class="hidden sm:inline-block">

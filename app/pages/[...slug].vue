@@ -118,7 +118,7 @@ const forEvents = ["business-lounge", "rooftop-terrace", "meetings-and-events"]
 const forBusiness = ["rooftop-terrace", "meetings-and-events"]
 const forStudio = ["bow-apartment", "studio-apartment", "rooftop-terrace"]
 const forExtras = ["business-lounge", "rooftop-terrace", "apartments"]
-const forCaptainsQuarters = [ "studio-apartment", "bow-apartment"]
+const forCaptainsQuarters = ["studio-apartment", "bow-apartment"]
 
 const relatedPages = computed(() => {
 	if (!allPages.value) return []

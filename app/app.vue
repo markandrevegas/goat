@@ -27,12 +27,7 @@ useHead({
 
 <template>
 	<NuxtLayout>
-		<NuxtPage
-			:transition="{
-				name: 'page',
-				mode: 'default'
-			}"
-		/>
+		<NuxtPage></NuxtPage>
 	</NuxtLayout>
 	<MainFooter />
 	<CookieBanner />
