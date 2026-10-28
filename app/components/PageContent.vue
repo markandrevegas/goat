@@ -167,7 +167,7 @@ const bookedRanges = computed(() => data.value?.bookedRanges ?? [])
 					</summary>
 					<Calendar :booked-ranges />
 				</details>
-				<details v-if="isSpecialSlug" class="hidden group border-palladian mt-8 w-full border-t [interpolate-size:allow-keywords] details-content:h-0 details-content:overflow-hidden details-content:opacity-0 details-content:transition-[height,opacity,content-visibility] details-content:transition-discrete details-content:duration-300 details-content:ease-out open:details-content:h-auto open:details-content:opacity-100">
+				<details v-if="isSpecialSlug" class="group border-palladian mt-8 w-full border-t [interpolate-size:allow-keywords] details-content:h-0 details-content:overflow-hidden details-content:opacity-0 details-content:transition-[height,opacity,content-visibility] details-content:transition-discrete details-content:duration-300 details-content:ease-out open:details-content:h-auto open:details-content:opacity-100">
 					<summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-4 font-semibold select-none [&::-webkit-details-marker]:hidden">
 						Sharefox Calendar
 						<svg class="size-5 shrink-0 transition-transform duration-300 group-open:rotate-180" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
