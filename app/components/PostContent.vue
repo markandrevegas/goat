@@ -61,7 +61,7 @@ const { data: postItems } = await getPosts({
 			<!-- Column 3: Sidebar -->
 			<div class="col-span-1">
 				<p v-if="postItems" class="mt-8 mb-2 text-sm tracking-tight uppercase sm:mt-0">Recent Posts</p>
-				<NuxtLink to="/blog" class="text-palladian mt-4 block w-max text-sm font-semibold underline">All posts</NuxtLink>
+				<NuxtLink to="/posts" class="text-palladian mt-4 block w-max text-sm font-semibold underline">All posts</NuxtLink>
 				<ul v-if="postItems" class="space-y-2">
 					<li v-for="post in postItems" :key="post.id">
 						<NuxtLink :to="`/${post.slug}`" class="w-max font-semibold transition-opacity duration-400 hover:border-b-2" v-html="post.title.rendered" />
