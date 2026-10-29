@@ -246,7 +246,7 @@ useSeoMeta({
 	description: () => cleanSeoDescription.value,
 	ogTitle: () => cleanSeoTitle.value,
 	ogDescription: () => cleanSeoDescription.value,
-	ogUrl: () => canonicalUrl.value,
+	ogUrl: () => canonicalUrl.value + '/',
 	ogSiteName: "Floating G.O.A.T.",
 	ogLocale: "en_GB",
 	ogImage: () => ogImage.value,
