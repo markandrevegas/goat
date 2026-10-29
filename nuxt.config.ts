@@ -44,7 +44,7 @@ export default defineNuxtConfig({
 				...(wpOrigin
 					? [
 							{
-								rel: "preconnect",
+								rel: "preconnect" as const,
 								href: wpOrigin,
 								crossorigin: "" as const
 							}
@@ -99,7 +99,7 @@ export default defineNuxtConfig({
 		public: {
 			siteUrl: "https://floatinggoat.dk",
 			goatWordpressUrl: process.env.NUXT_PUBLIC_GOAT_WORDPRESS_URL,
-			gtmId: process.env.NUXT_PUBLIC_GTM_ID || process.env.GTM_ID || "",
+			gtmId: process.env.NUXT_PUBLIC_GTM_ID || process.env.GTM_ID || "GTM-PN69ZCQJ",
 			sharefoxApiUrl: process.env.NUXT_PUBLIC_SHAREFOX_API_URL,
 			sharefoxShopDomain: process.env.NUXT_PUBLIC_SHAREFOX_SHOP_DOMAIN
 		}
