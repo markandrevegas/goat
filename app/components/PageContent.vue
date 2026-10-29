@@ -108,6 +108,7 @@ useHead(() => {
 
 if (import.meta.client && import.meta.dev) {
 	// console.log(props.acf)
+	console.log(props.relatedPages)
 	if (product.value) {
 		console.log(product.value)
 	}
@@ -181,7 +182,7 @@ const bookedRanges = computed(() => data.value?.bookedRanges ?? [])
 				<p class="mb-4 text-sm font-bold uppercase md:block">Related</p>
 				<ul class="list-reset space-y-2 sm:space-y-1">
 					<li v-for="item in relatedPages" :key="item.id">
-						<NuxtLink :to="item.slug"><span v-html="item.title?.rendered" class="w-max font-semibold transition-opacity duration-400 hover:border-b-2"></span></NuxtLink>
+						<NuxtLink :to="`/${item.slug?.replace(/^\/+/, '')}`"><span v-html="item.title?.rendered" class="w-max font-semibold transition-opacity duration-400 hover:border-b-2"></span></NuxtLink>
 					</li>
 				</ul>
 			</div>

@@ -56,7 +56,7 @@ const { data: postItems } = await getPosts({
 
 				<ul v-if="postItems" class="space-y-2">
 					<li v-for="post in postItems" :key="post.id">
-						<NuxtLink :to="`/${post.slug}`" class="w-max font-semibold transition-opacity duration-400 hover:border-b-2" v-html="post.title.rendered" />
+						<NuxtLink :to="`/${post.slug?.replace(/^\/+/, '')}`" class="w-max font-semibold transition-opacity duration-400 hover:border-b-2" v-html="post.title.rendered" />
 					</li>
 					<li>
 						<NuxtLink to="/posts" class="w-max font-semibold transition-opacity duration-400 hover:border-b-2">All posts</NuxtLink>
