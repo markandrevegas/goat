@@ -30,6 +30,8 @@ const pageItems = computed(() => {
 		return item
 	})
 })
+
+const isDev = import.meta.dev
 </script>
 
 <template>
@@ -57,7 +59,7 @@ const pageItems = computed(() => {
 						<li v-for="item in pageItems" :key="item.id" class="w-max">
 							<NuxtLink :to="`/${item.slug}`" class="w-max font-semibold transition-opacity duration-400 hover:border-b-2" v-html="item.title.rendered"></NuxtLink>
 						</li>
-						<li class="w-max"><a href="/posts" class="text-palladian w-max font-semibold transition-opacity duration-400 hover:border-b-2">Blog</a></li>
+						<li v-if="isDev" class="w-max"><a href="/posts" class="text-palladian w-max font-semibold transition-opacity duration-400 hover:border-b-2">Blog</a></li>
 						<li class="w-max">
 							<TextButton @click="openBanner" iconPos="right" :event-name="'open_cookie_settings'" :text="'Open cookie settings'" aria-haspopup="dialog" aria-expanded="false" aria-controls="cookie-settings-modal" class="text-palladian w-max pb-0 font-semibold transition-opacity duration-400 hover:border-b-2">
 								<template #icon>
