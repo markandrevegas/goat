@@ -9,10 +9,8 @@ const config = useRuntimeConfig()
 const canonicalUrl = computed(() => {
 	const rawSiteUrl = (config.public.siteUrl as string) || "https://floatinggoat.dk"
 	const siteUrl = rawSiteUrl.replace(/\/+$/, "")
-	let path = route.path
-	if (path !== "/" && !path.endsWith("/")) {
-		path = `${path}/`
-	}
+
+	const path = route.path === "/" ? "" : route.path.replace(/\/+$/, "")
 
 	return `${siteUrl}${path}`
 })
