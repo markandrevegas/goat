@@ -7,14 +7,16 @@ const route = useRoute()
 const config = useRuntimeConfig()
 
 const canonicalUrl = computed(() => {
-	const rawSiteUrl = (config.public.siteUrl as string) || "https://floatinggoat.dk"
-	const siteUrl = rawSiteUrl.replace(/\/+$/, "")
-	const path = route.path === "/" ? "" : route.path.replace(/\/+$/, "")
+  const rawSiteUrl = (config.public.siteUrl as string) || "https://floatinggoat.dk"
+  const siteUrl = rawSiteUrl.replace(/\/+$/, "")
+  let path = route.path
+  if (path !== "/" && !path.endsWith("/")) {
+    path = `${path}/`
+  }
 
-	return `${siteUrl}${path}`
+  return `${siteUrl}${path}`
 })
 
-// Organization Schema (JSON-LD)
 useHead(() => {
 	const siteUrl = ((config.public.siteUrl as string) || "https://floatinggoat.dk").replace(/\/+$/, "")
 
