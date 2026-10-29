@@ -7,14 +7,14 @@ const route = useRoute()
 const config = useRuntimeConfig()
 
 const canonicalUrl = computed(() => {
-  const rawSiteUrl = (config.public.siteUrl as string) || "https://floatinggoat.dk"
-  const siteUrl = rawSiteUrl.replace(/\/+$/, "")
-  let path = route.path
-  if (path !== "/" && !path.endsWith("/")) {
-    path = `${path}/`
-  }
+	const rawSiteUrl = (config.public.siteUrl as string) || "https://floatinggoat.dk"
+	const siteUrl = rawSiteUrl.replace(/\/+$/, "")
+	let path = route.path
+	if (path !== "/" && !path.endsWith("/")) {
+		path = `${path}/`
+	}
 
-  return `${siteUrl}${path}`
+	return `${siteUrl}${path}`
 })
 
 useHead(() => {
@@ -27,11 +27,7 @@ useHead(() => {
 		name: "Floating G.O.A.T.",
 		url: siteUrl,
 		logo: `${siteUrl}/logo/logo.png`,
-		sameAs: [
-			"https://www.instagram.com/floating_goat_cph/",
-			"https://linkedin.com/company/mar-k-waterside ",
-			"https://facebook.com/FloatingGOATCopenhagen"
-		]
+		sameAs: ["https://www.instagram.com/floating_goat_cph/", "https://linkedin.com/company/mar-k-waterside ", "https://facebook.com/FloatingGOATCopenhagen"]
 	}
 
 	return {

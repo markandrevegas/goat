@@ -84,7 +84,7 @@ const { data: postItems } = await getPosts({
 			<div class="col-span-1 flex items-center justify-start gap-2">
 				<NuxtLink to="/">
 					<span class="bg-brand flex h-12 w-12 items-center justify-center rounded-full">
-						<Logo class="size-6" />
+						<Logo />
 					</span>
 					<span class="sr-only">Logo</span>
 				</NuxtLink>
