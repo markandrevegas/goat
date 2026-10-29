@@ -8,20 +8,46 @@ const config = useRuntimeConfig()
 
 const canonicalUrl = computed(() => {
 	const rawSiteUrl = (config.public.siteUrl as string) || "https://floatinggoat.dk"
-	const siteUrl = rawSiteUrl.replace(/\/+\$/, "")
-	const path = route.path === "/" ? "" : route.path.replace(/\/+\$/, "")
+	const siteUrl = rawSiteUrl.replace(/\/+$/, "")
+	const path = route.path === "/" ? "" : route.path.replace(/\/+$/, "")
 
 	return `${siteUrl}${path}`
 })
 
-useHead({
-	link: [
-		{
-			rel: "canonical",
-			href: canonicalUrl,
-			key: "canonical"
-		}
-	]
+// Organization Schema (JSON-LD)
+useHead(() => {
+	const siteUrl = ((config.public.siteUrl as string) || "https://floatinggoat.dk").replace(/\/+$/, "")
+
+	const organizationSchema = {
+		"@context": "https://schema.org",
+		"@type": "Organization",
+		"@id": `${siteUrl}/#organization`,
+		name: "Floating G.O.A.T.",
+		url: siteUrl,
+		logo: `${siteUrl}/logo/logo.png`,
+		sameAs: [
+			"https://www.instagram.com/floating_goat_cph/",
+			"https://linkedin.com/company/mar-k-waterside ",
+			"https://facebook.com/FloatingGOATCopenhagen"
+		]
+	}
+
+	return {
+		link: [
+			{
+				rel: "canonical",
+				href: canonicalUrl.value,
+				key: "canonical"
+			}
+		],
+		script: [
+			{
+				key: "ld-organization",
+				type: "application/ld+json",
+				innerHTML: JSON.stringify(organizationSchema).replace(/</g, "\\u003c")
+			}
+		]
+	}
 })
 </script>
 
