@@ -16,8 +16,8 @@ const formatDate = (iso: string) =>
 const imageOf = (post: any) => post._embedded?.["wp:featuredmedia"]?.[0]
 
 useSeoMeta({
-	title: "Blog",
-	ogTitle: "Blog"
+	title: "Floating G.O.A.T. - Blog",
+	ogTitle: "Floating G.O.A.T. - Blog"
 })
 </script>
 

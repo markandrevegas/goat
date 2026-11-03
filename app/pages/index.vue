@@ -100,6 +100,7 @@ useSeoMeta({
 	titleTemplate: null,
 	description: seoDescription,
 	ogTitle: seoTitle,
+	ogUrl: "https://floatinggoat.dk",
 	ogDescription: seoDescription,
 	ogImage: ogImage,
 	ogType: "website",
