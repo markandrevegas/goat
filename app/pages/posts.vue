@@ -16,8 +16,18 @@ const formatDate = (iso: string) =>
 const imageOf = (post: any) => post._embedded?.["wp:featuredmedia"]?.[0]
 
 useSeoMeta({
-	title: "Floating G.O.A.T. - Blog",
-	ogTitle: "Floating G.O.A.T. - Blog"
+	title: "All Posts | floatinggoat.dk",
+	titleTemplate: null,
+	description: "Visit our blog for all the latest articles and happenings",
+	ogTitle: "All Posts | floatinggoat.dk",
+	ogUrl: "https://floatinggoat.dk",
+	ogDescription: "Visit our blog for all the latest articles and happenings",
+	ogImage: "http://floatinggoat.dk/wp-content/uploads/ferry-150x150.webp",
+	ogType: "website",
+	twitterCard: "summary_large_image",
+	twitterTitle: "All Posts | floatinggoat.dk",
+	twitterDescription: "Visit our blog for all the latest articles and happenings",
+	twitterImage: "http://floatinggoat.dk/wp-content/uploads/ferry-150x150.webp"
 })
 </script>
 
