@@ -37,11 +37,15 @@ const handleButtonClick = async (event: MouseEvent) => {
 <template>
 	<button @click="handleButtonClick" type="button" class="text-brand inline-flex items-center gap-1.5 p-0 leading-4">
 		<slot name="icon" v-if="iconPos !== 'right'">
-			<Icon v-if="icon" :name="icon" class="h-4 w-4 shrink-0" />
-		</slot>
+      <component 
+        v-if="icon" 
+        :is="icon" 
+        class="h-4 w-4 shrink-0" 
+      />
+    </slot>
 		<slot>{{ text }}</slot>
 		<slot name="icon" v-if="iconPos === 'right'">
-			<Icon v-if="icon" :name="icon" class="h-4 w-4 shrink-0" />
+			<component v-if="icon" :is="icon" class="h-4 w-4 shrink-0" />
 		</slot>
 	</button>
 </template>
