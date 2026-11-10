@@ -14,19 +14,21 @@ const formatDate = (iso: string) =>
 	}).format(new Date(iso))
 
 const imageOf = (post: any) => post._embedded?.["wp:featuredmedia"]?.[0]
+const route = useRoute()
+const isBlogIndex = route.path === "/blog"
 
 useSeoMeta({
 	title: "All Posts | floatinggoat.dk",
 	titleTemplate: null,
-	description: "Visit our blog for all the latest articles and happenings",
+	description: "Stories, tips, and news from Floating Goat. Read about our apartments, meeting spaces, and what's happening on the water.",
 	ogTitle: "All Posts | floatinggoat.dk",
 	ogUrl: "https://floatinggoat.dk",
-	ogDescription: "Visit our blog for all the latest articles and happenings",
+	ogDescription: "Stories, tips, and news from Floating Goat. Read about our apartments, meeting spaces, and what's happening on the water.",
 	ogImage: "http://floatinggoat.dk/wp-content/uploads/ferry-150x150.webp",
 	ogType: "website",
 	twitterCard: "summary_large_image",
 	twitterTitle: "All Posts | floatinggoat.dk",
-	twitterDescription: "Visit our blog for all the latest articles and happenings",
+	twitterDescription: "Stories, tips, and news from Floating Goat. Read about our apartments, meeting spaces, and what's happening on the water.",
 	twitterImage: "http://floatinggoat.dk/wp-content/uploads/ferry-150x150.webp"
 })
 </script>
@@ -37,9 +39,7 @@ useSeoMeta({
 			<div class="flex flex-col items-center justify-center sm:grid sm:grid-cols-4">
 				<div class="relative z-20 col-span-2 sm:col-start-2">
 					<h1 class="text-4xl" v-html="'BlogHeader'"></h1>
-					<p v-html="'Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. '" class="mt-3 mb-2 w-full text-sm/5 sm:max-w-2xl"></p>
-					<!--
-				<PrimaryButton v-if="callToAction" :event-params="{ button_location: slug }" :url="callToActionUrl" :text="callToAction" :event-name="'start_booking_' + slug" class="bg-palladian text-brand hover:bg-palladian/80 mt-4 mb-8 text-xl uppercase hover:cursor-pointer" />-->
+					<p v-html="'Stories, tips, and news from Floating Goat. Read about our apartments, meeting spaces, and what\'s happening on the water'" class="mt-3 mb-2 w-full text-sm/5 sm:max-w-2xl"></p>
 				</div>
 			</div>
 		</header>
