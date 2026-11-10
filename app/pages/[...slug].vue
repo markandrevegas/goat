@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, watch } from "vue"
 import SlimTrustWidget from "~/components/ui/SlimTrustWidget.vue"
+const config = useRuntimeConfig()
 
 interface YoastSchemaGraphItem {
 	"@type"?: string | string[]
@@ -233,7 +234,12 @@ const ogImage = computed(() => (ogImageRaw.value.startsWith("http") ? ogImageRaw
 const ogImageWidth = computed(() => (yoastImage.value?.url ? yoastImage.value.width : featuredImageUrl.value ? featuredImageWidth.value : 1200) || 1200)
 const ogImageHeight = computed(() => (yoastImage.value?.url ? yoastImage.value.height : featuredImageUrl.value ? featuredImageHeight.value : 630) || 630)
 
-const canonicalUrl = computed(() => `${siteUrl}${route.path}`.replace(/\/+$/, ""))
+const canonicalUrl = computed(() => {
+  const rawSiteUrl = (config.public.siteUrl as string) || "https://floatinggoat.dk"
+  const siteUrl = rawSiteUrl.replace(/\/+$/, "")
+  const cleanPath = route.path.replace(/\/+$/, "")
+  return `${siteUrl}${cleanPath}`
+})
 
 const cleanSeoTitle = computed(() => seoTitle.value)
 const cleanSeoDescription = computed(() => seoDescription.value)
