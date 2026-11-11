@@ -178,7 +178,7 @@ const bookedRanges = computed(() => data.value?.bookedRanges ?? [])
 					<SharefoxCalendar :slug="slug" />
 				</details>
 			</div>
-			<div v-if="!['privacy-policy', 'terms-and-conditions', 'terms-business', 'terms-private'].includes(slug)" class="col-span-1 mt-16 flex flex-col sm:mt-0">
+			<div v-if="!['about-us', 'privacy-policy', 'terms-and-conditions', 'terms-business', 'terms-private'].includes(slug)" class="col-span-1 mt-16 flex flex-col sm:mt-0">
 				<p class="mb-4 text-sm font-bold uppercase md:block">Related</p>
 				<ul class="list-reset space-y-2 sm:space-y-1">
 					<li v-for="item in relatedPages" :key="item.id">

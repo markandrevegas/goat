@@ -120,6 +120,7 @@ const forBusiness = ["rooftop-terrace", "meetings-and-events"]
 const forStudio = ["bow-apartment", "studio-apartment", "rooftop-terrace"]
 const forExtras = ["business-lounge", "rooftop-terrace", "apartments"]
 const forCaptainsQuarters = ["studio-apartment", "bow-apartment"]
+const forAboutUs = [""]
 
 const relatedPages = computed(() => {
 	if (!allPages.value) return []
@@ -143,6 +144,8 @@ const relatedPages = computed(() => {
 		relatedSlugs = forCaptainsQuarters
 	} else if (forEvents.includes(currentSlug) || currentSlug === "events") {
 		relatedSlugs = forEvents
+	} else if (forEvents.includes(currentSlug) || currentSlug === "about-us") {
+		relatedSlugs = forAboutUs
 	}
 
 	return allPages.value.filter((page) => page.id !== contentId.value && relatedSlugs.includes(page.slug)).sort((a, b) => relatedSlugs.indexOf(a.slug) - relatedSlugs.indexOf(b.slug))
