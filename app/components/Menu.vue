@@ -95,7 +95,7 @@ const { data: postItems } = await getPosts({
 			</div>
 
 			<div class="invisible col-span-2 lg:visible">
-				<ul v-if="centerMenuItems.length" class="flex items-center justify-start space-x-8 text-[12px]">
+				<ul v-if="centerMenuItems.length" class="flex items-center justify-start space-x-8">
 					<li v-for="item in centerMenuItems" :key="item.id || item.path">
 						<NuxtLink :to="item.path" class="text-palladian transition-opacity hover:opacity-70">
 							<span v-html="item.title"></span>
