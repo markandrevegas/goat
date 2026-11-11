@@ -114,7 +114,7 @@ const formattedDate = computed(() => {
 
 const { data: allPages } = await getPages()
 
-const forApartments = ["business-lounge", "rooftop-terrace", "simple-meeting"]
+const forApartments = ["rooftop-terrace"]
 const forEvents = ["business-lounge", "rooftop-terrace", "meetings-and-events"]
 const forBusiness = ["rooftop-terrace", "meetings-and-events"]
 const forStudio = ["bow-apartment", "studio-apartment", "rooftop-terrace"]
