@@ -100,14 +100,14 @@
 	}
 	/* Figures & Images */
 	.prose img {
-		@apply rounded-xl shadow-md;
+		@apply shadow-md;
 	}
 	:where(figure.wp-block-image) {
-		@apply my-8 overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800;
+		@apply my-8 h-auto;
 	}
 
 	:where(figure.wp-block-image img) {
-		@apply h-auto w-full max-w-full rounded-xl object-cover shadow-sm transition-opacity duration-300;
+		@apply w-full max-w-full rounded-xl object-cover shadow-sm transition-opacity duration-300;
 	}
 
 	:where(figure.wp-block-image figcaption) {
