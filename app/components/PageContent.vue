@@ -131,15 +131,20 @@ const bookedRanges = computed(() => data.value?.bookedRanges ?? [])
 				<div v-if="body" class="prose mb-4 max-w-none" v-html="body"></div>
 				<div v-if="body && slug === 'ferry-access'">
 					<h2 class="mb-4">Studio Apartment</h2>
-					<div class="flex w-full justify-start gap-4">
-						<PrimaryButton :target="'_blank'" :text="''" :event-name="'download_check_in_studio_apartment_pdf'" :url="'https://floatinggoat.dk/wp-content/uploads/pdfs/check-in-studio-apartment.pdf'" class="bg-palladian text-brand hover:bg-brand hover:text-palladian block text-xl uppercase hover:cursor-pointer">
+					<div class="flex flex-wrap w-full justify-start gap-4">
+						<PrimaryButton :target="'_blank'" :text="''" :event-name="'download_check_in_studio_apartment_pdf'" :url="'https://floatinggoat.dk/wp-content/uploads/pdfs/check-in-check-out-studio-apartment-dec2026.pdf'" class="bg-palladian text-brand hover:bg-brand hover:text-palladian block text-xl uppercase hover:cursor-pointer">
 							<slot>
 								<span class="flex items-center justify-start gap-1"> <Pdf /><span class="inline-block">Check-in / Check-out Info</span> </span>
 							</slot>
 						</PrimaryButton>
-						<PrimaryButton :target="'_blank'" :text="''" :event-name="'download_general_info_studio_apartment_pdf'" :url="'https://floatinggoat.dk/wp-content/uploads/pdfs/general-info-studio-apartment.pdf'" class="bg-palladian text-brand hover:bg-brand hover:text-palladian text-xl uppercase hover:cursor-pointer">
+						<PrimaryButton :target="'_blank'" :text="''" :event-name="'download_general_info_studio_apartment_pdf'" :url="'https://floatinggoat.dk/wp-content/uploads/pdfs/general-info-studio-apartment-dec2026.pdf'" class="bg-palladian text-brand hover:bg-brand hover:text-palladian text-xl uppercase hover:cursor-pointer">
 							<slot>
 								<span class="flex items-center justify-start gap-1"> <Pdf /><span class="inline-block">General info</span></span>
+							</slot>
+						</PrimaryButton>
+						<PrimaryButton :target="'_blank'" :text="''" :event-name="'download_directions_to_studio_apartment_pdf'" :url="'https://floatinggoat.dk/wp-content/uploads/pdfs/directions-to-ferry-dec2026.pdf'" class="bg-palladian text-brand hover:bg-brand hover:text-palladian text-xl uppercase hover:cursor-pointer">
+							<slot>
+								<span class="flex items-center justify-start gap-1"> <Pdf /><span class="inline-block">Directions to apartment</span></span>
 							</slot>
 						</PrimaryButton>
 					</div>
